@@ -1,0 +1,9 @@
+logging:
+  level:
+    ROOT: INFO
+
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://localhost/db
+    username: dbuser
+    password: password
