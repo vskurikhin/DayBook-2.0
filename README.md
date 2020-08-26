@@ -8,4 +8,8 @@ For further reference, please consider the following sections:
 
 ### Start project
 - install [java version 11](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
+- install [node.js](https://nodejs.org/en/download/current/)
+- Open CMD
+- Go to to project folder
+- Run cmd `npm i`
 
