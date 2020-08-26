@@ -1,3 +1,25 @@
+application:
+  db:
+    username: ${DB_USER:dbuser}
+    password: ${DB_PASS:password}
+    r2dbc:
+      host-rw: ${MASTER_DB_HOST:localhost}
+      host-ro: ${CLUSTER_DB_HOST:localhost}
+      port-rw: ${MASTER_DB_PORT:3306}
+      port-ro: ${CLUSTER_DB_PORT:3306}
+      database: ${DB_NAME:db}
+      pool:
+        connect-timeout: 500
+        duration: 30000
+        validation-depth: REMOTE
+        validation-query: "SELECT 1"
+  reactive:
+    buffer-size: 128
+    duration: 30000
+    limit: 1000
+  security:
+    strength: 12
+
 logging:
   level:
     ROOT: INFO
@@ -7,3 +29,10 @@ spring:
     url: r2dbc:postgresql://localhost/db
     username: dbuser
     password: password
+
+springbootwebfluxjjwt:
+  password:
+    encoder:
+      secret: mysecret
+      iteration: 33
+      keylength: 256
