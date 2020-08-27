@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.08.27 09:13 by Victor N. Skurikhin.
+ * This file was last modified at 2020.08.27 09:52 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * AuthenticationManager.java
@@ -9,7 +9,6 @@
 package su.svn.daybook.services.security;
 
 import io.jsonwebtoken.Claims;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -23,8 +22,11 @@ import java.util.List;
 @Component
 public class AuthenticationManager implements ReactiveAuthenticationManager {
 
-    @Autowired
-    private JWTUtil jwtUtil;
+    private final JWTUtil jwtUtil;
+
+    public AuthenticationManager(JWTUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
+    }
 
     @Override
     @SuppressWarnings("unchecked")
