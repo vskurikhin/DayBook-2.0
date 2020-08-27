@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.08.27 10:06 by Victor N. Skurikhin.
+ * This file was last modified at 2020.08.27 10:10 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * AuthenticationController.java
@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 import su.svn.daybook.domain.security.AuthRequest;
 import su.svn.daybook.domain.security.AuthResponse;
@@ -20,6 +21,7 @@ import su.svn.daybook.services.security.JWTUtil;
 import su.svn.daybook.services.security.PBKDF2Encoder;
 import su.svn.daybook.services.security.UserService;
 
+@RestController
 public class AuthenticationController {
 
     private final JWTUtil jwtUtil;
