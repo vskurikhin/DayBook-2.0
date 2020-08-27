@@ -29,13 +29,3 @@ spring:
     url: r2dbc:postgresql://localhost/db
     username: dbuser
     password: password
-
-springbootwebfluxjjwt:
-  jjwt:
-    secret: ThisIsSecretForJWTHS512SignatureAlgorithmThatMUSTHave64ByteLength
-    expiration: 28800
-  password:
-    encoder:
-      secret: mysecret
-      iteration: 33
-      keylength: 256

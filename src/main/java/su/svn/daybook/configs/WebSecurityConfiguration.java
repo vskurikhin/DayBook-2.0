@@ -8,53 +8,23 @@
 
 package su.svn.daybook.configs;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
-import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
-import org.springframework.security.config.web.server.ServerHttpSecurity;
-import org.springframework.security.web.server.SecurityWebFilterChain;
-
-import reactor.core.publisher.Mono;
-import su.svn.daybook.services.security.AuthenticationManager;
-import su.svn.daybook.services.security.SecurityContextRepository;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 
 @Configuration
-@EnableWebFluxSecurity
-@EnableReactiveMethodSecurity
-public class WebSecurityConfiguration {
-
-    private final AuthenticationManager authenticationManager;
-
-    private final SecurityContextRepository securityContextRepository;
-
-    public WebSecurityConfiguration(
-            AuthenticationManager authenticationManager,
-            SecurityContextRepository securityContextRepository) {
-        this.authenticationManager = authenticationManager;
-        this.securityContextRepository = securityContextRepository;
-    }
-
-    @Bean
-    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
-        return http
-                .exceptionHandling()
-                .authenticationEntryPoint((swe, e) -> Mono.fromRunnable(() ->
-                        swe.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED)))
-                .accessDeniedHandler((swe, e) -> Mono.fromRunnable(() ->
-                        swe.getResponse().setStatusCode(HttpStatus.FORBIDDEN)))
+@EnableWebSecurity
+public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable()
+                .headers()
+                .frameOptions().disable()
                 .and()
-                .csrf().disable()
-                .formLogin().disable()
-                .httpBasic().disable()
-                .authenticationManager(authenticationManager)
-                .securityContextRepository(securityContextRepository)
-                .authorizeExchange()
-                .pathMatchers(HttpMethod.OPTIONS).permitAll()
-                .pathMatchers("/login").permitAll()
-                .anyExchange().authenticated()
-                .and().build();
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests().antMatchers("/**").permitAll();
     }
 }
