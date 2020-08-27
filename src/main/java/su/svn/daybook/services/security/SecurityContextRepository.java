@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.08.27 09:36 by Victor N. Skurikhin.
+ * This file was last modified at 2020.08.27 09:52 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * SecurityContextRepository.java
@@ -8,7 +8,6 @@
 
 package su.svn.daybook.services.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,8 +22,11 @@ import reactor.core.publisher.Mono;
 @Component
 public class SecurityContextRepository implements ServerSecurityContextRepository {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
+
+    public SecurityContextRepository(AuthenticationManager authenticationManager) {
+        this.authenticationManager = authenticationManager;
+    }
 
     @Override
     public Mono<Void> save(ServerWebExchange swe, SecurityContext sc) {
