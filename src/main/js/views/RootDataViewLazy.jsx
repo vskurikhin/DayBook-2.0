@@ -16,7 +16,7 @@ const RootDataViewLazy = () => {
     const [loading, setLoading] = useState(true);
     const [first, setFirst] = useState(0);
     const [totalRecords, setTotalRecords] = useState(0);
-    const rows = 6;
+    const rows = 100;
     const carservice = new CarService();
 
     useEffect(() => {
@@ -124,5 +124,7 @@ const RootDataViewLazy = () => {
     );
 }
 
-const rootElement = document.getElementById("root");
-ReactDOM.render(<RootDataViewLazy />, rootElement);
+export default RootDataViewLazy;
+
+// const rootElement = document.getElementById("root");
+// ReactDOM.render(<RootDataViewLazy />, rootElement);

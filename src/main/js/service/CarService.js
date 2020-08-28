@@ -12,7 +12,7 @@ export class CarService {
 
     getCarsFirstPage(page, first, rows) {
         return axios
-            .get("/api/v1/pages?page=" + page + "&first=" + first + "&rows" + rows)
+            .get("/api/v1/pages?page=" + page + "&first=" + first + "&rows=" + rows)
             .then(function(response) {
                 console.log(response);
                 return response;
@@ -27,7 +27,7 @@ export class CarService {
         var filterJsonString = JSON.stringify(event);
         console.log("Filter", filterJsonString);
         return axios
-            .get("/api/v1/pages?page=" + event.page + "&first=" + event.first + "&rows" + event.rows)
+            .get("/api/v1/pages?page=" + event.page + "&first=" + event.first + "&rows=" + event.rows)
             .then(function(response) {
                 console.log(response);
                 return response;
