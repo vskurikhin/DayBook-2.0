@@ -1,0 +1,48 @@
+/*
+ Этот цикл сгенерирует CSS классы для работы с flex-ами:
+  .flex-1 { flex: 1 !important; }
+  .flex-2 { flex: 2 !important; }
+  ...
+  .flex-10 { flex: 10 !important; }
+*/
+@for $i from 1 through 10 {
+  .flex-#{$i} { flex: $i !important; }
+}
+
+/*
+ Этот цикл сгенерирует CSS классы для работы с margin-ами:
+  .margin-top-5 { margin-top: 5px !important; }
+  ...
+  .margin-right-5 { margin-right: 5px !important; }
+  ...
+  .margin-bottom-5 { margin-bottom: 5px !important; }
+  ...
+  .margin-left-5 { margin-left: 5px !important; }
+  ...
+*/
+@each $o in 'top' 'right' 'bottom' 'left' {
+  @each $i in 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 40 45 50 55 60 65 70 75 80 {
+    .margin-#{$o}-#{$i} { margin-#{$o}: #{$i}px !important; }
+  }
+}
+
+/*
+ Этот цикл сгенерирует CSS классы для работы с padding-ами:
+  .padding-top-5 { padding-top: 5px !important; }
+  ...
+  .padding-right-5 { padding-right: 5px !important; }
+  ...
+  .padding-bottom-5 { padding-bottom: 5px !important; }
+  ...
+  .padding-left-5 { padding-left: 5px !important; }
+  ...
+*/
+@each $o in 'top' 'right' 'bottom' 'left' {
+  @each $i in 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 40 45 50 55 60 {
+    .padding-#{$o}-#{$i} { padding-#{$o}: #{$i}px !important; }
+  }
+}
+
+/*
+ другие универсальные стили
+*/
