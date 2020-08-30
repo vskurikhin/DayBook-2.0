@@ -7,6 +7,8 @@ import './NavigationBar.scss'
 const SECTIONS = [
   { title: 'Home', href: '/' },
   { title: 'Calendar', href: '/calendar' },
+  { title: 'Login', href: '/login' },
+  { title: 'Signup', href: '/signup' },
   { title: '|', href: '/admin' },
 ]
 

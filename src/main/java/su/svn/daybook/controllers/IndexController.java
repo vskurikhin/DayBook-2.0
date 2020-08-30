@@ -15,6 +15,11 @@ public class IndexController {
         return "forward:/";
     }
 
+    @RequestMapping("/generated**")
+    public String generated() {
+        return "forward:/";
+    }
+
     @RequestMapping("/appointments**")
     public String appointments() {
         return "forward:/";

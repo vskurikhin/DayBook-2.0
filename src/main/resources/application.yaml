@@ -22,10 +22,25 @@ application:
 
 logging:
   level:
-    ROOT: INFO
+    ROOT: DEBUG
 
 spring:
   r2dbc:
     url: r2dbc:postgresql://localhost/db
     username: dbuser
     password: password
+  thymeleaf:
+    reactive:
+      max-chunk-size: 8192
+  webflux:
+    static-path-pattern: '/**'
+
+springbootwebfluxjjwt:
+  jjwt:
+    secret: ThisIsSecretForJWTHS512SignatureAlgorithmThatMUSTHave64ByteLength
+    expiration: 28800
+  password:
+    encoder:
+      secret: mysecret
+      iteration: 33
+      keylength: 256

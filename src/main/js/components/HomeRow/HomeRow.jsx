@@ -6,9 +6,9 @@ import RootDataViewLazy from '../RootDataViewLazy/RootDataViewLazy'
 import './HomeRow.scss'
 
 const FILES = [
-  '/theme.css',
-  '/primeicons.css',
-  '/main.362f8fd8.chunk.css'
+  '/css/theme.css',
+  '/css/primeicons.css',
+  '/css/main.362f8fd8.chunk.css'
 ]
 
 export default class HomeRow extends Component {
