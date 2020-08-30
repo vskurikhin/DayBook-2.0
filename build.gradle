@@ -42,6 +42,7 @@ ext.libVers = [
 		slf4j                       : getEnv('VERSION_ORG_SLF4J_VERSION', VERSION_ORG_SLF4J_VERSION),
 		google_collections			: '1.0',
 		h2_database                 : '1.4.197',
+		jsonwebtoken_jjwt			: '0.11.2',
 		jsr305                      : '1.3.9',
 		junit                       : '5.6.0',
 		junit_platform_launcher     : '1.6.0',
@@ -60,18 +61,21 @@ repositories {
 
 dependencies {
 	implementation "com.google.code.findbugs:jsr305:$libVers.jsr305"
-	implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:$libVers.mybatis_spring_boot_starter"
 	implementation "com.google.collections:google-collections:$libVers.google_collections"
+	implementation "io.jsonwebtoken:jjwt-api:$libVers.jsonwebtoken_jjwt"
+	implementation "io.jsonwebtoken:jjwt-impl:$libVers.jsonwebtoken_jjwt"
+	implementation "io.jsonwebtoken:jjwt-jackson:$libVers.jsonwebtoken_jjwt"
+	implementation "io.projectreactor.netty:reactor-netty:0.9.11.RELEASE"
 	implementation "org.hibernate:hibernate-validator:$libVers.hibernate_validator"
+	implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:$libVers.mybatis_spring_boot_starter"
 
 	implementation 'org.liquibase:liquibase-core'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	implementation 'org.springframework.kafka:spring-kafka'
 
