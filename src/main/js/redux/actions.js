@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.08.30 09:14 by Victor N. Skurikhin.
+ * This file was last modified at 2020.08.31 14:07 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * actions.js
@@ -44,8 +44,6 @@ export const userLoginFetch = user => {
                 if (data.message) {
                     //тут ваша логика
                 } else {
-                    console.log('user: ' + JSON.stringify(data.user))
-                    console.log('token: ' + JSON.stringify(data.token))
                     localStorage.setItem("token", data.token)
                     dispatch(loginUser(data.user))
                 }

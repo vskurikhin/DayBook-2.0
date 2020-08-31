@@ -1,14 +1,21 @@
-import 'primeicons/primeicons.css';
-import 'primereact/resources/themes/nova-light/theme.css';
-import 'primereact/resources/primereact.css';
-import 'primeflex/primeflex.css';
-import '../../resources/static/index.css';
-import ReactDOM from 'react-dom';
+/*
+ * This file was last modified at 2020.08.31 14:07 by Victor N. Skurikhin.
+ * This is free and unencumbered software released into the public domain.
+ * For more information, please refer to <http://unlicense.org>
+ * RootDataViewLazy.jsx
+ * $Id$
+ */
 
-import React, { useState, useEffect } from 'react';
-import { DataView, DataViewLayoutOptions } from 'primereact/dataview';
-import { Panel } from 'primereact/panel';
-import { CarService } from '../service/CarService';
+import 'primeflex/primeflex.css'
+import 'primeicons/primeicons.css'
+import 'primereact/resources/primereact.css'
+import 'primereact/resources/themes/nova-light/theme.css'
+import React, { useState, useEffect } from 'react'
+import { DataView, DataViewLayoutOptions } from 'primereact/dataview'
+import { Panel } from 'primereact/panel'
+
+import '../../resources/static/index.css'
+import { CarService } from '../service/CarService'
 
 const RootDataViewLazy = () => {
     const [cars, setCars] = useState([]);
@@ -125,6 +132,3 @@ const RootDataViewLazy = () => {
 }
 
 export default RootDataViewLazy;
-
-// const rootElement = document.getElementById("root");
-// ReactDOM.render(<RootDataViewLazy />, rootElement);
