@@ -14,7 +14,7 @@ export default class Home extends Component {
         <Header />
         <NavigationBar />
         <HomeRow />
-        <div className="footer">
+        <div className="my-footer">
         </div>
       </div>
     )

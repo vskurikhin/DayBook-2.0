@@ -7,15 +7,13 @@
  */
 
 const initialState = {
-    currentUser: {}
+    calendarDate: {}
 }
 
-export default function currentUser(state = initialState, action) {
+export default function calendarDate(state = initialState, action) {
     switch (action.type) {
-        case 'LOGIN_USER':
-            return {...state, currentUser: action.payload}
-        case 'LOGOUT_USER':
-            return {...state, currentUser: {}}
+        case 'CALENDAR_DATE':
+            return {...state, calendarDate: action.payload}
         default:
             return state;
     }

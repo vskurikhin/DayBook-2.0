@@ -9,7 +9,7 @@ body {
 }
 
 /* Header/logo Title */
-.header {
+.my-header {
     position: absolute;
     height: 90px;
     width: 100%;
@@ -56,10 +56,10 @@ body {
 }
 
 /* Column container */
-.row {
+.my-row {
     position: absolute;
     top: 134px;
-    bottom: 75px;
+    bottom: 10px;
     width: 100%;
     display: -ms-flexbox; /* IE10 */
     display: flex;
@@ -69,15 +69,16 @@ body {
 
 /* Create two unequal columns that sits next to each other */
 /* Sidebar/left column */
-.side {
+.my-side {
     -ms-flex: 25%; /* IE10 */
     flex: 25%;
     background-color: #f1f1f1;
+    border: 1px solid #c8c8c8;
     padding: 15px;
 }
 
 /* Main column */
-.main {
+.my-main {
     -ms-flex: 75%; /* IE10 */
     flex: 75%;
     background-color: white;
@@ -92,13 +93,14 @@ body {
 }
 
 /* Footer */
-.footer {
+.my-footer {
     position:absolute;
-    height: 75px;
+    height: 10px;
     bottom: 0;
-    padding: 20px;
+    padding: 2px;
     text-align: center;
     background: #ddd;
+    border: 1px solid #c8c8c8;
 }
 
 .center-demo {

@@ -28,14 +28,6 @@ class App extends Component {
     this.props.getProfileFetch()
   }
 
-  handleClick = event => {
-    event.preventDefault()
-    // Удаление token из localStorage
-    localStorage.removeItem("token")
-    // удаление из Redux хранилица
-    this.props.logoutUser()
-  }
-
   render() {
     const { history } = this.props
 
@@ -54,7 +46,8 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  currentUser: state.currentUser
+  currentUser: state.currentUser,
+  calendarDate: state.calendarDate
 })
 
 const mapDispatchToProps = dispatch => ({
