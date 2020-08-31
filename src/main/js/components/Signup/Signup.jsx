@@ -35,8 +35,8 @@ class Signup extends Component {
             <div>
                 <Header/>
                 <NavigationBar/>
-                <div className="row">
-                    <div className="side">
+                <div className="my-row">
+                    <div className="my-side">
                         <h1>Home</h1>
                         <h2>About Me</h2>
                         <h5>Photo of me:</h5>
@@ -45,7 +45,7 @@ class Signup extends Component {
                         <h3>More Text</h3>
                         <p>Lorem ipsum dolor sit ame.</p>
                     </div>
-                    <div className="main" name='main'>
+                    <div className="my-main" name='main'>
                         <form onSubmit={this.handleSubmit}>
                             <h1>Sign Up For An Account</h1>
 
@@ -78,7 +78,7 @@ class Signup extends Component {
                         </form>
                     </div>
                 </div>
-                <div className="footer">
+                <div className="my-footer">
                 </div>
             </div>
         )

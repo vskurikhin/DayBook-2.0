@@ -1,4 +1,12 @@
-import React, { Component, useState, useEffect } from 'react'
+/*
+ * This file was last modified at 2020.08.31 13:23 by Victor N. Skurikhin.
+ * This is free and unencumbered software released into the public domain.
+ * For more information, please refer to <http://unlicense.org>
+ * HomeRow.jsx
+ * $Id$
+ */
+
+import React, { Component } from 'react'
 
 import IFrame from '../IFrame/IFrame'
 import RootDataViewLazy from '../RootDataViewLazy/RootDataViewLazy'
@@ -22,15 +30,12 @@ export default class HomeRow extends Component {
 
   componentDidMount() {
       var iframe1 = document.getElementById('iframe1'); // getElementsByTagName("iframe")[0].contentWindow;
-      // console.log('iframe1' + iframe1);
       var head = iframe1.contentWindow.document.getElementsByTagName("head")[0];
-      // console.log('head' + head);
       FILES.forEach(function(item, i, arr) {
           var cssLink = document.createElement("link", {href: item, rel: 'stylesheet', type: 'text/css'});
           cssLink.href = item;
           cssLink.rel = "stylesheet";
           cssLink.type = "text/css";
-          // console.log('cssLink' + cssLink.outerHTML);
           head.appendChild(cssLink);
       });
   }
@@ -43,8 +48,8 @@ export default class HomeRow extends Component {
     };
 
     return (
-        <div className="row">
-            <div className="side">
+        <div className="my-row">
+            <div className="my-side">
                 <h1>Home</h1>
                 <h2>About Me</h2>
                 <h5>Photo of me:</h5>
@@ -53,7 +58,7 @@ export default class HomeRow extends Component {
                 <h3>More Text</h3>
                 <p>Lorem ipsum dolor sit ame.</p>
             </div>
-            <div className="main" name='main'>
+            <div className="my-main" name='main'>
               <IFrame style={divStyle} name='iframe1' id='iframe1'>
                 <RootDataViewLazy />
               </IFrame>

@@ -59,7 +59,12 @@ const RootDataViewLazy = () => {
                         <div className="p-grid">
                             <div className="p-col-12">Vin: <b>{car.vin}</b></div>
                             <div className="p-col-12">Year: <b>{car.year}</b></div>
-                            <div className="p-col-12"><img src={`showcase/demo/images/car/${car.brand}.png`} srcSet="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png" alt={car.brand} />Brand: <b>{car.brand}</b></div>
+                            <div className="p-col-12">
+                                <img src={`showcase/demo/images/car/${car.brand}.png`}
+                                     srcSet="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png"
+                                     alt={car.brand}
+                                />Brand: <b>{car.brand}</b>
+                            </div>
                             <div className="p-col-12">Color: <b>{car.color}</b></div>
                         </div>
                     </div>
@@ -74,7 +79,13 @@ const RootDataViewLazy = () => {
                 <Panel header={car.vin} style={{ textAlign: 'left' }}>
                     <div className="car-detail">
                         <p align = "justify">
-                            <img className="leftimg" src={`showcase/demo/images/car/${car.brand}.png`} srcSet="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png" alt={car.brand} width="32" height="32" /> {car.color}
+                            <img className="leftimg"
+                                 src={`showcase/demo/images/car/${car.brand}.png`}
+                                 srcSet="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png"
+                                 alt={car.brand}
+                                 width="32"
+                                 height="32"
+                            />{car.color}
                         </p>
                     </div>
                     <div className="right">{car.year}</div>
@@ -111,8 +122,6 @@ const RootDataViewLazy = () => {
         );
     }
 
-    // const header = renderHeader();
-
     return (
         <div className="dataview-demo">
             <DataView value={cars} layout={layout} itemTemplate={itemTemplate}
@@ -123,6 +132,3 @@ const RootDataViewLazy = () => {
 }
 
 export default RootDataViewLazy;
-
-// const rootElement = document.getElementById("root");
-// ReactDOM.render(<RootDataViewLazy />, rootElement);

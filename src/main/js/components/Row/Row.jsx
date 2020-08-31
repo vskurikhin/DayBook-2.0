@@ -6,8 +6,8 @@ export default class Home extends Component {
 
   render () {
     return (
-        <div className="row">
-            <div className="side">
+        <div className="my-row">
+            <div className="my-side">
                 <h1>Calendar</h1>
                 <h2>About Me</h2>
                 <h5>Photo of me:</h5>
@@ -16,7 +16,7 @@ export default class Home extends Component {
                 <h3>More Text</h3>
                 <p>Lorem ipsum dolor sit ame.</p>
             </div>
-            <div className="main">
+            <div className="my-main">
             </div>
         </div>
     )
