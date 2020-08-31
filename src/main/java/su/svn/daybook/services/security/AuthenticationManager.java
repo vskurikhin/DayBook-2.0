@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.08.27 09:52 by Victor N. Skurikhin.
+ * This file was last modified at 2020.08.31 14:07 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * AuthenticationManager.java
@@ -35,7 +35,7 @@ public class AuthenticationManager implements ReactiveAuthenticationManager {
 
         try {
             String username = jwtUtil.getUsernameFromToken(authToken);
-            if (!jwtUtil.validateToken(authToken)) {
+            if ( ! jwtUtil.validateToken(authToken)) {
                 return Mono.empty();
             }
             Claims claims = jwtUtil.getAllClaimsFromToken(authToken);
