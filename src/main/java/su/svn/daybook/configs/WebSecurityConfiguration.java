@@ -53,8 +53,12 @@ public class WebSecurityConfiguration {
                 .securityContextRepository(securityContextRepository)
                 .authorizeExchange()
                 .pathMatchers(HttpMethod.OPTIONS).permitAll()
-                .pathMatchers("/api/v1/login").permitAll()
-                .pathMatchers("/**").permitAll()
+                .pathMatchers(HttpMethod.GET, "/").permitAll()
+                .pathMatchers(HttpMethod.POST, "/api/v1/login").permitAll()
+                .pathMatchers(HttpMethod.GET, "/api/v1/pages").permitAll()
+                .pathMatchers(HttpMethod.GET, "/favicon.ico").permitAll()
+                .pathMatchers(HttpMethod.GET, "/css/**").permitAll()
+                .pathMatchers(HttpMethod.GET, "/generated/**").permitAll()
                 .anyExchange().authenticated()
                 .and().build();
     }
