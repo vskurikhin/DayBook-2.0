@@ -13,7 +13,7 @@ For further reference, please consider the following sections:
 - Go to to project folder
 - Run cmds:
   * ```
-    npm install axios bootstrap classname css css-loader file-loader history moment node-sass primeflex primeicons primereact prop-types react react-bootstrap-table-next react-datepicker react-dom react-moment react-redux react-router react-router-dom react-router-redux react-scripts reactstrap redux redux-thunk rest sass sass-loader underscore url-loader --save
+    npm install axios bootstrap classname css css-loader file-loader history moment node-sass primeflex primeicons primereact prop-types react react-bootstrap-table-next react-datepicker react-dom react-moment react-redux react-router react-router-dom react-router-redux react-scripts react-tagcloud reactstrap redux redux-thunk rest sass sass-loader underscore url-loader --save
     ```
   * ```
     npm install babel-loader@7.1.5 babel-core webpack webpack-cli webpack-dev-server babel-preset-stage-0 babel-plugin-transform-regenerator babel-preset-es2015 babel-preset-react cross-env react-test-renderer redux-devtools-extension mini-css-extract-plugin --save-dev
