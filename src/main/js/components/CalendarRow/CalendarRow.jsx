@@ -25,6 +25,7 @@ export class CalendarRow extends Component {
   }
 
   componentDidMount() {
+      this.props.setCalendarDate()
       var iframe1 = document.getElementById('iframe1'); // getElementsByTagName("iframe")[0].contentWindow;
       var head = iframe1.contentWindow.document.getElementsByTagName("head")[0];
       FILES.forEach(function(item, i, arr) {
@@ -48,14 +49,14 @@ export class CalendarRow extends Component {
         width: '100%',
         height: '100%'
     };
-    console.log("render: state.calendarDate: " + JSON.stringify(this.state.calendarDate))
+    const stateDate = new Date(this.state.calendarDate.year, this.state.calendarDate.month - 1, this.state.calendarDate.date)
 
     return (
         <div className="my-row">
             <div className="my-side">
                 <h1>Calendar</h1>
                 <Calendar dateFormat="yy-mm-dd"
-                          value={this.state.calendarDate}
+                          value={stateDate}
                           onChange={(e) => this.calendarRowSetState(e.value)}
                           inline
                           showWeek

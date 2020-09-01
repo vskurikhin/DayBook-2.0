@@ -68,6 +68,7 @@ dependencies {
 	implementation "io.projectreactor.netty:reactor-netty:0.9.11.RELEASE"
 	implementation "org.hibernate:hibernate-validator:$libVers.hibernate_validator"
 	implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:$libVers.mybatis_spring_boot_starter"
+	implementation "io.netty:netty-tcnative-boringssl-static:2.0.34.Final"
 
 	implementation 'org.liquibase:liquibase-core'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'

@@ -5,8 +5,8 @@ application:
     r2dbc:
       host-rw: ${MASTER_DB_HOST:localhost}
       host-ro: ${CLUSTER_DB_HOST:localhost}
-      port-rw: ${MASTER_DB_PORT:3306}
-      port-ro: ${CLUSTER_DB_PORT:3306}
+      port-rw: ${MASTER_DB_PORT:5432}
+      port-ro: ${CLUSTER_DB_PORT:5432}
       database: ${DB_NAME:db}
       pool:
         connect-timeout: 500
@@ -17,12 +17,14 @@ application:
     buffer-size: 128
     duration: 30000
     limit: 1000
-  security:
-    strength: 12
 
 logging:
   level:
-    ROOT: DEBUG
+    ROOT: INFO
+
+server:
+  compression:
+    enabled: true
 
 spring:
   r2dbc:
