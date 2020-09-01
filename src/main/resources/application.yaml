@@ -10,7 +10,6 @@ application:
       database: ${DB_NAME:db}
       pool:
         connect-timeout: 500
-        duration: 30000
         validation-depth: REMOTE
         validation-query: "SELECT 1"
   reactive:

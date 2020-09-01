@@ -9,17 +9,19 @@
 package su.svn.daybook.domain.security;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class AuthRequest {
-
+public class AuthRequest implements Serializable {
     private String username;
-
     private String password;
 }
