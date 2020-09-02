@@ -1,75 +1,72 @@
-import React, { Component } from 'react'
-import { Calendar } from 'primereact/calendar';
+import React, {Component} from 'react'
+import {ReactReduxContext} from 'react-redux'
+import {Calendar} from 'primereact/calendar';
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {withRouter} from "react-router";
 
 import './CalendarRow.scss'
-import {setCalendarDate} from '../../redux/actions'
-import IFrame from '../IFrame/IFrame'
 import CalendarDataView from '../CalendarDataView/CalendarDataView'
-
-const FILES = [
-    '/css/theme.css',
-    '/css/primeicons.css',
-    '/css/main.362f8fd8.chunk.css'
-]
+import IFrame from '../IFrame/IFrame'
+import {loadCssListIframe1} from '../../lib/CssListIframe1'
+import {setCalendarDate} from '../../redux/actions'
 
 export class CalendarRow extends Component {
-  constructor(props) {
-      super(props);
-      const now = new Date();
-      this.state = {
-          calendarDate: {year: now.getFullYear(), month: now.getMonth() + 1, date: now.getDate()}
-      };
-  }
+    constructor(props) {
+        super(props);
+        const now = new Date();
+        this.state = {
+            calendarDate: {year: now.getFullYear(), month: now.getMonth() + 1, date: now.getDate()}
+        };
+    }
 
-  componentDidMount() {
-      this.props.setCalendarDate()
-      var iframe1 = document.getElementById('iframe1'); // getElementsByTagName("iframe")[0].contentWindow;
-      var head = iframe1.contentWindow.document.getElementsByTagName("head")[0];
-      FILES.forEach(function(item, i, arr) {
-          var cssLink = document.createElement("link", {href: item, rel: 'stylesheet', type: 'text/css'});
-          cssLink.href = item;
-          cssLink.rel = "stylesheet";
-          cssLink.type = "text/css";
-          head.appendChild(cssLink);
-      });
-  }
+    componentDidMount() {
+        loadCssListIframe1()
+    }
 
-  calendarRowSetState(value) {
-      const date = {year: value.getFullYear(), month: value.getMonth() + 1, date: value.getDate()}
-      this.setState({ calendarDate: date })
-      setCalendarDate(date)
-  }
+    calendarRowSetState(value) {
+        const date = {year: value.getFullYear(), month: value.getMonth() + 1, date: value.getDate()}
+        this.setState({calendarDate: date})
+        this.props.handleCalendarDate(date)
+    }
 
-  render () {
-    const divStyle = {
-        borderStyle: 'none',
-        width: '100%',
-        height: '100%'
-    };
-    const stateDate = new Date(this.state.calendarDate.year, this.state.calendarDate.month - 1, this.state.calendarDate.date)
+    renderCalendar(store) {
+        let calendarDate = store.getState().calendarDate.calendarDate
+        let stateDate = new Date(calendarDate.year, calendarDate.month - 1, calendarDate.date)
 
-    return (
-        <div className="my-row">
-            <div className="my-side">
-                <h1>Calendar</h1>
-                <Calendar dateFormat="yy-mm-dd"
-                          value={stateDate}
-                          onChange={(e) => this.calendarRowSetState(e.value)}
-                          inline
-                          showWeek
-                />
+        return (
+            <Calendar dateFormat="yy-mm-dd"
+                      value={stateDate}
+                      onChange={(e) => this.calendarRowSetState(e.value)}
+                      inline
+                      showWeek
+            />
+        )
+    }
+
+    render() {
+        const divStyle = {
+            borderStyle: 'none',
+            width: '100%',
+            height: '100%'
+        };
+
+        return (
+            <div className="my-row">
+                <div className="my-side">
+                    <h1>Calendar</h1>
+                    <ReactReduxContext.Consumer>
+                        { ({store}) => this.renderCalendar(store) }
+                    </ReactReduxContext.Consumer>
+                </div>
+                <div className="my-main">
+                    <IFrame style={divStyle} name='iframe1' id='iframe1'>
+                        <CalendarDataView date={this.state.calendarDate}/>
+                    </IFrame>
+                </div>
             </div>
-            <div className="my-main">
-                <IFrame style={divStyle} name='iframe1' id='iframe1'>
-                    <CalendarDataView date={this.state.calendarDate} />
-                </IFrame>
-            </div>
-        </div>
-    )
-  }
+        )
+    }
 }
 
 const mapStateToProps = state => ({
@@ -77,7 +74,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    setCalendarDate: value => dispatch(setCalendarDate(value))
+    handleCalendarDate: value => dispatch(setCalendarDate(value))
 })
 
 export default compose(

@@ -85,5 +85,5 @@ export const logoutUser = () => ({
     type: 'LOGOUT_USER'
 })
 
-export const setCalendarDate = (date = {"year":2020,"month":8,"date":30}) => ({type: 'CALENDAR_DATE', payload: date});
+export const setCalendarDate = (date = {"year":2020,"month":1,"date":30}) => ({type: 'CALENDAR_DATE', payload: date});
 export const setLocale = (locale = '') => ({type: 'LOCALE', payload: locale});
