@@ -9,14 +9,18 @@
 package su.svn.daybook.domain.security;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class ProfileResponse {
+public class ProfileResponse implements Serializable {
     private String user;
 }
