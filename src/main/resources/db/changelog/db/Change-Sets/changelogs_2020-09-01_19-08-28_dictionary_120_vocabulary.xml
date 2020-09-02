@@ -1,0 +1,31 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd">
+  <changeSet id="2020-09-01_19-08-28" author="Victor N. Skurikhin">
+      <sql>
+          <![CDATA[
+            CREATE SEQUENCE dictionary.vocabulary_seq START 1;
+
+            CREATE TABLE dictionary.vocabulary (
+              vocabulary_id BIGINT  PRIMARY KEY  NOT NULL  DEFAULT nextval('dictionary.vocabulary_seq'),
+              words_id      BIGINT  NOT NULL,
+                            CONSTRAINT FK_db_news_tag_need_dictionary_tag_80e4
+                            FOREIGN KEY (words_id)
+                            REFERENCES  dictionary.words (words_id)
+                            ON DELETE CASCADE ON UPDATE CASCADE,
+              value         TEXT
+            );
+
+          ]]>
+      </sql>
+      <rollback>
+          <sql>
+            <![CDATA[
+
+            ]]>
+          </sql>
+      </rollback>
+  </changeSet>
+</databaseChangeLog>

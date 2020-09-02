@@ -1,0 +1,21 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd">
+  <changeSet id="2020-09-01_19-07-39" author="Victor N. Skurikhin">
+      <sql>
+          <![CDATA[
+            CREATE SEQUENCE dictionary.codifier_seq START 1;
+
+            CREATE TABLE dictionary.codifier (
+              codifier_id   BIGINT  PRIMARY KEY  NOT NULL  DEFAULT nextval('dictionary.codifier_seq'),
+              code          VARCHAR(64)
+                            CONSTRAINT UC_dictionary_code_must_be_different_81b0
+                            UNIQUE,
+              value         TEXT
+            );
+          ]]>
+      </sql>
+  </changeSet>
+</databaseChangeLog>

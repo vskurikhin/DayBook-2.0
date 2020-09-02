@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import su.svn.daybook.utils.SerializeUtil;
 
+import java.util.ArrayList;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("DTO classes in domain.security")
@@ -28,6 +30,7 @@ public class TestDataSecurity {
     public static final User USER_1 = User.builder()
             .username("username1")
             .password("password1")
+            .roles(new ArrayList<>() {{ add(Role.ROLE_USER); }})
             .build();
 
     @Nested
