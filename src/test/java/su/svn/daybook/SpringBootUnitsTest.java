@@ -11,7 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import reactor.core.publisher.Mono;
-import su.svn.daybook.domain.security.AuthRequest;
 import su.svn.daybook.domain.security.TestDataSecurity;
 import su.svn.daybook.services.security.AuthenticationManager;
 import su.svn.daybook.services.security.JWTUtil;
