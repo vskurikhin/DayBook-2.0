@@ -9,6 +9,8 @@
 package su.svn.daybook.services.security;
 
 import io.jsonwebtoken.Claims;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,6 +24,8 @@ import java.util.List;
 @Component
 public class AuthenticationManager implements ReactiveAuthenticationManager {
 
+    private static final Logger LOG = LoggerFactory.getLogger(AuthenticationManager.class);
+
     private final JWTUtil jwtUtil;
 
     public AuthenticationManager(JWTUtil jwtUtil) {
@@ -31,6 +35,12 @@ public class AuthenticationManager implements ReactiveAuthenticationManager {
     @Override
     @SuppressWarnings("unchecked")
     public Mono<Authentication> authenticate(Authentication authentication) {
+        Class<?> clazz = authentication.getClass();
+        LOG.info("clazz: {}", clazz.getCanonicalName());
+        LOG.info("credentials: {}", authentication.getCredentials());
+        LOG.info("credentials clazz: {}", authentication.getCredentials().getClass().getCanonicalName());
+        LOG.info("principal: {}", authentication.getPrincipal());
+        LOG.info("principal clazz: {}", authentication.getPrincipal().getClass().getCanonicalName());
 
         String authToken = authentication.getCredentials().toString();
 
