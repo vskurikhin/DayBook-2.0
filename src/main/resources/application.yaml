@@ -19,7 +19,7 @@ application:
 
 logging:
   level:
-    ROOT: INFO
+    ROOT: DEBUG
 
 server:
   compression:

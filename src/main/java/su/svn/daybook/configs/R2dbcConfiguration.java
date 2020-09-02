@@ -41,7 +41,7 @@ import static io.r2dbc.spi.ConnectionFactoryOptions.PROTOCOL;
 import static io.r2dbc.spi.ConnectionFactoryOptions.USER;
 
 @Configuration
-@EnableR2dbcRepositories
+@EnableR2dbcRepositories(basePackages = "su.svn.daybook.domain.dao.db")
 public class R2dbcConfiguration {
     @Value("${application.db.r2dbc.host-rw}")
     private String dbHostRw;
