@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.09.02 19:29 by Victor N. Skurikhin.
+ * This file was last modified at 2020.09.03 15:12 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * Vocabulary.java
@@ -42,6 +42,7 @@ public class Vocabulary {
 
     @Getter
     @Setter
+    @Size
     @Column("value")
     private String value;
 

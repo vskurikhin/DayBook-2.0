@@ -35,12 +35,6 @@ public class AuthenticationManager implements ReactiveAuthenticationManager {
     @Override
     @SuppressWarnings("unchecked")
     public Mono<Authentication> authenticate(Authentication authentication) {
-        Class<?> clazz = authentication.getClass();
-        LOG.info("clazz: {}", clazz.getCanonicalName());
-        LOG.info("credentials: {}", authentication.getCredentials());
-        LOG.info("credentials clazz: {}", authentication.getCredentials().getClass().getCanonicalName());
-        LOG.info("principal: {}", authentication.getPrincipal());
-        LOG.info("principal clazz: {}", authentication.getPrincipal().getClass().getCanonicalName());
 
         String authToken = authentication.getCredentials().toString();
 
