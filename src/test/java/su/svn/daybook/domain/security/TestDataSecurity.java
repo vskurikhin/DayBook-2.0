@@ -127,8 +127,6 @@ public class TestDataSecurity {
 
         @Test
         void defaults() {
-            System.err.println("format = " + String.format("%016d\n", 1L));
-            System.err.println("format = " + String.format("%016d\n", 12L));
             assertThat(test).hasFieldOrPropertyWithValue("username", null);
             assertThat(test).hasFieldOrPropertyWithValue("password", null);
         }
