@@ -1,4 +1,4 @@
-package su.svn.daybook.configs;
+package su.svn.daybook.domain.dao.db;
 
 import io.r2dbc.spi.ConnectionFactories;
 import io.r2dbc.spi.ConnectionFactory;

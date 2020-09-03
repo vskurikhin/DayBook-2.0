@@ -14,7 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import su.svn.daybook.configs.TestContextConfiguration;
+import su.svn.daybook.domain.dao.db.TestContextConfiguration;
 import su.svn.daybook.domain.model.db.dictionary.TagLabel;
 import su.svn.daybook.utils.TestDatabaseUtil;
 

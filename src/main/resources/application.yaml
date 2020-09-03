@@ -19,7 +19,7 @@ application:
 
 logging:
   level:
-    ROOT: DEBUG
+    ROOT: INFO
 
 server:
   compression:
@@ -30,6 +30,8 @@ spring:
     url: r2dbc:postgresql://localhost/db
     username: dbuser
     password: password
+  main:
+    allow-bean-definition-overriding: true
   thymeleaf:
     reactive:
       max-chunk-size: 8192
