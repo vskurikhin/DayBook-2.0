@@ -20,6 +20,9 @@ application:
 logging:
   level:
     ROOT: INFO
+    io:
+      r2dbc:
+        h2: DEBUG
 
 server:
   compression:

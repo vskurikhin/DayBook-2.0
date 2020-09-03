@@ -10,14 +10,14 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
 @EnableTransactionManagement
-public class TestContextConfiguration {
+public class TestConnectionFactoryConfiguration {
     @TestConfiguration
     static class ContextConfiguration {
 
         @Bean
         @Primary
         public ConnectionFactory connectionFactory() {
-            return ConnectionFactories.get("r2dbc:h2:mem:///db?options=DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL");
+            return ConnectionFactories.get("r2dbc:h2:mem:///db?options=DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE");
         }
 
         @Bean(name = "connectionFactoryRo")
