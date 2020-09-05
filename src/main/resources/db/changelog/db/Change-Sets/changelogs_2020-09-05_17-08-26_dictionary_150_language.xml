@@ -1,0 +1,24 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd">
+  <changeSet id="2020-09-05_17-08-26" author="Victor N. Skurikhin">
+      <sql>
+          <![CDATA[
+            CREATE SEQUENCE dictionary.language_seq START 1;
+
+            CREATE TABLE dictionary.language (
+              language_id   BIGINT  PRIMARY KEY  NOT NULL  DEFAULT nextval('dictionary.language_seq'),
+              language      VARCHAR(256),
+              user_name     VARCHAR(256),
+              create_time   TIMESTAMP WITHOUT TIME ZONE  NOT NULL   DEFAULT now(),
+              update_time   TIMESTAMP WITHOUT TIME ZONE  NOT NULL   DEFAULT now(),
+              is_disabled   BOOLEAN                                 DEFAULT false,
+              visible       BOOLEAN                                 DEFAULT true,
+              flags         INT
+            );
+          ]]>
+      </sql>
+  </changeSet>
+</databaseChangeLog>

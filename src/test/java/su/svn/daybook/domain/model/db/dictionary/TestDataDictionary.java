@@ -58,6 +58,30 @@ public class TestDataDictionary {
             .flags(0)
             .build();
 
+    public static final Language LANGUAGE_1 = Language.builder()
+            .id(1L)
+            .language("language1")
+            .userName("userName1")
+            .createTime(LOCAL_DATE_TIME_EPOCH)
+            .updateTime(LOCAL_DATE_TIME_EPOCH)
+            .isDisabled(false)
+            .visible(true)
+            .flags(0)
+            .build();
+
+    public static final I18n I18N_1 = I18n.builder()
+            .id(1L)
+            .languageId(1L)
+            .message("message1")
+            .translation("translation1")
+            .userName("userName1")
+            .createTime(LOCAL_DATE_TIME_EPOCH)
+            .updateTime(LOCAL_DATE_TIME_EPOCH)
+            .isDisabled(false)
+            .visible(true)
+            .flags(0)
+            .build();
+
     @BeforeEach
     void setUp() {
     }
