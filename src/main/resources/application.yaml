@@ -30,9 +30,9 @@ server:
 
 spring:
   r2dbc:
-    url: r2dbc:postgresql://localhost/db
-    username: dbuser
-    password: password
+    url: ${DB_URL:r2dbc:postgresql://localhost/db}
+    username: ${DB_USER:dbuser}
+    password: ${DB_PASS:password}
   main:
     allow-bean-definition-overriding: true
   thymeleaf:
