@@ -15,8 +15,8 @@
                             FOREIGN KEY (language_id)
                             REFERENCES  dictionary.language (language_id)
                             ON DELETE CASCADE ON UPDATE CASCADE,
-              message       VARCHAR(2147483647),
-              translation   VARCHAR(2147483647),
+              message       VARCHAR(10485760),
+              translation   VARCHAR(10485760),
               user_name     VARCHAR(256),
               create_time   TIMESTAMP WITHOUT TIME ZONE  NOT NULL   DEFAULT now(),
               update_time   TIMESTAMP WITHOUT TIME ZONE  NOT NULL   DEFAULT now(),

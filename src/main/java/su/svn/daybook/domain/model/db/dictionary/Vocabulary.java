@@ -42,7 +42,7 @@ public class Vocabulary {
 
     @Getter
     @Setter
-    @Size
+    @Size(max = 10485760)
     @Column("value")
     private String value;
 

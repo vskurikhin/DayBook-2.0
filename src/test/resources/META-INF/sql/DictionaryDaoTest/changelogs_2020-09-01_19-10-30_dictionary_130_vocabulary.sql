@@ -6,7 +6,7 @@ CREATE TABLE dictionary.vocabulary (
                 FOREIGN KEY (word_id)
                 REFERENCES  dictionary.word (word_id)
                 ON DELETE CASCADE ON UPDATE CASCADE,
-  value         VARCHAR(2147483647),
+  value         VARCHAR(10485760),
   user_name     VARCHAR(256),
   create_time   TIMESTAMP WITHOUT TIME ZONE  NOT NULL   DEFAULT now(),
   update_time   TIMESTAMP WITHOUT TIME ZONE  NOT NULL   DEFAULT now(),
