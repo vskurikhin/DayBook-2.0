@@ -1,3 +1,5 @@
+-- noinspection SqlWithoutWhere
+DELETE FROM dictionary.vocabulary;
 INSERT INTO dictionary.vocabulary
     (vocabulary_id, word_id, value, user_name, create_time, update_time, is_disabled, visible, flags)
      VALUES

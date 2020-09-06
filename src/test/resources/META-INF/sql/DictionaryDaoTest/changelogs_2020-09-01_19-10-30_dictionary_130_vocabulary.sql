@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS dictionary.vocabulary;
 CREATE TABLE dictionary.vocabulary (
   vocabulary_id BIGINT  AUTO_INCREMENT  PRIMARY KEY  NOT NULL,
   word_id       BIGINT  NOT NULL,
