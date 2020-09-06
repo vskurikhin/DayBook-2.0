@@ -46,7 +46,7 @@ public class Codifier implements Serializable, DBEntry<Long> {
 
     @Getter
     @Setter
-    @Size
+    @Size(max = 10485760)
     @Column("value")
     private String value;
 

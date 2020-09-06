@@ -43,13 +43,13 @@ public class I18n {
 
     @Getter
     @Setter
-    @Size
+    @Size(max = 10485760)
     @Column("message")
     private String message;
 
     @Getter
     @Setter
-    @Size
+    @Size(max = 10485760)
     @Column("translation")
     private String translation;
 
