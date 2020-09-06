@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS dictionary.language;
 CREATE TABLE dictionary.language (
   language_id   BIGINT  AUTO_INCREMENT  PRIMARY KEY  NOT NULL,
   language      VARCHAR(256),

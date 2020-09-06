@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS dictionary.i18n;
 CREATE TABLE dictionary.i18n (
   i18n_id       BIGINT  AUTO_INCREMENT  PRIMARY KEY  NOT NULL,
   language_id   BIGINT  NOT NULL,

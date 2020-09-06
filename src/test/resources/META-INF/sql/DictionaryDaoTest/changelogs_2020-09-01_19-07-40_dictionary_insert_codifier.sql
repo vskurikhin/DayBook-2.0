@@ -1,3 +1,5 @@
+-- noinspection SqlWithoutWhere
+DELETE FROM dictionary.codifier;
 INSERT INTO dictionary.codifier
   (codifier_id, code, value, user_name, create_time, update_time, is_disabled, visible, flags)
 VALUES
