@@ -3,13 +3,19 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd">
-  <changeSet id="2020-09-01_08-32-30" author="Victor N. Skurikhin">
+  <changeSet id="2020-09-01_19-10-40" author="Victor N. Skurikhin">
       <sql>
           <![CDATA[
-            CREATE SCHEMA IF NOT EXISTS db;
-            CREATE SCHEMA IF NOT EXISTS dictionary;
-            CREATE SCHEMA IF NOT EXISTS security;
+            CREATE INDEX IF NOT EXISTS IDX_dictionary_vocabulary_word_id
+                ON dictionary.vocabulary (word_id);
           ]]>
       </sql>
+      <rollback>
+          <sql>
+            <![CDATA[
+              DROP INDEX IF EXISTS dictionary.IDX_dictionary_vocabulary_word_id;
+            ]]>
+          </sql>
+      </rollback>
   </changeSet>
 </databaseChangeLog>

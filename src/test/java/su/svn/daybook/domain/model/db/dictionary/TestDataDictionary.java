@@ -19,7 +19,7 @@ public class TestDataDictionary {
             .userName("userName1")
             .createTime(LOCAL_DATE_TIME_EPOCH)
             .updateTime(LOCAL_DATE_TIME_EPOCH)
-            .isDisabled(false)
+            .enabled(true)
             .visible(true)
             .flags(0)
             .build();
@@ -30,7 +30,7 @@ public class TestDataDictionary {
             .userName("userName1")
             .createTime(LOCAL_DATE_TIME_EPOCH)
             .updateTime(LOCAL_DATE_TIME_EPOCH)
-            .isDisabled(false)
+            .enabled(true)
             .visible(true)
             .flags(0)
             .build();
@@ -42,7 +42,7 @@ public class TestDataDictionary {
             .userName("userName1")
             .createTime(LOCAL_DATE_TIME_EPOCH)
             .updateTime(LOCAL_DATE_TIME_EPOCH)
-            .isDisabled(false)
+            .enabled(true)
             .visible(true)
             .flags(0)
             .build();
@@ -53,7 +53,7 @@ public class TestDataDictionary {
             .userName("userName1")
             .createTime(LOCAL_DATE_TIME_EPOCH)
             .updateTime(LOCAL_DATE_TIME_EPOCH)
-            .isDisabled(false)
+            .enabled(true)
             .visible(true)
             .flags(0)
             .build();
@@ -64,7 +64,7 @@ public class TestDataDictionary {
             .userName("userName1")
             .createTime(LOCAL_DATE_TIME_EPOCH)
             .updateTime(LOCAL_DATE_TIME_EPOCH)
-            .isDisabled(false)
+            .enabled(true)
             .visible(true)
             .flags(0)
             .build();
@@ -77,7 +77,7 @@ public class TestDataDictionary {
             .userName("userName1")
             .createTime(LOCAL_DATE_TIME_EPOCH)
             .updateTime(LOCAL_DATE_TIME_EPOCH)
-            .isDisabled(false)
+            .enabled(true)
             .visible(true)
             .flags(0)
             .build();
