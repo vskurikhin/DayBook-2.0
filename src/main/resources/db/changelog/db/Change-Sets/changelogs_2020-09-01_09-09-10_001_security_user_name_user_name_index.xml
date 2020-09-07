@@ -3,12 +3,11 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd">
-  <changeSet id="2020-09-01_08-32-30" author="Victor N. Skurikhin">
+  <changeSet id="2020-09-01_09-09-10_001" author="Victor N. Skurikhin">
       <sql>
           <![CDATA[
-            CREATE SCHEMA IF NOT EXISTS db;
-            CREATE SCHEMA IF NOT EXISTS dictionary;
-            CREATE SCHEMA IF NOT EXISTS security;
+            CREATE INDEX IF NOT EXISTS IDX_security_user_name_user_name
+                ON security.user_name (user_name);
           ]]>
       </sql>
   </changeSet>

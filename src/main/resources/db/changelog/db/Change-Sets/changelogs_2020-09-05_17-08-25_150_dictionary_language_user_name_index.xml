@@ -1,0 +1,21 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd">
+  <changeSet id="2020-09-05_17-08-25" author="Victor N. Skurikhin">
+      <sql>
+          <![CDATA[
+            CREATE INDEX IF NOT EXISTS IDX_dictionary_language_user_name
+                ON dictionary.language (user_name);
+          ]]>
+      </sql>
+      <rollback>
+          <sql>
+              <![CDATA[
+                DROP INDEX IF EXISTS dictionary.IDX_dictionary_language_user_name;
+              ]]>
+          </sql>
+      </rollback>
+  </changeSet>
+</databaseChangeLog>

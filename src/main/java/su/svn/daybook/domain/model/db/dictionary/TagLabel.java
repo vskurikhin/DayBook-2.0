@@ -48,7 +48,7 @@ public class TagLabel implements Serializable, DBEntry<String> {
     @Getter
     @Setter
     @NotNull
-    @Size(max = 256)
+    @Size(max = 64)
     @Column("user_name")
     private String userName;
 
@@ -64,8 +64,8 @@ public class TagLabel implements Serializable, DBEntry<String> {
 
     @Getter
     @Setter
-    @Column("is_disabled")
-    private Boolean isDisabled;
+    @Column("enabled")
+    private Boolean enabled;
 
     @Getter
     @Setter
@@ -87,13 +87,13 @@ public class TagLabel implements Serializable, DBEntry<String> {
                 Objects.equals(userName, tagLabel.userName) &&
                 Objects.equals(createTime, tagLabel.createTime) &&
                 Objects.equals(updateTime, tagLabel.updateTime) &&
-                Objects.equals(isDisabled, tagLabel.isDisabled) &&
+                Objects.equals(enabled, tagLabel.enabled) &&
                 Objects.equals(visible, tagLabel.visible) &&
                 Objects.equals(flags, tagLabel.flags);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, label, userName, createTime, updateTime, isDisabled, visible, flags);
+        return Objects.hash(id, label, userName, createTime, updateTime, enabled, visible, flags);
     }
 }

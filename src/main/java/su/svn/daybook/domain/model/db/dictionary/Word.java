@@ -47,7 +47,7 @@ public class Word implements Serializable, DBEntry<Long> {
     @Getter
     @Setter
     @NotNull
-    @Size(max = 256)
+    @Size(max = 64)
     @Column("user_name")
     private String userName;
 
@@ -63,8 +63,8 @@ public class Word implements Serializable, DBEntry<Long> {
 
     @Getter
     @Setter
-    @Column("is_disabled")
-    private Boolean isDisabled;
+    @Column("enabled")
+    private Boolean enabled;
 
     @Getter
     @Setter
@@ -86,13 +86,13 @@ public class Word implements Serializable, DBEntry<Long> {
                 Objects.equals(userName, words.userName) &&
                 Objects.equals(createTime, words.createTime) &&
                 Objects.equals(updateTime, words.updateTime) &&
-                Objects.equals(isDisabled, words.isDisabled) &&
+                Objects.equals(enabled, words.enabled) &&
                 Objects.equals(visible, words.visible) &&
                 Objects.equals(flags, words.flags);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, word, userName, createTime, updateTime, isDisabled, visible, flags);
+        return Objects.hash(id, word, userName, createTime, updateTime, enabled, visible, flags);
     }
 }

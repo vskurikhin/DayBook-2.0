@@ -53,7 +53,7 @@ public class Codifier implements Serializable, DBEntry<Long> {
     @Getter
     @Setter
     @NotNull
-    @Size(max = 256)
+    @Size(max = 64)
     @Column("user_name")
     private String userName;
 
@@ -69,8 +69,8 @@ public class Codifier implements Serializable, DBEntry<Long> {
 
     @Getter
     @Setter
-    @Column("is_disabled")
-    private Boolean isDisabled;
+    @Column("enabled")
+    private Boolean enabled;
 
     @Getter
     @Setter
@@ -93,13 +93,13 @@ public class Codifier implements Serializable, DBEntry<Long> {
                 Objects.equals(userName, codifier.userName) &&
                 Objects.equals(createTime, codifier.createTime) &&
                 Objects.equals(updateTime, codifier.updateTime) &&
-                Objects.equals(isDisabled, codifier.isDisabled) &&
+                Objects.equals(enabled, codifier.enabled) &&
                 Objects.equals(visible, codifier.visible) &&
                 Objects.equals(flags, codifier.flags);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, code, value, userName, createTime, updateTime, isDisabled, visible, flags);
+        return Objects.hash(id, code, value, userName, createTime, updateTime, enabled, visible, flags);
     }
 }

@@ -1,12 +1,12 @@
 /*
- * This file was last modified at 2020.09.03 15:12 by Victor N. Skurikhin.
+ * This file was last modified at 2020.09.07 10:36 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
- * Vocabulary.java
+ * Role.java
  * $Id$
  */
 
-package su.svn.daybook.domain.model.db.dictionary;
+package su.svn.daybook.domain.model.db.security;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,35 +16,34 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
+import su.svn.daybook.domain.model.DBEntry;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(builderClassName = "Builder")
-@Table("dictionary.vocabulary")
-public class Vocabulary {
-    static final long serialVersionUID = -130L;
+@Table("security.role")
+public class Role implements Serializable, DBEntry<UUID> {
+    static final long serialVersionUID = -2L;
 
     @Id
     @Getter
     @Setter
-    @Column("vocabulary_id")
-    private Long id;
+    @Column("role_id")
+    private UUID id;
 
     @Getter
     @Setter
-    @Column("word_id")
-    private Long wordId;
-
-    @Getter
-    @Setter
-    @Size(max = 10485760)
-    @Column("value")
-    private String value;
+    @NotNull
+    @Size(max = 32)
+    @Column("role_name")
+    private String roleName;
 
     @Getter
     @Setter
@@ -82,20 +81,19 @@ public class Vocabulary {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Vocabulary that = (Vocabulary) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(wordId, that.wordId) &&
-                Objects.equals(value, that.value) &&
-                Objects.equals(userName, that.userName) &&
-                Objects.equals(createTime, that.createTime) &&
-                Objects.equals(updateTime, that.updateTime) &&
-                Objects.equals(enabled, that.enabled) &&
-                Objects.equals(visible, that.visible) &&
-                Objects.equals(flags, that.flags);
+        Role role = (Role) o;
+        return Objects.equals(id, role.id) &&
+                Objects.equals(roleName, role.roleName) &&
+                Objects.equals(userName, role.userName) &&
+                Objects.equals(createTime, role.createTime) &&
+                Objects.equals(updateTime, role.updateTime) &&
+                Objects.equals(enabled, role.enabled) &&
+                Objects.equals(visible, role.visible) &&
+                Objects.equals(flags, role.flags);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, wordId, value, userName, createTime, updateTime, enabled, visible, flags);
+        return Objects.hash(id, roleName, userName, createTime, updateTime, enabled, visible, flags);
     }
 }

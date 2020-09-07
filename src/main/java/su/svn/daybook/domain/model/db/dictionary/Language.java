@@ -46,7 +46,7 @@ public class Language implements Serializable, DBEntry<Long> {
     @Getter
     @Setter
     @NotNull
-    @Size(max = 256)
+    @Size(max = 64)
     @Column("user_name")
     private String userName;
 
@@ -62,8 +62,8 @@ public class Language implements Serializable, DBEntry<Long> {
 
     @Getter
     @Setter
-    @Column("is_disabled")
-    private Boolean isDisabled;
+    @Column("enabled")
+    private Boolean enabled;
 
     @Getter
     @Setter
@@ -85,13 +85,13 @@ public class Language implements Serializable, DBEntry<Long> {
                 Objects.equals(userName, language1.userName) &&
                 Objects.equals(createTime, language1.createTime) &&
                 Objects.equals(updateTime, language1.updateTime) &&
-                Objects.equals(isDisabled, language1.isDisabled) &&
+                Objects.equals(enabled, language1.enabled) &&
                 Objects.equals(visible, language1.visible) &&
                 Objects.equals(flags, language1.flags);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, language, userName, createTime, updateTime, isDisabled, visible, flags);
+        return Objects.hash(id, language, userName, createTime, updateTime, enabled, visible, flags);
     }
 }

@@ -56,7 +56,7 @@ public class I18n {
     @Getter
     @Setter
     @NotNull
-    @Size(max = 256)
+    @Size(max = 64)
     @Column("user_name")
     private String userName;
 
@@ -72,8 +72,8 @@ public class I18n {
 
     @Getter
     @Setter
-    @Column("is_disabled")
-    private Boolean isDisabled;
+    @Column("enabled")
+    private Boolean enabled;
 
     @Getter
     @Setter
@@ -97,13 +97,13 @@ public class I18n {
                 Objects.equals(userName, i18n.userName) &&
                 Objects.equals(createTime, i18n.createTime) &&
                 Objects.equals(updateTime, i18n.updateTime) &&
-                Objects.equals(isDisabled, i18n.isDisabled) &&
+                Objects.equals(enabled, i18n.enabled) &&
                 Objects.equals(visible, i18n.visible) &&
                 Objects.equals(flags, i18n.flags);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, languageId, message, translation, userName, createTime, updateTime, isDisabled, visible, flags);
+        return Objects.hash(id, languageId, message, translation, userName, createTime, updateTime, enabled, visible, flags);
     }
 }
