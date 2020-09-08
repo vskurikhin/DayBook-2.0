@@ -1,9 +1,6 @@
 package su.svn.daybook;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,6 +12,7 @@ import su.svn.daybook.domain.security.TestDataSecurity;
 import su.svn.daybook.services.security.AuthenticationManager;
 import su.svn.daybook.services.security.JWTUtil;
 import su.svn.daybook.services.security.PBKDF2Encoder;
+import su.svn.daybook.services.security.UserService;
 
 import java.util.ArrayList;
 import java.util.List;

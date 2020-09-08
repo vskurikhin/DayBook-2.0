@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.08.27 08:34 by Victor N. Skurikhin.
+ * This file was last modified at 2020.09.08 19:09 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * User.java
@@ -22,6 +22,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Builder
@@ -83,5 +84,21 @@ public class User implements UserDetails, Serializable {
     @JsonProperty
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(username, user.username) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(enabled, user.enabled) &&
+                Objects.equals(roles, user.roles);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username, password, enabled, roles);
     }
 }

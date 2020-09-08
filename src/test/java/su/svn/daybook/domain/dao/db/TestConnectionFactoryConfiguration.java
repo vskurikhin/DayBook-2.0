@@ -7,8 +7,12 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import su.svn.daybook.domain.dao.db.security.RoleDao;
+import su.svn.daybook.domain.dao.db.security.UserNameDao;
+import su.svn.daybook.services.security.DbUserService;
+import su.svn.daybook.services.security.UserService;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackageClasses = {UserService.class, DbUserService.class, UserNameDao.class, RoleDao.class})
 @EnableTransactionManagement
 public class TestConnectionFactoryConfiguration {
     @TestConfiguration
