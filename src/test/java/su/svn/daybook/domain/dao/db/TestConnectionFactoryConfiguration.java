@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import su.svn.daybook.domain.dao.db.security.RoleDao;
 import su.svn.daybook.domain.dao.db.security.UserNameDao;
@@ -14,6 +15,7 @@ import su.svn.daybook.services.security.UserService;
 
 @SpringBootApplication(scanBasePackageClasses = {UserService.class, DbUserService.class, UserNameDao.class, RoleDao.class})
 @EnableTransactionManagement
+@EnableR2dbcRepositories(basePackages = "su.svn.daybook.domain.dao.db")
 public class TestConnectionFactoryConfiguration {
     @TestConfiguration
     static class ContextConfiguration {

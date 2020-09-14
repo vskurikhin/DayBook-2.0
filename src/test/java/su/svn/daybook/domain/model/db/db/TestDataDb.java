@@ -16,11 +16,15 @@ public class TestDataDb {
 
     public static final LocalDateTime LOCAL_DATE_TIME_EPOCH = LocalDateTime.of(LocalDate.EPOCH, LocalTime.MIN);
 
-    @BeforeEach
-    void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
+    public static final Record RECORD_1 = Record.builder()
+            .id(UUID_1)
+            .index(1)
+            .type("type1")
+            .userName("userName1")
+            .createTime(LOCAL_DATE_TIME_EPOCH)
+            .updateTime(LOCAL_DATE_TIME_EPOCH)
+            .enabled(true)
+            .visible(true)
+            .flags(0)
+            .build();
 }

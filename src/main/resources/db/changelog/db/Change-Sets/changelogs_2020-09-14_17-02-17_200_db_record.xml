@@ -1,0 +1,27 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd">
+  <changeSet id="2020-09-14_17-02-17" author="Victor N. Skurikhin">
+      <sql>
+          <![CDATA[
+            CREATE TABLE db.record (
+              record_id         UUID  PRIMARY KEY            NOT NULL  DEFAULT pg_catalog.uuid_generate_v4(),
+              "index"           INTEGER                      NOT NULL  DEFAULT 1,
+              type              VARCHAR(256)                 NOT NULL,
+              user_name         VARCHAR(64),
+                                CONSTRAINT FK_9103_db_record_security_user_name_user_name
+                                FOREIGN KEY (user_name)
+                                REFERENCES  security.user_name (user_name)
+                                ON DELETE CASCADE ON UPDATE CASCADE,
+              create_time       TIMESTAMP WITHOUT TIME ZONE  NOT NULL   DEFAULT now(),
+              update_time       TIMESTAMP WITHOUT TIME ZONE  NOT NULL   DEFAULT now(),
+              enabled           BOOLEAN                                 DEFAULT true,
+              visible           BOOLEAN                                 DEFAULT true,
+              flags             INT
+            );
+          ]]>
+      </sql>
+  </changeSet>
+</databaseChangeLog>

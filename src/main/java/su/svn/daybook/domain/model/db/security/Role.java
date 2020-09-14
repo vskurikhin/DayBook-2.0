@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.09.07 10:36 by Victor N. Skurikhin.
+ * This file was last modified at 2020.09.14 19:19 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * Role.java
@@ -16,7 +16,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
-import su.svn.daybook.domain.model.DBEntry;
+import su.svn.daybook.domain.model.DBUuidEntry;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -29,7 +29,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder(builderClassName = "Builder")
 @Table("security.role")
-public class Role implements Serializable, DBEntry<UUID> {
+public class Role implements Serializable, DBUuidEntry {
     static final long serialVersionUID = -2L;
 
     @Id
