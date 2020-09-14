@@ -2,11 +2,11 @@
  * This file was last modified at 2020.09.14 19:19 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
- * I18n.java
+ * Record.java
  * $Id$
  */
 
-package su.svn.daybook.domain.model.db.dictionary;
+package su.svn.daybook.domain.model.db.db;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,44 +16,39 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
-import su.svn.daybook.domain.model.DBLongEntry;
+import su.svn.daybook.domain.model.DBUuidEntry;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(builderClassName = "Builder")
-@Table("dictionary.i18")
-public class I18n implements Serializable, DBLongEntry {
-    static final long serialVersionUID = -160L;
+@Table("db.record")
+public class Record implements Serializable, DBUuidEntry {
+    static final long serialVersionUID = -110L;
 
     @Id
     @Getter
     @Setter
-    @Column("i18n_id")
-    private Long id;
+    @Column("record_id")
+    private UUID id;
 
     @Getter
     @Setter
     @NotNull
-    @Column("language_id")
-    private Long languageId;
+    @Column("\"index\"")
+    private int index;
 
     @Getter
     @Setter
-    @Size(max = 10485760)
-    @Column("message")
-    private String message;
-
-    @Getter
-    @Setter
-    @Size(max = 10485760)
-    @Column("translation")
-    private String translation;
+    @Size(max = 256)
+    @Column("type")
+    private String type;
 
     @Getter
     @Setter
@@ -91,21 +86,20 @@ public class I18n implements Serializable, DBLongEntry {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        I18n i18n = (I18n) o;
-        return Objects.equals(id, i18n.id) &&
-                Objects.equals(languageId, i18n.languageId) &&
-                Objects.equals(message, i18n.message) &&
-                Objects.equals(translation, i18n.translation) &&
-                Objects.equals(userName, i18n.userName) &&
-                Objects.equals(createTime, i18n.createTime) &&
-                Objects.equals(updateTime, i18n.updateTime) &&
-                Objects.equals(enabled, i18n.enabled) &&
-                Objects.equals(visible, i18n.visible) &&
-                Objects.equals(flags, i18n.flags);
+        Record record = (Record) o;
+        return index == record.index &&
+                Objects.equals(id, record.id) &&
+                Objects.equals(type, record.type) &&
+                Objects.equals(userName, record.userName) &&
+                Objects.equals(createTime, record.createTime) &&
+                Objects.equals(updateTime, record.updateTime) &&
+                Objects.equals(enabled, record.enabled) &&
+                Objects.equals(visible, record.visible) &&
+                Objects.equals(flags, record.flags);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, languageId, message, translation, userName, createTime, updateTime, enabled, visible, flags);
+        return Objects.hash(id, index, type, userName, createTime, updateTime, enabled, visible, flags);
     }
 }

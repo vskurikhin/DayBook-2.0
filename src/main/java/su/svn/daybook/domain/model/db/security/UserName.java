@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.09.08 19:09 by Victor N. Skurikhin.
+ * This file was last modified at 2020.09.14 19:19 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * UserName.java
@@ -8,13 +8,19 @@
 
 package su.svn.daybook.domain.model.db.security;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
+import su.svn.daybook.domain.model.DBUuidEntry;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
@@ -23,7 +29,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder(builderClassName = "Builder")
 @Table("security.user_name")
-public class UserName {
+public class UserName implements Serializable, DBUuidEntry {
     static final long serialVersionUID = -1L;
 
     @Id

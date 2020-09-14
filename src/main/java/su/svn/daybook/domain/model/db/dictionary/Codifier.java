@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.09.03 15:12 by Victor N. Skurikhin.
+ * This file was last modified at 2020.09.14 19:19 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * Codifier.java
@@ -16,7 +16,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
-import su.svn.daybook.domain.model.DBEntry;
+import su.svn.daybook.domain.model.DBLongEntry;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -28,7 +28,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Builder(builderClassName = "Builder")
 @Table("dictionary.codifier")
-public class Codifier implements Serializable, DBEntry<Long> {
+public class Codifier implements Serializable, DBLongEntry {
     static final long serialVersionUID = -110L;
 
     @Id
