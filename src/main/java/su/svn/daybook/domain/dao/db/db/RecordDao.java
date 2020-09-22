@@ -20,16 +20,16 @@ import java.util.UUID;
 
 public interface RecordDao extends ReactiveCrudRepository<Record, UUID> {
 
-    @Query("SELECT * FROM db.record WHERE record_id = $1 AND enabled")
+    @Query("SELECT * FROM db.record WHERE record_id = :id AND enabled")
     Mono<Record> monoById(UUID id);
 
-    @Query("SELECT * FROM db.record WHERE record_id = $1 AND enabled")
+    @Query("SELECT * FROM db.record WHERE record_id = :id AND enabled")
     Mono<Record> monoById(Publisher<UUID> id);
 
     @Query("SELECT * FROM db.record WHERE enabled")
     Flux<Record> fluxAll();
 
-    @Query("SELECT * FROM db.record WHERE record_id IN ($1) AND enabled")
+    @Query("SELECT * FROM db.record WHERE record_id IN (:ids) AND enabled")
     Flux<Record> fluxAllById(Iterable<UUID> ids);
 
     @NonNull
