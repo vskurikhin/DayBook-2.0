@@ -117,5 +117,15 @@ public class DbDaoTest {
                     .assertNext(RECORD_1::equals)
                     .verifyComplete();
         }
+
+
+        @Test
+        void executesFluxAllById() throws IOException {
+            Hooks.onOperatorDebug();
+            recordDao.fluxAllById(new ArrayList<>() {{ add(UUID_1); }})
+                    .as(StepVerifier::create)
+                    .assertNext(RECORD_1::equals)
+                    .verifyComplete();
+        }
     }
 }
