@@ -15,6 +15,7 @@ import org.springframework.transaction.reactive.TransactionalOperator;
 import reactor.core.publisher.Hooks;
 import reactor.test.StepVerifier;
 import su.svn.daybook.domain.dao.db.TestConnectionFactoryConfiguration;
+import su.svn.daybook.domain.model.db.db.NewsEntry;
 import su.svn.daybook.domain.model.db.db.NewsGroup;
 import su.svn.daybook.domain.model.db.db.Record;
 import su.svn.daybook.utils.TestDatabaseUtil;
@@ -27,8 +28,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
 
-import static su.svn.daybook.domain.model.db.db.TestDataDb.NEWS_GROUP_1;
-import static su.svn.daybook.domain.model.db.db.TestDataDb.UUID_1;
+import static su.svn.daybook.domain.model.db.db.TestDataDb.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = TestConnectionFactoryConfiguration.class)
@@ -50,6 +50,9 @@ public class DbDaoTest {
 
     @Autowired
     NewsGroupDao newsGroupDao;
+
+    @Autowired
+    NewsEntryDao newsEntryDao;
 
     DatabaseClient databaseClient;
 
@@ -109,7 +112,7 @@ public class DbDaoTest {
             Hooks.onOperatorDebug();
             recordDao.monoById(UUID_1)
                     .as(StepVerifier::create)
-                    .assertNext(NEWS_GROUP_1::equals)
+                    .assertNext(RECORD_1::equals)
                     .verifyComplete();
         }
 
@@ -118,7 +121,7 @@ public class DbDaoTest {
             Hooks.onOperatorDebug();
             recordDao.fluxAll()
                     .as(StepVerifier::create)
-                    .assertNext(NEWS_GROUP_1::equals)
+                    .assertNext(RECORD_1::equals)
                     .verifyComplete();
         }
 
@@ -127,7 +130,7 @@ public class DbDaoTest {
             Hooks.onOperatorDebug();
             recordDao.fluxAllById(new ArrayList<>() {{ add(UUID_1); }})
                     .as(StepVerifier::create)
-                    .assertNext(NEWS_GROUP_1::equals)
+                    .assertNext(RECORD_1::equals)
                     .verifyComplete();
         }
     }
@@ -187,6 +190,69 @@ public class DbDaoTest {
             newsGroupDao.fluxAllById(new ArrayList<>() {{ add(UUID_1); }})
                     .as(StepVerifier::create)
                     .assertNext(NEWS_GROUP_1::equals)
+                    .verifyComplete();
+        }
+    }
+
+    @Nested
+    class NewsEntryDaoTest {
+
+        final NewsEntry NEWS_ENTRY_2 = NewsEntry.builder()
+                .newsGroupId(UUID_1)
+                .title("title2")
+                .content("content2")
+                .userName("userName1")
+                .createTime(LOCAL_DATE_TIME_EPOCH)
+                .updateTime(LOCAL_DATE_TIME_EPOCH)
+                .enabled(true)
+                .visible(true)
+                .flags(0)
+                .build();
+
+        final NewsEntry NEWS_ENTRY_3 = NewsEntry.builder()
+                .newsGroupId(UUID_1)
+                .title("title2")
+                .content("content2")
+                .userName("userName1")
+                .createTime(LOCAL_DATE_TIME_EPOCH)
+                .updateTime(LOCAL_DATE_TIME_EPOCH)
+                .enabled(true)
+                .visible(true)
+                .flags(0)
+                .build();
+        @Test
+        void executesSaveAll() {
+            Hooks.onOperatorDebug();
+            newsEntryDao.saveAll(Arrays.asList(NEWS_ENTRY_2, NEWS_ENTRY_3))
+                    .as(StepVerifier::create)
+                    .expectNextCount(2)
+                    .verifyComplete();
+        }
+
+        @Test
+        void executesMonoById() throws IOException {
+            Hooks.onOperatorDebug();
+            newsEntryDao.monoById(UUID_1)
+                    .as(StepVerifier::create)
+                    .assertNext(NEWS_ENTRY_1::equals)
+                    .verifyComplete();
+        }
+
+        @Test
+        void executesFluxAll() throws IOException {
+            Hooks.onOperatorDebug();
+            newsEntryDao.fluxAll()
+                    .as(StepVerifier::create)
+                    .assertNext(NEWS_ENTRY_1::equals)
+                    .verifyComplete();
+        }
+
+        @Test
+        void executesFluxAllById() throws IOException {
+            Hooks.onOperatorDebug();
+            newsEntryDao.fluxAllById(new ArrayList<>() {{ add(UUID_1); }})
+                    .as(StepVerifier::create)
+                    .assertNext(NEWS_ENTRY_1::equals)
                     .verifyComplete();
         }
     }

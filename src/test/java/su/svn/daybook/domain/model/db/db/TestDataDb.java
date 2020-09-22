@@ -33,4 +33,17 @@ public class TestDataDb {
             .visible(true)
             .flags(0)
             .build();
+
+    public static final NewsEntry NEWS_ENTRY_1 = NewsEntry.builder()
+            .id(UUID_1)
+            .newsGroupId(UUID_1)
+            .title("title1")
+            .content("content1")
+            .userName("userName1")
+            .createTime(LOCAL_DATE_TIME_EPOCH)
+            .updateTime(LOCAL_DATE_TIME_EPOCH)
+            .enabled(true)
+            .visible(true)
+            .flags(0)
+            .build();
 }
