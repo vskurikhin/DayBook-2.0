@@ -1,10 +1,5 @@
 package su.svn.daybook.domain.model.db.db;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
-import su.svn.daybook.domain.model.db.security.Role;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -20,6 +15,17 @@ public class TestDataDb {
             .id(UUID_1)
             .index(1)
             .type("type1")
+            .userName("userName1")
+            .createTime(LOCAL_DATE_TIME_EPOCH)
+            .updateTime(LOCAL_DATE_TIME_EPOCH)
+            .enabled(true)
+            .visible(true)
+            .flags(0)
+            .build();
+
+    public static final NewsGroup NEWS_GROUP_1 = NewsGroup.builder()
+            .id(UUID_1)
+            .group("group1")
             .userName("userName1")
             .createTime(LOCAL_DATE_TIME_EPOCH)
             .updateTime(LOCAL_DATE_TIME_EPOCH)
