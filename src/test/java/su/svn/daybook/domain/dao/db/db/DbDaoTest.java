@@ -15,6 +15,7 @@ import org.springframework.transaction.reactive.TransactionalOperator;
 import reactor.core.publisher.Hooks;
 import reactor.test.StepVerifier;
 import su.svn.daybook.domain.dao.db.TestConnectionFactoryConfiguration;
+import su.svn.daybook.domain.model.db.db.NewsGroup;
 import su.svn.daybook.domain.model.db.db.Record;
 import su.svn.daybook.utils.TestDatabaseUtil;
 
@@ -22,10 +23,11 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
 
-import static su.svn.daybook.domain.model.db.db.TestDataDb.RECORD_1;
+import static su.svn.daybook.domain.model.db.db.TestDataDb.NEWS_GROUP_1;
 import static su.svn.daybook.domain.model.db.db.TestDataDb.UUID_1;
 
 @ExtendWith(SpringExtension.class)
@@ -45,6 +47,9 @@ public class DbDaoTest {
 
     @Autowired
     RecordDao recordDao;
+
+    @Autowired
+    NewsGroupDao newsGroupDao;
 
     DatabaseClient databaseClient;
 
@@ -104,7 +109,7 @@ public class DbDaoTest {
             Hooks.onOperatorDebug();
             recordDao.monoById(UUID_1)
                     .as(StepVerifier::create)
-                    .assertNext(RECORD_1::equals)
+                    .assertNext(NEWS_GROUP_1::equals)
                     .verifyComplete();
         }
 
@@ -113,17 +118,75 @@ public class DbDaoTest {
             Hooks.onOperatorDebug();
             recordDao.fluxAll()
                     .as(StepVerifier::create)
-                    .assertNext(RECORD_1::equals)
+                    .assertNext(NEWS_GROUP_1::equals)
                     .verifyComplete();
         }
-
 
         @Test
         void executesFluxAllById() throws IOException {
             Hooks.onOperatorDebug();
             recordDao.fluxAllById(new ArrayList<>() {{ add(UUID_1); }})
                     .as(StepVerifier::create)
-                    .assertNext(RECORD_1::equals)
+                    .assertNext(NEWS_GROUP_1::equals)
+                    .verifyComplete();
+        }
+    }
+
+    @Nested
+    class NewsGroupDaoTest {
+        final NewsGroup NEWS_GROUP_2 = NewsGroup.builder()
+                .group("group2")
+                .userName("userName1")
+                .createTime(LOCAL_DATE_TIME_EPOCH)
+                .updateTime(LOCAL_DATE_TIME_EPOCH)
+                .enabled(true)
+                .visible(true)
+                .flags(0)
+                .build();
+
+        final NewsGroup NEWS_GROUP_3 = NewsGroup.builder()
+                .group("group3")
+                .userName("userName1")
+                .createTime(LOCAL_DATE_TIME_EPOCH)
+                .updateTime(LOCAL_DATE_TIME_EPOCH)
+                .enabled(true)
+                .visible(true)
+                .flags(0)
+                .build();
+
+        @Test
+        void executesSaveAll() {
+            Hooks.onOperatorDebug();
+            newsGroupDao.saveAll(Arrays.asList(NEWS_GROUP_2, NEWS_GROUP_3))
+                    .as(StepVerifier::create)
+                    .expectNextCount(2)
+                    .verifyComplete();
+        }
+
+        @Test
+        void executesMonoById() throws IOException {
+            Hooks.onOperatorDebug();
+            newsGroupDao.monoById(UUID_1)
+                    .as(StepVerifier::create)
+                    .assertNext(NEWS_GROUP_1::equals)
+                    .verifyComplete();
+        }
+
+        @Test
+        void executesFluxAll() throws IOException {
+            Hooks.onOperatorDebug();
+            newsGroupDao.fluxAll()
+                    .as(StepVerifier::create)
+                    .assertNext(NEWS_GROUP_1::equals)
+                    .verifyComplete();
+        }
+
+        @Test
+        void executesFluxAllById() throws IOException {
+            Hooks.onOperatorDebug();
+            newsGroupDao.fluxAllById(new ArrayList<>() {{ add(UUID_1); }})
+                    .as(StepVerifier::create)
+                    .assertNext(NEWS_GROUP_1::equals)
                     .verifyComplete();
         }
     }
