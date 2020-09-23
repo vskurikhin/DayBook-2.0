@@ -11,12 +11,15 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import su.svn.daybook.domain.dao.db.db.NewsEntryDao;
 import su.svn.daybook.domain.dao.db.db.NewsGroupDao;
 import su.svn.daybook.domain.dao.db.db.RecordDao;
+import su.svn.daybook.domain.dao.db.dictionary.*;
 import su.svn.daybook.domain.dao.db.security.RoleDao;
 import su.svn.daybook.domain.dao.db.security.UserNameDao;
 import su.svn.daybook.services.security.DbUserService;
 import su.svn.daybook.services.security.UserService;
 
 @SpringBootApplication(scanBasePackageClasses = {
+        CodifierDao.class, DbUserService.class, I18nDao.class, LanguageDao.class, RecordDao.class,
+        RoleDao.class, TagLabelDao.class, UserNameDao.class, UserService.class, VocabularyDao.class, WordDao.class,
         UserService.class, DbUserService.class, UserNameDao.class, RoleDao.class, RecordDao.class, NewsGroupDao.class,
         NewsEntryDao.class
 })

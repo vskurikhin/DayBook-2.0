@@ -1,10 +1,7 @@
 package su.svn.daybook.domain.dao.db.db;
 
 import io.r2dbc.spi.ConnectionFactory;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -220,6 +217,8 @@ public class DbDaoTest {
                 .visible(true)
                 .flags(0)
                 .build();
+
+        @Disabled
         @Test
         void executesSaveAll() {
             Hooks.onOperatorDebug();

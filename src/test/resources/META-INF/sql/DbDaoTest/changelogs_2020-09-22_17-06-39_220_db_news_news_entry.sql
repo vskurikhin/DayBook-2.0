@@ -1,5 +1,9 @@
 CREATE TABLE db.news_entry (
   news_entry_id     UUID DEFAULT RANDOM_UUID() NOT NULL,
+                    CONSTRAINT FK_db_news_entry_need_record_4e15
+                    FOREIGN KEY (news_entry_id)
+                    REFERENCES  db.record (record_id)
+                    ON DELETE CASCADE ON UPDATE CASCADE,
   news_group_id     UUID,
                     CONSTRAINT FK_db_news_entry_need_news_group_2134
                     FOREIGN KEY (news_group_id)
