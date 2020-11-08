@@ -18,7 +18,7 @@ import su.svn.daybook.domain.model.db.db.NewsGroup;
 
 import java.util.UUID;
 
-public interface NewsGroupDao extends ReactiveCrudRepository<NewsGroup, UUID>  {
+public interface NewsGroupDao extends ReactiveCrudRepository<NewsGroup, UUID> {
 
     @Query("SELECT * FROM db.news_group WHERE news_group_id = :id AND enabled")
     Mono<NewsGroup> monoById(UUID id);

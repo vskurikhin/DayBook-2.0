@@ -101,4 +101,20 @@ public class NewsEntry implements Serializable, DBUuidEntry {
     public int hashCode() {
         return Objects.hash(id, userName, newsGroupId, title, content, createTime, updateTime, enabled, visible, flags);
     }
+
+    @Override
+    public String toString() {
+        return "NewsEntry{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", newsGroupId=" + newsGroupId +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", enabled=" + enabled +
+                ", visible=" + visible +
+                ", flags=" + flags +
+                '}';
+    }
 }

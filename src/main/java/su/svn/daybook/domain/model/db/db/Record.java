@@ -41,7 +41,7 @@ public class Record implements Serializable, DBUuidEntry {
     @Getter
     @Setter
     @NotNull
-    @Column("\"index\"")
+    @Column("index")
     private int index;
 
     @Getter
@@ -101,5 +101,20 @@ public class Record implements Serializable, DBUuidEntry {
     @Override
     public int hashCode() {
         return Objects.hash(id, index, type, userName, createTime, updateTime, enabled, visible, flags);
+    }
+
+    @Override
+    public String toString() {
+        return "Record{" +
+                "id=" + id +
+                ", index=" + index +
+                ", type='" + type + '\'' +
+                ", userName='" + userName + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", enabled=" + enabled +
+                ", visible=" + visible +
+                ", flags=" + flags +
+                '}';
     }
 }
