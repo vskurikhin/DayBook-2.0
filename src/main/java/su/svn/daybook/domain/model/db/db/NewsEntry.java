@@ -1,11 +1,3 @@
-/*
- * This file was last modified at 2020.09.22 16:44 by Victor N. Skurikhin.
- * This is free and unencumbered software released into the public domain.
- * For more information, please refer to <http://unlicense.org>
- * NewsGroup.java
- * $Id$
- */
-
 package su.svn.daybook.domain.model.db.db;
 
 import lombok.AllArgsConstructor;
@@ -28,14 +20,14 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(builderClassName = "Builder")
-@Table("db.news_group")
-public class NewsGroup implements Serializable, DBUuidEntry {
-    static final long serialVersionUID = -210L;
+@Table("db.news_entry")
+public class NewsEntry implements Serializable, DBUuidEntry {
+    static final long serialVersionUID = -220L;
 
     @Id
     @Getter
     @Setter
-    @Column("news_group_id")
+    @Column("news_entry_id")
     private UUID id;
 
     @Getter
@@ -47,10 +39,21 @@ public class NewsGroup implements Serializable, DBUuidEntry {
 
     @Getter
     @Setter
+    @Column("news_group_id")
+    private UUID newsGroupId;
+
+    @Getter
+    @Setter
     @NotNull
-    @Size(max = 64)
-    @Column("\"group\"")
-    private String group;
+    @Size(max = 256)
+    @Column("title")
+    private String title;
+
+    @Getter
+    @Setter
+    @Size(max = 10485760)
+    @Column("content")
+    private String content;
 
     @Getter
     @NotNull
@@ -80,20 +83,22 @@ public class NewsGroup implements Serializable, DBUuidEntry {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        NewsGroup newsGroup = (NewsGroup) o;
-        return Objects.equals(id, newsGroup.id) &&
-                Objects.equals(group, newsGroup.group) &&
-                Objects.equals(userName, newsGroup.userName) &&
-                Objects.equals(createTime, newsGroup.createTime) &&
-                Objects.equals(updateTime, newsGroup.updateTime) &&
-                Objects.equals(enabled, newsGroup.enabled) &&
-                Objects.equals(visible, newsGroup.visible) &&
-                Objects.equals(flags, newsGroup.flags);
+        if (!(o instanceof NewsEntry)) return false;
+        NewsEntry newsEntry = (NewsEntry) o;
+        return Objects.equals(id, newsEntry.id) &&
+                Objects.equals(userName, newsEntry.userName) &&
+                Objects.equals(newsGroupId, newsEntry.newsGroupId) &&
+                Objects.equals(title, newsEntry.title) &&
+                Objects.equals(content, newsEntry.content) &&
+                Objects.equals(createTime, newsEntry.createTime) &&
+                Objects.equals(updateTime, newsEntry.updateTime) &&
+                Objects.equals(enabled, newsEntry.enabled) &&
+                Objects.equals(visible, newsEntry.visible) &&
+                Objects.equals(flags, newsEntry.flags);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, group, userName, createTime, updateTime, enabled, visible, flags);
+        return Objects.hash(id, userName, newsGroupId, title, content, createTime, updateTime, enabled, visible, flags);
     }
 }
