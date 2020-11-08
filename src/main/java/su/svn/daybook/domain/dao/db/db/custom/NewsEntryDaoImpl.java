@@ -1,3 +1,11 @@
+/*
+ * This file was last modified at 2020.11.08 23:34 by Victor N. Skurikhin.
+ * This is free and unencumbered software released into the public domain.
+ * For more information, please refer to <http://unlicense.org>
+ * NewsEntryDaoImpl.java
+ * $Id$
+ */
+
 package su.svn.daybook.domain.dao.db.db.custom;
 
 import io.r2dbc.spi.Connection;
