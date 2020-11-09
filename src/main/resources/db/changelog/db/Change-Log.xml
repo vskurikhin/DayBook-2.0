@@ -6,5 +6,5 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
         http://www.liquibase.org/xml/ns/dbchangelog-ext
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
-    <includeAll path="src/main/resources/db/changelog/db/Change-Sets/"/>
+    <includeAll path="Change-Sets/" relativeToChangelogFile="true"/>
 </databaseChangeLog>

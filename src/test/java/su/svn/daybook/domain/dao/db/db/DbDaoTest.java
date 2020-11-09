@@ -74,7 +74,7 @@ public class DbDaoTest {
     class RecordDaoTest {
 
         final Record RECORD_2 = Record.builder()
-                .index(2)
+                .position(2)
                 .type("type2")
                 .userName("userName1")
                 .createTime(LOCAL_DATE_TIME_EPOCH)
@@ -85,7 +85,7 @@ public class DbDaoTest {
                 .build();
 
         final Record RECORD_3 = Record.builder()
-                .index(3)
+                .position(3)
                 .type("type3")
                 .userName("userName1")
                 .createTime(LOCAL_DATE_TIME_EPOCH)
@@ -135,7 +135,7 @@ public class DbDaoTest {
     @Nested
     class NewsGroupDaoTest {
         final NewsGroup NEWS_GROUP_2 = NewsGroup.builder()
-                .group("group2")
+                .groupName("groupName2")
                 .userName("userName1")
                 .createTime(LOCAL_DATE_TIME_EPOCH)
                 .updateTime(LOCAL_DATE_TIME_EPOCH)
@@ -145,7 +145,7 @@ public class DbDaoTest {
                 .build();
 
         final NewsGroup NEWS_GROUP_3 = NewsGroup.builder()
-                .group("group3")
+                .groupName("groupName3")
                 .userName("userName1")
                 .createTime(LOCAL_DATE_TIME_EPOCH)
                 .updateTime(LOCAL_DATE_TIME_EPOCH)

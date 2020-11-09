@@ -1,6 +1,6 @@
 CREATE TABLE db.record (
   record_id         UUID DEFAULT RANDOM_UUID() NOT NULL,
-  "index"           INTEGER                      NOT NULL  DEFAULT 1,
+  position          INTEGER                      NOT NULL  DEFAULT 1,
   type              VARCHAR(256)                 NOT NULL,
   user_name         VARCHAR(64),
                     CONSTRAINT FK_9103_db_record_security_user_name_user_name

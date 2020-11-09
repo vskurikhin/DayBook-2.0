@@ -13,7 +13,7 @@ public class TestDataDb {
 
     public static final Record RECORD_1 = Record.builder()
             .id(UUID_1)
-            .index(1)
+            .position(1)
             .type("type1")
             .userName("userName1")
             .createTime(LOCAL_DATE_TIME_EPOCH)
@@ -26,7 +26,7 @@ public class TestDataDb {
     public static final NewsGroup NEWS_GROUP_1 = NewsGroup.builder()
             .id(UUID_1)
             .userName("userName1")
-            .group("group1")
+            .groupName("groupName1")
             .createTime(LOCAL_DATE_TIME_EPOCH)
             .updateTime(LOCAL_DATE_TIME_EPOCH)
             .enabled(true)

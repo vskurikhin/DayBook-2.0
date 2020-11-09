@@ -1,6 +1,6 @@
 CREATE TABLE db.news_group (
   news_group_id     UUID DEFAULT RANDOM_UUID() NOT NULL,
-  "group"           VARCHAR(64)                  NOT NULL
+  group_name        VARCHAR(64)                  NOT NULL
                     CONSTRAINT UC_db_news_group_must_be_different_4ce1
                     UNIQUE,
   user_name         VARCHAR(64),
