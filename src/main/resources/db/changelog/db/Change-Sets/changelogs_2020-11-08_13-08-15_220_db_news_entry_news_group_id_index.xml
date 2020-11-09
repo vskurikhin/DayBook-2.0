@@ -2,7 +2,9 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd">
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd"
+        logicalFilePath="./src/main/resources/db/changelog/db/Change-Sets/changelogs_2020-11-08_13-08-15_220_db_news_entry_news_group_id_index.xml">
+
   <changeSet id="2020-11-08_13-08-15" author="Victor N. Skurikhin">
       <sql>
           <![CDATA[

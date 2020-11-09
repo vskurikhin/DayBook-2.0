@@ -122,6 +122,7 @@ liquibase {
 			defaultSchemaName 'public'
 			username db_username
 			password db_password
+			classpath "$rootDir"
 		}
 	}
 	runList = run_list
@@ -134,16 +135,19 @@ def getProjectProperty(key, defaultValue) {
 task makeMigrationFile() {
 	doLast {
 		def projectDir = project.projectDir.toString()
-		def liquibaseHome = "${projectDir}/src/main/resources/db"
+		def resourcesDb = "src/main/resources/db"
+		def liquibaseHome = "${projectDir}/${resourcesDb}"
 		def date = new Date()
 		def formattedDate = date.format('yyyy-MM-dd_HH-mm-ss')
 		def scriptName = this.getProjectProperty('scriptName', 'migration')
 		def fileName = "changelogs_${formattedDate}_${scriptName}.xml"
 		def templateText = file("${liquibaseHome}/changeSet.xml.template").text
-		def changeSetAuthor = this.getProjectProperty('author', 'Victor N. Skurikhin')
+		def changeSetAuthor = getProjectProperty('author', 'Victor N. Skurikhin')
+		def logicalFilePath = "./${resourcesDb}/changelog/db/Change-Sets/${fileName}"
 		def binding = [
-				"changeSetId": "${formattedDate}",
-				"author"     : "${changeSetAuthor}"
+				"changeSetId"    : "${formattedDate}",
+				"logicalFilePath": "${logicalFilePath}",
+				"author"         : "${changeSetAuthor}"
 		]
 		def engine = new groovy.text.SimpleTemplateEngine()
 		def outText = engine.createTemplate(templateText).make(binding).toString()
