@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.11.10 19:59 by Victor N. Skurikhin.
+ * This file was last modified at 2020.11.10 22:22 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RecordDaoImpl.java
@@ -14,14 +14,7 @@ import io.r2dbc.spi.Result;
 import io.r2dbc.spi.Statement;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
-import org.springframework.data.r2dbc.convert.R2dbcConverter;
 import org.springframework.data.r2dbc.core.DatabaseClient;
-import org.springframework.data.r2dbc.core.R2dbcEntityOperations;
-import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
-import org.springframework.data.r2dbc.core.ReactiveDataAccessStrategy;
-import org.springframework.data.relational.core.mapping.RelationalPersistentProperty;
-import org.springframework.data.relational.repository.query.RelationalEntityInformation;
-import org.springframework.data.util.Lazy;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import su.svn.daybook.domain.dao.db.db.RecordCustomizedDao;
@@ -32,17 +25,17 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Slf4j
 public class RecordDaoImpl implements RecordCustomizedDao {
 
     private final ConnectionFactory connectionFactory;
 
-    private final AtomicLong count = new AtomicLong(0);
+    private final DatabaseClient client;
 
-    public RecordDaoImpl(ConnectionFactory connectionFactory) {
+    public RecordDaoImpl(ConnectionFactory connectionFactory, DatabaseClient client) {
         this.connectionFactory = connectionFactory;
+        this.client = client;
     }
 
     public static final String INSERT = "INSERT INTO db.record " +
@@ -79,30 +72,23 @@ public class RecordDaoImpl implements RecordCustomizedDao {
         });
     }
 
-    @Override
-    public Mono<Record> insert(Record newsEntry) {
-        return Mono.from(connectionFactory.create())
-                .flatMap(connection -> insert(connection, newsEntry));
-    }
-
-    private Mono<? extends Record> insert(Connection connection, Record newsEntry) {
-        return executeInsert(connection, newsEntry)
-                .doOnError(e -> log.error("insert ", e))
-                .doFinally((st) -> connection.close())
-                .flatMap(result -> Mono.from(extractResult(result)));
-    }
+    public static final String INSERT_RECORD = "INSERT INTO db.record " +
+            " (record_id, position, type, user_name, create_time, update_time, enabled, visible, flags) " +
+            " VALUES (:id, :position, :type, :userName, :createTime, :updateTime, :enabled, :visible, :flags)";
 
     @Override
-    public Flux<Record> insertAll(Iterable<Record> entries) {
-        return Mono.from(connectionFactory.create())
-                .flatMapMany(connection -> insertAll(connection, entries));
-    }
-
-    private Publisher<? extends Record> insertAll(Connection connection, Iterable<Record> entries) {
-        return Flux.from(executeInsertStatements(connection, entries))
-                .doOnError(e -> log.error("createInsertAllTransaction ", e))
-                .doFinally((st) -> connection.close())
-                .flatMap(this::extractResult);
+    public Mono<Integer> insert(Record entry) {
+        return client.execute(INSERT_RECORD)
+                .bind("id", entry.getId())
+                .bind("position", entry.getPosition())
+                .bind("type", entry.getType())
+                .bind("userName", entry.getUserName())
+                .bind("createTime", entry.getCreateTime())
+                .bind("updateTime", entry.getUpdateTime())
+                .bind("enabled", entry.getEnabled())
+                .bind("visible", entry.getVisible())
+                .bind("flags", entry.getFlags())
+                .fetch().rowsUpdated();
     }
 
     @Override
@@ -110,15 +96,6 @@ public class RecordDaoImpl implements RecordCustomizedDao {
         Iterable<Record> iterable = new LinkedList<>() {{ add(newsEntry); }};
         return Mono.from(connectionFactory.create())
                 .flatMap(connection -> Mono.from(createInsertAllTransaction(connection, iterable)));
-    }
-
-    private void incrementAndGetPrint() {
-        long c = count.incrementAndGet();
-        log.debug("insert count: {}", c);
-    }
-
-    private Mono<? extends Result> executeInsert(Connection connection, Record newsEntry) {
-        return Mono.from(executeInsertStatement(connection, newsEntry));
     }
 
     @Override
@@ -152,10 +129,6 @@ public class RecordDaoImpl implements RecordCustomizedDao {
             }
         }
         return Flux.empty();
-    }
-
-    private Publisher<? extends Result> executeInsertStatement(Connection connection, Record entry) {
-        return insertStatement(connection, entry).execute();
     }
 
     private Statement insertStatement(Connection connection, Record entry) {

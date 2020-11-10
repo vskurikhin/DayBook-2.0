@@ -95,6 +95,16 @@ public class DbDaoTest {
                 .build();
 
         @Test
+        void insert() {
+            Hooks.onOperatorDebug();
+            Record record2 = SerializeUtil.clone(RECORD_2);
+            assert record2 != null;
+            record2.setId(UUID.randomUUID());
+            Integer test = recordDao.insert(record2).block();
+            Assertions.assertEquals(1, test);
+        }
+
+        @Test
         void transactionalInsertAll() {
             Hooks.onOperatorDebug();
             Record record2 = SerializeUtil.clone(RECORD_2);
@@ -115,7 +125,6 @@ public class DbDaoTest {
 
         @Test
         void transactionalInsert() {
-            Hooks.onOperatorDebug();
             Hooks.onOperatorDebug();
             Record record2 = SerializeUtil.clone(RECORD_2);
             assert record2 != null;
