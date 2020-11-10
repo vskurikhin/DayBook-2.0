@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import su.svn.daybook.domain.dao.db.db.RecordNewsEntryService;
 import su.svn.daybook.domain.dao.db.db.RecordDao;
 import su.svn.daybook.domain.dao.db.dictionary.*;
 import su.svn.daybook.domain.dao.db.db.NewsGroupDao;
@@ -19,7 +20,8 @@ import su.svn.daybook.services.security.UserService;
 @SpringBootApplication(scanBasePackageClasses = {
         CodifierDao.class, DbUserService.class, I18nDao.class, LanguageDao.class, RecordDao.class, RoleDao.class,
         TagLabelDao.class, UserNameDao.class, UserService.class, VocabularyDao.class, WordDao.class, UserService.class,
-        DbUserService.class, UserNameDao.class, RoleDao.class, RecordDao.class, NewsGroupDao.class
+        DbUserService.class, UserNameDao.class, RoleDao.class, RecordDao.class, NewsGroupDao.class,
+        RecordNewsEntryService.class
 })
 @EnableTransactionManagement
 @EnableR2dbcRepositories(basePackages = "su.svn.daybook.domain.dao.db")

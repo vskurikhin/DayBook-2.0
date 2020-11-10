@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS dual AS ( VALUES (true) );

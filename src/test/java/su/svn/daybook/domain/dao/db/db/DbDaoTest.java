@@ -15,6 +15,7 @@ import su.svn.daybook.domain.dao.db.TestConnectionFactoryConfiguration;
 import su.svn.daybook.domain.model.db.db.NewsEntry;
 import su.svn.daybook.domain.model.db.db.NewsGroup;
 import su.svn.daybook.domain.model.db.db.Record;
+import su.svn.daybook.utils.SerializeUtil;
 import su.svn.daybook.utils.TestDatabaseUtil;
 
 import java.io.IOException;
@@ -71,7 +72,6 @@ public class DbDaoTest {
     @Nested
     class RecordDaoTest {
 
-
         final Record RECORD_2 = Record.builder()
                 .position(2)
                 .type("type2")
@@ -93,6 +93,51 @@ public class DbDaoTest {
                 .visible(true)
                 .flags(0)
                 .build();
+
+        @Test
+        void insert() {
+            Hooks.onOperatorDebug();
+            Record record2 = SerializeUtil.clone(RECORD_2);
+            assert record2 != null;
+            record2.setId(UUID.randomUUID());
+            Integer test = recordDao.insert(record2).block();
+            Assertions.assertEquals(1, test);
+        }
+
+        @Test
+        void transactionalInsertAll() {
+            Hooks.onOperatorDebug();
+            Record record2 = SerializeUtil.clone(RECORD_2);
+            assert record2 != null;
+            record2.setId(UUID.randomUUID());
+            Record record3 = SerializeUtil.clone(RECORD_3);
+            assert record3 != null;
+            record3.setId(UUID.randomUUID());
+            recordDao.transactionalInsertAll(Arrays.asList(record2, record3))
+                    .as(StepVerifier::create)
+                    .expectNextCount(0)
+                    .verifyComplete();
+            List<Record> list = recordDao.fluxAll().collectList().block();
+            assert list != null;
+            Assertions.assertTrue(list.contains(record2));
+            Assertions.assertTrue(list.contains(record3));
+        }
+
+        @Test
+        void transactionalInsert() {
+            Hooks.onOperatorDebug();
+            Record record2 = SerializeUtil.clone(RECORD_2);
+            assert record2 != null;
+            record2.setId(UUID.randomUUID());
+            recordDao.transactionalInsert(record2)
+                    .as(StepVerifier::create)
+                    .expectNextCount(0)
+                    .verifyComplete();
+            List<Record> list = recordDao.fluxAll().collectList().block();
+            System.err.println("list = " + list);
+            assert list != null;
+            Assertions.assertTrue(list.contains(record2));
+        }
 
         @Test
         @Disabled
