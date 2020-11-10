@@ -29,6 +29,9 @@ class DbBasedServiceIntegrationTest {
     @Autowired
     UserService userService;
 
+    @Autowired
+    NewsEntryService newsEntryService;
+
     DatabaseClient databaseClient;
 
     TransactionalOperator transactionalOperator;

@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.11.08 23:34 by Victor N. Skurikhin.
+ * This file was last modified at 2020.11.10 19:59 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NewsEntryDaoImpl.java
@@ -41,6 +41,35 @@ public class NewsEntryDaoImpl implements NewsEntryCustomizedDao {
             " (news_entry_id, news_group_id, user_name, title, content, create_time, update_time, enabled, visible, " +
             "  flags) " +
             " VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)";
+
+    private Statement statementBinding(Statement statement, NewsEntry newsEntry) {
+        return statement
+                .bind("$1", newsEntry.getId())
+                .bind("$2", newsEntry.getNewsGroupId())
+                .bind("$3", newsEntry.getUserName())
+                .bind("$4", newsEntry.getTitle())
+                .bind("$5", newsEntry.getContent())
+                .bind("$6", newsEntry.getCreateTime())
+                .bind("$7", newsEntry.getUpdateTime())
+                .bind("$8", newsEntry.getEnabled())
+                .bind("$9", newsEntry.getVisible())
+                .bind("$10", newsEntry.getFlags());
+    }
+
+    private Publisher<? extends NewsEntry> extractResult(Result result) {
+        return result.map((row, rowMetadata) -> NewsEntry.builder()
+                .id(row.get("news_entry_id", UUID.class))
+                .newsGroupId(row.get("news_group_id", UUID.class))
+                .userName(row.get("user_name", String.class))
+                .title(row.get("title", String.class))
+                .content(row.get("content", String.class))
+                .createTime(row.get("create_time", LocalDateTime.class))
+                .updateTime(row.get("update_time", LocalDateTime.class))
+                .enabled(row.get("enabled", Boolean.class))
+                .visible(row.get("visible", Boolean.class))
+                .flags(row.get("flags", Integer.class))
+                .build());
+    }
 
     @Override
     public Mono<NewsEntry> insert(NewsEntry newsEntry) {
@@ -103,21 +132,6 @@ public class NewsEntryDaoImpl implements NewsEntryCustomizedDao {
                 .flatMap(this::extractResult);
     }
 
-    private Publisher<? extends NewsEntry> extractResult(Result result) {
-        return result.map((row, rowMetadata) -> NewsEntry.builder()
-                .id(row.get("news_entry_id", UUID.class))
-                .newsGroupId(row.get("news_group_id", UUID.class))
-                .userName(row.get("user_name", String.class))
-                .title(row.get("title", String.class))
-                .content(row.get("content", String.class))
-                .createTime(row.get("create_time", LocalDateTime.class))
-                .updateTime(row.get("update_time", LocalDateTime.class))
-                .enabled(row.get("enabled", Boolean.class))
-                .visible(row.get("visible", Boolean.class))
-                .flags(row.get("flags", Integer.class))
-                .build());
-    }
-
     private Publisher<? extends Result> executeInsertStatements(Connection connection, Iterable<NewsEntry> entries) {
 
         if (entries != null) {
@@ -139,20 +153,6 @@ public class NewsEntryDaoImpl implements NewsEntryCustomizedDao {
 
     private Statement insertStatement(Connection connection, NewsEntry newsEntry) {
         return statementBinding(connection.createStatement(INSERT), newsEntry);
-    }
-
-    private Statement statementBinding(Statement statement, NewsEntry newsEntry) {
-        return statement
-                .bind("$1", newsEntry.getId())
-                .bind("$2", newsEntry.getNewsGroupId())
-                .bind("$3", newsEntry.getUserName())
-                .bind("$4", newsEntry.getTitle())
-                .bind("$5", newsEntry.getContent())
-                .bind("$6", newsEntry.getCreateTime())
-                .bind("$7", newsEntry.getUpdateTime())
-                .bind("$8", newsEntry.getEnabled())
-                .bind("$9", newsEntry.getVisible())
-                .bind("$10", newsEntry.getFlags());
     }
 
     public static int size(Iterable<?> data) {

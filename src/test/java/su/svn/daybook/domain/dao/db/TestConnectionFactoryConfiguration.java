@@ -19,7 +19,8 @@ import su.svn.daybook.services.security.UserService;
 @SpringBootApplication(scanBasePackageClasses = {
         CodifierDao.class, DbUserService.class, I18nDao.class, LanguageDao.class, RecordDao.class, RoleDao.class,
         TagLabelDao.class, UserNameDao.class, UserService.class, VocabularyDao.class, WordDao.class, UserService.class,
-        DbUserService.class, UserNameDao.class, RoleDao.class, RecordDao.class, NewsGroupDao.class
+        DbUserService.class, UserNameDao.class, RoleDao.class, RecordDao.class, NewsGroupDao.class,
+        NewsEntryService.class
 })
 @EnableTransactionManagement
 @EnableR2dbcRepositories(basePackages = "su.svn.daybook.domain.dao.db")
