@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.11.15 21:41 by Victor N. Skurikhin.
+ * This file was last modified at 2020.11.15 22:00 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * EhCacheConfiguration.java
@@ -52,7 +52,7 @@ public class EhCacheConfiguration {
         ResourcePoolsBuilder rpBuilder = ResourcePoolsBuilder.heap(longCacheEntries);
         CacheConfigurationBuilder<Long, DBLongEntry> configurationBuilder = CacheConfigurationBuilder
                 .newCacheConfigurationBuilder(Long.class, DBLongEntry.class, rpBuilder)
-                .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofSeconds(longCacheTtl)));
+                .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofMillis(longCacheTtl)));
         CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
                 .withCache("preConfigured", configurationBuilder)
                 .build();
@@ -66,7 +66,7 @@ public class EhCacheConfiguration {
         ResourcePoolsBuilder rpBuilder = ResourcePoolsBuilder.heap(stringCacheEntries);
         CacheConfigurationBuilder<String, DBStringEntry> configurationBuilder = CacheConfigurationBuilder
                 .newCacheConfigurationBuilder(String.class, DBStringEntry.class, rpBuilder)
-                .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofSeconds(stringCacheTtl)));
+                .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofMillis(stringCacheTtl)));
         CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
                 .withCache("preConfigured", configurationBuilder)
                 .build();
@@ -80,7 +80,7 @@ public class EhCacheConfiguration {
         ResourcePoolsBuilder rpBuilder = ResourcePoolsBuilder.heap(stringCacheEntries);
         CacheConfigurationBuilder<UUID, DBUuidEntry> configurationBuilder = CacheConfigurationBuilder
                 .newCacheConfigurationBuilder(UUID.class, DBUuidEntry.class, rpBuilder)
-                .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofSeconds(stringCacheTtl)));
+                .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofMillis(stringCacheTtl)));
         CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
                 .withCache("preConfigured", configurationBuilder)
                 .build();

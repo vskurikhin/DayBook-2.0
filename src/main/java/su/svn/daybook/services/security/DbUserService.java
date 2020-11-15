@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.09.08 19:09 by Victor N. Skurikhin.
+ * This file was last modified at 2020.11.15 22:00 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * DbUserService.java
@@ -8,8 +8,7 @@
 
 package su.svn.daybook.services.security;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -23,11 +22,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Primary
 @Service
 public class DbUserService implements UserService {
-
-    private static final Logger LOG = LoggerFactory.getLogger(DbUserService.class);
 
     private final UserNameDao userNameDao;
 
@@ -41,6 +39,7 @@ public class DbUserService implements UserService {
     public Mono<User> findByUsername(final String username) {
             return roleDao.fluxByUserName(username)
                     .collectList()
+                    .log()
                     .flatMap((roles -> fetchByUserName(username, roles)));
     }
 

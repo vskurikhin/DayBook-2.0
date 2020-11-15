@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.08.31 14:07 by Victor N. Skurikhin.
+ * This file was last modified at 2020.11.15 22:00 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * AuthenticationManager.java
@@ -9,8 +9,7 @@
 package su.svn.daybook.services.security;
 
 import io.jsonwebtoken.Claims;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,10 +20,9 @@ import reactor.core.publisher.Mono;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Component
 public class AuthenticationManager implements ReactiveAuthenticationManager {
-
-    private static final Logger LOG = LoggerFactory.getLogger(AuthenticationManager.class);
 
     private final JWTUtil jwtUtil;
 

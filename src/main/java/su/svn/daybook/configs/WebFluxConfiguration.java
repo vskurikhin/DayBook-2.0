@@ -1,8 +1,8 @@
 /*
- * This file was last modified at 2020.08.27 09:52 by Victor N. Skurikhin.
+ * This file was last modified at 2020.11.15 22:00 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
- * WebSecurityConfiguration.java
+ * WebFluxConfiguration.java
  * $Id$
  */
 
@@ -26,10 +26,6 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.reactive.ThymeleafReactiveViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
-
-import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
-import static org.springframework.web.reactive.function.server.RouterFunctions.route;
-import static org.springframework.web.reactive.function.server.ServerResponse.ok;
 
 @Configuration
 @EnableWebFlux
@@ -97,5 +93,10 @@ public class WebFluxConfiguration implements ApplicationContextAware, WebFluxCon
     @Bean
     public RouterFunction<ServerResponse> raw_svgRouter() {
         return RouterFunctions.resources("/raw-svg/**", new ClassPathResource("static/raw-svg/"));
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> swagger_ui_html() {
+        return RouterFunctions.resources("/swagger-ui.html", new ClassPathResource("swagger-ui.html"));
     }
 }

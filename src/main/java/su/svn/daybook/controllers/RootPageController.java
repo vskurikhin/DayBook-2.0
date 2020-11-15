@@ -1,5 +1,14 @@
+/*
+ * This file was last modified at 2020.11.15 22:00 by Victor N. Skurikhin.
+ * This is free and unencumbered software released into the public domain.
+ * For more information, please refer to <http://unlicense.org>
+ * RootPageController.java
+ * $Id$
+ */
+
 package su.svn.daybook.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -41,6 +50,7 @@ public class RootPageController {
             "  ]\n" +
             "}\n";
 
+    @Operation(hidden = true)
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/api/v1/pages", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> readAbTest(@Param("page") Long page) {

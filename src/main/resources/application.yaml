@@ -1,5 +1,5 @@
 application:
-    cache:
+  cache:
     long-cache:
       entries: 10000
       ttl-ms: 360000
@@ -33,6 +33,53 @@ logging:
     io:
       r2dbc:
         h2: DEBUG
+    org:
+      springframework:
+        core:
+          codec:
+            CharSequenceEncoder: INFO
+        web:
+          server:
+            session:
+              DefaultWebSessionManager: INFO
+            adapter:
+              HttpWebHandlerAdapter: INFO
+      thymeleaf:
+        TemplateEngine: INFO
+    su:
+      svn:
+        daybook: TRACE
+
+management:
+  endpoint:
+    caches:
+      enabled: true
+    health:
+      group:
+        custom:
+          include: diskSpace,ping
+          show-details: when_authorized
+          show-components: when_authorized
+      enabled: true
+      show-details: when_authorized
+      show-components: when_authorized
+    info:
+      enabled: true
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  health:
+    db:
+      enabled: true
+    defaults:
+      enabled: false
+    ldap:
+      enabled: false
+    livenessstate:
+      enabled: true
+    ping:
+      enabled: true
 
 server:
   compression:
