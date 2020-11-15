@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.11.10 22:22 by Victor N. Skurikhin.
+ * This file was last modified at 2020.11.15 19:16 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RecordNewsEntryService.java
@@ -36,7 +36,15 @@ public class RecordNewsEntryService {
         newsEntry.setId(record.getId());
         return recordDao.insert(record)
                 .doOnSuccess(i -> log.debug("insert {} count of record: {}", i, record))
-                .flatMap(i -> i != null && i == 1 ? newsEntryDao.insert(newsEntry) : Mono.empty())
-                .doOnSuccess(i -> log.debug("insert {} count of newsEntry: {}", i, newsEntry));
+                .doOnError(e -> log.error("insertNewsEntry ", e))
+                .flatMap(i -> doOnInsert(i, newsEntry))
+                .doOnSuccess(i -> log.debug("insert {} count of newsEntry: {}", i, newsEntry))
+                .doOnError(e -> log.error("insertNewsEntry ", e));
+    }
+
+    private Mono<Integer> doOnInsert(Integer i, final NewsEntry newsEntry) {
+        return i != null && i == 1
+                ? newsEntryDao.insert(newsEntry)
+                : Mono.error(new RuntimeException(" doOnInsert catch i: " + i));
     }
 }

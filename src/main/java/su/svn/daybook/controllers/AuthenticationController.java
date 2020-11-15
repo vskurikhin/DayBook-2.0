@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.08.27 10:10 by Victor N. Skurikhin.
+ * This file was last modified at 2020.11.15 19:16 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * AuthenticationController.java
@@ -8,6 +8,9 @@
 
 package su.svn.daybook.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +25,8 @@ import su.svn.daybook.services.security.PBKDF2Encoder;
 import su.svn.daybook.services.security.UserService;
 
 @RestController
+@RequestMapping("/api/v1/auth")
+@Tag(name = "Authentication Controller", description = "JWT authentication APIs for the DayBook project.")
 public class AuthenticationController {
 
     private final JWTUtil jwtUtil;
@@ -36,7 +41,8 @@ public class AuthenticationController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/api/v1/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @Operation(summary = "login", security = @SecurityRequirement(name = "bearerAuth"))
     public Mono<ResponseEntity<?>> login(@RequestBody AuthRequest authRequest) {
         return userService.findByUsername(authRequest.getUsername()).map((userDetails) -> {
             if (passwordEncoder.encode(authRequest.getPassword()).equals(userDetails.getPassword())) {
