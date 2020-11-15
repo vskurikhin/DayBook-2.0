@@ -1,4 +1,14 @@
 application:
+    cache:
+    long-cache:
+      entries: 10000
+      ttl-ms: 360000
+    string-cache:
+      entries: 10000
+      ttl-ms: 360000
+    uuid-cache:
+      entries: 10000
+      ttl-ms: 360000
   db:
     username: ${DB_USER:dbuser}
     password: ${DB_PASS:password}

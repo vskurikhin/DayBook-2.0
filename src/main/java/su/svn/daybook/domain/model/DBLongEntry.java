@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.09.14 19:19 by Victor N. Skurikhin.
+ * This file was last modified at 2020.11.15 21:41 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * DBLongEntry.java
@@ -23,4 +23,6 @@ public interface DBLongEntry extends DBEntry<Long> {
     Long getId();
 
     void setId(Long id);
+
+    Class<? extends DBLongEntry> getEClass();
 }

@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.11.09 11:14 by Victor N. Skurikhin.
+ * This file was last modified at 2020.11.15 21:41 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NewsGroup.java
@@ -75,6 +75,11 @@ public class NewsGroup implements Serializable, DBUuidEntry {
     @Setter
     @Column("flags")
     private Integer flags;
+
+    @Override
+    public Class<? extends DBUuidEntry> getEClass() {
+        return NewsGroup.class;
+    }
 
     @Override
     public String toString() {
