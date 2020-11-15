@@ -80,6 +80,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	implementation 'org.springframework.kafka:spring-kafka'
 
+	implementation "org.springdoc:springdoc-openapi-webflux-ui:1.5.0"
+
 	compileOnly 'org.projectlombok:lombok'
 
 	runtimeOnly 'com.h2database:h2'

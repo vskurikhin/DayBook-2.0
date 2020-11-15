@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.08.31 14:07 by Victor N. Skurikhin.
+ * This file was last modified at 2020.11.15 19:16 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * actions.js
@@ -31,7 +31,7 @@ export const userPostFetch = user => {
 export const userLoginFetch = user => {
     return dispatch => {
         console.log('user: ' + JSON.stringify(user))
-        return fetch("/api/v1/login", {
+        return fetch("/api/v1/auth/login", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
