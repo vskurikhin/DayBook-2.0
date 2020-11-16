@@ -1,26 +1,26 @@
 buildscript {
-	def gradle_docker_compose_plugin = System.getProperty('VERSION_GRADLE_DOCKER_COMPOSE_PLUGIN') ?: VERSION_GRADLE_DOCKER_COMPOSE_PLUGIN
-	def liquibase_gradle_plugin = System.getProperty('VERSION_LIQUIBASE_GRADLE_PLUGIN') ?: VERSION_LIQUIBASE_GRADLE_PLUGIN
-	def liquibase = System.getProperty('VERSION_ORG_LIQUIBASE') ?: VERSION_ORG_LIQUIBASE
-	def spring_boot_gradle_plugin = System.getProperty('VERSION_SPRING_BOOT_GRADLE_PLUGIN') ?: VERSION_SPRING_BOOT_GRADLE_PLUGIN
-	dependencies {
-		classpath "org.springframework.boot:spring-boot-gradle-plugin:${spring_boot_gradle_plugin}"
-		classpath "gradle.plugin.com.avast.gradle:gradle-docker-compose-plugin:${gradle_docker_compose_plugin}"
-		classpath("org.liquibase:liquibase-gradle-plugin:${liquibase_gradle_plugin}") {
-			exclude(module: 'liquibase-core')
-		}
-		classpath "org.liquibase:liquibase-core:${liquibase}"
-	}
+    def gradle_docker_compose_plugin = System.getProperty('VERSION_GRADLE_DOCKER_COMPOSE_PLUGIN') ?: VERSION_GRADLE_DOCKER_COMPOSE_PLUGIN
+    def liquibase_gradle_plugin = System.getProperty('VERSION_LIQUIBASE_GRADLE_PLUGIN') ?: VERSION_LIQUIBASE_GRADLE_PLUGIN
+    def liquibase = System.getProperty('VERSION_ORG_LIQUIBASE') ?: VERSION_ORG_LIQUIBASE
+    def spring_boot_gradle_plugin = System.getProperty('VERSION_SPRING_BOOT_GRADLE_PLUGIN') ?: VERSION_SPRING_BOOT_GRADLE_PLUGIN
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${spring_boot_gradle_plugin}"
+        classpath "gradle.plugin.com.avast.gradle:gradle-docker-compose-plugin:${gradle_docker_compose_plugin}"
+        classpath("org.liquibase:liquibase-gradle-plugin:${liquibase_gradle_plugin}") {
+            exclude(module: 'liquibase-core')
+        }
+        classpath "org.liquibase:liquibase-core:${liquibase}"
+    }
 }
 
 plugins {
-	id 'com.moowork.node' version '1.3.1'
-	id 'groovy'
-	id 'idea'
-	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
-	id 'java'
-	id 'org.liquibase.gradle' version '2.0.4'
-	id 'org.springframework.boot' version '2.3.3.RELEASE'
+    id 'com.moowork.node' version '1.3.1'
+    id 'groovy'
+    id 'idea'
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'java'
+    id 'org.liquibase.gradle' version '2.0.4'
+    id 'org.springframework.boot' version '2.3.3.RELEASE'
 }
 
 group = 'su.svn'
@@ -28,86 +28,87 @@ version = '2.0.0-SNAPSHOT'
 sourceCompatibility = '11'
 
 static def getEnv(key, defaultValue) {
-	return System.getenv(key) ?: defaultValue
+    return System.getenv(key) ?: defaultValue
 }
 
 ext.libVers = [
-		drv_org_postgresql          : getEnv('VERSION_DRV_ORG_POSTGRESQL', VERSION_DRV_ORG_POSTGRESQL),
-		hibernate_validator         : getEnv('VERSION_HIBERNATE_VALIDATOR', VERSION_HIBERNATE_VALIDATOR),
-		liquibase                   : getEnv('VERSION_ORG_LIQUIBASE', VERSION_ORG_LIQUIBASE),
-		liquibase_gradle_plugin     : getEnv('VERSION_LIQUIBASE_GRADLE_PLUGIN', VERSION_LIQUIBASE_GRADLE_PLUGIN),
-		liquibase_groovy_dsl        : getEnv('VERSION_LIQUIBASE_GROOVY_DSL', VERSION_LIQUIBASE_GROOVY_DSL),
-		mybatis_spring_boot_starter : getEnv('VERSION_MYBATIS_SPRING_BOOT_STARTER', VERSION_MYBATIS_SPRING_BOOT_STARTER),
-		projectlombok               : getEnv('VERSION_PROJECTLOMBOK', VERSION_PROJECTLOMBOK),
-		slf4j                       : getEnv('VERSION_ORG_SLF4J_VERSION', VERSION_ORG_SLF4J_VERSION),
-		google_collections			: '1.0',
-		h2_database                 : '1.4.197',
-		jsonwebtoken_jjwt			: '0.11.2',
-		jsr305                      : '1.3.9',
-		junit                       : '5.6.0',
-		junit_platform_launcher     : '1.6.0',
-		mockito_core                : '3.2.4',
+        drv_org_postgresql          : getEnv('VERSION_DRV_ORG_POSTGRESQL', VERSION_DRV_ORG_POSTGRESQL),
+        hibernate_validator         : getEnv('VERSION_HIBERNATE_VALIDATOR', VERSION_HIBERNATE_VALIDATOR),
+        liquibase                   : getEnv('VERSION_ORG_LIQUIBASE', VERSION_ORG_LIQUIBASE),
+        liquibase_gradle_plugin     : getEnv('VERSION_LIQUIBASE_GRADLE_PLUGIN', VERSION_LIQUIBASE_GRADLE_PLUGIN),
+        liquibase_groovy_dsl        : getEnv('VERSION_LIQUIBASE_GROOVY_DSL', VERSION_LIQUIBASE_GROOVY_DSL),
+        mybatis_spring_boot_starter : getEnv('VERSION_MYBATIS_SPRING_BOOT_STARTER', VERSION_MYBATIS_SPRING_BOOT_STARTER),
+        projectlombok               : getEnv('VERSION_PROJECTLOMBOK', VERSION_PROJECTLOMBOK),
+        slf4j                       : getEnv('VERSION_ORG_SLF4J_VERSION', VERSION_ORG_SLF4J_VERSION),
+        springdoc_openapi_webflux_ui: getEnv('VERSION_SPRINGDOC_OPENAPI_WEBFLUX', VERSION_SPRINGDOC_OPENAPI_WEBFLUX),
+        google_collections          : '1.0',
+        h2_database                 : '1.4.197',
+        jsonwebtoken_jjwt           : '0.11.2',
+        jsr305                      : '1.3.9',
+        junit                       : '5.6.0',
+        junit_platform_launcher     : '1.6.0',
+        mockito_core                : '3.2.4',
 ]
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation "com.google.code.findbugs:jsr305:$libVers.jsr305"
-	implementation "com.google.collections:google-collections:$libVers.google_collections"
-	implementation "io.jsonwebtoken:jjwt-api:$libVers.jsonwebtoken_jjwt"
-	implementation "io.jsonwebtoken:jjwt-impl:$libVers.jsonwebtoken_jjwt"
-	implementation "io.jsonwebtoken:jjwt-jackson:$libVers.jsonwebtoken_jjwt"
-	implementation "io.netty:netty-tcnative-boringssl-static:2.0.34.Final"
-	implementation "io.projectreactor.netty:reactor-netty:0.9.11.RELEASE"
-	implementation "org.hibernate:hibernate-validator:$libVers.hibernate_validator"
-	implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:$libVers.mybatis_spring_boot_starter"
+    implementation "com.google.code.findbugs:jsr305:$libVers.jsr305"
+    implementation "com.google.collections:google-collections:$libVers.google_collections"
+    implementation "io.jsonwebtoken:jjwt-api:$libVers.jsonwebtoken_jjwt"
+    implementation "io.jsonwebtoken:jjwt-impl:$libVers.jsonwebtoken_jjwt"
+    implementation "io.jsonwebtoken:jjwt-jackson:$libVers.jsonwebtoken_jjwt"
+    implementation "io.netty:netty-tcnative-boringssl-static:2.0.34.Final"
+    implementation "io.projectreactor.netty:reactor-netty:0.9.11.RELEASE"
+    implementation "org.hibernate:hibernate-validator:$libVers.hibernate_validator"
+    implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:$libVers.mybatis_spring_boot_starter"
 
-	implementation 'org.liquibase:liquibase-core'
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
-	implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
-	// implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.springframework.boot:spring-boot-starter-webflux'
-	implementation 'org.springframework.kafka:spring-kafka'
+    implementation 'org.liquibase:liquibase-core'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
+    // implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.kafka:spring-kafka'
 
-	implementation "org.springdoc:springdoc-openapi-webflux-ui:1.5.0"
+    implementation "org.springdoc:springdoc-openapi-webflux-ui:$libVers.springdoc_openapi_webflux_ui"
 
-	compileOnly 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok'
 
-	runtimeOnly 'com.h2database:h2'
-	runtimeOnly 'io.r2dbc:r2dbc-h2'
-	runtimeOnly 'io.r2dbc:r2dbc-postgresql'
-	runtimeOnly 'org.postgresql:postgresql'
+    runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'io.r2dbc:r2dbc-h2'
+    runtimeOnly 'io.r2dbc:r2dbc-postgresql'
+    runtimeOnly 'org.postgresql:postgresql'
 
-	annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 
-	liquibaseRuntime group: 'org.slf4j', name: 'slf4j-api', version: libVers.slf4j
-	liquibaseRuntime group: 'org.slf4j', name: 'slf4j-simple', version: libVers.slf4j
-	liquibaseRuntime group: 'org.liquibase', name: 'liquibase-core', version: libVers.liquibase
-	liquibaseRuntime group: 'org.liquibase', name: 'liquibase-gradle-plugin', version: libVers.liquibase_gradle_plugin
-	liquibaseRuntime group: 'org.postgresql', name: 'postgresql', version: libVers.drv_org_postgresql
+    liquibaseRuntime group: 'org.slf4j', name: 'slf4j-api', version: libVers.slf4j
+    liquibaseRuntime group: 'org.slf4j', name: 'slf4j-simple', version: libVers.slf4j
+    liquibaseRuntime group: 'org.liquibase', name: 'liquibase-core', version: libVers.liquibase
+    liquibaseRuntime group: 'org.liquibase', name: 'liquibase-gradle-plugin', version: libVers.liquibase_gradle_plugin
+    liquibaseRuntime group: 'org.postgresql', name: 'postgresql', version: libVers.drv_org_postgresql
 
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
-	testImplementation 'io.projectreactor:reactor-test'
-	testImplementation 'org.springframework.batch:spring-batch-test'
-	testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+    testImplementation 'io.projectreactor:reactor-test'
+    testImplementation 'org.springframework.batch:spring-batch-test'
+    testImplementation 'org.springframework.security:spring-security-test'
 
-	testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: libVers.junit
-	testImplementation group: 'org.junit.platform', name: 'junit-platform-launcher', version: libVers.junit_platform_launcher
-	testImplementation group: 'org.junit.vintage', name: 'junit-vintage-engine', version: libVers.junit
-	testImplementation group: 'org.mockito', name: 'mockito-core', version: libVers.mockito_core
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: libVers.junit
+    testImplementation group: 'org.junit.platform', name: 'junit-platform-launcher', version: libVers.junit_platform_launcher
+    testImplementation group: 'org.junit.vintage', name: 'junit-vintage-engine', version: libVers.junit
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: libVers.mockito_core
 }
 
 def db_url = getEnv('DBURL', DATABASE_URL)
@@ -117,52 +118,52 @@ def db_url_public = db_url + '?currentSchema=public'
 def run_list = project.properties['runList'] ?: 'db'
 
 liquibase {
-	activities {
-		db {
-			changeLogFile "src/main/resources/db/changelog/db/Change-Log.xml"
-			url db_url_public
-			defaultSchemaName 'public'
-			username db_username
-			password db_password
-			classpath "$rootDir"
-		}
-	}
-	runList = run_list
+    activities {
+        db {
+            changeLogFile "src/main/resources/db/changelog/db/Change-Log.xml"
+            url db_url_public
+            defaultSchemaName 'public'
+            username db_username
+            password db_password
+            classpath "$rootDir"
+        }
+    }
+    runList = run_list
 }
 
 def getProjectProperty(key, defaultValue) {
-	return project.getProperties().get(key) ?: defaultValue
+    return project.getProperties().get(key) ?: defaultValue
 }
 
 task makeMigrationFile() {
-	doLast {
-		def projectDir = project.projectDir.toString()
-		def resourcesDb = "src/main/resources/db"
-		def liquibaseHome = "${projectDir}/${resourcesDb}"
-		def date = new Date()
-		def formattedDate = date.format('yyyy-MM-dd_HH-mm-ss')
-		def scriptName = this.getProjectProperty('scriptName', 'migration')
-		def fileName = "changelogs_${formattedDate}_${scriptName}.xml"
-		def templateText = file("${liquibaseHome}/changeSet.xml.template").text
-		def changeSetAuthor = getProjectProperty('author', 'Victor N. Skurikhin')
-		def logicalFilePath = "./${resourcesDb}/changelog/db/Change-Sets/${fileName}"
-		def binding = [
-				"changeSetId"    : "${formattedDate}",
-				"logicalFilePath": "${logicalFilePath}",
-				"author"         : "${changeSetAuthor}"
-		]
-		def engine = new groovy.text.SimpleTemplateEngine()
-		def outText = engine.createTemplate(templateText).make(binding).toString()
-		file("${liquibaseHome}/changelog/db/Change-Sets/${fileName}").text = outText
-	}
+    doLast {
+        def projectDir = project.projectDir.toString()
+        def resourcesDb = "src/main/resources/db"
+        def liquibaseHome = "${projectDir}/${resourcesDb}"
+        def date = new Date()
+        def formattedDate = date.format('yyyy-MM-dd_HH-mm-ss')
+        def scriptName = this.getProjectProperty('scriptName', 'migration')
+        def fileName = "changelogs_${formattedDate}_${scriptName}.xml"
+        def templateText = file("${liquibaseHome}/changeSet.xml.template").text
+        def changeSetAuthor = getProjectProperty('author', 'Victor N. Skurikhin')
+        def logicalFilePath = "./${resourcesDb}/changelog/db/Change-Sets/${fileName}"
+        def binding = [
+                "changeSetId"    : "${formattedDate}",
+                "logicalFilePath": "${logicalFilePath}",
+                "author"         : "${changeSetAuthor}"
+        ]
+        def engine = new groovy.text.SimpleTemplateEngine()
+        def outText = engine.createTemplate(templateText).make(binding).toString()
+        file("${liquibaseHome}/changelog/db/Change-Sets/${fileName}").text = outText
+    }
 }
 
 task webpack(type: NpmTask) {
-	args = ['run', 'dev']
+    args = ['run', 'dev']
 }
 
 processResources.dependsOn 'webpack'
 
 test {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
