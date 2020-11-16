@@ -32,6 +32,7 @@ static def getEnv(key, defaultValue) {
 }
 
 ext.libVers = [
+		ehcache                     : getEnv('VERSION_EHCACHE', VERSION_EHCACHE),
         drv_org_postgresql          : getEnv('VERSION_DRV_ORG_POSTGRESQL', VERSION_DRV_ORG_POSTGRESQL),
         hibernate_validator         : getEnv('VERSION_HIBERNATE_VALIDATOR', VERSION_HIBERNATE_VALIDATOR),
         liquibase                   : getEnv('VERSION_ORG_LIQUIBASE', VERSION_ORG_LIQUIBASE),
@@ -81,6 +82,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.springframework.kafka:spring-kafka'
 
+	implementation "org.ehcache:ehcache:$libVers.ehcache"
     implementation "org.springdoc:springdoc-openapi-webflux-ui:$libVers.springdoc_openapi_webflux_ui"
 
     compileOnly 'org.projectlombok:lombok'
