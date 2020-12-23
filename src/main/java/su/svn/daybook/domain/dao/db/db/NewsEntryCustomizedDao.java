@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.11.10 22:22 by Victor N. Skurikhin.
+ * This file was last modified at 2020.12.23 09:24 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NewsEntryCustomizedDao.java
@@ -16,7 +16,7 @@ public interface NewsEntryCustomizedDao {
 
     Mono<Integer> insert(NewsEntry newsEntry);
 
-    Mono<NewsEntry> transactionalInsert(NewsEntry newsEntry);
+    Mono<Integer> transactionalInsert(NewsEntry newsEntry);
 
-    Flux<NewsEntry> transactionalInsertAll(Iterable<NewsEntry> entries);
+    Mono<Integer> transactionalInsertAll(Iterable<NewsEntry> entries);
 }

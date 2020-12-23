@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.11.10 22:22 by Victor N. Skurikhin.
+ * This file was last modified at 2020.12.23 09:24 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RecordDaoImpl.java
@@ -17,7 +17,9 @@ import org.reactivestreams.Publisher;
 import org.springframework.data.r2dbc.core.DatabaseClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.publisher.Signal;
 import su.svn.daybook.domain.dao.db.db.RecordCustomizedDao;
+import su.svn.daybook.domain.model.DBUuidEntry;
 import su.svn.daybook.domain.model.db.db.Record;
 
 import java.time.LocalDateTime;
@@ -25,6 +27,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 @Slf4j
 public class RecordDaoImpl implements RecordCustomizedDao {
@@ -92,31 +95,28 @@ public class RecordDaoImpl implements RecordCustomizedDao {
     }
 
     @Override
-    public Mono<Record> transactionalInsert(Record newsEntry) {
-        Iterable<Record> iterable = new LinkedList<>() {{ add(newsEntry); }};
+    public Mono<Integer> transactionalInsert(Record entry) {
+        Iterable<Record> iterable = new LinkedList<>() {{ add(entry); }};
         return Mono.from(connectionFactory.create())
-                .flatMap(connection -> Mono.from(createInsertAllTransaction(connection, iterable)));
+                .flatMap(connection -> createInsertAllTransaction1(connection, iterable));
     }
 
     @Override
-    public Flux<Record> transactionalInsertAll(Iterable<Record> entries) {
+    public Mono<Integer> transactionalInsertAll(Iterable<Record> entries) {
         return Mono.from(connectionFactory.create())
-                .flatMapMany(connection -> createInsertAllTransaction(connection, entries));
+                .flatMap(connection -> createInsertAllTransaction1(connection, entries));
     }
 
-    private Publisher<? extends Record> createInsertAllTransaction(Connection connection, Iterable<Record> entries) {
+    private Publisher<? extends Record> createInsertAllTransaction2(Connection connection, Iterable<Record> entries) {
         return Mono.from(connection.beginTransaction())
-                .thenMany(executeInsertStatements(connection, entries))
-                .collectList()
+                .thenMany(executeInsertStatements2(connection, entries))
                 .delayUntil(r -> connection.commitTransaction())
-                .flatMapMany(Flux::fromIterable)
                 .onErrorResume(t -> Mono.just(connection.rollbackTransaction()).then(Mono.error(t)))
                 .doOnError(e -> log.error("createInsertAllTransaction ", e))
-                .doFinally((st) -> connection.close())
-                .flatMap(this::extractResult);
+                .doFinally((st) -> connection.close());
     }
 
-    private Publisher<? extends Result> executeInsertStatements(Connection connection, Iterable<Record> entries) {
+    private Flux<Record> executeInsertStatements2(Connection connection, Iterable<Record> entries) {
 
         if (entries != null) {
             Iterator<Record> iterator = entries.iterator();
@@ -125,10 +125,57 @@ public class RecordDaoImpl implements RecordCustomizedDao {
                 while (iterator.hasNext()) {
                     statementBinding(statement.add(), iterator.next());
                 }
-                return statement.execute();
+                return Flux.from(statement.returnGeneratedValues("record_id").execute())
+                        .flatMap(result -> result.map((row, rowMetadata) -> Record.builder()
+                                .id(row.get(1, UUID.class))
+                                .build()));
             }
         }
         return Flux.empty();
+    }
+
+    private Mono<Integer> createInsertAllTransaction1(Connection connection, Iterable<Record> entries) {
+        return Mono.from(connection.beginTransaction())
+                .thenMany(executeInsertStatements1(connection, entries))
+                .reduce(Integer::sum)
+                .delayUntil(r -> connection.commitTransaction())
+                .onErrorResume(t -> Mono.just(connection.rollbackTransaction()).then(Mono.error(t)))
+                .doOnError(e -> log.error("createInsertAllTransaction1 ", e))
+                .doFinally((st) -> connection.close());
+    }
+
+
+    private Flux<Integer> executeInsertStatements1(Connection connection, Iterable<Record> entries) {
+
+        if (entries != null) {
+            Iterator<Record> iterator = entries.iterator();
+            if (iterator.hasNext()) {
+                Statement statement = insertStatement(connection, iterator.next());
+                while (iterator.hasNext()) {
+                    statementBinding(statement.add(), iterator.next());
+                }
+                return Flux.from(statement.execute()).flatMap(Result::getRowsUpdated);
+            }
+        }
+        return Flux.empty();
+    }
+
+    private <T extends DBUuidEntry> Publisher<?> getResult(Signal<? extends Result> signal, T record) {
+        return getResult(signal.get(), record);
+    }
+
+    private <T extends DBUuidEntry> Publisher<?> getResult(Result result, T t) {
+        return Mono.from(result.getRowsUpdated()).doOnSuccess(new Consumer<Integer>() {
+            @Override
+            public void accept(Integer integer) {
+                log.warn("integer: {}", integer);
+            }
+        }).then(Mono.from(result.map((row, rowMetadata) -> {
+            log.warn("row: {}", row);
+            log.warn("rowMetadata: {}", rowMetadata);
+            t.setId(row.get(1, UUID.class));
+            return t;
+        })));
     }
 
     private Statement insertStatement(Connection connection, Record entry) {

@@ -1,0 +1,26 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd"
+        logicalFilePath="./src/main/resources/db/changelog/db/Change-Sets/changelogs_2020-11-16_15-56-28_security_session_index.xml">
+
+  <changeSet id="2020-11-16_15-56-28" author="Victor N. Skurikhin">
+      <sql>
+          <![CDATA[
+            CREATE INDEX IF NOT EXISTS IDX_security_session_session_id
+                ON security.session (session_id);
+            CREATE INDEX IF NOT EXISTS IDX_security_session_end_time
+                ON security.session (end_time DESC);
+          ]]>
+      </sql>
+      <rollback>
+          <sql>
+            <![CDATA[
+              DROP INDEX IF EXISTS db.IDX_security_session_session_id;
+              DROP INDEX IF EXISTS db.IDX_security_session_end_time;
+            ]]>
+          </sql>
+      </rollback>
+  </changeSet>
+</databaseChangeLog>

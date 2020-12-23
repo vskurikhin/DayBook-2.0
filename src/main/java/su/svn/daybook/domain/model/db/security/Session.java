@@ -2,13 +2,12 @@
  * This file was last modified at 2020.12.23 09:24 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
- * Record.java
+ * Session.java
  * $Id$
  */
 
-package su.svn.daybook.domain.model.db.db;
+package su.svn.daybook.domain.model.db.security;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,7 +16,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
-import su.svn.daybook.domain.model.DBUuidEntry;
+import su.svn.daybook.domain.model.DBStringEntry;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -28,41 +27,32 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(builderClassName = "Builder")
-@Table("db.record")
-public class Record implements Serializable, DBUuidEntry {
-    static final long serialVersionUID = -200L;
+@Table("security.session")
+public class Session implements Serializable, DBStringEntry {
+    static final long serialVersionUID = -3L;
 
     @Id
     @Getter
     @Setter
-    @Column("record_id")
-    @Schema(description = "record id", example = "00000000-0000-0000-FFFF-000000101001")
-    private UUID id;
-
-    @Getter
-    @Setter
-    @NotNull
-    @Column("position")
-    private int position;
-
-    @Getter
-    @Setter
-    @Size(max = 256)
-    @Column("type")
-    private String type;
-
-    @Getter
-    @Setter
-    @NotNull
     @Size(max = 64)
     @Column("user_name")
-    private String userName;
+    private String id;
+
+    @Getter
+    @Setter
+    @NotNull
+    @Column("session_id")
+    private UUID sessionId;
 
     @Getter
     @NotNull
     @Column("create_time")
-    @Schema(description = "create time", example = "1970-01-01T00:00:00Z")
     private LocalDateTime createTime;
+
+    @Getter
+    @NotNull
+    @Column("end_time")
+    private LocalDateTime endTime;
 
     @Getter
     @Setter
@@ -85,13 +75,17 @@ public class Record implements Serializable, DBUuidEntry {
     private Integer flags;
 
     @Override
+    public Class<? extends DBStringEntry> getEClass() {
+        return Session.class;
+    }
+
+    @Override
     public String toString() {
-        return "Record{" +
-                "id=" + id +
-                ", position=" + position +
-                ", type='" + type + '\'' +
-                ", userName='" + userName + '\'' +
+        return "Session{" +
+                "id='" + id + '\'' +
+                ", sessionId=" + sessionId +
                 ", createTime=" + createTime +
+                ", endTime=" + endTime +
                 ", updateTime=" + updateTime +
                 ", enabled=" + enabled +
                 ", visible=" + visible +
@@ -99,30 +93,24 @@ public class Record implements Serializable, DBUuidEntry {
                 '}';
     }
 
-    @Override
-    public Class<? extends DBUuidEntry> getEClass() {
-        return Record.class;
-    }
-
     public boolean equals(final Object o) {
         if (o == this) return true;
-        if (!(o instanceof Record)) return false;
-        final Record other = (Record) o;
+        if (!(o instanceof Session)) return false;
+        final Session other = (Session) o;
         if (!other.canEqual((Object) this)) return false;
         final Object this$id = this.id;
         final Object other$id = other.id;
         if (this$id == null ? other$id != null : !this$id.equals(other$id)) return false;
-        if (this.position != other.position) return false;
-        final Object this$type = this.type;
-        final Object other$type = other.type;
-        if (this$type == null ? other$type != null : !this$type.equals(other$type)) return false;
-        final Object this$userName = this.userName;
-        final Object other$userName = other.userName;
-        if (this$userName == null ? other$userName != null : !this$userName.equals(other$userName)) return false;
+        final Object this$sessionId = this.sessionId;
+        final Object other$sessionId = other.sessionId;
+        if (this$sessionId == null ? other$sessionId != null : !this$sessionId.equals(other$sessionId)) return false;
         final Object this$createTime = this.createTime;
         final Object other$createTime = other.createTime;
         if (this$createTime == null ? other$createTime != null : !this$createTime.equals(other$createTime))
             return false;
+        final Object this$endTime = this.endTime;
+        final Object other$endTime = other.endTime;
+        if (this$endTime == null ? other$endTime != null : !this$endTime.equals(other$endTime)) return false;
         final Object this$updateTime = this.updateTime;
         final Object other$updateTime = other.updateTime;
         if (this$updateTime == null ? other$updateTime != null : !this$updateTime.equals(other$updateTime))
@@ -140,7 +128,7 @@ public class Record implements Serializable, DBUuidEntry {
     }
 
     protected boolean canEqual(final Object other) {
-        return other instanceof Record;
+        return other instanceof Session;
     }
 
     public int hashCode() {
@@ -148,13 +136,12 @@ public class Record implements Serializable, DBUuidEntry {
         int result = 1;
         final Object $id = this.id;
         result = result * PRIME + ($id == null ? 43 : $id.hashCode());
-        result = result * PRIME + this.position;
-        final Object $type = this.type;
-        result = result * PRIME + ($type == null ? 43 : $type.hashCode());
-        final Object $userName = this.userName;
-        result = result * PRIME + ($userName == null ? 43 : $userName.hashCode());
+        final Object $sessionId = this.sessionId;
+        result = result * PRIME + ($sessionId == null ? 43 : $sessionId.hashCode());
         final Object $createTime = this.createTime;
         result = result * PRIME + ($createTime == null ? 43 : $createTime.hashCode());
+        final Object $endTime = this.endTime;
+        result = result * PRIME + ($endTime == null ? 43 : $endTime.hashCode());
         final Object $updateTime = this.updateTime;
         result = result * PRIME + ($updateTime == null ? 43 : $updateTime.hashCode());
         final Object $enabled = this.enabled;
