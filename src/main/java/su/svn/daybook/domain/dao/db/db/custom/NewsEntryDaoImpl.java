@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.11.10 22:22 by Victor N. Skurikhin.
+ * This file was last modified at 2020.12.23 09:24 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NewsEntryDaoImpl.java
@@ -79,46 +79,57 @@ public class NewsEntryDaoImpl implements NewsEntryCustomizedDao {
 
     @Override
     public Mono<Integer> insert(NewsEntry entry) {
-        return client.execute(INSERT_NEWS_ENTRY)
+        DatabaseClient.GenericExecuteSpec execSpec = client.execute(INSERT_NEWS_ENTRY)
                 .bind("id", entry.getId())
-                .bind("newsGroupId", entry.getNewsGroupId())
                 .bind("userName", entry.getUserName())
                 .bind("title", entry.getTitle())
-                .bind("content", entry.getContent())
                 .bind("createTime", entry.getCreateTime())
-                .bind("updateTime", entry.getUpdateTime())
                 .bind("enabled", entry.getEnabled())
                 .bind("visible", entry.getVisible())
-                .bind("flags", entry.getFlags())
-                .fetch().rowsUpdated();
+                .bind("flags", entry.getFlags());
+
+        if (entry.getNewsGroupId() != null)
+            execSpec = execSpec.bind("newsGroupId", entry.getNewsGroupId());
+        else
+            execSpec = execSpec.bindNull("newsGroupId", UUID.class);
+
+        if (entry.getContent() != null)
+            execSpec = execSpec.bind("content", entry.getContent());
+        else
+            execSpec = execSpec.bindNull("content", String.class);
+
+        if (entry.getUpdateTime() != null)
+            execSpec = execSpec.bind("updateTime", entry.getUpdateTime());
+        else
+            execSpec = execSpec.bind("updateTime", LocalDateTime.now());
+
+        return execSpec.fetch().rowsUpdated();
     }
 
     @Override
-    public Mono<NewsEntry> transactionalInsert(NewsEntry newsEntry) {
+    public Mono<Integer> transactionalInsert(NewsEntry newsEntry) {
         Iterable<NewsEntry> iterable = new LinkedList<>() {{ add(newsEntry); }};
         return Mono.from(connectionFactory.create())
-                .flatMap(connection -> Mono.from(createInsertAllTransaction(connection, iterable)));
+                .flatMap(connection -> Mono.from(createInsertAllTransaction1(connection, iterable)));
     }
 
     @Override
-    public Flux<NewsEntry> transactionalInsertAll(Iterable<NewsEntry> entries) {
+    public Mono<Integer> transactionalInsertAll(Iterable<NewsEntry> entries) {
         return Mono.from(connectionFactory.create())
-                .flatMapMany(connection -> createInsertAllTransaction(connection, entries));
+                .flatMap(connection -> createInsertAllTransaction1(connection, entries));
     }
 
-    private Publisher<? extends NewsEntry> createInsertAllTransaction(Connection connection, Iterable<NewsEntry> entries) {
+    private Mono<Integer> createInsertAllTransaction1(Connection connection, Iterable<NewsEntry> entries) {
         return Mono.from(connection.beginTransaction())
-                .thenMany(executeInsertStatements(connection, entries))
-                .collectList()
+                .thenMany(executeInsertStatements1(connection, entries))
+                .reduce(Integer::sum)
                 .delayUntil(r -> connection.commitTransaction())
-                .flatMapMany(Flux::fromIterable)
                 .onErrorResume(t -> Mono.just(connection.rollbackTransaction()).then(Mono.error(t)))
-                .doOnError(e -> log.error("createInsertAllTransaction ", e))
-                .doFinally((st) -> connection.close())
-                .flatMap(this::extractResult);
+                .doOnError(e -> log.error("createInsertAllTransaction1 ", e))
+                .doFinally((st) -> connection.close());
     }
 
-    private Publisher<? extends Result> executeInsertStatements(Connection connection, Iterable<NewsEntry> entries) {
+    private Flux<Integer> executeInsertStatements1(Connection connection, Iterable<NewsEntry> entries) {
 
         if (entries != null) {
             Iterator<NewsEntry> iterator = entries.iterator();
@@ -127,7 +138,7 @@ public class NewsEntryDaoImpl implements NewsEntryCustomizedDao {
                 while (iterator.hasNext()) {
                     statementBinding(statement.add(), iterator.next());
                 }
-                return statement.execute();
+                return Flux.from(statement.execute()).flatMap(Result::getRowsUpdated);
             }
         }
         return Flux.empty();

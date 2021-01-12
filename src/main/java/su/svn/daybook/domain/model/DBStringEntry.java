@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.11.15 21:41 by Victor N. Skurikhin.
+ * This file was last modified at 2020.12.23 09:24 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * DBStringEntry.java
@@ -21,6 +21,8 @@ public interface DBStringEntry extends DBEntry<String> {
      * @return - the key.
      */
     String getId();
+
+    void setId(String id);
 
     Class<? extends DBStringEntry> getEClass();
 }

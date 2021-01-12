@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.11.15 21:41 by Victor N. Skurikhin.
+ * This file was last modified at 2020.12.23 09:24 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NewsEntry.java
@@ -8,6 +8,7 @@
 
 package su.svn.daybook.domain.model.db.db;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -35,6 +36,7 @@ public class NewsEntry implements Serializable, DBUuidEntry {
     @Getter
     @Setter
     @Column("news_entry_id")
+    @Schema(description = "news entry id", example = "00000000-0000-0000-FFFF-000000101001")
     private UUID id;
 
     @Getter
@@ -65,6 +67,7 @@ public class NewsEntry implements Serializable, DBUuidEntry {
     @Getter
     @NotNull
     @Column("create_time")
+    @Schema(description = "create time", example = "1970-01-01T00:00:00Z")
     private LocalDateTime createTime;
 
     @Getter

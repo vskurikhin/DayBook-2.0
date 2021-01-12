@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.11.15 22:00 by Victor N. Skurikhin.
+ * This file was last modified at 2020.12.23 09:24 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * EhCacheConfiguration.java
@@ -77,10 +77,10 @@ public class EhCacheConfiguration {
 
     @Bean("uuidCache")
     public Cache<UUID, DBUuidEntry> uuidCache() {
-        ResourcePoolsBuilder rpBuilder = ResourcePoolsBuilder.heap(stringCacheEntries);
+        ResourcePoolsBuilder rpBuilder = ResourcePoolsBuilder.heap(uuidCacheEntries);
         CacheConfigurationBuilder<UUID, DBUuidEntry> configurationBuilder = CacheConfigurationBuilder
                 .newCacheConfigurationBuilder(UUID.class, DBUuidEntry.class, rpBuilder)
-                .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofMillis(stringCacheTtl)));
+                .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofMillis(uuidCacheTtl)));
         CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
                 .withCache("preConfigured", configurationBuilder)
                 .build();

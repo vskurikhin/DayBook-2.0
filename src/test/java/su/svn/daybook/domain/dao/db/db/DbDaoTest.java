@@ -10,6 +10,7 @@ import org.springframework.data.r2dbc.core.DatabaseClient;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.reactive.TransactionalOperator;
 import reactor.core.publisher.Hooks;
+import reactor.core.publisher.Signal;
 import reactor.test.StepVerifier;
 import su.svn.daybook.domain.dao.db.TestConnectionFactoryConfiguration;
 import su.svn.daybook.domain.model.db.db.NewsEntry;
@@ -23,6 +24,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
+import java.util.function.Consumer;
 
 import static su.svn.daybook.domain.model.db.db.TestDataDb.*;
 
@@ -115,7 +117,7 @@ public class DbDaoTest {
             record3.setId(UUID.randomUUID());
             recordDao.transactionalInsertAll(Arrays.asList(record2, record3))
                     .as(StepVerifier::create)
-                    .expectNextCount(0)
+                    .expectNextCount(1)
                     .verifyComplete();
             List<Record> list = recordDao.fluxAll().collectList().block();
             assert list != null;
@@ -131,7 +133,7 @@ public class DbDaoTest {
             record2.setId(UUID.randomUUID());
             recordDao.transactionalInsert(record2)
                     .as(StepVerifier::create)
-                    .expectNextCount(0)
+                    .expectNextCount(1)
                     .verifyComplete();
             List<Record> list = recordDao.fluxAll().collectList().block();
             System.err.println("list = " + list);
@@ -140,7 +142,6 @@ public class DbDaoTest {
         }
 
         @Test
-        @Disabled
         void executesSaveAll() {
             Hooks.onOperatorDebug();
             recordDao.saveAll(Arrays.asList(RECORD_2, RECORD_3))
@@ -270,7 +271,7 @@ public class DbDaoTest {
             Hooks.onOperatorDebug();
             newsEntryDao.transactionalInsertAll(Arrays.asList(NEWS_ENTRY_2, NEWS_ENTRY_3))
                     .as(StepVerifier::create)
-                    .expectNextCount(0)
+                    .expectNextCount(1)
                     .verifyComplete();
             List<NewsEntry> list = newsEntryDao.fluxAll().collectList().block();
             assert list != null;
@@ -283,7 +284,7 @@ public class DbDaoTest {
             Hooks.onOperatorDebug();
             newsEntryDao.transactionalInsert(NEWS_ENTRY_2)
                     .as(StepVerifier::create)
-                    .expectNextCount(0)
+                    .expectNextCount(1)
                     .verifyComplete();
             List<NewsEntry> list = newsEntryDao.fluxAll().collectList().block();
             assert list != null;
@@ -300,7 +301,6 @@ public class DbDaoTest {
         }
 
         @Test
-        @Disabled
         void executesFluxAll() throws IOException {
             Hooks.onOperatorDebug();
             newsEntryDao.fluxAll()
@@ -310,7 +310,6 @@ public class DbDaoTest {
         }
 
         @Test
-        @Disabled
         void executesFluxAllById() throws IOException {
             Hooks.onOperatorDebug();
             newsEntryDao.fluxAllById(new ArrayList<>() {{ add(UUID_1); }})
