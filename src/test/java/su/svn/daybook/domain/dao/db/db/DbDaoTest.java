@@ -142,7 +142,6 @@ public class DbDaoTest {
         }
 
         @Test
-        @Disabled
         void executesSaveAll() {
             Hooks.onOperatorDebug();
             recordDao.saveAll(Arrays.asList(RECORD_2, RECORD_3))
@@ -272,7 +271,7 @@ public class DbDaoTest {
             Hooks.onOperatorDebug();
             newsEntryDao.transactionalInsertAll(Arrays.asList(NEWS_ENTRY_2, NEWS_ENTRY_3))
                     .as(StepVerifier::create)
-                    .expectNextCount(0)
+                    .expectNextCount(1)
                     .verifyComplete();
             List<NewsEntry> list = newsEntryDao.fluxAll().collectList().block();
             assert list != null;
@@ -302,7 +301,6 @@ public class DbDaoTest {
         }
 
         @Test
-        @Disabled
         void executesFluxAll() throws IOException {
             Hooks.onOperatorDebug();
             newsEntryDao.fluxAll()
@@ -312,7 +310,6 @@ public class DbDaoTest {
         }
 
         @Test
-        @Disabled
         void executesFluxAllById() throws IOException {
             Hooks.onOperatorDebug();
             newsEntryDao.fluxAllById(new ArrayList<>() {{ add(UUID_1); }})

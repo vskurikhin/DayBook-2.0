@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.11.15 22:00 by Victor N. Skurikhin.
+ * This file was last modified at 2021.01.12 21:41 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RecordNewsEntryService.java
@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
+import su.svn.daybook.domain.model.NewsEntryRecordDto;
 import su.svn.daybook.domain.model.db.db.NewsEntry;
 import su.svn.daybook.domain.model.db.db.Record;
 
@@ -31,7 +32,7 @@ public class RecordNewsEntryService {
     }
 
     @Transactional
-    public Mono<Integer> insertNewsEntry(Record record, NewsEntry newsEntry) {
+    public Mono<NewsEntry> insertNewsEntry(Record record, NewsEntry newsEntry) {
         record.setId(UUID.randomUUID());
         newsEntry.setId(record.getId());
         return recordDao.insert(record)
@@ -42,9 +43,19 @@ public class RecordNewsEntryService {
                 .doOnError(e -> log.error("insertNewsEntry ", e));
     }
 
-    private Mono<Integer> doOnInsert(Integer i, final NewsEntry newsEntry) {
+    private Mono<NewsEntry> doOnInsert(Integer i, final NewsEntry newsEntry) {
         return i != null && i == 1
-                ? newsEntryDao.insert(newsEntry)
+                ? newsEntryDao.insert(newsEntry).map(integer -> newsEntry)
                 : Mono.error(new RuntimeException(" doOnInsert catch i: " + i));
+    }
+
+    public Mono<NewsEntryRecordDto> getNewsEntryRecord(UUID id) {
+        return newsEntryDao.monoById(id)
+                .flatMap(newsEntry -> findRecordConvertToNewsEntryRecord(newsEntry, id));
+    }
+
+    private Mono<NewsEntryRecordDto> findRecordConvertToNewsEntryRecord(NewsEntry newsEntry, UUID id) {
+        return recordDao.monoById(id)
+                .map(record -> new NewsEntryRecordDto(record, newsEntry));
     }
 }

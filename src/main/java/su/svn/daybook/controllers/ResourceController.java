@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.12.23 09:24 by Victor N. Skurikhin.
+ * This file was last modified at 2021.01.12 21:41 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * ResourceController.java
@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -22,6 +23,8 @@ import su.svn.daybook.domain.Message;
 import su.svn.daybook.domain.dao.db.db.RecordNewsEntryService;
 import su.svn.daybook.domain.model.NewsEntryRecordDto;
 import su.svn.daybook.domain.security.ProfileResponse;
+
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -75,8 +78,15 @@ public class ResourceController {
     @PostMapping(value = "/record/news-entry")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public Mono<ResponseEntity<?>> createNewsEntryRecord(@RequestBody NewsEntryRecordDto dto) {
-        log.debug("dto: {}", dto);
+        log.debug("createNewsEntryRecord({})", dto);
         return recordNewsEntryService.insertNewsEntry(dto.getRecord(), dto.getNewsEntry())
-                .map(a -> ResponseEntity.ok(new Message("Content for user or admin")));
+                .map(a -> ResponseEntity.status(HttpStatus.CREATED).body("Created: " + a.getId()));
+    }
+
+    @Operation(summary = "get news entry record by id")
+    @GetMapping(value = "/record/news-entry/{id}")
+    public Mono<NewsEntryRecordDto> readNewsEntry(@PathVariable("id") UUID id) {
+        log.debug("getNewsEntry({})", id);
+        return recordNewsEntryService.getNewsEntryRecord(id);
     }
 }

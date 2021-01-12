@@ -74,7 +74,7 @@ class RecordNewsEntryServiceTest {
                 .visible(true)
                 .flags(0)
                 .build();
-        Integer i = recordNewsEntryService.insertNewsEntry(record, newsEntry).block();
-        Assertions.assertEquals(1, i);
+        NewsEntry test = recordNewsEntryService.insertNewsEntry(record, newsEntry).block();
+        Assertions.assertEquals(newsEntry, test);
     }
 }
