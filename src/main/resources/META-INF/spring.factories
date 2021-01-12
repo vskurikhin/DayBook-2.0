@@ -1,0 +1,1 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=su.svn.daybook.configs.DateTimeAutoConfiguration

@@ -86,6 +86,10 @@ server:
     enabled: true
 
 spring:
+  jackson:
+    date-format: com.fasterxml.jackson.databind.util.ISO8601DateFormat
+    serialization:
+      write_dates_as_timestamps: false
   r2dbc:
     url: ${DB_URL:r2dbc:postgresql://localhost/db}
     username: ${DB_USER:dbuser}
@@ -97,6 +101,17 @@ spring:
       max-chunk-size: 8192
   webflux:
     static-path-pattern: '/**'
+    format:
+      date-time: yyyy-MM-dd HH:mm:ss
+      time: HH:mm:ss
+      date: yyyy-MM-dd
+  mvc:
+    favicon:
+      enabled: true
+    format:
+      date-time: yyyy-MM-dd HH:mm:ss
+      date: yyyy-MM-dd
+      time: HH:mm:ss
 
 springbootwebfluxjjwt:
   jjwt:
