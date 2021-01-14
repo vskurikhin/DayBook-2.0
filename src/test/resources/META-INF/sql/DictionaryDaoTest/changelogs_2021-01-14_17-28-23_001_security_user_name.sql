@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS security.user_name;
 CREATE TABLE security.user_name (
-  user_name_id  UUID DEFAULT RANDOM_UUID() NOT NULL,
+  id            UUID DEFAULT RANDOM_UUID() NOT NULL,
   user_name     VARCHAR(64)        NOT NULL
                 CONSTRAINT UC_3109_security_user_name_must_be_unique
                 UNIQUE,

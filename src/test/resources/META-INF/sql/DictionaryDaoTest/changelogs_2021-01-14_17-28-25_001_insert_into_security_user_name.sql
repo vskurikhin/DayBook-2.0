@@ -1,7 +1,7 @@
 -- noinspection SqlWithoutWhere
 DELETE FROM security.user_name;
 INSERT INTO security.user_name
-    (user_name_id, user_name, password,
+    (id, user_name, password,
      create_time, update_time, enabled, visible, flags)
   VALUES
     ('00000000-0000-0000-0000-000000000001', 'userName1', 'password1',
