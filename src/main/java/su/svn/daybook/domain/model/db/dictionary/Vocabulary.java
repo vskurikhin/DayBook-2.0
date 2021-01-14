@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.11.15 21:41 by Victor N. Skurikhin.
+ * This file was last modified at 2021.01.15 00:32 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * Vocabulary.java
@@ -28,12 +28,13 @@ import java.time.LocalDateTime;
 @Builder(builderClassName = "Builder")
 @Table("dictionary.vocabulary")
 public class Vocabulary implements Serializable, DBLongEntry {
-    static final long serialVersionUID = -130L;
+
+    private static final long serialVersionUID = -6611537490002043670L;
 
     @Id
     @Getter
     @Setter
-    @Column("vocabulary_id")
+    @Column("id")
     private Long id;
 
     @Getter
