@@ -1,0 +1,32 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd"
+        logicalFilePath="./src/main/resources/db/changelog/db/Change-Sets/changelogs_2021-01-14_17-50-08_002_security_role.xml">
+
+  <changeSet id="2021-01-14_17-50-08" author="Victor N. Skurikhin">
+      <sql>
+          <![CDATA[
+            CREATE TABLE security.role (
+              id            UUID  PRIMARY KEY  NOT NULL  DEFAULT pg_catalog.uuid_generate_v4(),
+              role_name     VARCHAR(32)        NOT NULL,
+                            CONSTRAINT UC_9c54_security_id_role_name_must_be_unique
+                            UNIQUE (id, role_name),
+              user_name     VARCHAR(64),
+                            CONSTRAINT FK_7854_security_role_security_user_name_user_name
+                            FOREIGN KEY (user_name)
+                            REFERENCES  security.user_name (user_name)
+                            ON DELETE CASCADE ON UPDATE CASCADE,
+                            CONSTRAINT UC_41a3_role_name_user_name_must_be_unique
+                            UNIQUE (role_name, user_name),
+              create_time   TIMESTAMP WITHOUT TIME ZONE  NOT NULL   DEFAULT now(),
+              update_time   TIMESTAMP WITHOUT TIME ZONE  NOT NULL   DEFAULT now(),
+              enabled       BOOLEAN                                 DEFAULT true,
+              visible       BOOLEAN                                 DEFAULT true,
+              flags         INT
+            );
+          ]]>
+      </sql>
+  </changeSet>
+</databaseChangeLog>

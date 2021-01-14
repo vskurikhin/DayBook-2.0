@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.12.23 09:24 by Victor N. Skurikhin.
+ * This file was last modified at 2021.01.14 23:46 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * Session.java
@@ -29,7 +29,8 @@ import java.util.UUID;
 @Builder(builderClassName = "Builder")
 @Table("security.session")
 public class Session implements Serializable, DBStringEntry {
-    static final long serialVersionUID = -3L;
+
+    private static final long serialVersionUID = 4341033212195925197L;
 
     @Id
     @Getter
