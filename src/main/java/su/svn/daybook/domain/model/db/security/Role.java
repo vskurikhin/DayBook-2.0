@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.11.15 21:41 by Victor N. Skurikhin.
+ * This file was last modified at 2021.01.14 23:46 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * Role.java
@@ -29,12 +29,13 @@ import java.util.UUID;
 @Builder(builderClassName = "Builder")
 @Table("security.role")
 public class Role implements Serializable, DBUuidEntry {
-    static final long serialVersionUID = -2L;
+
+    private static final long serialVersionUID = 2852922041324241810L;
 
     @Id
     @Getter
     @Setter
-    @Column("role_id")
+    @Column("id")
     private UUID id;
 
     @Getter

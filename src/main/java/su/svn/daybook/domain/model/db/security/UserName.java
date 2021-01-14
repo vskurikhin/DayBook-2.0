@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.01.14 17:35 by Victor N. Skurikhin.
+ * This file was last modified at 2021.01.14 23:46 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * UserName.java
@@ -29,7 +29,8 @@ import java.util.UUID;
 @Builder(builderClassName = "Builder")
 @Table("security.user_name")
 public class UserName implements Serializable, DBUuidEntry {
-    static final long serialVersionUID = -1L;
+
+    private static final long serialVersionUID = 3335328869859130933L;
 
     @Id
     @Getter
