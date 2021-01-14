@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.11.15 21:41 by Victor N. Skurikhin.
+ * This file was last modified at 2021.01.14 17:35 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * UserName.java
@@ -34,7 +34,7 @@ public class UserName implements Serializable, DBUuidEntry {
     @Id
     @Getter
     @Setter
-    @Column("user_name_id")
+    @Column("id")
     private UUID id;
 
     @Getter
