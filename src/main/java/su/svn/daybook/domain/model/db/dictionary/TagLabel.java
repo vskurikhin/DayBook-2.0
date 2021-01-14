@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.11.15 21:41 by Victor N. Skurikhin.
+ * This file was last modified at 2021.01.15 00:41 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * TagLabel.java
@@ -28,13 +28,14 @@ import java.time.LocalDateTime;
 @Builder(builderClassName = "Builder")
 @Table("dictionary.tag_label")
 public class TagLabel implements Serializable, DBStringEntry {
-    static final long serialVersionUID = -140L;
+
+    private static final long serialVersionUID = 7430969393917118489L;
 
     @Id
     @Getter
     @Setter
     @Size(max = 16)
-    @Column("tag_label_id")
+    @Column("id")
     private String id;
 
     @Getter
