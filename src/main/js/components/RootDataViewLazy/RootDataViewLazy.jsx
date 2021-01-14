@@ -1,3 +1,11 @@
+/*
+ * This file was last modified at 2021.01.14 09:25 by Victor N. Skurikhin.
+ * This is free and unencumbered software released into the public domain.
+ * For more information, please refer to <http://unlicense.org>
+ * RootDataViewLazy.jsx
+ * $Id$
+ */
+
 import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.css';
@@ -28,7 +36,7 @@ const RootDataViewLazy = () => {
             });
             setFirst(0);
             setLoading(false);
-        }, 1000);
+        }, 250);
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const onPage = (event) => {
@@ -47,7 +55,7 @@ const RootDataViewLazy = () => {
             });
             setFirst(startIndex);
             setLoading(false);
-        }, 1000);
+        }, 250);
     }
 
     const renderListItem = (car) => {
@@ -60,8 +68,8 @@ const RootDataViewLazy = () => {
                             <div className="p-col-12">Vin: <b>{car.vin}</b></div>
                             <div className="p-col-12">Year: <b>{car.year}</b></div>
                             <div className="p-col-12">
-                                <img src={`showcase/demo/images/car/${car.brand}.png`}
-                                     srcSet="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png"
+                                <img src="/raw-svg/sitemap.svg"
+                                     srcSet="/raw-svg/sitemap.svg"
                                      alt={car.brand}
                                 />Brand: <b>{car.brand}</b>
                             </div>
@@ -80,8 +88,8 @@ const RootDataViewLazy = () => {
                     <div className="car-detail">
                         <p align = "justify">
                             <img className="leftimg"
-                                 src={`showcase/demo/images/car/${car.brand}.png`}
-                                 srcSet="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png"
+                                 src="/raw-svg/sitemap.svg"
+                                 srcSet="/raw-svg/sitemap.svg"
                                  alt={car.brand}
                                  width="32"
                                  height="32"
@@ -112,7 +120,7 @@ const RootDataViewLazy = () => {
             setTimeout(() => {
                 setLoading(false);
                 setLayout(e.value);
-            }, 1000);
+            }, 250);
         };
 
         return (
