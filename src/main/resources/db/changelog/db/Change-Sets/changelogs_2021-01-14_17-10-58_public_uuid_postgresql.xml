@@ -3,12 +3,12 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd"
-        logicalFilePath="./src/main/resources/db/changelog/db/Change-Sets/changelogs_2020-09-01_08-32-10_public_dual_postgresql.xml">
+        logicalFilePath="./src/main/resources/db/changelog/db/Change-Sets/changelogs_2021-01-14_17-10-58_public_uuid_postgresql.xml">
 
-  <changeSet id="2020-09-01_08-32-10" author="Victor N. Skurikhin">
+  <changeSet id="2021-01-14_17-10-58" author="Victor N. Skurikhin">
       <sql>
           <![CDATA[
-            CREATE TABLE IF NOT EXISTS dual AS ( VALUES (true) );
+            CREATE EXTENSION IF NOT EXISTS "uuid-ossp" SCHEMA pg_catalog version "1.1";
           ]]>
       </sql>
   </changeSet>
