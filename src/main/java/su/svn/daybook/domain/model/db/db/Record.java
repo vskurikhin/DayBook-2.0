@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.12.23 09:24 by Victor N. Skurikhin.
+ * This file was last modified at 2021.01.13 00:44 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * Record.java
@@ -8,6 +8,7 @@
 
 package su.svn.daybook.domain.model.db.db;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -60,12 +61,14 @@ public class Record implements Serializable, DBUuidEntry {
 
     @Getter
     @NotNull
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @Column("create_time")
     @Schema(description = "create time", example = "1970-01-01T00:00:00Z")
     private LocalDateTime createTime;
 
     @Getter
     @Setter
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @Column("update_time")
     private LocalDateTime updateTime;
 

@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.01.12 21:43 by Victor N. Skurikhin.
+ * This file was last modified at 2021.01.13 00:44 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * ResourceController.java
@@ -18,10 +18,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import su.svn.daybook.domain.Message;
 import su.svn.daybook.domain.dao.db.db.RecordNewsEntryService;
 import su.svn.daybook.domain.model.NewsEntryRecordDto;
+import su.svn.daybook.domain.model.RecordDto;
 import su.svn.daybook.domain.security.ProfileResponse;
 
 import java.util.UUID;
@@ -84,9 +86,18 @@ public class ResourceController {
     }
 
     @Operation(summary = "get news entry record by id")
-    @GetMapping(value = "/record/news-entry/{id}")
+    @GetMapping(value = "/record/fetch/{id}")
+    @PreAuthorize("permitAll() or hasPermission()")
     public Mono<NewsEntryRecordDto> readNewsEntry(@PathVariable("id") UUID id) {
         log.debug("getNewsEntry({})", id);
         return recordNewsEntryService.getNewsEntryRecord(id);
+    }
+
+    @Operation(summary = "get all records")
+    @GetMapping(value = "/records")
+    @PreAuthorize("permitAll() or hasPermission()")
+    public Flux<RecordDto<?>> readRecords() {
+        log.debug("readRecords()");
+        return recordNewsEntryService.getRecords();
     }
 }

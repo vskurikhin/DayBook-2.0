@@ -71,12 +71,12 @@ dependencies {
     implementation "io.projectreactor.netty:reactor-netty:0.9.11.RELEASE"
     implementation "org.hibernate:hibernate-validator:$libVers.hibernate_validator"
     implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:$libVers.mybatis_spring_boot_starter"
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 
     implementation 'org.liquibase:liquibase-core'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
-    // implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'

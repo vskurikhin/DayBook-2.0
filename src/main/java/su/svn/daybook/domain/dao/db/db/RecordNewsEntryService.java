@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.01.12 21:43 by Victor N. Skurikhin.
+ * This file was last modified at 2021.01.13 00:44 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RecordNewsEntryService.java
@@ -11,11 +11,14 @@ package su.svn.daybook.domain.dao.db.db;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import su.svn.daybook.domain.model.NewsEntryRecordDto;
+import su.svn.daybook.domain.model.RecordDto;
 import su.svn.daybook.domain.model.db.db.NewsEntry;
 import su.svn.daybook.domain.model.db.db.Record;
 
+import java.io.Flushable;
 import java.util.UUID;
 
 @Slf4j
@@ -57,5 +60,9 @@ public class RecordNewsEntryService {
     private Mono<NewsEntryRecordDto> findRecordConvertToNewsEntryRecord(NewsEntry newsEntry, UUID id) {
         return recordDao.monoById(id)
                 .map(record -> new NewsEntryRecordDto(record, newsEntry));
+    }
+
+    public Flux<RecordDto<?>> getRecords() {
+        return recordDao.selectRecords();
     }
 }
