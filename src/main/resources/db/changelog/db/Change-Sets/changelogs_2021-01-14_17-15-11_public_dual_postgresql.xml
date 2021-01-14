@@ -3,13 +3,12 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd"
-        logicalFilePath="./src/main/resources/db/changelog/db/Change-Sets/changelogs_2020-09-01_09-09-10_001_security_user_name_user_name_index.xml">
+        logicalFilePath="./src/main/resources/db/changelog/db/Change-Sets/changelogs_2021-01-14_17-15-11_public_dual_postgresql.xml">
 
-  <changeSet id="2020-09-01_09-09-10_001" author="Victor N. Skurikhin">
+  <changeSet id="2021-01-14_17-15-11" author="Victor N. Skurikhin">
       <sql>
           <![CDATA[
-            CREATE INDEX IF NOT EXISTS IDX_security_user_name_user_name
-                ON security.user_name (user_name);
+            CREATE TABLE IF NOT EXISTS dual AS ( VALUES (true) );
           ]]>
       </sql>
   </changeSet>
