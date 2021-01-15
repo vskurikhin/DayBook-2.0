@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.11.15 21:41 by Victor N. Skurikhin.
+ * This file was last modified at 2021.01.15 01:38 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * I18n.java
@@ -28,12 +28,13 @@ import java.time.LocalDateTime;
 @Builder(builderClassName = "Builder")
 @Table("dictionary.i18")
 public class I18n implements Serializable, DBLongEntry {
-    static final long serialVersionUID = -160L;
+
+    private static final long serialVersionUID = 6450209380865072838L;
 
     @Id
     @Getter
     @Setter
-    @Column("i18n_id")
+    @Column("id")
     private Long id;
 
     @Getter
