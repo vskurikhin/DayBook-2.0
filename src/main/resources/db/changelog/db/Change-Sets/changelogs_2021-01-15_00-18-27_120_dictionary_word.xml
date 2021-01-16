@@ -16,7 +16,7 @@
                             CONSTRAINT UC_63c5_dictionary_word_must_be_different
                             UNIQUE,
               user_name     VARCHAR(64),
-                            CONSTRAINT FK_7854_dictionary_word_security_user_name_user_name
+                            CONSTRAINT FK_7854_dictionary_word_security_user_name
                             FOREIGN KEY (user_name)
                             REFERENCES  security.user_name (user_name)
                             ON DELETE CASCADE ON UPDATE CASCADE,

@@ -3,18 +3,24 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd"
-        logicalFilePath="./src/main/resources/db/changelog/db/Change-Sets/changelogs_2021-01-15_00-40-01_150_dictionary_language.xml">
+        logicalFilePath="./src/main/resources/db/changelog/db/Change-Sets/changelogs_2021-01-16_15-20-03_180_dictionary_settings.xml">
 
-  <changeSet id="2021-01-15_00-40-01" author="Victor N. Skurikhin">
+  <changeSet id="2021-01-16_15-20-03" author="Victor N. Skurikhin">
       <sql>
           <![CDATA[
-            CREATE SEQUENCE dictionary.language_seq START 1;
+            CREATE SEQUENCE dictionary.setting_seq START 1;
 
-            CREATE TABLE dictionary.language (
-              id            BIGINT  PRIMARY KEY  NOT NULL  DEFAULT nextval('dictionary.language_seq'),
-              language      VARCHAR(256),
+            CREATE TABLE dictionary.setting  (
+              id            BIGINT  PRIMARY KEY  NOT NULL  DEFAULT nextval('dictionary.setting_seq'),
+              key           VARCHAR(1024),
+              value         VARCHAR(65536),
+              value_type_id BIGINT,
+                            CONSTRAINT FK_5014_dictionary_setting_value_type_id
+                            FOREIGN KEY (value_type_id)
+                            REFERENCES  security.value_type (id)
+                            ON DELETE CASCADE ON UPDATE CASCADE,
               user_name     VARCHAR(64),
-                            CONSTRAINT FK_4792_dictionary_language_security_user_name
+                            CONSTRAINT FK_9f10_dictionary_setting_security_user_name
                             FOREIGN KEY (user_name)
                             REFERENCES  security.user_name (user_name)
                             ON DELETE CASCADE ON UPDATE CASCADE,
@@ -26,12 +32,5 @@
             );
           ]]>
       </sql>
-      <rollback>
-          <sql>
-            <![CDATA[
-
-            ]]>
-          </sql>
-      </rollback>
   </changeSet>
 </databaseChangeLog>
