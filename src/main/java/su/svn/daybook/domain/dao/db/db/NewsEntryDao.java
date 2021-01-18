@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.11.08 23:34 by Victor N. Skurikhin.
+ * This file was last modified at 2021.01.18 14:04 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NewsEntryDao.java
@@ -20,16 +20,16 @@ import java.util.UUID;
 
 public interface NewsEntryDao extends ReactiveCrudRepository<NewsEntry, UUID>, NewsEntryCustomizedDao {
 
-    @Query("SELECT * FROM db.news_entry WHERE news_entry_id = :id AND enabled")
+    @Query("SELECT * FROM db.news_entry WHERE id = :id AND enabled")
     Mono<NewsEntry> monoById(UUID id);
 
-    @Query("SELECT * FROM db.news_entry WHERE news_entry_id = :id AND enabled")
+    @Query("SELECT * FROM db.news_entry WHERE id = :id AND enabled")
     Mono<NewsEntry> monoById(Publisher<UUID> id);
 
     @Query("SELECT * FROM db.news_entry WHERE enabled")
     Flux<NewsEntry> fluxAll();
 
-    @Query("SELECT * FROM db.news_entry WHERE news_entry_id IN (:ids) AND enabled")
+    @Query("SELECT * FROM db.news_entry WHERE id IN (:ids) AND enabled")
     Flux<NewsEntry> fluxAllById(Iterable<UUID> ids);
 
     @NonNull

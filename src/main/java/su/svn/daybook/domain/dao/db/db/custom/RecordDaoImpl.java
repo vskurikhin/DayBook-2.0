@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.01.13 00:44 by Victor N. Skurikhin.
+ * This file was last modified at 2021.01.18 14:04 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RecordDaoImpl.java
@@ -41,7 +41,7 @@ public class RecordDaoImpl implements RecordCustomizedDao {
     }
 
     public static final String INSERT = "INSERT INTO db.record " +
-            " (record_id, position, type, user_name, create_time, update_time, enabled, visible, flags) " +
+            " (id, position, type, user_name, create_time, update_time, enabled, visible, flags) " +
             " VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)";
 
     private Statement statementBinding(Statement statement, Record entry) {
@@ -58,7 +58,7 @@ public class RecordDaoImpl implements RecordCustomizedDao {
     }
 
     public static final String INSERT_RECORD = "INSERT INTO db.record " +
-            " (record_id, position, type, user_name, create_time, update_time, enabled, visible, flags) " +
+            " (id, position, type, user_name, create_time, update_time, enabled, visible, flags) " +
             " VALUES (:id, :position, :type, :userName, :createTime, :updateTime, :enabled, :visible, :flags)";
 
     @Override
@@ -90,9 +90,9 @@ public class RecordDaoImpl implements RecordCustomizedDao {
     }
 
     public static final String SELECT_RECORDS = "SELECT " +
-            " r.record_id r_id, r.position r_position, r.type r_type, r.user_name r_user_name, " +
+            " r.id r_id, r.position r_position, r.type r_type, r.user_name r_user_name, " +
             " r.create_time r_create_time, r.update_time r_update_time, r.enabled r_enabled, r.visible r_visible, " +
-            " r.flags r_flags, ne.news_entry_id ne_news_entry_id, ne.news_group_id ne_news_group_id, " +
+            " r.flags r_flags, ne.id ne_news_entry_id, ne.news_group_id ne_news_group_id, " +
             " ne.user_name ne_user_name, ne.title ne_title, ne.content ne_content, ne.create_time ne_create_time, " +
             " ne.update_time ne_update_time, ne.enabled ne_enabled, ne.visible ne_visible, ne.flags ne_flags " +
             " FROM db.record r LEFT JOIN db.news_entry ne ON r.record_id = ne.news_entry_id;";

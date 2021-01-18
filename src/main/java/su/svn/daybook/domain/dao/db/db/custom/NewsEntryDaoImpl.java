@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.12.23 09:24 by Victor N. Skurikhin.
+ * This file was last modified at 2021.01.18 14:04 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NewsEntryDaoImpl.java
@@ -38,8 +38,7 @@ public class NewsEntryDaoImpl implements NewsEntryCustomizedDao {
     }
 
     public static final String INSERT = "INSERT INTO db.news_entry " +
-            " (news_entry_id, news_group_id, user_name, title, content, create_time, update_time, enabled, visible, " +
-            "  flags) " +
+            " (id, news_group_id, user_name, title, content, create_time, update_time, enabled, visible, flags) " +
             " VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)";
 
     private Statement statementBinding(Statement statement, NewsEntry newsEntry) {
@@ -58,7 +57,7 @@ public class NewsEntryDaoImpl implements NewsEntryCustomizedDao {
 
     private Publisher<? extends NewsEntry> extractResult(Result result) {
         return result.map((row, rowMetadata) -> NewsEntry.builder()
-                .id(row.get("news_entry_id", UUID.class))
+                .id(row.get("id", UUID.class))
                 .newsGroupId(row.get("news_group_id", UUID.class))
                 .userName(row.get("user_name", String.class))
                 .title(row.get("title", String.class))
@@ -72,8 +71,7 @@ public class NewsEntryDaoImpl implements NewsEntryCustomizedDao {
     }
 
     public static final String INSERT_NEWS_ENTRY = "INSERT INTO db.news_entry " +
-            " (news_entry_id, news_group_id, user_name, title, content, create_time, update_time, enabled, visible, " +
-            "  flags) " +
+            " (id, news_group_id, user_name, title, content, create_time, update_time, enabled, visible, flags) " +
             " VALUES" +
             " (:id, :newsGroupId, :userName, :title, :content, :createTime, :updateTime, :enabled, :visible, :flags)";
 
