@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.01.13 00:44 by Victor N. Skurikhin.
+ * This file was last modified at 2021.01.18 13:14 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * Record.java
@@ -31,12 +31,13 @@ import java.util.UUID;
 @Builder(builderClassName = "Builder")
 @Table("db.record")
 public class Record implements Serializable, DBUuidEntry {
-    static final long serialVersionUID = -200L;
+
+    private static final long serialVersionUID = 3138158476026595128L;
 
     @Id
     @Getter
     @Setter
-    @Column("record_id")
+    @Column("id")
     @Schema(description = "record id", example = "00000000-0000-0000-FFFF-000000101001")
     private UUID id;
 
@@ -61,7 +62,7 @@ public class Record implements Serializable, DBUuidEntry {
 
     @Getter
     @NotNull
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     @Column("create_time")
     @Schema(description = "create time", example = "1970-01-01T00:00:00Z")
     private LocalDateTime createTime;
