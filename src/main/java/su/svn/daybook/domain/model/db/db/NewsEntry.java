@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.01.13 00:44 by Victor N. Skurikhin.
+ * This file was last modified at 2021.01.18 18:15 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NewsEntry.java
@@ -8,6 +8,7 @@
 
 package su.svn.daybook.domain.model.db.db;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,12 +32,13 @@ import java.util.UUID;
 @Builder(builderClassName = "Builder")
 @Table("db.news_entry")
 public class NewsEntry implements Serializable, RecordEntry {
-    static final long serialVersionUID = -220L;
+
+    private static final long serialVersionUID = 730484232717818713L;
 
     @Id
     @Getter
     @Setter
-    @Column("news_entry_id")
+    @Column("id")
     @Schema(description = "news entry id", example = "00000000-0000-0000-FFFF-000000101001")
     private UUID id;
 
@@ -68,12 +70,14 @@ public class NewsEntry implements Serializable, RecordEntry {
     @Getter
     @NotNull
     @Column("create_time")
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     @Schema(description = "create time", example = "1970-01-01T00:00:00Z")
     private LocalDateTime createTime;
 
     @Getter
     @Setter
     @Column("update_time")
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime updateTime;
 
     @Getter
