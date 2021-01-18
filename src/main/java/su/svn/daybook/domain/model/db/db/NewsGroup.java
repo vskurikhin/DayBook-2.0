@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.11.15 21:41 by Victor N. Skurikhin.
+ * This file was last modified at 2021.01.18 18:15 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NewsGroup.java
@@ -8,6 +8,7 @@
 
 package su.svn.daybook.domain.model.db.db;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -54,11 +55,13 @@ public class NewsGroup implements Serializable, DBUuidEntry {
     @Getter
     @NotNull
     @Column("create_time")
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createTime;
 
     @Getter
     @Setter
     @Column("update_time")
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime updateTime;
 
     @Getter

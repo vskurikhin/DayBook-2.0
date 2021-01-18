@@ -3,19 +3,19 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd"
-        logicalFilePath="./src/main/resources/db/changelog/db/Change-Sets/changelogs_2021-01-16_15-26-55_180_dictionary_setting_user_name.xml">
+        logicalFilePath="./src/main/resources/db/changelog/db/Change-Sets/changelogs_2021-01-16_15-27-00_180_dictionary_setting_value_type_id">
 
-  <changeSet id="2021-01-16_15-26-55" author="Victor N. Skurikhin">
+  <changeSet id="2021-01-16_15-27-00" author="Victor N. Skurikhin">
       <sql>
           <![CDATA[
-            CREATE INDEX IF NOT EXISTS IDX_dictionary_setting_user_name
-                ON dictionary.setting (user_name);
+            CREATE INDEX IF NOT EXISTS IDX_dictionary_setting_value_type_id
+                ON dictionary.setting (value_type_id);
           ]]>
       </sql>
       <rollback>
           <sql>
             <![CDATA[
-              DROP INDEX IF EXISTS dictionary.IDX_dictionary_setting_user_name;
+              DROP INDEX IF EXISTS dictionary.IDX_dictionary_setting_value_type_id;
             ]]>
           </sql>
       </rollback>
