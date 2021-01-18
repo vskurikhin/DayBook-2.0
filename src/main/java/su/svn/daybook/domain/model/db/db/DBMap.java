@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.01.16 16:27 by Victor N. Skurikhin.
+ * This file was last modified at 2021.01.18 13:14 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * DBMap.java
@@ -32,7 +32,7 @@ import java.util.UUID;
 @Table("db.map")
 public class DBMap implements Serializable, DBUuidEntry {
 
-    private static final long serialVersionUID = -8104398446553124909L;
+    private static final long serialVersionUID = 6269491811865636304L;
 
     @Id
     @Getter

@@ -17,7 +17,7 @@
               value_type_id BIGINT,
                             CONSTRAINT FK_5014_dictionary_setting_value_type_id
                             FOREIGN KEY (value_type_id)
-                            REFERENCES  security.value_type (id)
+                            REFERENCES  dictionary.value_type (id)
                             ON DELETE CASCADE ON UPDATE CASCADE,
               user_name     VARCHAR(64),
                             CONSTRAINT FK_9f10_dictionary_setting_security_user_name
