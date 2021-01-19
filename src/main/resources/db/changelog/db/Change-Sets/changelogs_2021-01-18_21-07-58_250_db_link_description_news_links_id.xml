@@ -3,19 +3,19 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd"
-        logicalFilePath="./src/main/resources/db/changelog/db/Change-Sets/changelogs_2021-01-18_19-36-06_250_db_link_description_user_name.xml">
+        logicalFilePath="./src/main/resources/db/changelog/db/Change-Sets/changelogs_2021-01-18_21-08-10_250_db_link_description_link_id.xml">
 
-  <changeSet id="2021-01-18_19-36-06" author="Victor N. Skurikhin">
+  <changeSet id="2021-01-18_21-08-10" author="Victor N. Skurikhin">
       <sql>
           <![CDATA[
-            CREATE INDEX IF NOT EXISTS IDX_db_link_description_user_name
-                ON db.link_description (user_name);
+            CREATE INDEX IF NOT EXISTS IDX_db_link_description_news_links_id
+                ON db.link_description (news_links_id);
           ]]>
       </sql>
       <rollback>
           <sql>
             <![CDATA[
-              DROP INDEX IF EXISTS db.IDX_db_link_description_user_name;
+              DROP INDEX IF EXISTS db.IDX_db_link_description_news_links_id;
             ]]>
           </sql>
       </rollback>
