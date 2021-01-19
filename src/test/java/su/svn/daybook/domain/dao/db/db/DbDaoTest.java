@@ -57,6 +57,9 @@ public class DbDaoTest {
     @Autowired
     LinkDescriptionDao linkDescriptionDao;
 
+    @Autowired
+    ArticleDao articleDao;
+
     DatabaseClient databaseClient;
 
     TransactionalOperator transactionalOperator;
@@ -483,6 +486,65 @@ public class DbDaoTest {
             linkDescriptionDao.fluxAllById(new ArrayList<>() {{ add(UUID_1); }})
                     .as(StepVerifier::create)
                     .assertNext(LINK_DESCRIPTION_1::equals)
+                    .verifyComplete();
+        }
+    }
+
+    @Nested
+    class ArticleDaoTest {
+
+        final Article ARTICLE_2 = Article.builder()
+                .id(UUID_2)
+                .title("title1")
+                .include("include1")
+                .anchor("anchor1")
+                .summary("summary1")
+                .userName("userName1")
+                .createTime(LOCAL_DATE_TIME_EPOCH)
+                .updateTime(LOCAL_DATE_TIME_EPOCH)
+                .enabled(true)
+                .visible(true)
+                .flags(0)
+                .build();
+
+        final Article ARTICLE_3 = Article.builder()
+                .id(UUID_3)
+                .title("title1")
+                .include("include1")
+                .anchor("anchor1")
+                .summary("summary1")
+                .userName("userName1")
+                .createTime(LOCAL_DATE_TIME_EPOCH)
+                .updateTime(LOCAL_DATE_TIME_EPOCH)
+                .enabled(true)
+                .visible(true)
+                .flags(0)
+                .build();
+
+        @Test
+        void executesMonoById() throws IOException {
+            Hooks.onOperatorDebug();
+            articleDao.monoById(UUID_1)
+                    .as(StepVerifier::create)
+                    .assertNext(ARTICLE_1::equals)
+                    .verifyComplete();
+        }
+
+        @Test
+        void executesFluxAll() throws IOException {
+            Hooks.onOperatorDebug();
+            articleDao.fluxAll()
+                    .as(StepVerifier::create)
+                    .assertNext(ARTICLE_1::equals)
+                    .verifyComplete();
+        }
+
+        @Test
+        void executesFluxAllById() throws IOException {
+            Hooks.onOperatorDebug();
+            articleDao.fluxAllById(new ArrayList<>() {{ add(UUID_1); }})
+                    .as(StepVerifier::create)
+                    .assertNext(ARTICLE_1::equals)
                     .verifyComplete();
         }
     }

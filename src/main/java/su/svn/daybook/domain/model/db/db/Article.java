@@ -2,7 +2,7 @@
  * This file was last modified at 2021.01.19 21:06 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
- * NewsLinks.java
+ * Article.java
  * $Id$
  */
 
@@ -30,16 +30,16 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(builderClassName = "Builder")
-@Table("db.news_links")
-public class NewsLinks implements Serializable, RecordEntry {
+@Table("db.article")
+public class Article implements Serializable, RecordEntry {
 
-    private static final long serialVersionUID = 4690421013674698951L;
+    private static final long serialVersionUID = 6273130195279157204L;
 
     @Id
     @Getter
     @Setter
     @Column("id")
-    @Schema(description = "news links id", example = "00000000-0000-0000-FFFF-000000101001")
+    @Schema(description = "news entry id", example = "00000000-0000-0000-FFFF-000000101001")
     private UUID id;
 
     @Getter
@@ -53,6 +53,27 @@ public class NewsLinks implements Serializable, RecordEntry {
     @Size(max = 256)
     @Column("title")
     private String title;
+
+    @Getter
+    @Setter
+    @NotNull
+    @Size(max = 256)
+    @Column("include")
+    private String include;
+
+    @Getter
+    @Setter
+    @NotNull
+    @Size(max = 128)
+    @Column("anchor")
+    private String anchor;
+
+    @Getter
+    @Setter
+    @NotNull
+    @Size(max = 10485760)
+    @Column("summary")
+    private String summary;
 
     @Getter
     @Setter
@@ -91,16 +112,19 @@ public class NewsLinks implements Serializable, RecordEntry {
 
     @Override
     public Class<? extends DBUuidEntry> getEClass() {
-        return NewsLinks.class;
+        return Article.class;
     }
 
     @Override
     public String toString() {
-        return "NewsLinks{" +
+        return "Article{" +
                 "id=" + id +
                 ", newsGroupId=" + newsGroupId +
-                ", userName='" + userName + '\'' +
                 ", title='" + title + '\'' +
+                ", include='" + include + '\'' +
+                ", anchor='" + anchor + '\'' +
+                ", summary='" + summary + '\'' +
+                ", userName='" + userName + '\'' +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
                 ", enabled=" + enabled +
@@ -111,8 +135,8 @@ public class NewsLinks implements Serializable, RecordEntry {
 
     public boolean equals(final Object o) {
         if (o == this) return true;
-        if (!(o instanceof NewsLinks)) return false;
-        final NewsLinks other = (NewsLinks) o;
+        if (!(o instanceof Article)) return false;
+        final Article other = (Article) o;
         if (!other.canEqual((Object) this)) return false;
         final Object this$id = this.id;
         final Object other$id = other.id;
@@ -121,12 +145,21 @@ public class NewsLinks implements Serializable, RecordEntry {
         final Object other$newsGroupId = other.newsGroupId;
         if (this$newsGroupId == null ? other$newsGroupId != null : !this$newsGroupId.equals(other$newsGroupId))
             return false;
-        final Object this$userName = this.userName;
-        final Object other$userName = other.userName;
-        if (this$userName == null ? other$userName != null : !this$userName.equals(other$userName)) return false;
         final Object this$title = this.title;
         final Object other$title = other.title;
         if (this$title == null ? other$title != null : !this$title.equals(other$title)) return false;
+        final Object this$include = this.include;
+        final Object other$include = other.include;
+        if (this$include == null ? other$include != null : !this$include.equals(other$include)) return false;
+        final Object this$anchor = this.anchor;
+        final Object other$anchor = other.anchor;
+        if (this$anchor == null ? other$anchor != null : !this$anchor.equals(other$anchor)) return false;
+        final Object this$summary = this.summary;
+        final Object other$summary = other.summary;
+        if (this$summary == null ? other$summary != null : !this$summary.equals(other$summary)) return false;
+        final Object this$userName = this.userName;
+        final Object other$userName = other.userName;
+        if (this$userName == null ? other$userName != null : !this$userName.equals(other$userName)) return false;
         final Object this$createTime = this.createTime;
         final Object other$createTime = other.createTime;
         if (this$createTime == null ? other$createTime != null : !this$createTime.equals(other$createTime))
@@ -148,7 +181,7 @@ public class NewsLinks implements Serializable, RecordEntry {
     }
 
     protected boolean canEqual(final Object other) {
-        return other instanceof NewsLinks;
+        return other instanceof Article;
     }
 
     public int hashCode() {
@@ -158,10 +191,16 @@ public class NewsLinks implements Serializable, RecordEntry {
         result = result * PRIME + ($id == null ? 43 : $id.hashCode());
         final Object $newsGroupId = this.newsGroupId;
         result = result * PRIME + ($newsGroupId == null ? 43 : $newsGroupId.hashCode());
-        final Object $userName = this.userName;
-        result = result * PRIME + ($userName == null ? 43 : $userName.hashCode());
         final Object $title = this.title;
         result = result * PRIME + ($title == null ? 43 : $title.hashCode());
+        final Object $include = this.include;
+        result = result * PRIME + ($include == null ? 43 : $include.hashCode());
+        final Object $anchor = this.anchor;
+        result = result * PRIME + ($anchor == null ? 43 : $anchor.hashCode());
+        final Object $summary = this.summary;
+        result = result * PRIME + ($summary == null ? 43 : $summary.hashCode());
+        final Object $userName = this.userName;
+        result = result * PRIME + ($userName == null ? 43 : $userName.hashCode());
         final Object $createTime = this.createTime;
         result = result * PRIME + ($createTime == null ? 43 : $createTime.hashCode());
         final Object $updateTime = this.updateTime;

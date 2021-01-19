@@ -81,4 +81,18 @@ public class TestDataDb {
             .visible(true)
             .flags(0)
             .build();
+
+    public static final Article ARTICLE_1 = Article.builder()
+            .id(UUID_1)
+            .title("title1")
+            .include("include1")
+            .anchor("anchor1")
+            .summary("summary1")
+            .userName("userName1")
+            .createTime(LOCAL_DATE_TIME_EPOCH)
+            .updateTime(LOCAL_DATE_TIME_EPOCH)
+            .enabled(true)
+            .visible(true)
+            .flags(0)
+            .build();
 }

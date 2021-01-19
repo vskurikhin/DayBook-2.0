@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.01.18 18:15 by Victor N. Skurikhin.
+ * This file was last modified at 2021.01.19 21:06 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NewsGroup.java
@@ -30,7 +30,8 @@ import java.util.UUID;
 @Builder(builderClassName = "Builder")
 @Table("db.news_group")
 public class NewsGroup implements Serializable, DBUuidEntry {
-    static final long serialVersionUID = -210L;
+
+    private static final long serialVersionUID = 3819198386326222965L;
 
     @Id
     @Getter
@@ -42,15 +43,15 @@ public class NewsGroup implements Serializable, DBUuidEntry {
     @Setter
     @NotNull
     @Size(max = 64)
-    @Column("user_name")
-    private String userName;
+    @Column("group_name")
+    private String groupName;
 
     @Getter
     @Setter
     @NotNull
     @Size(max = 64)
-    @Column("group_name")
-    private String groupName;
+    @Column("user_name")
+    private String userName;
 
     @Getter
     @NotNull
