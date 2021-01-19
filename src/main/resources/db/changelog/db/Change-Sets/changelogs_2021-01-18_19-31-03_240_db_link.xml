@@ -3,7 +3,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd"
-        logicalFilePath="./src/main/resources/db/changelog/db/Change-Sets/changelogs_2021-01-18_19-31-03_230_db_link.xml">
+        logicalFilePath="./src/main/resources/db/changelog/db/Change-Sets/changelogs_2021-01-18_19-31-03_240_db_link.xml">
 
   <changeSet id="2021-01-18_19-31-03" author="Victor N. Skurikhin">
       <sql>
