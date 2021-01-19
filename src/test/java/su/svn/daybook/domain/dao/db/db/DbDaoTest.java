@@ -10,12 +10,9 @@ import org.springframework.data.r2dbc.core.DatabaseClient;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.reactive.TransactionalOperator;
 import reactor.core.publisher.Hooks;
-import reactor.core.publisher.Signal;
 import reactor.test.StepVerifier;
 import su.svn.daybook.domain.dao.db.TestConnectionFactoryConfiguration;
-import su.svn.daybook.domain.model.db.db.NewsEntry;
-import su.svn.daybook.domain.model.db.db.NewsGroup;
-import su.svn.daybook.domain.model.db.db.Record;
+import su.svn.daybook.domain.model.db.db.*;
 import su.svn.daybook.utils.SerializeUtil;
 import su.svn.daybook.utils.TestDatabaseUtil;
 
@@ -24,7 +21,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
-import java.util.function.Consumer;
 
 import static su.svn.daybook.domain.model.db.db.TestDataDb.*;
 
@@ -51,6 +47,15 @@ public class DbDaoTest {
 
     @Autowired
     NewsEntryDao newsEntryDao;
+
+    @Autowired
+    NewsLinksDao newsLinksDao;
+
+    @Autowired
+    LinkDao linkDao;
+
+    @Autowired
+    LinkDescriptionDao linkDescriptionDao;
 
     DatabaseClient databaseClient;
 
@@ -315,6 +320,169 @@ public class DbDaoTest {
             newsEntryDao.fluxAllById(new ArrayList<>() {{ add(UUID_1); }})
                     .as(StepVerifier::create)
                     .assertNext(NEWS_ENTRY_1::equals)
+                    .verifyComplete();
+        }
+    }
+
+    @Nested
+    class NewsLinksDaoTest {
+
+        final NewsLinks NEWS_ENTRY_2 = NewsLinks.builder()
+                .id(UUID_2)
+                .userName("userName1")
+                .newsGroupId(UUID_1)
+                .title("title1")
+                .createTime(LOCAL_DATE_TIME_EPOCH)
+                .updateTime(LOCAL_DATE_TIME_EPOCH)
+                .enabled(true)
+                .visible(true)
+                .flags(0)
+                .build();
+
+        final NewsLinks NEWS_ENTRY_3 = NewsLinks.builder()
+                .id(UUID_3)
+                .userName("userName1")
+                .newsGroupId(UUID_1)
+                .title("title1")
+                .createTime(LOCAL_DATE_TIME_EPOCH)
+                .updateTime(LOCAL_DATE_TIME_EPOCH)
+                .enabled(true)
+                .visible(true)
+                .flags(0)
+                .build();
+
+        @Test
+        void executesMonoById() throws IOException {
+            Hooks.onOperatorDebug();
+            newsLinksDao.monoById(UUID_1)
+                    .as(StepVerifier::create)
+                    .assertNext(NEWS_LINKS_1::equals)
+                    .verifyComplete();
+        }
+
+        @Test
+        void executesFluxAll() throws IOException {
+            Hooks.onOperatorDebug();
+            newsLinksDao.fluxAll()
+                    .as(StepVerifier::create)
+                    .assertNext(NEWS_LINKS_1::equals)
+                    .verifyComplete();
+        }
+
+        @Test
+        void executesFluxAllById() throws IOException {
+            Hooks.onOperatorDebug();
+            newsLinksDao.fluxAllById(new ArrayList<>() {{ add(UUID_1); }})
+                    .as(StepVerifier::create)
+                    .assertNext(NEWS_LINKS_1::equals)
+                    .verifyComplete();
+        }
+    }
+
+    @Nested
+    class LinkDaoTest {
+
+        final Link LINK_2 = Link.builder()
+                .id(UUID_2)
+                .link("link2")
+                .userName("userName1")
+                .createTime(LOCAL_DATE_TIME_EPOCH)
+                .updateTime(LOCAL_DATE_TIME_EPOCH)
+                .enabled(true)
+                .visible(true)
+                .flags(0)
+                .build();
+
+        final Link LINK_3 = Link.builder()
+                .id(UUID_3)
+                .link("link3")
+                .userName("userName1")
+                .createTime(LOCAL_DATE_TIME_EPOCH)
+                .updateTime(LOCAL_DATE_TIME_EPOCH)
+                .enabled(true)
+                .visible(true)
+                .flags(0)
+                .build();
+
+        @Test
+        void executesMonoById() throws IOException {
+            Hooks.onOperatorDebug();
+            newsLinksDao.monoById(UUID_1)
+                    .as(StepVerifier::create)
+                    .assertNext(LINK_1::equals)
+                    .verifyComplete();
+        }
+
+        @Test
+        void executesFluxAll() throws IOException {
+            Hooks.onOperatorDebug();
+            newsLinksDao.fluxAll()
+                    .as(StepVerifier::create)
+                    .assertNext(LINK_1::equals)
+                    .verifyComplete();
+        }
+
+        @Test
+        void executesFluxAllById() throws IOException {
+            Hooks.onOperatorDebug();
+            newsLinksDao.fluxAllById(new ArrayList<>() {{ add(UUID_1); }})
+                    .as(StepVerifier::create)
+                    .assertNext(LINK_1::equals)
+                    .verifyComplete();
+        }
+    }
+
+    @Nested
+    class LinkDescriptionDaoTest {
+
+        final LinkDescription LINK_DESCRIPTION_2 = LinkDescription.builder()
+                .id(UUID_2)
+                .newsLinksId(UUID_1)
+                .linkId(UUID_1)
+                .userName("userName1")
+                .createTime(LOCAL_DATE_TIME_EPOCH)
+                .updateTime(LOCAL_DATE_TIME_EPOCH)
+                .enabled(true)
+                .visible(true)
+                .flags(0)
+                .build();
+
+        final LinkDescription LINK_DESCRIPTION_3 = LinkDescription.builder()
+                .id(UUID_3)
+                .newsLinksId(UUID_1)
+                .linkId(UUID_1)
+                .userName("userName1")
+                .createTime(LOCAL_DATE_TIME_EPOCH)
+                .updateTime(LOCAL_DATE_TIME_EPOCH)
+                .enabled(true)
+                .visible(true)
+                .flags(0)
+                .build();
+
+        @Test
+        void executesMonoById() throws IOException {
+            Hooks.onOperatorDebug();
+            linkDescriptionDao.monoById(UUID_1)
+                    .as(StepVerifier::create)
+                    .assertNext(LINK_DESCRIPTION_1::equals)
+                    .verifyComplete();
+        }
+
+        @Test
+        void executesFluxAll() throws IOException {
+            Hooks.onOperatorDebug();
+            linkDescriptionDao.fluxAll()
+                    .as(StepVerifier::create)
+                    .assertNext(LINK_DESCRIPTION_1::equals)
+                    .verifyComplete();
+        }
+
+        @Test
+        void executesFluxAllById() throws IOException {
+            Hooks.onOperatorDebug();
+            linkDescriptionDao.fluxAllById(new ArrayList<>() {{ add(UUID_1); }})
+                    .as(StepVerifier::create)
+                    .assertNext(LINK_DESCRIPTION_1::equals)
                     .verifyComplete();
         }
     }

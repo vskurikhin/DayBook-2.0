@@ -46,4 +46,39 @@ public class TestDataDb {
             .visible(true)
             .flags(0)
             .build();
+
+    public static final NewsLinks NEWS_LINKS_1 = NewsLinks.builder()
+            .id(UUID_1)
+            .userName("userName1")
+            .newsGroupId(UUID_1)
+            .title("title1")
+            .createTime(LOCAL_DATE_TIME_EPOCH)
+            .updateTime(LOCAL_DATE_TIME_EPOCH)
+            .enabled(true)
+            .visible(true)
+            .flags(0)
+            .build();
+
+    public static final Link LINK_1 = Link.builder()
+            .id(UUID_1)
+            .link("link1")
+            .userName("userName1")
+            .createTime(LOCAL_DATE_TIME_EPOCH)
+            .updateTime(LOCAL_DATE_TIME_EPOCH)
+            .enabled(true)
+            .visible(true)
+            .flags(0)
+            .build();
+
+    public static final LinkDescription LINK_DESCRIPTION_1 = LinkDescription.builder()
+            .id(UUID_1)
+            .newsLinksId(UUID_1)
+            .linkId(UUID_1)
+            .userName("userName1")
+            .createTime(LOCAL_DATE_TIME_EPOCH)
+            .updateTime(LOCAL_DATE_TIME_EPOCH)
+            .enabled(true)
+            .visible(true)
+            .flags(0)
+            .build();
 }
