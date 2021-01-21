@@ -3,14 +3,14 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd"
-        logicalFilePath="./src/main/resources/db/changelog/db/Change-Sets/changelogs_2021-01-18_17-45-17_220_db_news_entry.xml">
+        logicalFilePath="./src/main/resources/db/changelog/db/Change-Sets/changelogs_2021-01-19_20-30-03_260_db_article.xml">
 
-  <changeSet id="2021-01-18_17-45-17" author="Victor N. Skurikhin">
+  <changeSet id="2021-01-19_20-30-03" author="Victor N. Skurikhin">
       <sql>
           <![CDATA[
-            CREATE TABLE db.news_entry (
+            CREATE TABLE db.article (
               id                UUID  PRIMARY KEY            NOT NULL  DEFAULT pg_catalog.uuid_generate_v4(),
-                                CONSTRAINT FK_9a77_db_news_entry_need_record
+                                CONSTRAINT FK_9a77_db_article_need_record
                                 FOREIGN KEY (id)
                                 REFERENCES  db.record (id)
                                 ON DELETE CASCADE ON UPDATE CASCADE,
@@ -18,10 +18,12 @@
                                 FOREIGN KEY (news_group_id)
                                 REFERENCES  db.news_group (id)
                                 ON DELETE CASCADE ON UPDATE CASCADE,
-              title             VARCHAR(256)                 NOT NULL,
-              content           VARCHAR(10485760),
+              title             VARCHAR(256)      NOT NULL,
+              include           VARCHAR(256)      NOT NULL,
+              anchor            VARCHAR(128)      NOT NULL,
+              summary           VARCHAR(10485760),
               user_name         VARCHAR(64),
-                                CONSTRAINT FK_47f3_db_news_entry_security_user_name
+                                CONSTRAINT FK_47f3_db_article_security_user_name
                                 FOREIGN KEY (user_name)
                                 REFERENCES  security.user_name (user_name)
                                 ON DELETE CASCADE ON UPDATE CASCADE,

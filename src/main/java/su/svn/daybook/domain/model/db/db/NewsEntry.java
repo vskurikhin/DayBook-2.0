@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.01.18 18:15 by Victor N. Skurikhin.
+ * This file was last modified at 2021.01.19 21:06 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NewsEntry.java
@@ -44,13 +44,6 @@ public class NewsEntry implements Serializable, RecordEntry {
 
     @Getter
     @Setter
-    @NotNull
-    @Size(max = 64)
-    @Column("user_name")
-    private String userName;
-
-    @Getter
-    @Setter
     @Column("news_group_id")
     private UUID newsGroupId;
 
@@ -66,6 +59,13 @@ public class NewsEntry implements Serializable, RecordEntry {
     @Size(max = 10485760)
     @Column("content")
     private String content;
+
+    @Getter
+    @Setter
+    @NotNull
+    @Size(max = 64)
+    @Column("user_name")
+    private String userName;
 
     @Getter
     @NotNull

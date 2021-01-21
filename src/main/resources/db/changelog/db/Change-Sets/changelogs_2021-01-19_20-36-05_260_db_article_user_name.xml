@@ -1,0 +1,23 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd"
+        logicalFilePath="./src/main/resources/db/changelog/db/Change-Sets/changelogs_2021-01-19_20-36-05_260_db_article_user_name.xml">
+
+  <changeSet id="2021-01-19_20-36-05" author="Victor N. Skurikhin">
+      <sql>
+          <![CDATA[
+            CREATE INDEX IF NOT EXISTS IDX_db_article_user_name
+                ON db.article (user_name);
+          ]]>
+      </sql>
+      <rollback>
+          <sql>
+            <![CDATA[
+              DROP INDEX IF EXISTS db.IDX_db_article_user_name;
+            ]]>
+          </sql>
+      </rollback>
+  </changeSet>
+</databaseChangeLog>
