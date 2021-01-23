@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.01.23 13:09 by Victor N. Skurikhin.
+ * This file was last modified at 2021.01.23 16:55 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RecordDaoImpl.java
@@ -95,7 +95,7 @@ public class RecordDaoImpl implements RecordCustomizedDao {
             " r.flags r_flags, ne.id ne_news_entry_id, ne.news_group_id ne_news_group_id, " +
             " ne.user_name ne_user_name, ne.title ne_title, ne.content ne_content, ne.create_time ne_create_time, " +
             " ne.update_time ne_update_time, ne.enabled ne_enabled, ne.visible ne_visible, ne.flags ne_flags " +
-            " FROM db.record r LEFT JOIN db.news_entry ne ON r.id = ne.news_entry_id;";
+            " FROM db.record r LEFT JOIN db.news_entry ne ON r.id = ne.id;";
 
     @Override
     public Flux<RecordDto<?>> selectRecords() {
