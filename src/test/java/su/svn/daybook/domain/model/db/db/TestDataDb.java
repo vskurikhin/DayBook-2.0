@@ -95,4 +95,17 @@ public class TestDataDb {
             .visible(true)
             .flags(0)
             .build();
+
+    public static final TaggetRecordView TAGGET_RECORD_VIEW_1 = TaggetRecordView.builder()
+            .id(UUID_1)
+            .position(1)
+            .type("type1")
+            .userName("userName1")
+            .createTime(LOCAL_DATE_TIME_EPOCH)
+            .updateTime(LOCAL_DATE_TIME_EPOCH)
+            .enabled(true)
+            .visible(true)
+            .flags(0)
+            .tags(new String[]{"label1"})
+            .build();
 }
