@@ -60,6 +60,9 @@ public class DbDaoTest {
     @Autowired
     ArticleDao articleDao;
 
+    @Autowired
+    TaggetRecordViewDao taggetRecordViewDao;
+
     DatabaseClient databaseClient;
 
     TransactionalOperator transactionalOperator;
@@ -545,6 +548,37 @@ public class DbDaoTest {
             articleDao.fluxAllById(new ArrayList<>() {{ add(UUID_1); }})
                     .as(StepVerifier::create)
                     .assertNext(ARTICLE_1::equals)
+                    .verifyComplete();
+        }
+    }
+
+    @Nested
+    class TaggetRecordViewDaoTest {
+        @Test
+        void executesMonoById() throws IOException {
+            Hooks.onOperatorDebug();
+            taggetRecordViewDao.monoById(UUID_1)
+                    .as(StepVerifier::create)
+                    .assertNext(TAGGET_RECORD_VIEW_1::equals)
+                    .verifyComplete();
+        }
+
+        @Disabled
+        @Test
+        void executesFluxAll() throws IOException {
+            Hooks.onOperatorDebug();
+            taggetRecordViewDao.fluxAll()
+                    .as(StepVerifier::create)
+                    .expectNextCount(2)
+                    .verifyComplete();
+        }
+
+        @Test
+        void executesFluxAllById() throws IOException {
+            Hooks.onOperatorDebug();
+            taggetRecordViewDao.fluxAllById(new ArrayList<>() {{ add(UUID_1); }})
+                    .as(StepVerifier::create)
+                    .assertNext(TAGGET_RECORD_VIEW_1::equals)
                     .verifyComplete();
         }
     }
