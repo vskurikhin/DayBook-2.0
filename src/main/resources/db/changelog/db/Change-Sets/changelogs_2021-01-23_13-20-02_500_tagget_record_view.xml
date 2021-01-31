@@ -20,7 +20,7 @@
                 re.flags record_flags,
                 (   SELECT array_agg(tl.label)
                       FROM db.tagget ta
-                      JOIN dictionary.tag_label tl
+                      LEFT JOIN dictionary.tag_label tl
                         ON tl.id = ta.tag_label_id AND tl.enabled AND ta.enabled
                      WHERE re.id = ta.record_id AND ta.enabled
                 ) tags

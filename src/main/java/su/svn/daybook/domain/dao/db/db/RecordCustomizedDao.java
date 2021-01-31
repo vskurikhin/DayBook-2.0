@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.01.13 00:44 by Victor N. Skurikhin.
+ * This file was last modified at 2021.01.31 20:08 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RecordCustomizedDao.java
@@ -21,6 +21,4 @@ public interface RecordCustomizedDao {
     Mono<Integer> transactionalInsert(Record entry);
 
     Mono<Integer> transactionalInsertAll(Iterable<Record> entries);
-
-    Flux<RecordDto<?>> selectRecords();
 }

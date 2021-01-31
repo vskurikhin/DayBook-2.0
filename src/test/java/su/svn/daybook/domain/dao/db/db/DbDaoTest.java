@@ -72,14 +72,12 @@ public class DbDaoTest {
         databaseClient = DatabaseClient.create(connectionFactory);
         transactionalOperator = TransactionalOperator.create(new R2dbcTransactionManager(connectionFactory));
         TestDatabaseUtil.constructTestDatabase(databaseClient, transactionalOperator, tClass);
-        System.err.println("setUp");
     }
 
     @AfterEach
     void tearDown() {
         transactionalOperator = TransactionalOperator.create(new R2dbcTransactionManager(connectionFactory));
         TestDatabaseUtil.dropTestDatabase(databaseClient, transactionalOperator, tClass);
-        System.err.println("tearDown");
     }
 
     @Nested
