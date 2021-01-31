@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.01.13 00:44 by Victor N. Skurikhin.
+ * This file was last modified at 2021.01.31 20:08 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RecordNewsEntryService.java
@@ -9,27 +9,31 @@
 package su.svn.daybook.domain.dao.db.db;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import su.svn.daybook.domain.model.NewsEntryRecordDto;
 import su.svn.daybook.domain.model.RecordDto;
+import su.svn.daybook.domain.model.db.db.AllRecordView;
 import su.svn.daybook.domain.model.db.db.NewsEntry;
 import su.svn.daybook.domain.model.db.db.Record;
 
-import java.io.Flushable;
 import java.util.UUID;
 
 @Slf4j
 @Service
 public class RecordNewsEntryService {
 
+    private final AllRecordViewDao allRecordViewDao;
+
     private final RecordDao recordDao;
 
     private final NewsEntryDao newsEntryDao;
 
-    public RecordNewsEntryService(RecordDao recordDao, NewsEntryDao newsEntryDao) {
+    public RecordNewsEntryService(AllRecordViewDao allRecordViewDao, RecordDao recordDao, NewsEntryDao newsEntryDao) {
+        this.allRecordViewDao = allRecordViewDao;
         this.recordDao = recordDao;
         this.newsEntryDao = newsEntryDao;
     }
@@ -62,7 +66,7 @@ public class RecordNewsEntryService {
                 .map(record -> new NewsEntryRecordDto(record, newsEntry));
     }
 
-    public Flux<RecordDto<?>> getRecords() {
-        return recordDao.selectRecords();
+    public Flux<AllRecordView> getRecords() {
+        return allRecordViewDao.findAllByEnabledIsTrueOrderByUpdateTimeDescPositionAsc(Pageable.unpaged());
     }
 }

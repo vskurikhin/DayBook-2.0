@@ -27,7 +27,7 @@ public class TestDatabaseUtil {
         Arrays.stream(Objects.requireNonNull(directory.listFiles())).filter(File::isFile).sorted().forEach(file -> {
             String content = null;
             try {
-                content = Files.readString(Path.of(file.getPath()), StandardCharsets.US_ASCII);
+                content = Files.readString(Path.of(file.getPath()), StandardCharsets.UTF_8);
                 executeTransactionalOperator(databaseClient, transactionalOperator, content);
             } catch (IOException e) {
                 e.printStackTrace();

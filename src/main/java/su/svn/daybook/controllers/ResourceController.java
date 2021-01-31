@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.01.13 00:44 by Victor N. Skurikhin.
+ * This file was last modified at 2021.01.31 20:08 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * ResourceController.java
@@ -24,6 +24,7 @@ import su.svn.daybook.domain.Message;
 import su.svn.daybook.domain.dao.db.db.RecordNewsEntryService;
 import su.svn.daybook.domain.model.NewsEntryRecordDto;
 import su.svn.daybook.domain.model.RecordDto;
+import su.svn.daybook.domain.model.db.db.AllRecordView;
 import su.svn.daybook.domain.security.ProfileResponse;
 
 import java.util.UUID;
@@ -96,7 +97,7 @@ public class ResourceController {
     @Operation(summary = "get all records")
     @GetMapping(value = "/records")
     @PreAuthorize("permitAll() or hasPermission()")
-    public Flux<RecordDto<?>> readRecords() {
+    public Flux<AllRecordView> readRecords() {
         log.debug("readRecords()");
         return recordNewsEntryService.getRecords();
     }

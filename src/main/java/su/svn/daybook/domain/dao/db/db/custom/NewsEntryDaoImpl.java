@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.01.18 14:04 by Victor N. Skurikhin.
+ * This file was last modified at 2021.01.31 20:08 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NewsEntryDaoImpl.java
@@ -53,21 +53,6 @@ public class NewsEntryDaoImpl implements NewsEntryCustomizedDao {
                 .bind("$8", newsEntry.getEnabled())
                 .bind("$9", newsEntry.getVisible())
                 .bind("$10", newsEntry.getFlags());
-    }
-
-    private Publisher<? extends NewsEntry> extractResult(Result result) {
-        return result.map((row, rowMetadata) -> NewsEntry.builder()
-                .id(row.get("id", UUID.class))
-                .newsGroupId(row.get("news_group_id", UUID.class))
-                .userName(row.get("user_name", String.class))
-                .title(row.get("title", String.class))
-                .content(row.get("content", String.class))
-                .createTime(row.get("create_time", LocalDateTime.class))
-                .updateTime(row.get("update_time", LocalDateTime.class))
-                .enabled(row.get("enabled", Boolean.class))
-                .visible(row.get("visible", Boolean.class))
-                .flags(row.get("flags", Integer.class))
-                .build());
     }
 
     public static final String INSERT_NEWS_ENTRY = "INSERT INTO db.news_entry " +
