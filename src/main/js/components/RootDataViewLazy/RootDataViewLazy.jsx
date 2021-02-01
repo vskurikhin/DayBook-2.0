@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.01.14 09:25 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.01 23:11 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RootDataViewLazy.jsx
@@ -7,36 +7,36 @@
  */
 
 import 'primeicons/primeicons.css';
-import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.css';
 import 'primeflex/primeflex.css';
+import './RootDataViewLazy.scss';
 
 import React, { useState, useEffect } from 'react';
 import { DataView, DataViewLayoutOptions } from 'primereact/dataview';
 import { Panel } from 'primereact/panel';
-import { CarService } from '../../service/CarService';
+import { AllRecordService } from '../../service/AllRecordService';
 
 const RootDataViewLazy = () => {
-    const [cars, setCars] = useState([]);
-    const [layout, setLayout] = useState('list');
+    const [records, setRecords] = useState([]);
+    const [layout, setLayout] = useState('grid');
     const [loading, setLoading] = useState(true);
     const [first, setFirst] = useState(0);
     const [totalRecords, setTotalRecords] = useState(0);
-    const rows = 6;
-    const carservice = new CarService();
+    const [numberOfElements, setNumberOfElements] = useState(3);
+    const allRecordService = new AllRecordService();
 
     useEffect(() => {
         setTimeout(() => {
-            carservice.getCarsFirstPage(0, 0, rows).then(function (resItems) {
-                console.log("resItems", JSON.stringify(resItems));
-                setTotalRecords(resItems.data.headers.resultCount);
-                setCars(resItems.data.data);
+            allRecordService.getCarsFirstPage(0, 0, numberOfElements).then(function (resItems) {
+                setTotalRecords(resItems.data.totalElements);
+                setNumberOfElements(resItems.data.numberOfElements);
+                setRecords(resItems.data.content);
             }).catch(function (error) {
                 console.log(error);
             });
             setFirst(0);
             setLoading(false);
-        }, 250);
+        }, 50);
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const onPage = (event) => {
@@ -46,34 +46,43 @@ const RootDataViewLazy = () => {
         //imitate delay of a backend call
         setTimeout(() => {
             const startIndex = event.first;
-            carservice.getCarsLazy(event.originalEvent).then(function (resItems) {
-                console.log("resItems", JSON.stringify(resItems));
-                setTotalRecords(resItems.data.headers.resultCount);
-                setCars(resItems.data.data);
+            allRecordService.getCarsLazy(event.originalEvent).then(function (resItems) {
+                setTotalRecords(resItems.data.totalElements);
+                setNumberOfElements(resItems.data.numberOfElements);
+                setRecords(resItems.data.content);
             }).catch(function (error) {
                 console.log(error);
             });
             setFirst(startIndex);
             setLoading(false);
-        }, 250);
+        }, 50);
     }
 
-    const renderListItem = (car) => {
+    const renderListItem = (record) => {
         return (
-            <div className="p-col-12">
-                <div className="car-details">
+            <div className="p-col-12"  key={record.id}>
+                <div className="car-details p-paginator-page p-paginator-element p-link p-highlight">
                     <div>
-
                         <div className="p-grid">
-                            <div className="p-col-12">Vin: <b>{car.vin}</b></div>
-                            <div className="p-col-12">Year: <b>{car.year}</b></div>
+                            <div className="p-col-12">type: <b>{record.articleTitle}</b></div>
                             <div className="p-col-12">
-                                <img src="/raw-svg/sitemap.svg"
-                                     srcSet="/raw-svg/sitemap.svg"
-                                     alt={car.brand}
-                                />Brand: <b>{car.brand}</b>
+                                <img className="leftimg"
+                                     src="/raw-svg/arrow-right.svg"
+                                     srcSet="/raw-svg/arrow-right.svg"
+                                     alt={record.visible}
+                                     width="64"
+                                     height="64"
+                                />
+                                <ul>
+                                <li>Anchor: <b>{record.articleAnchor}</b></li>
+                                <li>Include: <b>{record.articleInclude}</b></li>
+                                <li>Summary: <b>{record.articleSummary}</b></li>
+                                <li>Title: <b>{record.articleTitle}</b></li>
+                                <li>UserName: <b>{record.articleUserName}</b></li>
+                                </ul>
                             </div>
-                            <div className="p-col-12">Color: <b>{car.color}</b></div>
+                            <div className="p-col-12">updateTime: <b>{record.updateTime}</b></div>
+                            <div className="p-col-12">tags: <b>{record.tags}</b></div>
                         </div>
                     </div>
                 </div>
@@ -81,36 +90,126 @@ const RootDataViewLazy = () => {
         );
     }
 
-    const renderGridItem = (car) => {
+    const renderGridItem = (record) => {
+        if (record.type === "Article")
+            return renderGridItemArticle(record);
+        if (record.type === "NewsEntry")
+            return renderGridItemNewsEntry(record);
+        if (record.type === "NewsLinks")
+            return renderGridItemNewsLinks(record);
         return (
-            <div style={{ padding: '.5em' }} className="p-col-12 p-md-4">
-                <Panel header={car.vin} style={{ textAlign: 'left' }}>
+            <div style={{ padding: '.5em' }} className="p-col-12 p-md-4" key={record.id}>
+                <Panel header={record.type} style={{ textAlign: 'left' }}>
                     <div className="car-detail">
                         <p align = "justify">
-                            <img className="leftimg"
-                                 src="/raw-svg/sitemap.svg"
-                                 srcSet="/raw-svg/sitemap.svg"
-                                 alt={car.brand}
-                                 width="32"
-                                 height="32"
-                            />{car.color}
+                            <img className="my-left-top"
+                                 src="/raw-svg/arrow-right.svg"
+                                 srcSet="/raw-svg/arrow-right.svg"
+                                 alt={record.position}
+                                 width="64"
+                                 height="64"
+                            />{record.tags}
                         </p>
                     </div>
-                    <div className="right">{car.year}</div>
+                    <div className="right">{record.tags}</div>
+                    <div className="right timestamp-bottom">{record.updateTime}</div>
                 </Panel>
             </div>
         );
     }
 
-    const itemTemplate = (car, layout) => {
-        if (!car) {
+    const renderGridItemArticle = (record) => {
+        return (
+            <div style={{ padding: '.5em' }} className="p-col-12 p-md-4" key={record.id}>
+                <Panel header={record.articleTitle} style={{ textAlign: 'left' }}>
+                    <div className="car-detail">
+                        <p align = "justify">
+                            <img className="my-left-top"
+                                 src="/raw-svg/file.svg"
+                                 srcSet="/raw-svg/file.svg"
+                                 alt={record.articleTitle}
+                                 width="64"
+                                 height="64"
+                            />{record.articleSummary}
+                            <ul>
+                                <li>Anchor: <b>{record.articleAnchor}</b></li>
+                                <li>Include: <b>{record.articleInclude}</b></li>
+                                <li>Summary: <b>{record.articleSummary}</b></li>
+                                <li>Title: <b>{record.articleTitle}</b></li>
+                                <li>UserName: <b>{record.articleUserName}</b></li>
+                            </ul>
+                        </p>
+                    </div>
+                    <div className="right">{record.tags}</div>
+                    <div className="right timestamp-bottom">{record.updateTime}</div>
+                </Panel>
+            </div>
+        );
+    }
+
+    const renderGridItemNewsEntry = (record) => {
+        return (
+            <div style={{ padding: '.5em' }} className="p-col-12 p-md-4" key={record.id}>
+                <Panel header={record.newsEntryTitle} style={{ textAlign: 'left' }}>
+                    <div className="car-detail">
+                        <p align = "justify">
+                            <img className="my-left-top"
+                                 src="/raw-svg/pause.svg"
+                                 srcSet="/raw-svg/pause.svg"
+                                 alt={record.newsEntryTitle}
+                                 width="64"
+                                 height="96"
+                            />{record.newsEntryContent}
+                            <ul>
+                                <li>Content: <b>{record.newsEntryContent}</b></li>
+                                <li>Title: <b>{record.newsEntryTitle}</b></li>
+                                <li>UserName: <b>{record.newsEntryUserName}</b></li>
+                            </ul>
+                        </p>
+                    </div>
+                    <div className="right">{record.tags}</div>
+                    <div className="right timestamp-bottom">{record.updateTime}</div>
+                </Panel>
+            </div>
+        );
+    }
+
+    const renderGridItemNewsLinks = (record) => {
+        return (
+            <div style={{ padding: '.5em' }} className="p-col-12 p-md-4" key={record.id}>
+                <Panel header={record.newsLinksTitle} style={{ textAlign: 'left' }}>
+                    <div className="car-detail">
+                        <p align = "justify">
+                            <img className="my-left-top"
+                                 src="/raw-svg/link.svg"
+                                 srcSet="/raw-svg/link.svg"
+                                 alt={record.newsLinksTitle}
+                                 width="64"
+                                 height="72"
+                            />{record.links}
+                            <ul>
+                                <li>links: <b>{record.links}</b></li>
+                                <li>Title: <b>{record.newsLinksTitle}</b></li>
+                                <li>UserName: <b>{record.newsLinksUserName}</b></li>
+                            </ul>
+                        </p>
+                    </div>
+                    <div className="right">{record.tags}</div>
+                    <div className="right timestamp-bottom">{record.updateTime}</div>
+                </Panel>
+            </div>
+        );
+    }
+
+    const itemTemplate = (record, layout) => {
+        if ( ! record) {
             return;
         }
 
         if (layout === 'grid')
-            return renderListItem(car);
+            return renderGridItem(record);
         else if (layout === 'list')
-            return renderGridItem(car);
+            return renderListItem(record);
     }
 
     const renderHeader = () => {
@@ -120,7 +219,7 @@ const RootDataViewLazy = () => {
             setTimeout(() => {
                 setLoading(false);
                 setLayout(e.value);
-            }, 250);
+            }, 50);
         };
 
         return (
@@ -132,8 +231,8 @@ const RootDataViewLazy = () => {
 
     return (
         <div className="dataview-demo">
-            <DataView value={cars} layout={layout} itemTemplate={itemTemplate}
-                      lazy paginator paginatorPosition={'both'} rows={rows} totalRecords={totalRecords}
+            <DataView value={records} layout={layout} itemTemplate={itemTemplate}
+                      lazy paginator paginatorPosition={'both'} rows={numberOfElements} totalRecords={totalRecords}
                       first={first} onPage={onPage} loading={loading} />
         </div>
     );

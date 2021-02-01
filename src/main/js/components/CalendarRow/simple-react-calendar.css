@@ -1,265 +1,3 @@
-* {
-    box-sizing: border-box;
-}
-
-/* Style the body */
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0;
-}
-
-/* Header/logo Title */
-.my-header {
-    position: absolute;
-    height: 90px;
-    width: 100%;
-    padding: 4px;
-    text-align: center;
-    background: white;
-    color: #3f3f3f;
-}
-
-/* Increase the font size of the heading */
-.header h1 {
-    font-size: 40px;
-}
-
-/* Style the top navigation bar */
-.navbar {
-    position: absolute;
-    top: 90px;
-    height: 44px;
-    width: 100%;
-    overflow: hidden;
-    background-color: #333;
-}
-
-/* Style the navigation bar links */
-.navbar a {
-    float: left;
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 20px;
-    text-decoration: none;
-}
-
-/* Right-aligned link */
-.navbar a.right {
-    float: right;
-}
-
-/* Change color on hover */
-.navbar a:hover {
-    background-color: #ddd;
-    color: black;
-}
-
-/* Column container */
-.my-row {
-    position: absolute;
-    top: 134px;
-    bottom: 10px;
-    width: 100%;
-    display: -ms-flexbox; /* IE10 */
-    display: flex;
-    -ms-flex-wrap: wrap; /* IE10 */
-    flex-wrap: wrap;
-}
-
-/* Create two unequal columns that sits next to each other */
-/* Sidebar/left column */
-.my-side {
-    /* -ms-flex: 25%; /* IE10
-    flex: 25%; */
-    background-color: #f1f1f1;
-    border: 1px solid #c8c8c8;
-    padding: 5px;
-    width: 240px;
-    min-width: 230px;
-}
-
-/* Main column */
-.my-main {
-    -ms-flex: 55%; /* IE10 */
-    flex: 55%;
-    background-color: white;
-    padding: 0;
-}
-
-/* Fake image, just for this example */
-.fakeimg {
-    background-color: #aaa;
-    width: 100%;
-    padding: 20px;
-}
-
-.timestamp-bottom {
-    margin-bottom: 15px;
-}
-
-/* Footer */
-.my-footer {
-    position:absolute;
-    height: 10px;
-    bottom: 0;
-    padding: 2px;
-    text-align: center;
-    background: #ddd;
-    border: 1px solid #c8c8c8;
-}
-
-img.my-left-top {
-    float:left; /* Выравнивание по левому краю */
-    margin: 17px 17px 17px 17px; /* Отступы вокруг картинки */
-    vertical-align: text-top;
-}
-
-.my-left-top {
-    float:left; /* Выравнивание по левому краю */
-    margin: 17px 17px 17px 17px; /* Отступы вокруг картинки */
-    vertical-align: text-top;
-}
-
-.center-demo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.p-col-d {
-    display: table-cell;
-}
-.p-col-m {
-    display: none;
-}
-
-.leftimg {
-    float:left; /* Выравнивание по левому краю */
-    margin: 17px 17px 17px 17px; /* Отступы вокруг картинки */
-}
-.rightimg  {
-    float: right; /* Выравнивание по правому краю  */
-    margin: 7px 0 7px 7px; /* Отступы вокруг картинки */
-}
-
-/* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 700px) {
-    .row {
-        flex-direction: column;
-    }
-}
-
-/* Responsive layout - when the screen is less than 400px wide, make the navigation links stack on top of each other instead of next to each other */
-@media screen and (max-width: 400px) {
-    .navbar a {
-        float: none;
-        width: 100%;
-    }
-}
-
-@media screen and (max-width: 1024px) {
-    .p-col-d {
-        display: none;
-    }
-    .p-col-m {
-        display: inline-block;
-    }
-}
-
-.my-p-calendar {
-    font-size: 10px;
-}
-
-
-.p-paginator {
-    margin: 0;
-    text-align: center;
-    padding: .125em
-}
-
-.p-paginator .p-paginator-top {
-    border-bottom: 0
-}
-
-.p-paginator .p-paginator-bottom {
-    border-top: 0
-}
-
-.p-paginator .p-paginator-left-content {
-    float: left
-}
-
-.p-paginator .p-paginator-right-content {
-    float: right
-}
-
-.p-paginator .p-paginator-current, .p-paginator .p-paginator-first, .p-paginator .p-paginator-last, .p-paginator .p-paginator-next, .p-paginator .p-paginator-page, .p-paginator .p-paginator-pages, .p-paginator .p-paginator-prev {
-    display: inline-block;
-    width: 1.5em;
-    height: 1.5em;
-    line-height: 1.5em;
-    zoom: 1;
-    margin-left: .063em;
-    margin-right: .063em;
-    text-decoration: none;
-    vertical-align: middle;
-    text-align: center;
-    position: relative
-}
-
-.p-paginator .p-paginator-pages {
-    width: auto;
-    line-height: 1
-}
-
-.p-paginator .p-paginator-icon {
-    display: block;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 1em;
-    height: 1em;
-    margin-top: -.5em;
-    margin-left: -.5em
-}
-
-.p-paginator .p-paginator-first, .p-paginator .p-paginator-last, .p-paginator .p-paginator-next, .p-paginator .p-paginator-page, .p-paginator .p-paginator-prev {
-    cursor: pointer
-}
-
-.p-paginator .p-paginator-current, .p-paginator .p-paginator-rpp-options {
-    margin-left: 1em;
-    margin-right: 1em;
-    background-image: none
-}
-
-.p-paginator .p-paginator-jtp-select option, .p-paginator .p-paginator-rpp-options option {
-    background-image: none;
-    border: 0;
-    box-shadow: none;
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none
-}
-
-.p-paginator a.p-disabled {
-    outline: 0 none
-}
-
-.p-paginator .p-dropdown {
-    min-width: 4em;
-    margin-left: .375em
-}
-
-.p-fluid .p-paginator .p-dropdown {
-    width: auto
-}
-
-.p-paginator .p-paginator-current {
-    width: auto;
-    height: auto
-}
-
-
 :not(.sb-show-main) > .sb-main,
 :not(.sb-show-nopreview) > .sb-nopreview,
 :not(.sb-show-errordisplay) > .sb-errordisplay {
@@ -279,7 +17,7 @@ img.my-left-top {
 }
 
 .sb-heading {
-    font-size: 10px;
+    font-size: 14px;
     font-weight: 600;
     letter-spacing: 0.2px;
     margin: 10px 0;
@@ -322,12 +60,10 @@ img.my-left-top {
 }
 .calendar {
     border-radius: 5px;
-    padding: 3px;
-    margin: 0;
-    max-width: 225px;
+    padding: 30px;
 }
 .calendar-month {
-    width: 225px;
+    width: 300px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -346,11 +82,10 @@ img.my-left-top {
 .calendar-week-day,
 .calendar-days_of_week_day {
     display: inline-block;
-    width: 100px;
+    width: 40px;
     text-align: center;
     line-height: 30px;
     opacity: 0.5;
-    font-size: 12px;
 }
 .calendar-week-day {
     margin: 0;
@@ -405,7 +140,7 @@ img.my-left-top {
     margin: 0 auto 25px;
 }
 .date_picker-month_header_title {
-    font-size: 10px;
+    font-size: 20px;
 }
 .date_picker-header_button {
     cursor: pointer;
@@ -448,7 +183,7 @@ img.my-left-top {
     content: '>';
 }
 .date_picker-days_of_week {
-    font-size: 9px;
+    font-size: 13px;
     display: flex;
     color: #c3c3c3;
     text-align: center;

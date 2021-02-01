@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.01.19 21:06 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.01 23:11 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * Article.java
@@ -38,12 +38,13 @@ public class Article implements Serializable, RecordEntry {
     @Id
     @Getter
     @Setter
-    @Column("id")
     @Schema(description = "news entry id", example = "00000000-0000-0000-FFFF-000000101001")
+    @Column("id")
     private UUID id;
 
     @Getter
     @Setter
+    @Schema(description = "news group id", example = "00000000-0000-0000-FFFF-000000101001")
     @Column("news_group_id")
     private UUID newsGroupId;
 
@@ -51,6 +52,7 @@ public class Article implements Serializable, RecordEntry {
     @Setter
     @NotNull
     @Size(max = 256)
+    @Schema(description = "title", example = "string", required = true)
     @Column("title")
     private String title;
 
@@ -58,6 +60,7 @@ public class Article implements Serializable, RecordEntry {
     @Setter
     @NotNull
     @Size(max = 256)
+    @Schema(description = "include", example = "string", required = true)
     @Column("include")
     private String include;
 
@@ -65,6 +68,7 @@ public class Article implements Serializable, RecordEntry {
     @Setter
     @NotNull
     @Size(max = 128)
+    @Schema(description = "anchor", example = "string", required = true)
     @Column("anchor")
     private String anchor;
 
@@ -72,6 +76,7 @@ public class Article implements Serializable, RecordEntry {
     @Setter
     @NotNull
     @Size(max = 10485760)
+    @Schema(description = "summary", example = "string")
     @Column("summary")
     private String summary;
 
@@ -79,20 +84,22 @@ public class Article implements Serializable, RecordEntry {
     @Setter
     @NotNull
     @Size(max = 64)
+    @Schema(description = "user name", example = "login")
     @Column("user_name")
     private String userName;
 
     @Getter
     @NotNull
-    @Column("create_time")
     @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     @Schema(description = "create time", example = "1970-01-01T00:00:00Z")
+    @Column("create_time")
     private LocalDateTime createTime;
 
     @Getter
     @Setter
-    @Column("update_time")
     @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
+    @Schema(description = "update time", example = "1970-01-01T00:00:00Z")
+    @Column("update_time")
     private LocalDateTime updateTime;
 
     @Getter
