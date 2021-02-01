@@ -143,6 +143,7 @@ class AllRecordViewDaoTest {
         Assertions.assertFalse(list0.isEmpty());
         Assertions.assertEquals(1, list0.size());
         Assertions.assertTrue(list0.contains(ALL_RECORD_VIEW_3));
+        System.out.println("list = " + list0);
 
         Pageable pageable1 = PageRequest.of(1, 1, Sort.by(Sort.Order.desc("updateTime"), Sort.Order.by("position")));
         List<AllRecordView> list1 = allRecordViewDao.findAllByEnabledIsTrue(pageable1)
@@ -152,6 +153,7 @@ class AllRecordViewDaoTest {
         Assertions.assertFalse(list1.isEmpty());
         Assertions.assertEquals(1, list1.size());
         Assertions.assertTrue(list1.contains(ALL_RECORD_VIEW_1));
+        System.out.println("list = " + list1);
 
 
         Pageable pageable2 = PageRequest.of(2, 1);
@@ -162,5 +164,6 @@ class AllRecordViewDaoTest {
         Assertions.assertFalse(list2.isEmpty());
         Assertions.assertEquals(1, list2.size());
         Assertions.assertTrue(list2.contains(ALL_RECORD_VIEW_2));
+        System.out.println("list = " + list2);
     }
 }

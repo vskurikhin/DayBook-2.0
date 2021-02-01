@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.01.31 20:08 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.01 23:11 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * AllRecordView.java
@@ -9,6 +9,7 @@
 package su.svn.daybook.domain.model.db.db;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,6 +28,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.UUID;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(builderClassName = "Builder")
@@ -38,19 +40,21 @@ public class AllRecordView implements Serializable, DBUuidEntry {
     @Id
     @Getter
     @Setter
-    @Column("record_id")
     @Schema(description = "record id", example = "00000000-0000-0000-FFFF-000000101001")
+    @Column("record_id")
     private UUID id;
 
     @Getter
     @Setter
     @NotNull
+    @Schema(description = "record position", example = "1")
     @Column("record_position")
     private int position;
 
     @Getter
     @Setter
     @Size(max = 256)
+    @Schema(description = "type", example = "string")
     @Column("record_type")
     private String type;
 
@@ -58,6 +62,7 @@ public class AllRecordView implements Serializable, DBUuidEntry {
     @Setter
     @NotNull
     @Size(max = 64)
+    @Schema(description = "user name", example = "login")
     @Column("record_user_name")
     private String userName;
 
@@ -97,6 +102,7 @@ public class AllRecordView implements Serializable, DBUuidEntry {
 
     @Getter
     @Setter
+    @Schema(description = "article news group id", example = "00000000-0000-0000-FFFF-000000101001")
     @Column("article_news_group_id")
     private UUID articleNewsGroupId;
 
@@ -104,6 +110,7 @@ public class AllRecordView implements Serializable, DBUuidEntry {
     @Setter
     @NotNull
     @Size(max = 256)
+    @Schema(description = "article title", example = "string")
     @Column("article_title")
     private String articleTitle;
 
@@ -111,6 +118,7 @@ public class AllRecordView implements Serializable, DBUuidEntry {
     @Setter
     @NotNull
     @Size(max = 256)
+    @Schema(description = "article include", example = "string")
     @Column("article_include")
     private String articleInclude;
 
@@ -118,6 +126,7 @@ public class AllRecordView implements Serializable, DBUuidEntry {
     @Setter
     @NotNull
     @Size(max = 128)
+    @Schema(description = "article anchor", example = "string")
     @Column("article_anchor")
     private String articleAnchor;
 
@@ -125,6 +134,7 @@ public class AllRecordView implements Serializable, DBUuidEntry {
     @Setter
     @NotNull
     @Size(max = 10485760)
+    @Schema(description = "article summary", example = "string")
     @Column("article_summary")
     private String articleSummary;
 
@@ -132,6 +142,7 @@ public class AllRecordView implements Serializable, DBUuidEntry {
     @Setter
     @NotNull
     @Size(max = 64)
+    @Schema(description = "article user name", example = "login")
     @Column("article_user_name")
     private String articleUserName;
 
@@ -142,6 +153,7 @@ public class AllRecordView implements Serializable, DBUuidEntry {
 
     @Getter
     @Setter
+    @Schema(description = "news entry news group id", example = "00000000-0000-0000-FFFF-000000101001")
     @Column("news_entry_news_group_id")
     private UUID newsEntryNewsGroupId;
 
@@ -149,12 +161,14 @@ public class AllRecordView implements Serializable, DBUuidEntry {
     @Setter
     @NotNull
     @Size(max = 256)
+    @Schema(description = "news entry title", example = "string")
     @Column("news_entry_title")
     private String newsEntryTitle;
 
     @Getter
     @Setter
     @Size(max = 10485760)
+    @Schema(description = "news entry content", example = "string")
     @Column("news_entry_content")
     private String newsEntryContent;
 
@@ -162,6 +176,7 @@ public class AllRecordView implements Serializable, DBUuidEntry {
     @Setter
     @NotNull
     @Size(max = 64)
+    @Schema(description = "news entry user name", example = "login")
     @Column("news_entry_user_name")
     private String newsEntryUserName;
 
@@ -172,6 +187,7 @@ public class AllRecordView implements Serializable, DBUuidEntry {
 
     @Getter
     @Setter
+    @Schema(description = "news links news group id", example = "00000000-0000-0000-FFFF-000000101001")
     @Column("news_links_news_group_id")
     private UUID newsLinksNewsGroupId;
 
@@ -179,6 +195,7 @@ public class AllRecordView implements Serializable, DBUuidEntry {
     @Setter
     @NotNull
     @Size(max = 256)
+    @Schema(description = "news links title", example = "string")
     @Column("news_links_title")
     private String newsLinksTitle;
 
@@ -186,6 +203,7 @@ public class AllRecordView implements Serializable, DBUuidEntry {
     @Setter
     @NotNull
     @Size(max = 64)
+    @Schema(description = "news links user name", example = "login")
     @Column("news_links_user_name")
     private String newsLinksUserName;
 

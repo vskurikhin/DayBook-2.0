@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.01.18 13:14 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.01 23:11 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * DBMap.java
@@ -61,19 +61,21 @@ public class DBMap implements Serializable, DBUuidEntry {
     @Setter
     @NotNull
     @Size(max = 64)
+    @Schema(description = "user name", example = "login")
     @Column("user_name")
     private String userName;
 
     @Getter
     @NotNull
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    @Column("create_time")
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     @Schema(description = "create time", example = "1970-01-01T00:00:00Z")
+    @Column("create_time")
     private LocalDateTime createTime;
 
     @Getter
     @Setter
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
+    @Schema(description = "update time", example = "1970-01-01T00:00:00Z")
     @Column("update_time")
     private LocalDateTime updateTime;
 

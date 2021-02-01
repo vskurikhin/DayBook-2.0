@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.01.18 13:14 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.01 23:11 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * Record.java
@@ -37,19 +37,22 @@ public class Record implements Serializable, DBUuidEntry {
     @Id
     @Getter
     @Setter
-    @Column("id")
     @Schema(description = "record id", example = "00000000-0000-0000-FFFF-000000101001")
+    @Column("id")
     private UUID id;
 
     @Getter
     @Setter
     @NotNull
+    @Schema(description = "record position", example = "1", required = true)
     @Column("position")
     private int position;
 
     @Getter
     @Setter
+    @NotNull
     @Size(max = 256)
+    @Schema(description = "type", example = "string", required = true)
     @Column("type")
     private String type;
 
@@ -57,19 +60,21 @@ public class Record implements Serializable, DBUuidEntry {
     @Setter
     @NotNull
     @Size(max = 64)
+    @Schema(description = "user name", example = "login")
     @Column("user_name")
     private String userName;
 
     @Getter
     @NotNull
     @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
-    @Column("create_time")
     @Schema(description = "create time", example = "1970-01-01T00:00:00Z")
+    @Column("create_time")
     private LocalDateTime createTime;
 
     @Getter
     @Setter
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
+    @Schema(description = "update time", example = "1970-01-01T00:00:00Z")
     @Column("update_time")
     private LocalDateTime updateTime;
 
