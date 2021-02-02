@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.02 17:50 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.01 23:11 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RootDataViewLazy.jsx
@@ -11,11 +11,10 @@ import 'primereact/resources/primereact.css';
 import 'primeflex/primeflex.css';
 import './RootDataViewLazy.scss';
 
-import moment from 'moment';
-import React, {useState, useEffect} from 'react';
-import {DataView, DataViewLayoutOptions} from 'primereact/dataview';
-import {Panel} from 'primereact/panel';
-import {AllRecordService} from '../../service/AllRecordService';
+import React, { useState, useEffect } from 'react';
+import { DataView, DataViewLayoutOptions } from 'primereact/dataview';
+import { Panel } from 'primereact/panel';
+import { AllRecordService } from '../../service/AllRecordService';
 
 const RootDataViewLazy = () => {
     const [records, setRecords] = useState([]);
@@ -61,7 +60,7 @@ const RootDataViewLazy = () => {
 
     const renderListItem = (record) => {
         return (
-            <div className="p-col-12" key={record.id}>
+            <div className="p-col-12"  key={record.id}>
                 <div className="car-details p-paginator-page p-paginator-element p-link p-highlight">
                     <div>
                         <div className="p-grid">
@@ -242,11 +241,11 @@ const RootDataViewLazy = () => {
                         </tr>
                         <tr>
                             <td>{record.tags}</td>
-                            <td className="my-news-links-date-th">{record.updateTime}</td>
+                            <td className="my-news-links-date-th">{moment(record.updateTime).format("dddd, MMM DD at HH:mm a")}</td>
                             <td/>
                         </tr>
                         <tr>
-                            <td className="my-news-links-user-th">{moment(record.updateTime).format("dddd, MMM DD at HH:mm a")}</td>
+                            <td className="my-news-links-user-th">{record.newsLinksUserName}</td>
                             <td/>
                             <td/>
                             <td/>

@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.01 23:11 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.02 19:28 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * CalendarRow.jsx
@@ -12,7 +12,6 @@ import {compose} from "redux";
 import {connect} from "react-redux";
 import {withRouter} from "react-router";
 
-import './CalendarRow.scss'
 import CalendarDataView from '../CalendarDataView/CalendarDataView'
 import IFrame from '../IFrame/IFrame'
 import {loadCssListIframe1} from '../../lib/CssListIframe1'
