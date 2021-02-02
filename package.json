@@ -41,6 +41,7 @@
     "rest": "^2.0.0",
     "sass": "^1.26.10",
     "sass-loader": "^9.0.3",
+    "simple-react-calendar": "^2.2.8",
     "underscore": "^1.11.0",
     "url-loader": "^4.1.0"
   },

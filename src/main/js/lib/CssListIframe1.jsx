@@ -1,7 +1,16 @@
+/*
+ * This file was last modified at 2021.02.02 19:28 by Victor N. Skurikhin.
+ * This is free and unencumbered software released into the public domain.
+ * For more information, please refer to <http://unlicense.org>
+ * CssListIframe1.jsx
+ * $Id$
+ */
+
 const FILES = [
-    '/css/theme.css',
     '/css/primeicons.css',
-    '/css/main.362f8fd8.chunk.css'
+    '/css/primereact.min.css',
+    '/css/theme.css',
+    '/css/index.css'
 ]
 
 export const loadCssListIframe1 = () => {

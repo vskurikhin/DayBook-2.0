@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.08.31 15:48 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.02 19:28 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * CalendarDataView.jsx
@@ -7,14 +7,12 @@
  */
 
 import 'primeicons/primeicons.css';
-import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.css';
 import 'primeflex/primeflex.css';
-import React, {Component, useEffect, useState} from 'react';
-import { DataView } from 'primereact/dataview';
-import { Panel } from "primereact/panel";
 
-import { CarService } from '../../service/CarService';
+import React, {useEffect, useState} from 'react';
+import { DataView } from 'primereact/dataview';
+import { AllRecordService } from '../../service/AllRecordService';
 
 const CalendarDataView = (date) => {
     const rows = 6;
@@ -22,7 +20,7 @@ const CalendarDataView = (date) => {
     const [totalRecords, setTotalRecords] = useState(0);
     const [loading, setLoading] = useState(true);
     const [first, setFirst] = useState(0);
-    const carservice = new CarService();
+    const carservice = new AllRecordService();
 
     useEffect(() => {
         setTimeout(() => {
@@ -40,21 +38,22 @@ const CalendarDataView = (date) => {
 
     const renderGridItem = (car) => {
         return (
-            <div style={{ padding: '.5em' }} className="p-col-12 p-md-4">
-                <Panel header={car.vin} style={{ textAlign: 'left' }}>
-                    <div className="car-detail">
-                        <p align = "justify">
-                            <img className="leftimg"
-                                 src={`showcase/demo/images/car/${car.brand}.png`}
-                                 srcSet="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png"
-                                 alt={car.brand}
-                                 width="32"
-                                 height="32"
-                            />{car.color}
-                        </p>
+            <div className="p-col-12"  key={record.id}>
+                <div className="car-details">
+                    <div>
+                        <div className="p-grid">
+                            <div className="p-col-12">type: <b>{record.type}</b></div>
+                            <div className="p-col-12">updateTime: <b>{record.updateTime}</b></div>
+                            <div className="p-col-12">
+                                <img src="/raw-svg/sitemap.svg"
+                                     srcSet="/raw-svg/sitemap.svg"
+                                     alt={record.visible}
+                                />Brand: <b>{record.visible}</b>
+                            </div>
+                            <div className="p-col-12">tags: <b>{record.tags}</b></div>
+                        </div>
                     </div>
-                    <div className="right">{car.year}</div>
-                </Panel>
+                </div>
             </div>
         );
     }
