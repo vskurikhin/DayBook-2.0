@@ -1967,10 +1967,10 @@ body .p-paginator .p-paginator-pages {
 }
 body .p-paginator .p-paginator-pages .p-paginator-page {
   color: #848484;
-  height: 2.286em;
+  /* VS height: 2.286em; */
   min-width: 2.286em;
   border: 0 none;
-  line-height: 2.286em;
+  /* VS line-height: 2.286em; */
   padding: 0;
   margin: 0;
   vertical-align: top;
@@ -1983,8 +1983,8 @@ body .p-paginator .p-paginator-pages .p-paginator-page {
   border-radius: 0;
 }
 body .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
-  background-color: #007ad9;
-  color: #ffffff;
+  /* VS background-color: #007ad9; */
+  /* VS color: #ffffff; */
 }
 body .p-paginator .p-paginator-pages .p-paginator-page:not(.p-highlight):hover {
   background-color: #e0e0e0;
@@ -2277,7 +2277,8 @@ body .p-dataview .p-dataview-header {
 }
 body .p-dataview .p-dataview-content {
   padding: 0.571em 1em;
-  border: 1px solid #c8c8c8;
+  border: 0;
+  /* VS border: 1px solid #c8c8c8; */
   background-color: #ffffff;
   color: #333333;
   padding: 0.571em 1em;

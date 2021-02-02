@@ -11,7 +11,7 @@
   "author": "Victor N. Skurikhin",
   "license": "UNLICENSED",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bootstrap": "^4.5.2",
     "classname": "0.0.0",
     "css": "^3.0.0",

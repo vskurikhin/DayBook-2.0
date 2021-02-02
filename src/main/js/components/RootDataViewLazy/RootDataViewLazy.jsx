@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.02 19:28 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.02 21:06 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RootDataViewLazy.jsx
@@ -241,11 +241,11 @@ const RootDataViewLazy = () => {
                         </tr>
                         <tr>
                             <td>{record.tags}</td>
-                            <td className="my-news-links-date-th">{record.updateTime}</td>
+                            <td className="my-news-links-date-th">{moment(record.updateTime).format("dddd, MMM DD at HH:mm a")}</td>
                             <td/>
                         </tr>
                         <tr>
-                            <td className="my-news-links-user-th">{moment(record.updateTime).format("dddd, MMM DD at HH:mm a")}</td>
+                            <td className="my-news-links-user-th">{record.newsEntryUserName}</td>
                             <td/>
                             <td/>
                             <td/>
