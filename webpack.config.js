@@ -35,12 +35,19 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(scss|sass)$/i,
+                test: /\.s[ac]ss$/i,
                 include: [
                     path.resolve(__dirname, 'node_modules'),
                     path.resolve(__dirname, 'src/main/js')
                 ],
-                loaders: ["css-loader", "sass-loader"]
+                use: [
+                    // Creates `style` nodes from JS strings
+                    "style-loader",
+                    // Translates CSS into CommonJS
+                    "css-loader",
+                    // Compiles Sass to CSS
+                    "sass-loader",
+                ],
             },
             {
                 test: /\.(png|gif|woff|woff2|eot|ttf|svg)$/,

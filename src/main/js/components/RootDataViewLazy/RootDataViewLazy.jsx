@@ -245,7 +245,7 @@ const RootDataViewLazy = () => {
                             <td/>
                         </tr>
                         <tr>
-                            <td className="my-news-links-user-th">{record.newsEntryUserName}</td>
+                            <td className="my-news-links-user-th">{record.newsLinksUserName}</td>
                             <td/>
                             <td/>
                             <td/>

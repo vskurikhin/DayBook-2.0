@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
  * This file was last modified at 2021.02.02 19:34 by Victor N. Skurikhin.
+=======
+ * This file was last modified at 2021.02.01 23:11 by Victor N. Skurikhin.
+>>>>>>> e97099662bc293d42117c78731fbdd3ea84a0e76
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NewsLinks.java

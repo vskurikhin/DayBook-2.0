@@ -88,6 +88,7 @@ server:
 spring:
   jackson:
     date-format: com.fasterxml.jackson.databind.util.ISO8601DateFormat
+    default-property-inclusion: non_null
     serialization:
       write_dates_as_timestamps: false
   r2dbc:
