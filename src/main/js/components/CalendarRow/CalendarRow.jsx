@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.02 19:28 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.03 18:28 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * CalendarRow.jsx
@@ -17,44 +17,52 @@ import IFrame from '../IFrame/IFrame'
 import {loadCssListIframe1} from '../../lib/CssListIframe1'
 import {setCalendarDate} from '../../redux/actions'
 import SimpleReactCalendar from 'simple-react-calendar'
+import {formatDate, logDate} from '../../lib/formatDate'
 
 export class CalendarRow extends Component {
-    state = { count: 0 };
 
     constructor(props) {
         super(props);
-        const now = new Date();
         this.state = {
-            calendarDate: {year: now.getFullYear(), month: now.getMonth() + 1, date: now.getDate()}
+            calendarDate: this.getCurrentDate()
         };
     }
 
     componentDidMount() {
         loadCssListIframe1();
-        this.interval = setInterval(() => {
-            this.setState(({ count }) => ({ count: count + 1 }));
-        }, 1000);
     }
 
-    calendarRowSetState(value) {
-        const date = {year: value.getFullYear(), month: value.getMonth() + 1, date: value.getDate()}
-        console.log(new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(timestamp));
-        console.log("date:" + date);
+    getCurrentUser() {
+        return this.props.currentUser['currentUser'];
+    }
+
+    getCurrentDate() {
+        return this.props.currentDate['currentDate'];
+    }
+
+    calendarRowSetState(date) {
+        this.state = {calendarDate: date};
         this.setState({calendarDate: date})
         this.props.handleCalendarDate(date)
     }
 
     getDocFinancialInfo = timestamp => {
-        this.calendarRowSetState(timestamp);
-        this.setState({ state: Math.random() });
+        const date = {year: timestamp.getFullYear(), month: timestamp.getMonth() + 1, date: timestamp.getDate()}
+        logDate("CalendarRow.getDocFinancialInfo: ", date);
+        this.calendarRowSetState(date);
     };
 
     renderCalendar(store) {
-        let calendarDate = store.getState().calendarDate.calendarDate
-        let stateDate = new Date(calendarDate.year, calendarDate.month - 1, calendarDate.date)
+        let calendarDate = store.getState().currentDate.currentDate;
+        const selectedDate = new Date(calendarDate.year, calendarDate.month - 1, calendarDate.date);
 
         return (
-            <SimpleReactCalendar activeMonth={new Date()} onSelect={this.getDocFinancialInfo} />
+            <SimpleReactCalendar
+                mode="single"
+                activeMonth={selectedDate}
+                selected={selectedDate}
+                onSelect={this.getDocFinancialInfo}
+            />
         )
     }
 
@@ -64,7 +72,8 @@ export class CalendarRow extends Component {
             width: '100%',
             height: '100%'
         };
-        console.log("!!!OK!!!");
+        console.log("CalendarRow.render currentUser=" + this.getCurrentUser());
+        logDate("CalendarRow.render: currentDate=", this.getCurrentDate());
 
         return (
             <div className="my-row">
@@ -76,7 +85,7 @@ export class CalendarRow extends Component {
                 </div>
                 <div className="my-main">
                     <IFrame style={divStyle} name='iframe1' id='iframe1'>
-                        <CalendarDataView date={this.state.calendarDate}/>
+                        <CalendarDataView date={formatDate(this.getCurrentDate())}/>
                     </IFrame>
                 </div>
             </div>
@@ -85,7 +94,8 @@ export class CalendarRow extends Component {
 }
 
 const mapStateToProps = state => ({
-    calendarDate: state.calendarDate
+    currentUser: state.currentUser,
+    currentDate: state.currentDate
 })
 
 const mapDispatchToProps = dispatch => ({

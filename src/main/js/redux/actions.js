@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.11.15 22:00 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.03 18:28 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * actions.js
@@ -55,7 +55,7 @@ export const getProfileFetch = () => {
     return dispatch => {
         const token = localStorage.token;
         if (token) {
-            return fetch("/api/v1/profile", {
+            return fetch("/api/v1/resource/profile", {
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json',
@@ -85,5 +85,7 @@ export const logoutUser = () => ({
     type: 'LOGOUT_USER'
 })
 
-export const setCalendarDate = (date = {"year":2020,"month":1,"date":30}) => ({type: 'CALENDAR_DATE', payload: date});
+const now = new Date();
+
+export const setCalendarDate = (date = {"year":now.getFullYear(),"month":now.getMonth()+1,"date":now.getDay()}) => ({type: 'CALENDAR_DATE', payload: date});
 export const setLocale = (locale = '') => ({type: 'LOCALE', payload: locale});

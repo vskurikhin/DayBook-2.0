@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.02 19:28 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.03 18:28 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * CalendarDataView.jsx
@@ -25,8 +25,7 @@ const CalendarDataView = (date) => {
     useEffect(() => {
         setTimeout(() => {
             carservice.getCarsFirstPage(0, 0, rows).then(function (resItems) {
-                console.log("resItems", JSON.stringify(resItems));
-                setTotalRecords(resItems.data.headers.resultCount);
+                // TODO setTotalRecords(resItems.data.headers.resultCount);
                 setCars(resItems.data.data);
             }).catch(function (error) {
                 console.log(error);
