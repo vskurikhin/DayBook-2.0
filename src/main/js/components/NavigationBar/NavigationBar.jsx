@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.03 18:28 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.03 21:38 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NavigationBar.jsx
@@ -11,7 +11,7 @@ import {map} from 'underscore'
 import {Link} from 'react-router-dom'
 
 import {isAnonymity, isAdmin} from '../../lib/userTool'
-import {logoutUser} from '../../redux/actions'
+import {getProfileFetch, logoutUser} from '../../redux/actions'
 import {compose} from 'redux'
 import {withRouter} from 'react-router'
 import {connect} from 'react-redux'
@@ -93,6 +93,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+    getProfileFetch: () => dispatch(getProfileFetch()),
     logoutUser: () => dispatch(logoutUser())
 })
 

@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.02 21:52 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.03 21:38 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RootDataViewLazy.jsx
@@ -17,6 +17,7 @@ import {Panel} from 'primereact/panel';
 import {AllRecordService} from '../../service/AllRecordService';
 
 const RootDataViewLazy = () => {
+    const timeout = 25;
     const [records, setRecords] = useState([]);
     const [layout, setLayout] = useState('grid');
     const [loading, setLoading] = useState(true);
@@ -36,7 +37,7 @@ const RootDataViewLazy = () => {
             });
             setFirst(0);
             setLoading(false);
-        }, 50);
+        }, timeout);
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const onPage = (event) => {
@@ -55,7 +56,7 @@ const RootDataViewLazy = () => {
             });
             setFirst(startIndex);
             setLoading(false);
-        }, 50);
+        }, timeout);
     }
 
     const renderListItem = (record) => {
@@ -245,7 +246,7 @@ const RootDataViewLazy = () => {
                             <td/>
                         </tr>
                         <tr>
-                            <td className="my-news-links-user-th">{record.updateTime}</td>
+                            <td className="my-news-links-user-th">{record.newsEntryUserName}</td>
                             <td/>
                             <td/>
                             <td/>
@@ -275,7 +276,7 @@ const RootDataViewLazy = () => {
             setTimeout(() => {
                 setLoading(false);
                 setLayout(e.value);
-            }, 50);
+            }, timeout);
         };
 
         return (

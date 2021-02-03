@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.09.08 19:09 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.03 21:38 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * MapUserService.java
@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
+import su.svn.daybook.domain.model.db.security.Session;
 import su.svn.daybook.domain.security.Role;
 import su.svn.daybook.domain.security.User;
 
@@ -19,6 +20,7 @@ import javax.annotation.PostConstruct;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class MapUserService implements UserService {
@@ -44,5 +46,22 @@ public class MapUserService implements UserService {
         } else {
             return Mono.empty();
         }
+    }
+
+    // TODO
+    @Override
+    public Mono<Session> newSessionForUserName(String username) {
+        return null;
+    }
+
+    // TODO
+    @Override
+    public Mono<Session> updateSessionForUserName(String username) {
+        return null;
+    }
+
+    @Override
+    public Mono<User> findBySessionId(UUID sessionId) {
+        return null;
     }
 }

@@ -63,6 +63,7 @@ class DbBasedServiceIntegrationTest {
                 .build();
 
         @Test
+        @Disabled
         void checkClass() {
             Assertions.assertEquals(DbUserService.class, userService.getClass());
         }

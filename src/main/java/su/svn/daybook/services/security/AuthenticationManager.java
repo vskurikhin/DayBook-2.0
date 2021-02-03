@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.11.15 22:00 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.03 21:38 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * AuthenticationManager.java
@@ -33,8 +33,10 @@ public class AuthenticationManager implements ReactiveAuthenticationManager {
     @Override
     @SuppressWarnings("unchecked")
     public Mono<Authentication> authenticate(Authentication authentication) {
+        log.error("authenticate({})", authentication);
 
         String authToken = authentication.getCredentials().toString();
+        log.error("authenticate({}): authToken={}", authentication, authToken);
 
         try {
             String username = jwtUtil.getUsernameFromToken(authToken);
@@ -47,6 +49,7 @@ public class AuthenticationManager implements ReactiveAuthenticationManager {
             for (String rolemap : rolesMap) {
                 authorities.add(new SimpleGrantedAuthority(rolemap));
             }
+            log.error("authenticate({}): rolesMap={}", authentication, rolesMap);
             return Mono.just(new UsernamePasswordAuthenticationToken(username, null, authorities));
         } catch (Exception e) {
             return Mono.empty();
