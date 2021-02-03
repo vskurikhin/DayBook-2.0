@@ -1,9 +1,5 @@
 /*
-<<<<<<< HEAD
- * This file was last modified at 2021.02.02 19:34 by Victor N. Skurikhin.
-=======
- * This file was last modified at 2021.02.01 23:11 by Victor N. Skurikhin.
->>>>>>> e97099662bc293d42117c78731fbdd3ea84a0e76
+ * This file was last modified at 2021.02.03 18:28 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * ResourceController.java
@@ -32,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
-import su.svn.daybook.domain.Message;
 import su.svn.daybook.domain.dao.db.db.RecordNewsEntryService;
 import su.svn.daybook.domain.model.NewsEntryRecordDto;
 import su.svn.daybook.domain.model.db.db.AllRecordView;
@@ -54,17 +49,17 @@ public class ResourceController {
 
     @Operation(summary = "profile", security = @SecurityRequirement(name = "bearerAuth"))
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public Mono<ResponseEntity<?>> profile(Authentication authentication) {
-        if (authentication.getPrincipal() instanceof UserDetails) {
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             log.debug("User has authorities: {}", userDetails.getAuthorities());
-        } else if (authentication.getPrincipal() instanceof String) {
+            return Mono.just(ResponseEntity.ok(new ProfileResponse(userDetails.getUsername())));
+        } else if (authentication != null && authentication.getPrincipal() instanceof String) {
             log.debug("User has authorities: {}", authentication.getAuthorities());
             return Mono.just(ResponseEntity.ok(new ProfileResponse(authentication.getPrincipal().toString())));
         }
 
-        return Mono.just(ResponseEntity.ok(new Message("Content for user or admin")));
+        return Mono.just(ResponseEntity.ok("{}"));
     }
 
     @Operation(summary = "create news entry record", security = @SecurityRequirement(name = "bearerAuth"))

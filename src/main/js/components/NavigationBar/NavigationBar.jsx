@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.02 21:06 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.03 18:28 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NavigationBar.jsx
@@ -10,7 +10,8 @@ import React, {Component} from 'react'
 import {map} from 'underscore'
 import {Link} from 'react-router-dom'
 
-import {getProfileFetch, logoutUser} from '../../redux/actions'
+import {isAnonymity, isAdmin} from '../../lib/userTool'
+import {logoutUser} from '../../redux/actions'
 import {compose} from 'redux'
 import {withRouter} from 'react-router'
 import {connect} from 'react-redux'
@@ -25,9 +26,6 @@ const SECTIONS = [
 ]
 
 class Header extends Component {
-    componentDidMount = () => {
-        this.props.getProfileFetch()
-    }
 
     handleClick = event => {
         event.preventDefault()
@@ -37,12 +35,8 @@ class Header extends Component {
         this.props.logoutUser()
     }
 
-    isAnonymity() {
-        return JSON.stringify(this.props.currentUser['currentUser']) === '{}';
-    }
-
-    isAdmin() {
-        return JSON.stringify(this.props.currentUser['currentUser']) === '\"admin\"';
+    getCurrentUser() {
+        return this.props.currentUser['currentUser'];
     }
 
     link(title, href, handleClick) {
@@ -55,12 +49,12 @@ class Header extends Component {
     }
 
     admin(title, href, handleClick) {
-        if ( ! this.isAdmin()) return null;
+        if ( ! isAdmin(this.props)) return null;
         return this.link(title, href, handleClick);
     }
 
     anonymously(title, href,handleClick) {
-        if ( ! this.isAnonymity()) return null;
+        if ( ! isAnonymity(this.props)) return null;
         return this.link(title, href, handleClick);
     }
 
@@ -69,11 +63,12 @@ class Header extends Component {
     }
 
     other(title, href, handleClick) {
-        if (this.isAnonymity()) return null;
+        if (isAnonymity(this.props)) return null;
         return this.link(title, href, handleClick);
     }
 
     render() {
+        console.log("Header.render currentUser=" + this.getCurrentUser());
         return (
             <div className="navbar">
                 {map(SECTIONS, ({title, href, admin, anonymously, global, handleClick}) => (
@@ -98,7 +93,6 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    getProfileFetch: () => dispatch(getProfileFetch()),
     logoutUser: () => dispatch(logoutUser())
 })
 
