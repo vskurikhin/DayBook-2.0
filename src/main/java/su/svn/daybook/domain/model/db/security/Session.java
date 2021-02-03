@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.01.14 23:46 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.03 21:38 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * Session.java
@@ -51,6 +51,7 @@ public class Session implements Serializable, DBStringEntry {
     private LocalDateTime createTime;
 
     @Getter
+    @Setter
     @NotNull
     @Column("end_time")
     private LocalDateTime endTime;
