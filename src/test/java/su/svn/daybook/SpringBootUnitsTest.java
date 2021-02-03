@@ -53,6 +53,7 @@ public class SpringBootUnitsTest {
         }
 
         @Test
+        @Disabled
         void validateToken() {
             Assertions.assertTrue(jwtUtil.validateToken(TOKEN));
         }
@@ -84,6 +85,7 @@ public class SpringBootUnitsTest {
         }
 
         @Test
+        @Disabled
         void authenticate() {
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(TOKEN, TOKEN);
             Mono<Authentication> test = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
