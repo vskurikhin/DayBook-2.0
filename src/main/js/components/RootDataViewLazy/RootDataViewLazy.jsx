@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.03 21:38 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.04 22:49 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RootDataViewLazy.jsx
@@ -11,7 +11,8 @@ import 'primereact/resources/primereact.css';
 import 'primeflex/primeflex.css';
 
 import moment from 'moment';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
+import {ContextMenu} from 'primereact/contextmenu';
 import {DataView, DataViewLayoutOptions} from 'primereact/dataview';
 import {Panel} from 'primereact/panel';
 import {AllRecordService} from '../../service/AllRecordService';
@@ -25,6 +26,37 @@ const RootDataViewLazy = () => {
     const [totalRecords, setTotalRecords] = useState(0);
     const [numberOfElements, setNumberOfElements] = useState(3);
     const allRecordService = new AllRecordService();
+    const cm = useRef(null);
+    const items = [
+        {
+            label: 'New',
+            icon: 'pi pi-fw pi-file',
+            command: () => {
+                window.location = "/home";
+            }
+        },
+        {
+            label: 'Edit',
+            icon: 'pi pi-fw pi-pencil',
+            command: () => {
+                window.location = "/calendar";
+            }
+        },
+        {
+            label: 'Delete',
+            icon: 'pi pi-fw pi-trash',
+            command: () => {
+                window.location = "/login";
+            }
+        },
+        {
+            separator: true
+        },
+        {
+            label: 'Quit',
+            icon: 'pi pi-fw pi-power-off'
+        }
+    ];
 
     useEffect(() => {
         setTimeout(() => {
@@ -61,33 +93,7 @@ const RootDataViewLazy = () => {
 
     const renderListItem = (record) => {
         return (
-            <div className="p-col-12" key={record.id}>
-                <div className="car-details p-paginator-page p-paginator-element p-link p-highlight">
-                    <div>
-                        <div className="p-grid">
-                            <div className="p-col-12">type: <b>{record.articleTitle}</b></div>
-                            <div className="p-col-12">
-                                <img className="leftimg"
-                                     src="/raw-svg/arrow-right.svg"
-                                     srcSet="/raw-svg/arrow-right.svg"
-                                     alt={record.visible}
-                                     width="64"
-                                     height="64"
-                                />
-                                <ul>
-                                    <li>Anchor: <b>{record.articleAnchor}</b></li>
-                                    <li>Include: <b>{record.articleInclude}</b></li>
-                                    <li>Summary: <b>{record.articleSummary}</b></li>
-                                    <li>Title: <b>{record.articleTitle}</b></li>
-                                    <li>UserName: <b>{record.articleUserName}</b></li>
-                                </ul>
-                            </div>
-                            <div className="p-col-12">updateTime: <b>{record.updateTime}</b></div>
-                            <div className="p-col-12">tags: <b>{record.tags}</b></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div></div>
         );
     }
 
@@ -113,7 +119,8 @@ const RootDataViewLazy = () => {
                         </p>
                     </div>
                     <div className="right">{record.tags}</div>
-                    <div className="right timestamp-bottom">{moment(record.updateTime).format("dddd, MMM DD at HH:mm a")}</div>
+                    <div
+                        className="right timestamp-bottom">{moment(record.updateTime).format("dddd, MMM DD at HH:mm a")}</div>
                 </Panel>
             </div>
         );
@@ -123,7 +130,7 @@ const RootDataViewLazy = () => {
         return (
             <div style={{padding: '.5em'}} className="p-col-12 p-md-4" key={record.id}>
                 <Panel header={record.articleTitle} style={{textAlign: 'left'}}>
-                    <table className="article">
+                    <table className="article" onContextMenu={(e) => cm.current.show(e)} aria-haspopup>
                         <tbody>
                         <tr>
                             <td className="my-article-first-th" rowSpan="3">
@@ -135,7 +142,8 @@ const RootDataViewLazy = () => {
                                      height="64"
                                 />
                             </td>
-                            <td className="valueField my-article-second-th" colSpan="2" rowSpan="2">{record.articleSummary}
+                            <td className="valueField my-article-second-th" colSpan="2"
+                                rowSpan="2">{record.articleSummary}
                                 Представляю вашему вниманию
                                 новый инструмент по созданию HTML таблиц для сайта v3.0 с расширенными
                                 возможностями. В данный инструмент я включил самые нужные функции, которые помогут
@@ -172,7 +180,7 @@ const RootDataViewLazy = () => {
         return (
             <div style={{padding: '.5em'}} className="p-col-12 p-md-4" key={record.id}>
                 <Panel header={record.newsEntryTitle} style={{textAlign: 'left'}}>
-                    <table className="news-entry">
+                    <table className="news-entry" onContextMenu={(e) => cm.current.show(e)} aria-haspopup>
                         <tbody>
                         <tr>
                             <td className="my-news-entry-first-th" rowSpan="3">
@@ -184,7 +192,8 @@ const RootDataViewLazy = () => {
                                      height="96"
                                 />
                             </td>
-                            <td className="valueField my-news-entry-second-th" colSpan="2" rowSpan="2">{record.newsEntryContent}
+                            <td className="valueField my-news-entry-second-th" colSpan="2"
+                                rowSpan="2">{record.newsEntryContent}
                                 Представляю вашему вниманию
                                 новый инструмент по созданию HTML таблиц для сайта v3.0 с расширенными
                                 возможностями. В данный инструмент я включил самые нужные функции, которые помогут
@@ -218,7 +227,7 @@ const RootDataViewLazy = () => {
         return (
             <div style={{padding: '.5em'}} className="p-col-12 p-md-4" key={record.id}>
                 <Panel header={record.newsLinksTitle} style={{textAlign: 'left'}}>
-                    <table className="news-links">
+                    <table className="news-links" onContextMenu={(e) => cm.current.show(e)} aria-haspopup>
                         <tbody>
                         <tr>
                             <td className="my-news-links-first-th" rowSpan="3">
@@ -269,28 +278,13 @@ const RootDataViewLazy = () => {
             return renderListItem(record);
     }
 
-    const renderHeader = () => {
-        let onOptionChange = (e) => {
-            setLoading(true);
-
-            setTimeout(() => {
-                setLoading(false);
-                setLayout(e.value);
-            }, timeout);
-        };
-
-        return (
-            <div style={{textAlign: 'left'}}>
-                <DataViewLayoutOptions layout={layout} onChange={onOptionChange}/>
-            </div>
-        );
-    }
-
     return (
         <div className="dataview-demo">
+            <ContextMenu model={items} ref={cm}/>
             <DataView value={records} layout={layout} itemTemplate={itemTemplate}
                       lazy paginator paginatorPosition={'both'} rows={numberOfElements} totalRecords={totalRecords}
-                      first={first} onPage={onPage} loading={loading}/>
+                      first={first} onPage={onPage} loading={loading}
+            />
         </div>
     );
 }

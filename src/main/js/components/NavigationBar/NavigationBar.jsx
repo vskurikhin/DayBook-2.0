@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.03 21:38 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.04 22:49 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NavigationBar.jsx
@@ -9,6 +9,8 @@
 import React, {Component} from 'react'
 import {map} from 'underscore'
 import {Link} from 'react-router-dom'
+import { Menubar } from 'primereact/menubar';
+import { InputText } from 'primereact/inputtext';
 
 import {isAnonymity, isAdmin} from '../../lib/userTool'
 import {getProfileFetch, logoutUser} from '../../redux/actions'
@@ -65,6 +67,17 @@ class Header extends Component {
     other(title, href, handleClick) {
         if (isAnonymity(this.props)) return null;
         return this.link(title, href, handleClick);
+    }
+
+    save = () => {
+        this.toast.current.show({severity: 'success', summary: 'Success', detail: 'Data Saved'});
+    }
+
+    add() {
+        if ( ! isAdmin(this.props)) return null;
+        return (
+            <SplitButton label="Save" icon="pi pi-plus" onClick={this.save} model={items}/>
+        )
     }
 
     render() {

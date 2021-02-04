@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.03 18:28 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.04 22:49 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * App.jsx
@@ -17,6 +17,7 @@ import {compose} from 'redux'
 import {connect} from 'react-redux'
 
 import './App.scss'
+import Admin from './components/Admin/Admin'
 import Calendar from './components/Calendar/Calendar'
 import Home from './components/Home/Home'
 import Login from './components/Login/Login'
@@ -38,6 +39,7 @@ class App extends Component {
           <Route history={history} path='/calendar' component={Calendar} />
           <Route history={history} path='/login' component={Login} />
           <Route history={history} path='/signup' component={Signup} />
+          <Route history={history} path='/admin' component={Admin} />
           <Redirect from='/' to='/home'/>
         </Switch>
       </div>
