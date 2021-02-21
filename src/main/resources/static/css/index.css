@@ -4,6 +4,8 @@
 
 /* Style the body */
 body {
+    min-width:550px; // Suppose you want minimum width of 550px
+    _width: expression( document.body.clientWidth > 550 ? "550px" : "auto" ); /* sets max-width for IE6 */
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
 }

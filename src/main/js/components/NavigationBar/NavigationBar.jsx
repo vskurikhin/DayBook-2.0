@@ -1,22 +1,20 @@
 /*
- * This file was last modified at 2021.02.04 22:49 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.21 16:52 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NavigationBar.jsx
  * $Id$
  */
 
-import React, {Component} from 'react'
-import {map} from 'underscore'
-import {Link} from 'react-router-dom'
-import { Menubar } from 'primereact/menubar';
-import { InputText } from 'primereact/inputtext';
-
-import {isAnonymity, isAdmin} from '../../lib/userTool'
 import {getProfileFetch, logoutUser} from '../../redux/actions'
+import {isAnonymity, isAdmin} from '../../lib/userTool'
+
+import React, {Component} from 'react'
+import {Link} from 'react-router-dom'
 import {compose} from 'redux'
-import {withRouter} from 'react-router'
 import {connect} from 'react-redux'
+import {map} from 'underscore'
+import {withRouter} from 'react-router'
 
 const SECTIONS = [
     {title: 'Home', href: '/', global: true},
