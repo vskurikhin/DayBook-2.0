@@ -1,18 +1,18 @@
 /*
- * This file was last modified at 2020.08.31 14:07 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.21 16:52 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * Login.jsx
  * $Id$
  */
 
-import React, {Component} from 'react'
-import {Redirect} from 'react-router';
-import {connect} from 'react-redux'
-
 import Header from '../Header/Header'
 import NavigationBar from '../NavigationBar/NavigationBar'
 import {userLoginFetch} from '../../redux/actions'
+
+import React, {Component} from 'react'
+import {Redirect} from 'react-router';
+import {connect} from 'react-redux'
 
 class Login extends Component {
     state = {

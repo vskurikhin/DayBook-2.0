@@ -1,23 +1,22 @@
 /*
- * This file was last modified at 2021.02.03 18:28 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.21 16:52 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * CalendarRow.jsx
  * $Id$
  */
 
-import React, {Component} from 'react'
-import {ReactReduxContext} from 'react-redux'
-import {compose} from "redux";
-import {connect} from "react-redux";
-import {withRouter} from "react-router";
-
 import CalendarDataView from '../CalendarDataView/CalendarDataView'
 import IFrame from '../IFrame/IFrame'
-import {loadCssListIframe1} from '../../lib/CssListIframe1'
-import {setCalendarDate} from '../../redux/actions'
 import SimpleReactCalendar from 'simple-react-calendar'
 import {formatDate, logDate} from '../../lib/formatDate'
+import {loadCssListIframe1} from '../../lib/CssListIframe1'
+import {setCalendarDate} from '../../redux/actions'
+
+import React, {Component} from 'react'
+import {compose} from "redux";
+import {connect, ReactReduxContext} from 'react-redux'
+import {withRouter} from "react-router";
 
 export class CalendarRow extends Component {
 

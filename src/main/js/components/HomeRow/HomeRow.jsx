@@ -1,21 +1,20 @@
 /*
- * This file was last modified at 2021.02.03 18:28 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.21 16:52 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * HomeRow.jsx
  * $Id$
  */
 
-import React, {Component} from 'react'
-import {compose} from "redux";
-import {connect} from "react-redux";
-import {withRouter} from "react-router";
-
 import IFrame from '../IFrame/IFrame'
 import RootDataViewLazy from '../RootDataViewLazy/RootDataViewLazy'
 import {loadCssListIframe1} from '../../lib/CssListIframe1'
 import {setCalendarDate} from "../../redux/actions";
-import {logDate} from "../../lib/formatDate";
+
+import React, {Component} from 'react'
+import {compose} from "redux";
+import {connect} from "react-redux";
+import {withRouter} from "react-router";
 
 export class HomeRow extends Component {
 
@@ -27,22 +26,13 @@ export class HomeRow extends Component {
         loadCssListIframe1()
     }
 
-    getCurrentUser() {
-        return this.props.currentUser['currentUser'];
-    }
-
-    getCurrentDate() {
-        return this.props.currentDate['currentDate'];
-    }
-
     render() {
         const divStyle = {
             borderStyle: 'none',
             width: '100%',
             height: '100%'
         };
-        console.log("HomeRow.render currentUser=" + this.getCurrentUser());
-        logDate("HomeRow.render: currentDate=", this.getCurrentDate());
+        const propValues = this.props;
 
         return (
             <div className="my-row">
@@ -57,14 +47,13 @@ export class HomeRow extends Component {
                 </div>
                 <div className="my-main" id='main'>
                     <IFrame style={divStyle} name='iframe1' id='iframe1'>
-                        <RootDataViewLazy/>
+                        <RootDataViewLazy props={propValues}/>
                     </IFrame>
                 </div>
             </div>
         )
     }
 }
-
 
 const mapStateToProps = state => ({
     currentUser: state.currentUser,
