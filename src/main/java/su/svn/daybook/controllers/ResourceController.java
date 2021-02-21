@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.03 18:28 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.21 20:37 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * ResourceController.java
@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 import su.svn.daybook.domain.dao.db.db.RecordNewsEntryService;
+import su.svn.daybook.domain.model.NewsEntryDto;
 import su.svn.daybook.domain.model.NewsEntryRecordDto;
 import su.svn.daybook.domain.model.db.db.AllRecordView;
 import su.svn.daybook.domain.security.ProfileResponse;
@@ -65,9 +66,9 @@ public class ResourceController {
     @Operation(summary = "create news entry record", security = @SecurityRequirement(name = "bearerAuth"))
     @PostMapping(value = "/record/news-entry")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public Mono<ResponseEntity<?>> createNewsEntryRecord(@RequestBody NewsEntryRecordDto dto) {
+    public Mono<ResponseEntity<?>> createNewsEntryRecord(@RequestBody NewsEntryDto dto) {
         log.debug("createNewsEntryRecord({})", dto);
-        return recordNewsEntryService.insertNewsEntry(dto.getRecord(), dto.getNewsEntry())
+        return recordNewsEntryService.insertNewsEntryNew(dto)
                 .map(a -> ResponseEntity.status(HttpStatus.CREATED).body("Created: " + a.getId()));
     }
 

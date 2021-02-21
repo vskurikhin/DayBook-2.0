@@ -1,23 +1,23 @@
 /*
- * This file was last modified at 2021.02.04 22:49 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.21 20:37 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
- * AdminRow.jsx
+ * AdminCreateRow.jsx
  * $Id$
  */
 
-import React, {Component} from 'react'
+import AdminCreateView from "../AdminCreateView/AdminCreateView";
+import IFrame from "../IFrame/IFrame";
+import {loadCssListIframe1} from "../../lib/CssListIframe1";
+import {logDate} from "../../lib/formatDate";
+import {setCalendarDate} from "../../redux/actions";
+
+import React, {Component} from 'react';
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {withRouter} from "react-router";
 
-import IFrame from '../IFrame/IFrame'
-import AdminDataView from '../AdminDataView/AdminDataView'
-import {loadCssListIframe1} from '../../lib/CssListIframe1'
-import {setCalendarDate} from "../../redux/actions";
-import {logDate} from "../../lib/formatDate";
-
-export class AdminRow extends Component {
+export class AdminCreateRow extends Component {
 
     constructor(props) {
         super(props);
@@ -41,7 +41,6 @@ export class AdminRow extends Component {
             width: '100%',
             height: '100%'
         };
-        console.log("HomeRow.render currentUser=" + this.getCurrentUser());
         logDate("HomeRow.render: currentDate=", this.getCurrentDate());
 
         return (
@@ -57,7 +56,7 @@ export class AdminRow extends Component {
                 </div>
                 <div className="my-main" id='main'>
                     <IFrame style={divStyle} name='iframe1' id='iframe1'>
-                        <AdminDataView/>
+                        <AdminCreateView/>
                     </IFrame>
                 </div>
             </div>
@@ -78,4 +77,4 @@ const mapDispatchToProps = dispatch => ({
 export default compose(
     withRouter,
     connect(mapStateToProps, mapDispatchToProps)
-)(AdminRow);
+)(AdminCreateRow);

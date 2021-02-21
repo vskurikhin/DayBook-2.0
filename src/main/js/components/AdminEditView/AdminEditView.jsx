@@ -2,33 +2,22 @@
  * This file was last modified at 2021.02.21 20:37 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
- * AdminEdit.jsx
+ * AdminEditView.jsx
  * $Id$
  */
 
-import AdminEditRow from "../AdminEditRow/AdminEditRow";
-import Header from "../Header/Header";
-import NavigationBar from "../NavigationBar/NavigationBar";
 import {setCalendarDate} from "../../redux/actions";
 
-import React, { Component } from 'react';
 import {compose} from "redux";
 import {connect} from "react-redux";
-import {withRouter} from "react-router";
+import {withRouter} from "react-router-dom";
 
-class AdminEdit extends Component {
+const AdminEditView = (props) => {
 
-    render () {
-        return (
-            <div>
-                <Header />
-                <NavigationBar />
-                <AdminEditRow />
-                <div className="my-footer">
-                </div>
-            </div>
-        )
-    }
+    return (
+        <div className="dataview-demo">
+        </div>
+    );
 }
 
 const mapStateToProps = state => ({
@@ -43,4 +32,4 @@ const mapDispatchToProps = dispatch => ({
 export default compose(
     withRouter,
     connect(mapStateToProps, mapDispatchToProps)
-)(AdminEdit);
+)(AdminEditView);
