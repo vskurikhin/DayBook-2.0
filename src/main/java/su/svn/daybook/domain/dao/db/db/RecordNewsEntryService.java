@@ -1,9 +1,5 @@
 /*
-<<<<<<< HEAD
- * This file was last modified at 2021.02.02 19:34 by Victor N. Skurikhin.
-=======
- * This file was last modified at 2021.02.01 23:11 by Victor N. Skurikhin.
->>>>>>> e97099662bc293d42117c78731fbdd3ea84a0e76
+ * This file was last modified at 2021.02.21 20:37 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RecordNewsEntryService.java
@@ -18,16 +14,19 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import su.svn.daybook.domain.model.NewsEntryDto;
 import su.svn.daybook.domain.model.NewsEntryRecordDto;
 import su.svn.daybook.domain.model.db.db.AllRecordView;
 import su.svn.daybook.domain.model.db.db.NewsEntry;
 import su.svn.daybook.domain.model.db.db.Record;
 
 import javax.annotation.Nonnull;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -57,6 +56,11 @@ public class RecordNewsEntryService {
     public Mono<NewsEntry> insertNewsEntry(Record record, NewsEntry newsEntry) {
         record.setId(UUID.randomUUID());
         newsEntry.setId(record.getId());
+        /*
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        record.setUserName(userName);
+        newsEntry.setUserName(userName);
+         */
         return recordDao.insert(record)
                 .doOnSuccess(i -> log.debug("insert {} count of record: {}", i, record))
                 .doOnError(e -> log.error("insertNewsEntry ", e))
@@ -103,5 +107,30 @@ public class RecordNewsEntryService {
 
     private Page<AllRecordView> newPage(List<AllRecordView> list, Pageable pageable, long totalCount) {
         return new PageImpl<>(list, pageable, totalCount);
+    }
+
+    @Transactional
+    public  Mono<NewsEntry> insertNewsEntryNew(NewsEntryDto dto) {
+
+        NewsEntry newsEntry = NewsEntry.builder()
+                .newsGroupId(UUID.fromString(dto.getNewsGroupId()))
+                .title(dto.getTitle())
+                .content(dto.getContent())
+                .createTime(LocalDateTime.now())
+                .updateTime(LocalDateTime.now())
+                .enabled(true)
+                .visible(true)
+                .build();
+
+        Record record = Record.builder()
+                .position(Integer.MAX_VALUE / 2)
+                .type(NewsEntry.class.getSimpleName())
+                .createTime(LocalDateTime.now())
+                .updateTime(LocalDateTime.now())
+                .enabled(true)
+                .visible(true)
+                .build();
+
+        return insertNewsEntry(record, newsEntry);
     }
 }

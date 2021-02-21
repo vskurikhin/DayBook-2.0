@@ -1,18 +1,20 @@
 /*
- * This file was last modified at 2021.02.21 16:52 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.21 20:37 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * Login.jsx
  * $Id$
  */
 
-import Header from '../Header/Header'
-import NavigationBar from '../NavigationBar/NavigationBar'
-import {userLoginFetch} from '../../redux/actions'
+import Header from '../Header/Header';
+import NavigationBar from '../NavigationBar/NavigationBar';
+import {userLoginFetch} from '../../redux/actions';
 
-import React, {Component} from 'react'
+import React, {Component} from 'react';
 import {Redirect} from 'react-router';
-import {connect} from 'react-redux'
+import {connect} from 'react-redux';
+import {InputText} from "primereact/inputtext";
+import {Button} from "primereact/button";
 
 class Login extends Component {
     state = {
@@ -36,7 +38,7 @@ class Login extends Component {
     render() {
         const redirectToReferrer = this.state.redirectToReferrer;
         if (redirectToReferrer === true) {
-            return <Redirect to="/home" />
+            return <Redirect to="/home"/>
         }
         return (
             <div>
@@ -53,28 +55,60 @@ class Login extends Component {
                         <p>Lorem ipsum dolor sit ame.</p>
                     </div>
                     <div className="my-main" name='main'>
-                        <form onSubmit={this.handleSubmit}>
-                            <h1>Login</h1>
-
-                            <label>Username</label>
-                            <input
-                                name='username'
-                                placeholder='Username'
-                                value={this.state.username}
-                                onChange={this.handleChange}
-                            /><br/>
-
-                            <label>Password</label>
-                            <input
-                                type='password'
-                                name='password'
-                                placeholder='Password'
-                                value={this.state.password}
-                                onChange={this.handleChange}
-                            /><br/>
-
-                            <input type='submit'/>
-                        </form>
+                        <div className="dataview-demo">
+                            <form onSubmit={this.handleSubmit}>
+                                <div className="card">
+                                    <div className="my-divTable">
+                                        <div className="my-divTableBody">
+                                            <div className="my-divTableRow">
+                                                <div className="my-divTableCellLeft">&nbsp;</div>
+                                                <div className="my-divTableCell">
+                                                    <h5 className="my-h5">&nbsp;</h5>
+                                                    <span className="p-float-label">
+                                                        <InputText
+                                                            className="my-p-inputtext"
+                                                            id="Username"
+                                                            name='username'
+                                                            onChange={this.handleChange}
+                                                            value={this.state.username}
+                                                        />
+                                                        <label htmlFor="Username"><b>Username:</b></label>
+                                                    </span>
+                                                </div>
+                                                <div className="my-divTableCellRight">&nbsp;</div>
+                                            </div>
+                                            <div className="my-divTableRow">
+                                                <div className="my-divTableCellLeft">&nbsp;</div>
+                                                <div className="my-divTableCell">
+                                                    <label htmlFor="Username"><b>Password:</b></label><br/>
+                                                    <input
+                                                        className="my-p-inputtext"
+                                                        name='password'
+                                                        onChange={this.handleChange}
+                                                        placeholder='Password'
+                                                        type='password'
+                                                        value={this.state.password}
+                                                    /><br/>
+                                                </div>
+                                                <div className="my-divTableCellRight">&nbsp;</div>
+                                            </div>
+                                            <div className="my-divTableRow">
+                                                <div className="my-divTableCellLeft">&nbsp;</div>
+                                                <div className="my-divTableCell">
+                                                    <Button
+                                                        className="my-p-button"
+                                                        icon="pi pi-check"
+                                                        iconPos="right"
+                                                        label="Submit"
+                                                    />
+                                                </div>
+                                                <div className="my-divTableCellRight">&nbsp;</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 <div className="my-footer">
