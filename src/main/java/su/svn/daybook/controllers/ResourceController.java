@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.21 20:37 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.22 14:28 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * ResourceController.java
@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -68,6 +69,7 @@ public class ResourceController {
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public Mono<ResponseEntity<?>> createNewsEntryRecord(@RequestBody NewsEntryDto dto) {
         log.debug("createNewsEntryRecord({})", dto);
+        log.debug("createNewsEntryRecord: authentication={}", SecurityContextHolder.getContext().getAuthentication());
         return recordNewsEntryService.insertNewsEntryNew(dto)
                 .map(a -> ResponseEntity.status(HttpStatus.CREATED).body("Created: " + a.getId()));
     }

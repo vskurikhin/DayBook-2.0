@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.21 16:52 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.22 14:28 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RootDataViewLazy.jsx
@@ -23,14 +23,17 @@ import {compose} from "redux";
 import {connect} from "react-redux";
 import {useHistory, withRouter} from 'react-router-dom';
 
+const NUMBER_OF_ELEMENTS = 3;
+
 const RootDataViewLazy = (props) => {
-    const timeout = 25;
+    const timeout = 33;
     const [records, setRecords] = useState([]);
-    const [layout, setLayout] = useState('grid');
+    const [layout, setLayout] = useState('list');
     const [loading, setLoading] = useState(true);
     const [first, setFirst] = useState(0);
     const [totalRecords, setTotalRecords] = useState(0);
-    const [numberOfElements, setNumberOfElements] = useState(3);
+    const [numberOfElements, setNumberOfElements] = useState(NUMBER_OF_ELEMENTS);
+    const isMounted = useRef(false);
     const allRecordService = new AllRecordService();
     const cm = useRef(null);
     const history = useHistory();
@@ -61,40 +64,47 @@ const RootDataViewLazy = (props) => {
     ];
 
     useEffect(() => {
+        if (isMounted.current) {
+            setTimeout(() => {
+                setLoading(false);
+                setLayout(e.value);
+            }, timeout);
+        }
+    }, [loading]); // eslint-disable-line react-hooks/exhaustive-deps
+
+
+    useEffect(() => {
         setTimeout(() => {
             allRecordService.getCarsFirstPage(0, 0, numberOfElements).then(function (resItems) {
                 setTotalRecords(resItems.data.totalElements);
                 setNumberOfElements(resItems.data.numberOfElements);
                 setRecords(resItems.data.content);
+                setFirst(0);
+                setLoading(false);
             }).catch(function (error) {
                 console.log(error);
             });
-            setFirst(0);
-            setLoading(false);
         }, timeout);
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const onPage = (event) => {
         setLoading(true);
-        console.log("event", JSON.stringify(event));
-
         //imitate delay of a backend call
         setTimeout(() => {
-            const startIndex = event.first;
-            allRecordService.getCarsLazy(event.originalEvent).then(function (resItems) {
-                setTotalRecords(resItems.data.totalElements);
-                setNumberOfElements(resItems.data.numberOfElements);
+            let min = totalRecords - event.originalEvent.page*NUMBER_OF_ELEMENTS;
+            min = min < NUMBER_OF_ELEMENTS ? min : NUMBER_OF_ELEMENTS;
+            allRecordService.getCarsLazy(event.originalEvent, min).then(function (resItems) {
+                setFirst(event.originalEvent.first);
                 setRecords(resItems.data.content);
+                setLoading(false);
             }).catch(function (error) {
                 console.log(error);
             });
-            setFirst(startIndex);
-            setLoading(false);
         }, timeout);
     }
 
     // TODO
-    const renderListItem = (record) => {
+    const renderGridItem = (record) => {
         return (
             <div></div>
         );
@@ -108,7 +118,7 @@ const RootDataViewLazy = (props) => {
         }
     }
 
-    const renderGridItem = (record) => {
+    const renderListItem = (record) => {
         if (record.type === "Article")
             return renderGridItemArticle(record);
         if (record.type === "NewsEntry")
@@ -116,24 +126,7 @@ const RootDataViewLazy = (props) => {
         if (record.type === "NewsLinks")
             return renderGridItemNewsLinks(record);
         return (
-            <div style={{padding: '.5em'}} className="p-col-12 p-md-4" key={record.id}>
-                <Panel header={record.type} style={{textAlign: 'left'}}>
-                    <div className="car-detail">
-                        <p align="justify">
-                            <img alt={record.position}
-                                 className="my-left-top"
-                                 src="/raw-svg/arrow-right.svg"
-                                 srcSet="/raw-svg/arrow-right.svg"
-                                 height="64"
-                                 width="64"
-                            />{record.tags}
-                        </p>
-                    </div>
-                    <div className="right">{record.tags}</div>
-                    <div
-                        className="right timestamp-bottom">{moment(record.updateTime).format("dddd, MMM DD at HH:mm a")}</div>
-                </Panel>
-            </div>
+            <div style={{padding: '.5em'}}  key={record.id}/>
         );
     }
 

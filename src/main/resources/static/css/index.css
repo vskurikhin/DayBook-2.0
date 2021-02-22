@@ -3,11 +3,26 @@
 }
 
 /* Style the body */
+/*
 body {
-    min-width:550px; // Suppose you want minimum width of 550px
-    _width: expression( document.body.clientWidth > 550 ? "550px" : "auto" ); /* sets max-width for IE6 */
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
+}
+*/
+
+body {
+    min-width:550px; // Suppose you want minimum width of 550px
+_width: expression( document.body.clientWidth > 550 ? "550px" : "auto" ); /* sets max-width for IE6 */
+    margin: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: #f6f6f6;
+    font-family: "Open Sans","Helvetica Neue",sans-serif;
+    font-weight: 400;
+    color: #333;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 14px;
 }
 
 /* Header/logo Title */
@@ -41,8 +56,8 @@ body {
     float: left;
     display: block;
     color: white;
-    text-align: center;
-    padding: 14px 20px;
+    /* text-align: center; */
+    /* padding: 14px 20px; */
     text-decoration: none;
 }
 
@@ -271,6 +286,11 @@ img.my-left-top {
 
 .p-dataview .p-paginator-bottom {
     border-width: 0 0 1px 0;
+}
+
+.p-dataview.p-dataview-list .p-dataview-content > .p-grid > div {
+    border: 1px solid #d8dae2;
+    border-width: 0;
 }
 
 .p-paginator .p-paginator-left-content {

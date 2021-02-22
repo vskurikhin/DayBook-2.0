@@ -1,0 +1,16 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd"
+        logicalFilePath="./src/main/resources/db/changelog/db/Change-Sets/changelogs_2021-02-21_20-56-51_280_unq_session_session_id.xml">
+
+  <changeSet id="2021-02-21_20-56-51" author="Victor N. Skurikhin">
+      <sql>
+          <![CDATA[
+          CREATE UNIQUE INDEX IF NOT EXISTS UNQ_session_session_id
+            ON security.session (session_id);
+          ]]>
+      </sql>
+  </changeSet>
+</databaseChangeLog>
