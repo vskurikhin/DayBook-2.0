@@ -1,0 +1,96 @@
+/* Ensure proper sizing */
+* {
+ box-sizing: border-box;
+}
+/* Style the body */
+body {
+ margin: 0;
+ font-family: "Open Sans","Helvetica Neue",sans-serif;
+ font-weight: 400;
+ color: #333;
+ -webkit-font-smoothing: antialiased;
+ -moz-osx-font-smoothing: grayscale;
+ font-size: 14px;
+}
+/* Increase the font size of the heading */
+.header h1 {
+ font-size: 40px;
+}
+/* Fake image, just for this example */
+.fakeimg {
+ background-color: #aaa;
+ width: 100%;
+ padding: 20px;
+}
+.timestamp-bottom {
+ margin-bottom: 15px;
+}
+img.my-left-top {
+ float:left; /* Выравнивание по левому краю */
+ margin: 17px 17px 17px 17px; /* Отступы вокруг картинки */
+ vertical-align: text-top;
+}
+.my-left-top {
+ float:left; /* Выравнивание по левому краю */
+ margin: 17px 17px 17px 17px; /* Отступы вокруг картинки */
+ vertical-align: text-top;
+}
+.center-demo {
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+}
+.p-col-d {
+ display: table-cell;
+}
+.p-col-m {
+ display: none;
+}
+.leftimg {
+ float:left; /* Выравнивание по левому краю */
+ margin: 17px 17px 17px 17px; /* Отступы вокруг картинки */
+}
+.rightimg  {
+ float: right; /* Выравнивание по правому краю  */
+ margin: 7px 0 7px 7px; /* Отступы вокруг картинки */
+}
+@media screen and (max-width: 1024px) {
+ .p-col-d {
+     display: none;
+ }
+ .p-col-m {
+     display: inline-block;
+ }
+}
+.my-p-calendar {
+ font-size: 10px;
+}
+:not(.sb-show-main) > .sb-main,
+:not(.sb-show-nopreview) > .sb-nopreview,
+:not(.sb-show-errordisplay) > .sb-errordisplay {
+ display: none;
+}
+.descField{
+ font-size: 10px;
+ font-family: "Helvetica";
+ font-weight: 900;
+ color: #96989A;
+}
+.valueField{
+ font-size: 10px;
+ font-family: "Helvetica";
+ font-weight: 900;
+ color: #606062;
+}
+.valueField p {
+ text-align: justify;
+ width: 100%;
+ height:10px;
+ line-height:10px;
+ margin:0;
+}
+.valueField p:after{
+ content: "";
+ display: inline-block;
+ width: 100%;
+}

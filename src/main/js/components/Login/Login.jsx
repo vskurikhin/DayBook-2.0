@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.21 20:37 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.22 17:38 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * Login.jsx
@@ -57,14 +57,14 @@ class Login extends Component {
                     <div className="my-main" name='main'>
                         <div className="dataview-demo">
                             <form onSubmit={this.handleSubmit}>
-                                <div className="card">
-                                    <div className="my-divTable">
-                                        <div className="my-divTableBody">
-                                            <div className="my-divTableRow">
-                                                <div className="my-divTableCellLeft">&nbsp;</div>
-                                                <div className="my-divTableCell">
-                                                    <h5 className="my-h5">&nbsp;</h5>
-                                                    <span className="p-float-label">
+                                <div className="my-divTable">
+                                    <div className="my-divTableBody">
+                                        <div className="my-divTableRow">
+                                            <div className="my-divTableCellLeft">&nbsp;</div>
+                                            <div className="my-divTableCell">
+                                                <h1>Login</h1>
+                                                <br/>
+                                                <span className="p-float-label">
                                                         <InputText
                                                             className="my-p-inputtext"
                                                             id="Username"
@@ -74,36 +74,35 @@ class Login extends Component {
                                                         />
                                                         <label htmlFor="Username"><b>Username:</b></label>
                                                     </span>
-                                                </div>
-                                                <div className="my-divTableCellRight">&nbsp;</div>
                                             </div>
-                                            <div className="my-divTableRow">
-                                                <div className="my-divTableCellLeft">&nbsp;</div>
-                                                <div className="my-divTableCell">
-                                                    <label htmlFor="Username"><b>Password:</b></label><br/>
-                                                    <input
-                                                        className="my-p-inputtext"
-                                                        name='password'
-                                                        onChange={this.handleChange}
-                                                        placeholder='Password'
-                                                        type='password'
-                                                        value={this.state.password}
-                                                    /><br/>
-                                                </div>
-                                                <div className="my-divTableCellRight">&nbsp;</div>
+                                            <div className="my-divTableCellRight">&nbsp;</div>
+                                        </div>
+                                        <div className="my-divTableRow">
+                                            <div className="my-divTableCellLeft">&nbsp;</div>
+                                            <div className="my-divTableCell">
+                                                <label className="my-label"><b>Password:</b></label><br/>
+                                                <input
+                                                    className="my-p-inputtext"
+                                                    name='password'
+                                                    onChange={this.handleChange}
+                                                    placeholder='Password'
+                                                    type='password'
+                                                    value={this.state.password}
+                                                /><br/>
                                             </div>
-                                            <div className="my-divTableRow">
-                                                <div className="my-divTableCellLeft">&nbsp;</div>
-                                                <div className="my-divTableCell">
-                                                    <Button
-                                                        className="my-p-button"
-                                                        icon="pi pi-check"
-                                                        iconPos="right"
-                                                        label="Submit"
-                                                    />
-                                                </div>
-                                                <div className="my-divTableCellRight">&nbsp;</div>
+                                            <div className="my-divTableCellRight">&nbsp;</div>
+                                        </div>
+                                        <div className="my-divTableRow">
+                                            <div className="my-divTableCellLeft">&nbsp;</div>
+                                            <div className="my-divTableCell">
+                                                <Button
+                                                    className="my-p-button"
+                                                    icon="pi pi-check"
+                                                    iconPos="right"
+                                                    label="Submit"
+                                                />
                                             </div>
+                                            <div className="my-divTableCellRight">&nbsp;</div>
                                         </div>
                                     </div>
                                 </div>

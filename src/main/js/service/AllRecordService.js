@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.22 14:28 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.22 17:38 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * AllRecordService.js
@@ -25,7 +25,7 @@ export class AllRecordService {
             });
     }
 
-    getCarsLazy(event, rows) {
+    getCarsLazy(event, numberOfElements, rows) {
         console.log("Table lazy event", event);
         const config = getConfigHeadersAuthorization(localStorage.token)
         var filterJsonString = JSON.stringify(event);
@@ -35,7 +35,6 @@ export class AllRecordService {
             .then(function(response) {
                 console.log(response);
                 const length = response.data.content.length;
-                const numberOfElements = response.data['numberOfElements'] === null ? 3 : response.data['numberOfElements'];
                 for (let i = length; i < numberOfElements; i++) {
                     response.data.content.push({});
                 }
