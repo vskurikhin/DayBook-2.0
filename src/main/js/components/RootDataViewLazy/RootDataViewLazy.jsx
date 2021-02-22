@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.22 17:38 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.22 22:44 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RootDataViewLazy.jsx
@@ -24,14 +24,14 @@ import {connect} from "react-redux";
 import {useHistory, withRouter} from 'react-router-dom';
 
 const NUMBER_OF_ELEMENTS = 3;
+const TIMEOUT = 33;
 
 const RootDataViewLazy = (props) => {
-    const timeout = 33;
     const [records, setRecords] = useState([]);
     const [layout, setLayout] = useState('list');
     const [loading, setLoading] = useState(true);
     const [first, setFirst] = useState(0);
-    const [totalRecords, setTotalRecords] = useState(0);
+    const [totalRecords, setTotalRecords] = useState(NUMBER_OF_ELEMENTS);
     const [numberOfElements, setNumberOfElements] = useState(NUMBER_OF_ELEMENTS);
     const isMounted = useRef(false);
     const allRecordService = new AllRecordService();
@@ -68,14 +68,13 @@ const RootDataViewLazy = (props) => {
             setTimeout(() => {
                 setLoading(false);
                 setLayout(e.value);
-            }, timeout);
+            }, TIMEOUT);
         }
     }, [loading]); // eslint-disable-line react-hooks/exhaustive-deps
 
-
     useEffect(() => {
         setTimeout(() => {
-            allRecordService.getCarsFirstPage(0, 0, numberOfElements).then(function (resItems) {
+            allRecordService.getCarsLazy(null, numberOfElements, totalRecords).then(function (resItems) {
                 setTotalRecords(resItems.data.totalElements);
                 setNumberOfElements(resItems.data.numberOfElements);
                 setRecords(resItems.data.content);
@@ -84,7 +83,7 @@ const RootDataViewLazy = (props) => {
             }).catch(function (error) {
                 console.log(error);
             });
-        }, timeout);
+        }, TIMEOUT);
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const onPage = (event) => {
@@ -100,13 +99,13 @@ const RootDataViewLazy = (props) => {
             }).catch(function (error) {
                 console.log(error);
             });
-        }, timeout);
+        }, TIMEOUT);
     }
 
     // TODO
     const renderGridItem = (record) => {
         return (
-            <div></div>
+            <div/>
         );
     }
 
@@ -118,22 +117,22 @@ const RootDataViewLazy = (props) => {
         }
     }
 
+    const isArticle = (record) => record.type === "Article";
+    const isNewsEntry = (record) => record.type === "NewsEntry";
+    const isNewsLinks = (record) => record.type === "NewsLinks";
+
     const renderListItem = (record) => {
-        if (record.type === "Article")
-            return renderGridItemArticle(record);
-        if (record.type === "NewsEntry")
-            return renderGridItemNewsEntry(record);
-        if (record.type === "NewsLinks")
-            return renderGridItemNewsLinks(record);
+        if (isArticle(record) || isNewsEntry(record) || isNewsLinks(record))
+            return renderListItemEntity(record);
         return (
             <div style={{padding: '.5em', border: 0}}  key={record.id}/>
         );
     }
 
-    const renderGridItemArticle = (record) => {
+    const renderListItemEntity = (record) => {
         return (
             <div style={{padding: '.5em', border: 0}} className="p-col-12 p-md-4" key={record.id}>
-                <Panel header={record.articleTitle} style={{textAlign: 'left'}}>
+                <Panel header={renderTitle(record)} style={{textAlign: 'left'}}>
                     <table aria-haspopup
                            className="news-entry"
                            id={record.id}
@@ -141,19 +140,12 @@ const RootDataViewLazy = (props) => {
                         <tbody>
                         <tr>
                             <td className="my-article-first-th" rowSpan="3">
-                                <img alt={record.articleTitle}
-                                     className="my-left-top"
-                                     src="/raw-svg/file.svg"
-                                     srcSet="/raw-svg/file.svg"
-                                     height="64"
-                                     width="64"
-                                />
+                                {renderImg(record)}
                             </td>
                             <td className="valueField my-article-second-th" colSpan="2"
-                                rowSpan="2">{record.articleSummary}
-                                <ul>
-                                    <li><a href={record.articleInclude}>{record.articleAnchor}</a></li>
-                                </ul>
+                                rowSpan="2">{renderContent(record)}
+                                {isArticle(record) ? renderSummaryIncludeAnchor(record) : null}
+                                {isNewsLinks(record) ? renderLinkNewsLinks(record) : null}
                             </td>
                             <td/>
                         </tr>
@@ -166,7 +158,7 @@ const RootDataViewLazy = (props) => {
                             <td/>
                         </tr>
                         <tr>
-                            <td className="my-article-user-th">{record.articleUserName}</td>
+                            <td className="my-article-user-th">{renderUserName(record)}</td>
                             <td/>
                             <td/>
                             <td/>
@@ -178,102 +170,98 @@ const RootDataViewLazy = (props) => {
         );
     }
 
-    const renderGridItemNewsEntry = (record) => {
+    const renderTitle = (record) => {
+        if (isArticle(record))
+            return record['articleTitle'];
+        if (isNewsEntry(record))
+            return record['newsEntryTitle'];
+        if (isNewsLinks(record))
+            return record['newsLinksTitle'];
         return (
-            <div style={{padding: '.5em', border: 0}} className="p-col-12 p-md-4" key={record.id}>
-                <Panel header={record.newsEntryTitle} style={{textAlign: 'left'}}>
-                    <table id={record.id}
-                           className="news-entry"
-                           onContextMenu={(e) => renderContextMenu(e, record.id)}
-                           aria-haspopup>
-                        <tbody>
-                        <tr>
-                            <td className="my-news-entry-first-th" rowSpan="3">
-                                <img alt={record.newsEntryTitle}
-                                     className="my-left-top"
-                                     src="/raw-svg/pause.svg"
-                                     srcSet="/raw-svg/pause.svg"
-                                     height="96"
-                                     width="64"
-                                />
-                            </td>
-                            <td className="valueField my-news-entry-second-th" colSpan="2"
-                                rowSpan="2">{record.newsEntryContent}
-                            </td>
-                            <td/>
-                        </tr>
-                        <tr>
-                            <td/>
-                        </tr>
-                        <tr>
-                            <td>{record.tags}</td>
-                            <td className="my-news-entry-date-th">{moment(record.updateTime).format("dddd, MMM DD at HH:mm a")}</td>
-                            <td/>
-                        </tr>
-                        <tr>
-                            <td className="my-news-entry-user-th">{record.newsEntryUserName}</td>
-                            <td/>
-                            <td/>
-                            <td/>
-                        </tr>
-                        </tbody>
-                    </table>
-                </Panel>
-            </div>
+            <div style={{padding: '.5em', border: 0}} key={record.id}/>
         );
     }
 
-    const renderGridItemNewsLinks = (record) => {
+    const renderImg = (record) => {
+        if (isArticle(record))
+            return renderImgArticle(record);
+        if (isNewsEntry(record))
+            return renderImgNewsEntry(record);
+        if (isNewsLinks(record))
+            return renderImgNewsLinks(record);
         return (
-            <div style={{padding: '.5em', border: 0}} className="p-col-12 p-md-4" key={record.id}>
-                <Panel header={record.newsLinksTitle} style={{textAlign: 'left'}}>
-                    <table id={record.id}
-                           className="news-entry"
-                           onContextMenu={(e) => renderContextMenu(e, record.id)}
-                           aria-haspopup>
-                        <tbody>
-                        <tr>
-                            <td className="my-news-links-first-th" rowSpan="3">
-                                <img alt={record.newsLinksTitle}
-                                     className="my-left-top"
-                                     src="/raw-svg/link.svg"
-                                     srcSet="/raw-svg/link.svg"
-                                     height="72"
-                                     width="64"
-                                />
-                            </td>
-                            <td className="valueField my-news-links-second-th" colSpan="2" rowSpan="2">
-                                <ul>
-                                    <li><a href={record.links}>{record.links}</a></li>
-                                </ul>
-                            </td>
-                            <td/>
-                        </tr>
-                        <tr>
-                            <td/>
-                        </tr>
-                        <tr>
-                            <td>{record.tags}</td>
-                            <td className="my-news-links-date-th">{moment(record.updateTime).format("dddd, MMM DD at HH:mm a")}</td>
-                            <td/>
-                        </tr>
-                        <tr>
-                            <td className="my-news-links-user-th">{record.newsEntryUserName}</td>
-                            <td/>
-                            <td/>
-                            <td/>
-                        </tr>
-                        </tbody>
-                    </table>
-                </Panel>
-            </div>
+            <div style={{padding: '.5em', border: 0}}  key={record.id}/>
         );
     }
+
+    const renderUserName = (record) => {
+        if (isArticle(record))
+            return record['articleUserName'];
+        if (isNewsEntry(record))
+            return record['newsEntryUserName'];
+        if (isNewsLinks(record))
+            return record['newsLinksUserName'];
+        return (
+            <div style={{padding: '.5em', border: 0}}  key={record.id}/>
+        );
+    }
+
+    const renderImgArticle = (record) => (
+        <img alt={record['articleTitle']}
+             className="my-left-top"
+             src="/raw-svg/file.svg"
+             srcSet="/raw-svg/file.svg"
+             height="64"
+             width="64"
+        />
+    )
+
+    const renderImgNewsEntry = (record) => (
+        <img alt={record['newsEntryTitle']}
+             className="my-left-top"
+             src="/raw-svg/pause.svg"
+             srcSet="/raw-svg/pause.svg"
+             height="96"
+             width="64"
+        />
+    )
+
+    const renderImgNewsLinks = (record) => (
+        <img alt={record['newsLinksTitle']}
+             className="my-left-top"
+             src="/raw-svg/link.svg"
+             srcSet="/raw-svg/link.svg"
+             height="72"
+             width="64"
+        />
+    )
+
+    const renderContent = (record) => {
+        if (isArticle(record))
+            return record['articleSummary'];
+        if (isNewsEntry(record))
+            return record['newsEntryContent'];
+        if (isNewsLinks(record))
+            return null;
+        return (
+            <div style={{padding: '.5em', border: 0}} key={record.id}/>
+        );
+    }
+
+    const renderSummaryIncludeAnchor = (record) => (
+        <ul>
+            <li><a href={record['articleInclude']}>{record['articleAnchor']}</a></li>
+        </ul>
+    )
+
+    const renderLinkNewsLinks = (record) => (
+        <ul>
+            <li><a href={record.links}>{record.links}</a></li>
+        </ul>
+    )
 
     const itemTemplate = (record, layout) => {
-        if (!record) {
-            return;
-        }
+        if ( ! record) return;
 
         if (layout === 'grid')
             return renderGridItem(record);

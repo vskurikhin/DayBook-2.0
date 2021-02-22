@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.21 16:52 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.22 22:44 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * CalendarRow.jsx
@@ -71,8 +71,6 @@ export class CalendarRow extends Component {
             width: '100%',
             height: '100%'
         };
-        console.log("CalendarRow.render currentUser=" + this.getCurrentUser());
-        logDate("CalendarRow.render: currentDate=", this.getCurrentDate());
 
         return (
             <div className="my-row">
