@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.01.31 20:08 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.22 14:28 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RecordDaoImpl.java
@@ -19,6 +19,7 @@ import reactor.core.publisher.Mono;
 import su.svn.daybook.domain.dao.db.db.RecordCustomizedDao;
 import su.svn.daybook.domain.model.db.db.Record;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -58,17 +59,39 @@ public class RecordDaoImpl implements RecordCustomizedDao {
 
     @Override
     public Mono<Integer> insert(Record entry) {
-        return client.execute(INSERT_RECORD)
+
+        DatabaseClient.GenericExecuteSpec execSpec = client.execute(INSERT_RECORD)
                 .bind("id", entry.getId())
                 .bind("position", entry.getPosition())
                 .bind("type", entry.getType())
-                .bind("userName", entry.getUserName())
-                .bind("createTime", entry.getCreateTime())
-                .bind("updateTime", entry.getUpdateTime())
-                .bind("enabled", entry.getEnabled())
-                .bind("visible", entry.getVisible())
-                .bind("flags", entry.getFlags())
-                .fetch().rowsUpdated();
+                .bind("userName", entry.getUserName());
+
+        if (entry.getEnabled() != null)
+            execSpec = execSpec.bind("enabled", entry.getEnabled());
+        else
+            execSpec = execSpec.bind("enabled", true);
+
+        if (entry.getVisible() != null)
+            execSpec = execSpec.bind("visible", entry.getVisible());
+        else
+            execSpec = execSpec.bind("visible", true);
+
+        if (entry.getCreateTime() != null)
+            execSpec = execSpec.bind("createTime", entry.getCreateTime());
+        else
+            execSpec = execSpec.bind("createTime", LocalDateTime.now());
+
+        if (entry.getUpdateTime() != null)
+            execSpec = execSpec.bind("updateTime", entry.getUpdateTime());
+        else
+            execSpec = execSpec.bind("updateTime", LocalDateTime.now());
+
+        if (entry.getFlags() != null)
+            execSpec = execSpec.bind("flags", entry.getFlags());
+        else
+            execSpec = execSpec.bindNull("flags", Integer.class);
+
+        return execSpec.fetch().rowsUpdated();
     }
 
     @Override
@@ -93,7 +116,6 @@ public class RecordDaoImpl implements RecordCustomizedDao {
                 .doOnError(e -> log.error("createInsertAllTransaction1 ", e))
                 .doFinally((st) -> connection.close());
     }
-
 
     private Flux<Integer> executeInsertStatements(Connection connection, Iterable<Record> entries) {
 

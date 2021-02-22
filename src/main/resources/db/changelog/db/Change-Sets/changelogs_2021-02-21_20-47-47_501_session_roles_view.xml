@@ -1,0 +1,24 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd"
+        logicalFilePath="./src/main/resources/db/changelog/db/Change-Sets/changelogs_2021-02-21_20-47-47_501_session_roles_view.xml">
+
+  <changeSet id="2021-02-21_20-47-47" author="Victor N. Skurikhin">
+      <sql>
+          <![CDATA[
+            CREATE OR REPLACE VIEW security.session_roles_view AS SELECT
+                se.user_name user_name,
+                se.session_id session_id,
+                (   SELECT array_agg(ro.role_name)
+                      FROM security.role ro
+                     WHERE se.user_name = ro.user_name AND ro.enabled
+                ) roles
+              FROM security.session se
+             WHERE se.enabled
+            ;
+          ]]>
+      </sql>
+  </changeSet>
+</databaseChangeLog>

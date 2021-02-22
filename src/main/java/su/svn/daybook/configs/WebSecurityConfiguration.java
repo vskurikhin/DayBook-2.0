@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.03 18:28 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.22 14:28 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * WebSecurityConfiguration.java
@@ -18,6 +18,7 @@ import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 
+import org.springframework.security.web.server.context.NoOpServerSecurityContextRepository;
 import reactor.core.publisher.Mono;
 import su.svn.daybook.services.security.AuthenticationManager;
 import su.svn.daybook.services.security.JwtAuthenticationFilter;
@@ -70,10 +71,9 @@ public class WebSecurityConfiguration {
                 .pathMatchers(HttpMethod.GET, "/webjars/**").permitAll()
                 .pathMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
                 .pathMatchers(HttpMethod.GET, "/api/v1/resource/profile").permitAll()
+                .pathMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyExchange().authenticated()
                 .and()
-                .addFilterBefore(new JwtAuthenticationFilter(), SecurityWebFiltersOrder.AUTHORIZATION)
-                // .securityContextRepository(NoOpServerSecurityContextRepository.getInstance())
                 .build();
     }
 }

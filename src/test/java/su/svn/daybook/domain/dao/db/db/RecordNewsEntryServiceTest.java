@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.r2dbc.connectionfactory.R2dbcTransactionManager;
 import org.springframework.data.r2dbc.core.DatabaseClient;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.reactive.TransactionalOperator;
 import su.svn.daybook.domain.dao.db.TestConnectionFactoryConfiguration;
@@ -18,7 +21,10 @@ import su.svn.daybook.domain.model.db.db.Record;
 import su.svn.daybook.utils.TestDatabaseUtil;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.UUID;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = TestConnectionFactoryConfiguration.class)
@@ -41,6 +47,10 @@ class RecordNewsEntryServiceTest {
         databaseClient = DatabaseClient.create(connectionFactory);
         transactionalOperator = TransactionalOperator.create(new R2dbcTransactionManager(connectionFactory));
         TestDatabaseUtil.constructTestDatabase(databaseClient, transactionalOperator, tClass);
+        SecurityContextHolder.getContext()
+                .setAuthentication(
+                        new UsernamePasswordAuthenticationToken("userName1", null, Collections.emptyList())
+                );
         System.err.println("setUp");
     }
 

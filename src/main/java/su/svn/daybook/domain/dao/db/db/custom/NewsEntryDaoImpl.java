@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.01.31 20:08 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.22 14:28 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NewsEntryDaoImpl.java
@@ -65,11 +65,17 @@ public class NewsEntryDaoImpl implements NewsEntryCustomizedDao {
         DatabaseClient.GenericExecuteSpec execSpec = client.execute(INSERT_NEWS_ENTRY)
                 .bind("id", entry.getId())
                 .bind("userName", entry.getUserName())
-                .bind("title", entry.getTitle())
-                .bind("createTime", entry.getCreateTime())
-                .bind("enabled", entry.getEnabled())
-                .bind("visible", entry.getVisible())
-                .bind("flags", entry.getFlags());
+                .bind("title", entry.getTitle());
+
+        if (entry.getEnabled() != null)
+            execSpec = execSpec.bind("enabled", entry.getEnabled());
+        else
+            execSpec = execSpec.bind("enabled", true);
+
+        if (entry.getVisible() != null)
+            execSpec = execSpec.bind("visible", entry.getVisible());
+        else
+            execSpec = execSpec.bind("visible", true);
 
         if (entry.getNewsGroupId() != null)
             execSpec = execSpec.bind("newsGroupId", entry.getNewsGroupId());
@@ -81,10 +87,20 @@ public class NewsEntryDaoImpl implements NewsEntryCustomizedDao {
         else
             execSpec = execSpec.bindNull("content", String.class);
 
+        if (entry.getCreateTime() != null)
+            execSpec = execSpec.bind("createTime", entry.getCreateTime());
+        else
+            execSpec = execSpec.bind("createTime", LocalDateTime.now());
+
         if (entry.getUpdateTime() != null)
             execSpec = execSpec.bind("updateTime", entry.getUpdateTime());
         else
             execSpec = execSpec.bind("updateTime", LocalDateTime.now());
+
+        if (entry.getFlags() != null)
+            execSpec = execSpec.bind("flags", entry.getFlags());
+        else
+            execSpec = execSpec.bindNull("flags", Integer.class);
 
         return execSpec.fetch().rowsUpdated();
     }
