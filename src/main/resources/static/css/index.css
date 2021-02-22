@@ -2,50 +2,50 @@
  display: table;
  width: 100%;
 }
-.my-divTableRow {
+.my-divTableRow{
  display: table-row;
 }
-.my-divTableHeading {
+.my-divTableHeading{
  background-color: #EEE;
  display: table-header-group;
 }
-.my-divTableCellLeft, .my-divTableHeadLeft {
+.my-divTableCellLeft,.my-divTableHeadLeft{
  width: 10%;
  border: 0 solid #999999;
  display: table-cell;
  padding: 15px 10px;
 }
-.my-divTableCell, .my-divTableHead {
+.my-divTableCell,.my-divTableHead{
  border: 0 solid #999999;
  display: table-cell;
  padding: 15px 10px;
 }
-.my-divTableCellRight, .my-divTableHeadRight {
+.my-divTableCellRight,.my-divTableHeadRight{
  width: 10%;
  border: 0 solid #999999;
  display: table-cell;
  padding: 15px 10px;
 }
-.my-divTableHeading {
+.my-divTableHeading{
  background-color: #EEE;
  display: table-header-group;
  font-weight: bold;
 }
-.my-divTableFoot {
+.my-divTableFoot{
  background-color: #EEE;
  display: table-footer-group;
  font-weight: bold;
 }
-.my-divTableBody {
+.my-divTableBody{
  display: table-row-group;
 }
-.my-h5 {
+.my-h5{
  margin-block-start: 1.67em;
  margin-block-end: 0.67em;
  margin-inline-start: 0px;
  margin-inline-end: 0px;
 }
-.my-p-inputtext {
+.my-p-inputtext{
  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
  font-size: 1rem;
  color: #333333;
@@ -57,7 +57,7 @@
  border-radius: 3px;
  width: 22.2em;
 }
-.my-p-button {
+.my-p-button{
  color: #ffffff;
  background: #777777;
  border: 1px solid #555555;
@@ -66,11 +66,12 @@
  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
  border-radius: 3px;
 }
-.p-selectbutton .p-button.p-highlight:hover {
+.p-selectbutton .p-button.p-highlight:hover{
  background: #111f1f;
  border-color: #111f1f;
  color: #ffffff;
-}label.my-label {
+}
+label.my-label{
     top: -.75rem;
     font-size: 12px;
     left: 0.429rem;
@@ -78,76 +79,79 @@
     transition-duration: 0.2s;
     margin-bottom: 0.33rem;
     margin-left: 0.6em;
-}/* Ensure proper sizing */
+}
+/* Ensure proper sizing */
 * {
  box-sizing: border-box;
 }
 /* Style the body */
-body {
+body{
  margin: 0;
- font-family: "Open Sans","Helvetica Neue",sans-serif;
- font-weight: 400;
  color: #333;
  -webkit-font-smoothing: antialiased;
  -moz-osx-font-smoothing: grayscale;
  font-size: 14px;
+ min-width:550px;
+ font-weight: 400;
+ font-family: "Open Sans","Helvetica Neue",sans-serif;
+ _width: expression( document.body.clientWidth > 550 ? "550px" : "auto" );
 }
 /* Increase the font size of the heading */
-.header h1 {
+.header h1{
  font-size: 40px;
 }
 /* Fake image, just for this example */
-.fakeimg {
+.fakeimg{
  background-color: #aaa;
  width: 100%;
  padding: 20px;
 }
-.timestamp-bottom {
+.timestamp-bottom{
  margin-bottom: 15px;
 }
-img.my-left-top {
+img.my-left-top{
  float:left; /* Выравнивание по левому краю */
  margin: 17px 17px 17px 17px; /* Отступы вокруг картинки */
  vertical-align: text-top;
 }
-.my-left-top {
+.my-left-top{
  float:left; /* Выравнивание по левому краю */
  margin: 17px 17px 17px 17px; /* Отступы вокруг картинки */
  vertical-align: text-top;
 }
-.center-demo {
+.center-demo{
  display: flex;
  flex-direction: column;
  align-items: center;
 }
-.p-col-d {
+.p-col-d{
  display: table-cell;
 }
-.p-col-m {
+.p-col-m{
  display: none;
 }
-.leftimg {
+.leftimg{
  float:left; /* Выравнивание по левому краю */
  margin: 17px 17px 17px 17px; /* Отступы вокруг картинки */
 }
-.rightimg  {
+.rightimg{
  float: right; /* Выравнивание по правому краю  */
  margin: 7px 0 7px 7px; /* Отступы вокруг картинки */
 }
-@media screen and (max-width: 1024px) {
- .p-col-d {
+@media screen and (max-width: 1024px){
+ .p-col-d{
      display: none;
  }
- .p-col-m {
+ .p-col-m{
      display: inline-block;
  }
 }
-.my-p-calendar {
+.my-p-calendar{
  font-size: 10px;
 }
 :not(.sb-show-main) > .sb-main,
 :not(.sb-show-nopreview) > .sb-nopreview,
-:not(.sb-show-errordisplay) > .sb-errordisplay {
+:not(.sb-show-errordisplay) > .sb-errordisplay{
  display: none;
 }
 .descField{
@@ -162,7 +166,7 @@ img.my-left-top {
  font-weight: 900;
  color: #606062;
 }
-.valueField p {
+.valueField p{
  text-align: justify;
  width: 100%;
  height:10px;
@@ -173,8 +177,9 @@ img.my-left-top {
  content: "";
  display: inline-block;
  width: 100%;
-}/* Header/logo Title */
-.my-header {
+}
+/* Header/logo Title */
+.my-header{
  position: absolute;
  height: 90px;
  width: 100%;
@@ -184,7 +189,7 @@ img.my-left-top {
  color: #3f3f3f;
 }
 /* Style the top navigation bar */
-.my-navbar {
+.my-navbar{
  position: absolute;
  top: 90px;
  height: 44px;
@@ -193,7 +198,7 @@ img.my-left-top {
  background-color: #333;
 }
 /* Style the navigation bar links */
-.my-navbar a {
+.my-navbar a{
  float: left;
  display: block;
  color: white;
@@ -202,17 +207,17 @@ img.my-left-top {
  text-decoration: none;
 }
 /* Right-aligned link */
-.my-navbar a.right {
+.my-navbar a.right{
  float: right; /* Float a link to the right */
 }
 /* Change color on hover/mouse-over */
-.my-navbar a:hover {
+.my-navbar a:hover{
  background-color: #ddd; /* Grey background color */
  color: black; /* Black text color */
  height: 99%;
 }
 /* Column container */
-.my-row {
+.my-row{
  position: absolute;
  top: 134px;
  bottom: 10px;
@@ -224,7 +229,7 @@ img.my-left-top {
 }
 /* Create two unequal columns that sits next to each other */
 /* Sidebar/left column */
-.my-side {
+.my-side{
  /* -ms-flex: 25%; /* IE10
  flex: 25%; */
  background-color: #f1f1f1;
@@ -234,14 +239,14 @@ img.my-left-top {
  min-width: 230px;
 }
 /* Main column */
-.my-main {
+.my-main{
  -ms-flex: 75%; /* IE10 */
  flex: 75%;
  background-color: white;
- padding: 0px;
+ padding: 0;
 }
 /* Footer */
-.my-footer {
+.my-footer{
  position:absolute;
  height: 10px;
  bottom: 0;
@@ -250,22 +255,28 @@ img.my-left-top {
  background: #ddd;
  border: 1px solid #c8c8c8;
 }
-a.SectionNavigation-Item.Section {
+a.SectionNavigation-Item.Section{
  text-decoration: none;
 }
 /* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 700px){
  .my-row {
      flex-direction: column;
  }
 }
 /* Responsive layout - when the screen is less than 400px wide, make the navigation links stack on top of each other instead of next to each other */
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 400px){
  .my-navbar a {
      float: none;
      width: 100%;
  }
-}.sb-wrapper {
+}
+@media (max-width: 960px){
+ .my-side {
+  position: absolute;
+  display: none;
+ }
+}.sb-wrapper{
  position: fixed;
  top: 0;
  bottom: 0;
@@ -276,67 +287,67 @@ a.SectionNavigation-Item.Section {
  -webkit-font-smoothing: antialiased;
  overflow: auto;
 }
-.sb-heading {
+.sb-heading{
  font-size: 10px;
  font-weight: 600;
  letter-spacing: 0.2px;
  margin: 10px 0;
  padding-right: 25px;
 }
-.sb-nopreview {
+.sb-nopreview{
  display: flex;
  align-content: center;
  justify-content: center;
 }
-.sb-nopreview_main {
+.sb-nopreview_main{
  margin: auto;
  padding: 30px;
  border-radius: 10px;
  background: rgba(0,0,0,0.03);
 }
-.sb-nopreview_heading {
+.sb-nopreview_heading{
  text-align: center;
 }
-.sb-errordisplay {
+.sb-errordisplay{
  border: 20px solid rgb(187, 49, 49);
  background: #222;
  color: #fff;
  z-index: 999999;
 }
-.sb-errordisplay_code {
+.sb-errordisplay_code{
  padding: 10px;
  background: #000;
  color: #eee;
  font-family: "Operator Mono", "Fira Code Retina", "Fira Code", "FiraCode-Retina", "Andale Mono", "Lucida Console", Consolas, Monaco, monospace;
 }
-.sb-errordisplay pre {
+.sb-errordisplay pre{
  white-space: pre-wrap;
 }
-.calendar {
+.calendar{
  border-radius: 5px;
  padding: 3px;
  margin: 0;
  max-width: 225px;
 }
-.calendar-month {
+.calendar-month{
  width: 225px;
  -webkit-user-select: none;
  -moz-user-select: none;
  -ms-user-select: none;
  user-select: none;
 }
-.calendar-month_header {
+.calendar-month_header{
  display: flex;
  justify-content: space-between;
  margin-bottom: 30px;
 }
 .calendar-week,
-.calendar-days_of_week {
+.calendar-days_of_week{
  display: flex;
  justify-content: space-between;
 }
 .calendar-week-day,
-.calendar-days_of_week_day {
+.calendar-days_of_week_day{
  display: inline-block;
  width: 100px;
  text-align: center;
@@ -344,37 +355,37 @@ a.SectionNavigation-Item.Section {
  opacity: 0.5;
  font-size: 12px;
 }
-.calendar-week-day {
+.calendar-week-day{
  margin: 0;
  padding: 0;
  background: none;
  border: none;
 }
-.calendar-week-day.is-selectable {
+.calendar-week-day.is-selectable{
  cursor: pointer;
 }
-.calendar-week-day.is-disabled {
+.calendar-week-day.is-disabled{
  background: #f5f5f5;
 }
-.calendar-week-day.is-current_month {
+.calendar-week-day.is-current_month{
  opacity: 1;
 }
-.calendar-week-day.is-selected {
+.calendar-week-day.is-selected{
  background: #008000;
 }
-.calendar-week-day.is-selected.is-start_selection {
+.calendar-week-day.is-selected.is-start_selection{
  background: #f00;
 }
-.calendar-week-day.is-selected.is-end_selection {
+.calendar-week-day.is-selected.is-end_selection{
  background: #00f;
 }
-.calendar-header_button.is-prev:before {
+.calendar-header_button.is-prev:before{
  content: '<';
 }
-.calendar-header_button.is-next:before {
+.calendar-header_button.is-next:before{
  content: '>';
 }
-.date_picker {
+.date_picker{
  padding: 30px;
  border-radius: 5px;
  border: 1px solid #e4e7ea;
@@ -386,20 +397,20 @@ a.SectionNavigation-Item.Section {
  max-width: 250px;
  font-family: 'PT Sans', sans-serif;
 }
-.date_picker-month_header {
+.date_picker-month_header{
  display: flex;
  justify-content: space-between;
  align-items: center;
  margin-bottom: 20px;
 }
-.date_picker-month_header_wrapper {
+.date_picker-month_header_wrapper{
  text-align: center;
  margin: 0 auto 25px;
 }
-.date_picker-month_header_title {
+.date_picker-month_header_title{
  font-size: 10px;
 }
-.date_picker-header_button {
+.date_picker-header_button{
  cursor: pointer;
  background: transparent;
  border-radius: 50%;
@@ -409,14 +420,14 @@ a.SectionNavigation-Item.Section {
  height: 35px;
  width: 35px;
 }
-.date_picker-header_button:focus {
+.date_picker-header_button:focus{
  outline: 0;
 }
-.date_picker-header_button.is-disabled {
+.date_picker-header_button.is-disabled{
  cursor: default;
 }
 .date_picker-header_button.is-next:before,
-.date_picker-header_button.is-prev:before {
+.date_picker-header_button.is-prev:before{
  position: absolute;
  top: 50%;
  left: 50%;
@@ -425,38 +436,38 @@ a.SectionNavigation-Item.Section {
  color: #303030;
 }
 .date_picker-header_button.is-disabled .date_picker-header_button.is-next,
-.date_picker-header_button.is-disabled .date_picker-header_button.is-prev {
+.date_picker-header_button.is-disabled .date_picker-header_button.is-prev{
  color: #acb3bb;
 }
 .date_picker-calendar_wrapper.is-shortcut_hover_outrange .date_picker-header_button.is-next,
-.date_picker-calendar_wrapper.is-shortcut_hover_outrange .date_picker-header_button.is-prev {
+.date_picker-calendar_wrapper.is-shortcut_hover_outrange .date_picker-header_button.is-prev{
  border-color: #4a90e2;
  background: #e7f5ff;
 }
-.date_picker-header_button.is-prev:before {
+.date_picker-header_button.is-prev:before{
  content: '<';
 }
-.date_picker-header_button.is-next:after {
+.date_picker-header_button.is-next:after{
  content: '>';
 }
-.date_picker-days_of_week {
+.date_picker-days_of_week{
  font-size: 9px;
  display: flex;
  color: #c3c3c3;
  text-align: center;
  margin-bottom: 25px;
 }
-.date_picker-days_of_week_day {
+.date_picker-days_of_week_day{
  flex-basis: 15%;
 }
-.date_picker-week {
+.date_picker-week{
  display: flex;
  margin-bottom: 8px;
 }
-.date_picker-week:last-of-type {
+.date_picker-week:last-of-type{
  margin-bottom: 0;
 }
-.date_picker-week-day {
+.date_picker-week-day{
  height: 34px;
  width: 34px;
  vertical-align: middle;
@@ -478,36 +489,36 @@ a.SectionNavigation-Item.Section {
  outline: 0;
 }
 .date_picker-week-day:first-of-type:hover,
-.date_picker-week-day:last-of-type:hover {
+.date_picker-week-day:last-of-type:hover{
  border-radius: 50%;
 }
-.date_picker-week-day:first-of-type {
+.date_picker-week-day:first-of-type{
  border-radius: 50% 0 0 50%;
 }
-.date_picker-week-day:last-of-type {
+.date_picker-week-day:last-of-type{
  border-radius: 0 50% 50% 0;
 }
 .date_picker-week-day.is-prev_month,
-.date_picker-week-day.is-next_month {
+.date_picker-week-day.is-next_month{
  color: rgba(172,179,187,0.85);
 }
-.date_picker-week-day.is-today {
+.date_picker-week-day.is-today{
  font-weight: 700;
 }
-.date_picker-week-day.is-selected {
+.date_picker-week-day.is-selected{
  background: #e3effc;
  color: #404040;
  position: relative;
  z-index: 1;
  border-radius: 0;
 }
-.date_picker-week-day.is-selected:first-of-type {
+.date_picker-week-day.is-selected:first-of-type{
  border-radius: 50% 0 0 50%;
 }
-.date_picker-week-day.is-selected:last-of-type {
+.date_picker-week-day.is-selected:last-of-type{
  border-radius: 0 50% 50% 0;
 }
-.date_picker-week-day.is-selected::before {
+.date_picker-week-day.is-selected::before{
  background: #3863a0;
  top: 0;
  left: 0;
@@ -518,46 +529,46 @@ a.SectionNavigation-Item.Section {
  border-radius: 50%;
  color: #fff;
 }
-.date_picker-calendar_wrapper.is-shortcut_hovered .date_picker-week-day.is-selected::before {
+.date_picker-calendar_wrapper.is-shortcut_hovered .date_picker-week-day.is-selected::before{
  background: #4a90e2;
 }
-.date_picker-week-day.is-selected:hover::before {
+.date_picker-week-day.is-selected:hover::before{
  content: '';
  box-shadow: inset 0 0 1px 0 #3863a0;
  background: #e3effc;
  color: #404040;
 }
 .date_picker-week-day.is-selected.is-start_selection.date_picker-week-day.is-selected:hover::before,
-.date_picker-week-day.is-selected.is-end_selection.date_picker-week-day.is-selected:hover::before {
+.date_picker-week-day.is-selected.is-end_selection.date_picker-week-day.is-selected:hover::before{
  background: #3863a0;
 }
 .date_picker-week-day.is-selected.is-start_selection,
-.date_picker-week-day.is-selected.is-end_selection {
+.date_picker-week-day.is-selected.is-end_selection{
  background: #e3effc;
  color: #fff;
 }
 .date_picker-week-day.is-selected.is-start_selection::before,
-.date_picker-week-day.is-selected.is-end_selection::before {
+.date_picker-week-day.is-selected.is-end_selection::before{
  content: '';
 }
-.date_picker-week-day.is-selected.is-start_selection {
+.date_picker-week-day.is-selected.is-start_selection{
  border-radius: 50% 0 0 50%;
 }
-.date_picker-week-day.is-selected.is-start_selection:last-of-type {
+.date_picker-week-day.is-selected.is-start_selection:last-of-type{
  border-radius: 50%;
 }
-.date_picker-week-day.is-selected.is-end_selection {
+.date_picker-week-day.is-selected.is-end_selection{
  border-radius: 0 50% 50% 0;
 }
 .date_picker-week-day.is-selected.is-end_selection.is-start_selection,
-.date_picker-week-day.is-selected.is-end_selection:first-of-type {
+.date_picker-week-day.is-selected.is-end_selection:first-of-type{
  border-radius: 50%;
 }
-.date_picker-week-day.is-selectable {
+.date_picker-week-day.is-selectable{
  cursor: pointer;
  position: relative;
 }
-.date_picker-week-day.is-selectable:before {
+.date_picker-week-day.is-selectable:before{
  top: 0;
  left: 0;
  bottom: 0;
@@ -567,14 +578,14 @@ a.SectionNavigation-Item.Section {
  height: 100%;
  position: absolute;
 }
-.date_picker-week-day.is-selectable:hover:not(.is-selected) {
+.date_picker-week-day.is-selectable:hover:not(.is-selected){
  z-index: 1;
  box-shadow: inset 0 0 1px 0 #3863a0;
 }
-.date_picker-week-day.is-not_selectable {
+.date_picker-week-day.is-not_selectable{
  color: #e4e7ea;
 }
-.date_picker-notice {
+.date_picker-notice{
  font-size: 11px;
  font-weight: 700;
  margin-bottom: 15px;

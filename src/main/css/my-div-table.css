@@ -2,50 +2,50 @@
  display: table;
  width: 100%;
 }
-.my-divTableRow {
+.my-divTableRow{
  display: table-row;
 }
-.my-divTableHeading {
+.my-divTableHeading{
  background-color: #EEE;
  display: table-header-group;
 }
-.my-divTableCellLeft, .my-divTableHeadLeft {
+.my-divTableCellLeft,.my-divTableHeadLeft{
  width: 10%;
  border: 0 solid #999999;
  display: table-cell;
  padding: 15px 10px;
 }
-.my-divTableCell, .my-divTableHead {
+.my-divTableCell,.my-divTableHead{
  border: 0 solid #999999;
  display: table-cell;
  padding: 15px 10px;
 }
-.my-divTableCellRight, .my-divTableHeadRight {
+.my-divTableCellRight,.my-divTableHeadRight{
  width: 10%;
  border: 0 solid #999999;
  display: table-cell;
  padding: 15px 10px;
 }
-.my-divTableHeading {
+.my-divTableHeading{
  background-color: #EEE;
  display: table-header-group;
  font-weight: bold;
 }
-.my-divTableFoot {
+.my-divTableFoot{
  background-color: #EEE;
  display: table-footer-group;
  font-weight: bold;
 }
-.my-divTableBody {
+.my-divTableBody{
  display: table-row-group;
 }
-.my-h5 {
+.my-h5{
  margin-block-start: 1.67em;
  margin-block-end: 0.67em;
  margin-inline-start: 0px;
  margin-inline-end: 0px;
 }
-.my-p-inputtext {
+.my-p-inputtext{
  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
  font-size: 1rem;
  color: #333333;
@@ -57,7 +57,7 @@
  border-radius: 3px;
  width: 22.2em;
 }
-.my-p-button {
+.my-p-button{
  color: #ffffff;
  background: #777777;
  border: 1px solid #555555;
@@ -66,7 +66,7 @@
  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
  border-radius: 3px;
 }
-.p-selectbutton .p-button.p-highlight:hover {
+.p-selectbutton .p-button.p-highlight:hover{
  background: #111f1f;
  border-color: #111f1f;
  color: #ffffff;

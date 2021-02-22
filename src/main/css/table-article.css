@@ -3,7 +3,7 @@ table.article td,table.article th{white-space:pre-wrap;padding:10px 5px;line-hei
 table.article tr:hover td{color:#354264;cursor:default;}
 .my-article-first-th{width: 64px;color:#354251;font-size: 12px;font-family: "Helvetica";font-weight: 500;}
 .my-article-second-th{width: 95%;color:#354251;font-size: 12px;font-family: "Helvetica";font-weight: 500;}
-.my-article-second-th p {
+.my-article-second-th p{
  text-align: justify;
  width: 100%;
  height:10px;
