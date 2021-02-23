@@ -1,0 +1,18 @@
+.container {
+    max-width: 40rem;
+    margin: 0 auto;
+    padding: 0 $m-size;
+    text-align: center;
+}
+
+.container__list {
+    text-align: left;
+}
+
+.container__box {
+    background-color: $light;
+    width: 300px;
+    border: 1px solid $blue;
+    padding: 15px;
+    margin: 15px auto;
+}
