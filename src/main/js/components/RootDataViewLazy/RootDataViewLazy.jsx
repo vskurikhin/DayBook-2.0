@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.22 14:28 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.22 17:38 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RootDataViewLazy.jsx
@@ -93,7 +93,7 @@ const RootDataViewLazy = (props) => {
         setTimeout(() => {
             let min = totalRecords - event.originalEvent.page*NUMBER_OF_ELEMENTS;
             min = min < NUMBER_OF_ELEMENTS ? min : NUMBER_OF_ELEMENTS;
-            allRecordService.getCarsLazy(event.originalEvent, min).then(function (resItems) {
+            allRecordService.getCarsLazy(event.originalEvent, numberOfElements, min).then(function (resItems) {
                 setFirst(event.originalEvent.first);
                 setRecords(resItems.data.content);
                 setLoading(false);
@@ -126,13 +126,13 @@ const RootDataViewLazy = (props) => {
         if (record.type === "NewsLinks")
             return renderGridItemNewsLinks(record);
         return (
-            <div style={{padding: '.5em'}}  key={record.id}/>
+            <div style={{padding: '.5em', border: 0}}  key={record.id}/>
         );
     }
 
     const renderGridItemArticle = (record) => {
         return (
-            <div style={{padding: '.5em'}} className="p-col-12 p-md-4" key={record.id}>
+            <div style={{padding: '.5em', border: 0}} className="p-col-12 p-md-4" key={record.id}>
                 <Panel header={record.articleTitle} style={{textAlign: 'left'}}>
                     <table aria-haspopup
                            className="news-entry"
@@ -151,11 +151,6 @@ const RootDataViewLazy = (props) => {
                             </td>
                             <td className="valueField my-article-second-th" colSpan="2"
                                 rowSpan="2">{record.articleSummary}
-                                Представляю вашему вниманию
-                                новый инструмент по созданию HTML таблиц для сайта v3.0 с расширенными
-                                возможностями. В данный инструмент я включил самые нужные функции, которые помогут
-                                без знаний HTML сгенерировать нужную таблицу. Данная версию была созданная благодаря
-                                большой активности пользователей в предыдущих версиях инструмента.
                                 <ul>
                                     <li><a href={record.articleInclude}>{record.articleAnchor}</a></li>
                                 </ul>
@@ -185,7 +180,7 @@ const RootDataViewLazy = (props) => {
 
     const renderGridItemNewsEntry = (record) => {
         return (
-            <div style={{padding: '.5em'}} className="p-col-12 p-md-4" key={record.id}>
+            <div style={{padding: '.5em', border: 0}} className="p-col-12 p-md-4" key={record.id}>
                 <Panel header={record.newsEntryTitle} style={{textAlign: 'left'}}>
                     <table id={record.id}
                            className="news-entry"
@@ -204,11 +199,6 @@ const RootDataViewLazy = (props) => {
                             </td>
                             <td className="valueField my-news-entry-second-th" colSpan="2"
                                 rowSpan="2">{record.newsEntryContent}
-                                Представляю вашему вниманию
-                                новый инструмент по созданию HTML таблиц для сайта v3.0 с расширенными
-                                возможностями. В данный инструмент я включил самые нужные функции, которые помогут
-                                без знаний HTML сгенерировать нужную таблицу. Данная версию была созданная благодаря
-                                большой активности пользователей в предыдущих версиях инструмента.
                             </td>
                             <td/>
                         </tr>
@@ -235,7 +225,7 @@ const RootDataViewLazy = (props) => {
 
     const renderGridItemNewsLinks = (record) => {
         return (
-            <div style={{padding: '.5em'}} className="p-col-12 p-md-4" key={record.id}>
+            <div style={{padding: '.5em', border: 0}} className="p-col-12 p-md-4" key={record.id}>
                 <Panel header={record.newsLinksTitle} style={{textAlign: 'left'}}>
                     <table id={record.id}
                            className="news-entry"

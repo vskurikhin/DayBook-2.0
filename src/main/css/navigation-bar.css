@@ -1,0 +1,93 @@
+/* Header/logo Title */
+.my-header {
+ position: absolute;
+ height: 90px;
+ width: 100%;
+ padding: 4px;
+ text-align: center;
+ background: white;
+ color: #3f3f3f;
+}
+/* Style the top navigation bar */
+.my-navbar {
+ position: absolute;
+ top: 90px;
+ height: 44px;
+ width: 100%;
+ overflow: hidden;
+ background-color: #333;
+}
+/* Style the navigation bar links */
+.my-navbar a {
+ float: left;
+ display: block;
+ color: white;
+ text-align: center;
+ padding: 14px 20px;
+ text-decoration: none;
+}
+/* Right-aligned link */
+.my-navbar a.right {
+ float: right; /* Float a link to the right */
+}
+/* Change color on hover/mouse-over */
+.my-navbar a:hover {
+ background-color: #ddd; /* Grey background color */
+ color: black; /* Black text color */
+ height: 99%;
+}
+/* Column container */
+.my-row {
+ position: absolute;
+ top: 134px;
+ bottom: 10px;
+ width: 100%;
+ display: -ms-flexbox; /* IE10 */
+ display: flex;
+ -ms-flex-wrap: wrap; /* IE10 */
+ flex-wrap: wrap;
+}
+/* Create two unequal columns that sits next to each other */
+/* Sidebar/left column */
+.my-side {
+ /* -ms-flex: 25%; /* IE10
+ flex: 25%; */
+ background-color: #f1f1f1;
+ border: 1px solid #c8c8c8;
+ padding: 5px;
+ width: 240px;
+ min-width: 230px;
+}
+/* Main column */
+.my-main {
+ -ms-flex: 75%; /* IE10 */
+ flex: 75%;
+ background-color: white;
+ padding: 0px;
+}
+/* Footer */
+.my-footer {
+ position:absolute;
+ height: 10px;
+ bottom: 0;
+ padding: 2px;
+ text-align: center;
+ background: #ddd;
+ border: 1px solid #c8c8c8;
+}
+a.SectionNavigation-Item.Section {
+ text-decoration: none;
+}
+/* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 700px) {
+ .my-row {
+     flex-direction: column;
+ }
+}
+/* Responsive layout - when the screen is less than 400px wide, make the navigation links stack on top of each other instead of next to each other */
+@media screen and (max-width: 400px) {
+ .my-navbar a {
+     float: none;
+     width: 100%;
+ }
+}

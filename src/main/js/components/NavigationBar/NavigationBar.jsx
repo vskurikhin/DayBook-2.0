@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.21 16:52 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.22 17:38 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NavigationBar.jsx
@@ -21,8 +21,8 @@ const SECTIONS = [
     {title: 'Calendar', href: '/calendar', global: true},
     {title: 'Login', href: '/login', anonymously: true},
     {title: 'Signup', href: '/signup', anonymously: true},
+    {title: 'Create', href: '/create', admin: true},
     {title: 'Log Out', href: '/', handleClick: true},
-    {title: '|', href: '/admin', admin: true},
 ]
 
 class Header extends Component {
@@ -79,9 +79,8 @@ class Header extends Component {
     }
 
     render() {
-        console.log("Header.render currentUser=" + this.getCurrentUser());
         return (
-            <div className="navbar">
+            <div className="my-navbar">
                 {map(SECTIONS, ({title, href, admin, anonymously, global, handleClick}) => (
                     // с помощью компонента Link будет осуществляться
                     // навигация по разделам приложения

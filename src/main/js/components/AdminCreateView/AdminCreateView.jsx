@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.21 20:37 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.22 17:38 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * AdminCreateView.jsx
@@ -56,7 +56,7 @@ class AdminCreateView extends Component {
                                 <div className="my-divTableRow">
                                     <div className="my-divTableCellLeft">&nbsp;</div>
                                     <div className="my-divTableCell">
-                                        <h6 className="my-h5">News group Id:</h6>
+                                        <label className="my-label"><b>News group Id:</b></label><br/>
                                         <InputMask
                                             className="my-p-inputtext"
                                             id="inputmask"
@@ -89,7 +89,7 @@ class AdminCreateView extends Component {
                                 <div className="my-divTableRow">
                                     <div className="my-divTableCellLeft">&nbsp;</div>
                                     <div className="my-divTableCell">
-                                        <h5 className="my-h5">Content:</h5>
+                                        <label className="my-label"><b>Content:</b></label><br/>
                                         <InputTextarea
                                             className="my-p-inputtext"
                                             autoResize

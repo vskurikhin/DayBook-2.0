@@ -1,0 +1,9 @@
+label.my-label {
+    top: -.75rem;
+    font-size: 12px;
+    left: 0.429rem;
+    color: #666666;
+    transition-duration: 0.2s;
+    margin-bottom: 0.33rem;
+    margin-left: 0.6em;
+}

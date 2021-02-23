@@ -1,0 +1,25 @@
+table.article td{font-size:14px}
+table.article td,table.article th{white-space:pre-wrap;padding:10px 5px;line-height:18px;vertical-align: middle;border: 0x solid #354251;}
+table.article tr:hover td{color:#354264;cursor:default;}
+.my-article-first-th{width: 64px;color:#354251;font-size: 12px;font-family: "Helvetica";font-weight: 500;}
+.my-article-second-th{width: 95%;color:#354251;font-size: 12px;font-family: "Helvetica";font-weight: 500;}
+.my-article-second-th p {
+ text-align: justify;
+ width: 100%;
+ height:10px;
+ line-height:10px;
+ margin:0;
+}
+.my-article-second-th p:after{
+ content: "";
+ display: inline-block;
+ width: 100%;
+}
+.my-article-date-th{min-width: 230px;width: 10%;color:#354251;text-align: right;}
+.my-article-user-th{
+ color: #000;
+ color: rgba(0, 0, 0, 0.2);
+ font-size: 8pt;
+ font-family: Arial, sans-serif;
+ text-align: right;
+}
