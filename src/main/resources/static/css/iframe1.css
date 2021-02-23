@@ -1,4 +1,4 @@
-label.my-label {
+label.my-label{
     top: -.75rem;
     font-size: 12px;
     left: 0.429rem;
@@ -6,30 +6,31 @@ label.my-label {
     transition-duration: 0.2s;
     margin-bottom: 0.33rem;
     margin-left: 0.6em;
-}.p-dataview .p-paginator-top.p-paginator {
+}
+.p-dataview .p-paginator-top.p-paginator{
  margin: 0;
  text-align: center;
  padding: .125em
 }
-.p-paginator .p-paginator-top {
+.p-paginator .p-paginator-top{
  border-width: 1px 0 0 0;
 }
-.p-paginator .p-paginator-bottom {
+.p-paginator .p-paginator-bottom{
  border-width: 0 0 1px 0;
 }
-.p-dataview .p-paginator-top {
+.p-dataview .p-paginator-top{
  border-width: 1px 0 0 0;
 }
-.p-dataview .p-paginator-bottom {
+.p-dataview .p-paginator-bottom{
  border-width: 0 0 1px 0;
 }
-.p-paginator .p-paginator-left-content {
+.p-paginator .p-paginator-left-content{
  float: left
 }
-.p-paginator .p-paginator-right-content {
+.p-paginator .p-paginator-right-content{
  float: right
 }
-.p-paginator .p-paginator-current, .p-paginator .p-paginator-first, .p-paginator .p-paginator-last, .p-paginator .p-paginator-next, .p-paginator .p-paginator-page, .p-paginator .p-paginator-pages, .p-paginator .p-paginator-prev {
+.p-paginator .p-paginator-current, .p-paginator .p-paginator-first, .p-paginator .p-paginator-last, .p-paginator .p-paginator-next, .p-paginator .p-paginator-page, .p-paginator .p-paginator-pages, .p-paginator .p-paginator-prev{
  display: inline-block;
  width: 1.5em;
  height: 1.5em;
@@ -42,11 +43,11 @@ label.my-label {
  text-align: center;
  position: relative
 }
-.p-paginator .p-paginator-pages {
+.p-paginator .p-paginator-pages{
  width: auto;
  line-height: 1
 }
-.p-paginator .p-paginator-icon {
+.p-paginator .p-paginator-icon{
  display: block;
  position: absolute;
  left: 50%;
@@ -56,32 +57,32 @@ label.my-label {
  margin-top: -.5em;
  margin-left: -.5em
 }
-.p-paginator .p-paginator-first, .p-paginator .p-paginator-last, .p-paginator .p-paginator-next, .p-paginator .p-paginator-page, .p-paginator .p-paginator-prev {
+.p-paginator .p-paginator-first, .p-paginator .p-paginator-last, .p-paginator .p-paginator-next, .p-paginator .p-paginator-page, .p-paginator .p-paginator-prev{
  cursor: pointer
 }
-.p-paginator .p-paginator-current, .p-paginator .p-paginator-rpp-options {
+.p-paginator .p-paginator-current, .p-paginator .p-paginator-rpp-options{
  margin-left: 1em;
  margin-right: 1em;
  background-image: none
 }
-.p-paginator .p-paginator-jtp-select option, .p-paginator .p-paginator-rpp-options option {
+.p-paginator .p-paginator-jtp-select option, .p-paginator .p-paginator-rpp-options option{
  background-image: none;
  border: 0;
  box-shadow: none;
  -moz-box-shadow: none;
  -webkit-box-shadow: none
 }
-.p-paginator a.p-disabled {
+.p-paginator a.p-disabled{
  outline: 0 none
 }
-.p-paginator .p-dropdown {
+.p-paginator .p-dropdown{
  min-width: 4em;
  margin-left: .375em
 }
-.p-fluid .p-paginator .p-dropdown {
+.p-fluid .p-paginator .p-dropdown{
  width: auto
 }
-.p-paginator .p-paginator-current {
+.p-paginator .p-paginator-current{
  width: auto;
  height: auto
 }
@@ -90,7 +91,7 @@ table.article td,table.article th{white-space:pre-wrap;padding:10px 5px;line-hei
 table.article tr:hover td{color:#354264;cursor:default;}
 .my-article-first-th{width: 64px;color:#354251;font-size: 12px;font-family: "Helvetica";font-weight: 500;}
 .my-article-second-th{width: 95%;color:#354251;font-size: 12px;font-family: "Helvetica";font-weight: 500;}
-.my-article-second-th p {
+.my-article-second-th p{
  text-align: justify;
  width: 100%;
  height:10px;
@@ -109,7 +110,8 @@ table.article tr:hover td{color:#354264;cursor:default;}
  font-size: 8pt;
  font-family: Arial, sans-serif;
  text-align: right;
-}table.news-entry td{font-size:15px}
+}
+table.news-entry td{font-size:15px}
 table.news-entry td,table.news-entry th{white-space:pre-wrap;padding:10px 5px;line-height:20px;vertical-align: middle;border: 0 solid #455261;}
 table.news-entry tr:hover td{color:#455261;cursor:default;}
 .my-news-entry-first-th{width: 64px;color:#455261;font-size: 12px;font-weight: 400;}
@@ -133,12 +135,13 @@ table.news-entry tr:hover td{color:#455261;cursor:default;}
  font-size: 8pt;
  font-family: Arial, sans-serif;
  text-align: right;
-}table.news-links td{font-size:15px}
+}
+table.news-links td{font-size:15px}
 table.news-links td,table.news-links th{white-space:pre-wrap;padding:10px 5px;line-height:20px;vertical-align: middle;border: 0 solid #455261;}
 table.news-links tr:hover td{color:#455261;cursor:default;}
 .my-news-links-first-th{width: 64px;color:#455261;font-size: 12px;font-weight: 400;}
 .my-news-links-second-th{width: 95%;color:#455261;font-size: 12px;font-weight: 400;}
-.my-news-links-second-th p {
+.my-news-links-second-th p{
  text-align: justify;
  width: 100%;
  height:10px;

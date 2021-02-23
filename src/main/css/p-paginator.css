@@ -1,27 +1,27 @@
-.p-dataview .p-paginator-top.p-paginator {
+.p-dataview .p-paginator-top.p-paginator{
  margin: 0;
  text-align: center;
  padding: .125em
 }
-.p-paginator .p-paginator-top {
+.p-paginator .p-paginator-top{
  border-width: 1px 0 0 0;
 }
-.p-paginator .p-paginator-bottom {
+.p-paginator .p-paginator-bottom{
  border-width: 0 0 1px 0;
 }
-.p-dataview .p-paginator-top {
+.p-dataview .p-paginator-top{
  border-width: 1px 0 0 0;
 }
-.p-dataview .p-paginator-bottom {
+.p-dataview .p-paginator-bottom{
  border-width: 0 0 1px 0;
 }
-.p-paginator .p-paginator-left-content {
+.p-paginator .p-paginator-left-content{
  float: left
 }
-.p-paginator .p-paginator-right-content {
+.p-paginator .p-paginator-right-content{
  float: right
 }
-.p-paginator .p-paginator-current, .p-paginator .p-paginator-first, .p-paginator .p-paginator-last, .p-paginator .p-paginator-next, .p-paginator .p-paginator-page, .p-paginator .p-paginator-pages, .p-paginator .p-paginator-prev {
+.p-paginator .p-paginator-current, .p-paginator .p-paginator-first, .p-paginator .p-paginator-last, .p-paginator .p-paginator-next, .p-paginator .p-paginator-page, .p-paginator .p-paginator-pages, .p-paginator .p-paginator-prev{
  display: inline-block;
  width: 1.5em;
  height: 1.5em;
@@ -34,11 +34,11 @@
  text-align: center;
  position: relative
 }
-.p-paginator .p-paginator-pages {
+.p-paginator .p-paginator-pages{
  width: auto;
  line-height: 1
 }
-.p-paginator .p-paginator-icon {
+.p-paginator .p-paginator-icon{
  display: block;
  position: absolute;
  left: 50%;
@@ -48,32 +48,32 @@
  margin-top: -.5em;
  margin-left: -.5em
 }
-.p-paginator .p-paginator-first, .p-paginator .p-paginator-last, .p-paginator .p-paginator-next, .p-paginator .p-paginator-page, .p-paginator .p-paginator-prev {
+.p-paginator .p-paginator-first, .p-paginator .p-paginator-last, .p-paginator .p-paginator-next, .p-paginator .p-paginator-page, .p-paginator .p-paginator-prev{
  cursor: pointer
 }
-.p-paginator .p-paginator-current, .p-paginator .p-paginator-rpp-options {
+.p-paginator .p-paginator-current, .p-paginator .p-paginator-rpp-options{
  margin-left: 1em;
  margin-right: 1em;
  background-image: none
 }
-.p-paginator .p-paginator-jtp-select option, .p-paginator .p-paginator-rpp-options option {
+.p-paginator .p-paginator-jtp-select option, .p-paginator .p-paginator-rpp-options option{
  background-image: none;
  border: 0;
  box-shadow: none;
  -moz-box-shadow: none;
  -webkit-box-shadow: none
 }
-.p-paginator a.p-disabled {
+.p-paginator a.p-disabled{
  outline: 0 none
 }
-.p-paginator .p-dropdown {
+.p-paginator .p-dropdown{
  min-width: 4em;
  margin-left: .375em
 }
-.p-fluid .p-paginator .p-dropdown {
+.p-fluid .p-paginator .p-dropdown{
  width: auto
 }
-.p-paginator .p-paginator-current {
+.p-paginator .p-paginator-current{
  width: auto;
  height: auto
 }

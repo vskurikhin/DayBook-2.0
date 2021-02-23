@@ -1,5 +1,5 @@
 /* Header/logo Title */
-.my-header {
+.my-header{
  position: absolute;
  height: 90px;
  width: 100%;
@@ -9,7 +9,7 @@
  color: #3f3f3f;
 }
 /* Style the top navigation bar */
-.my-navbar {
+.my-navbar{
  position: absolute;
  top: 90px;
  height: 44px;
@@ -18,7 +18,7 @@
  background-color: #333;
 }
 /* Style the navigation bar links */
-.my-navbar a {
+.my-navbar a{
  float: left;
  display: block;
  color: white;
@@ -27,17 +27,17 @@
  text-decoration: none;
 }
 /* Right-aligned link */
-.my-navbar a.right {
+.my-navbar a.right{
  float: right; /* Float a link to the right */
 }
 /* Change color on hover/mouse-over */
-.my-navbar a:hover {
+.my-navbar a:hover{
  background-color: #ddd; /* Grey background color */
  color: black; /* Black text color */
  height: 99%;
 }
 /* Column container */
-.my-row {
+.my-row{
  position: absolute;
  top: 134px;
  bottom: 10px;
@@ -49,7 +49,7 @@
 }
 /* Create two unequal columns that sits next to each other */
 /* Sidebar/left column */
-.my-side {
+.my-side{
  /* -ms-flex: 25%; /* IE10
  flex: 25%; */
  background-color: #f1f1f1;
@@ -59,14 +59,14 @@
  min-width: 230px;
 }
 /* Main column */
-.my-main {
+.my-main{
  -ms-flex: 75%; /* IE10 */
  flex: 75%;
  background-color: white;
- padding: 0px;
+ padding: 0;
 }
 /* Footer */
-.my-footer {
+.my-footer{
  position:absolute;
  height: 10px;
  bottom: 0;
@@ -75,19 +75,25 @@
  background: #ddd;
  border: 1px solid #c8c8c8;
 }
-a.SectionNavigation-Item.Section {
+a.SectionNavigation-Item.Section{
  text-decoration: none;
 }
 /* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 700px){
  .my-row {
      flex-direction: column;
  }
 }
 /* Responsive layout - when the screen is less than 400px wide, make the navigation links stack on top of each other instead of next to each other */
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 400px){
  .my-navbar a {
      float: none;
      width: 100%;
+ }
+}
+@media (max-width: 960px){
+ .my-side {
+  position: absolute;
+  display: none;
  }
 }

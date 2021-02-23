@@ -3,71 +3,71 @@
  box-sizing: border-box;
 }
 /* Style the body */
-body {
+body{
  margin: 0;
- font-family: "Open Sans","Helvetica Neue",sans-serif;
- font-weight: 400;
  color: #333;
  -webkit-font-smoothing: antialiased;
  -moz-osx-font-smoothing: grayscale;
  font-size: 14px;
+ font-weight: 400;
+ font-family: "Open Sans","Helvetica Neue",sans-serif;
 }
 /* Increase the font size of the heading */
-.header h1 {
+.header h1{
  font-size: 40px;
 }
 /* Fake image, just for this example */
-.fakeimg {
+.fakeimg{
  background-color: #aaa;
  width: 100%;
  padding: 20px;
 }
-.timestamp-bottom {
+.timestamp-bottom{
  margin-bottom: 15px;
 }
-img.my-left-top {
+img.my-left-top{
  float:left; /* Выравнивание по левому краю */
  margin: 17px 17px 17px 17px; /* Отступы вокруг картинки */
  vertical-align: text-top;
 }
-.my-left-top {
+.my-left-top{
  float:left; /* Выравнивание по левому краю */
  margin: 17px 17px 17px 17px; /* Отступы вокруг картинки */
  vertical-align: text-top;
 }
-.center-demo {
+.center-demo{
  display: flex;
  flex-direction: column;
  align-items: center;
 }
-.p-col-d {
+.p-col-d{
  display: table-cell;
 }
-.p-col-m {
+.p-col-m{
  display: none;
 }
-.leftimg {
+.leftimg{
  float:left; /* Выравнивание по левому краю */
  margin: 17px 17px 17px 17px; /* Отступы вокруг картинки */
 }
-.rightimg  {
+.rightimg{
  float: right; /* Выравнивание по правому краю  */
  margin: 7px 0 7px 7px; /* Отступы вокруг картинки */
 }
-@media screen and (max-width: 1024px) {
- .p-col-d {
+@media screen and (max-width: 1024px){
+ .p-col-d{
      display: none;
  }
- .p-col-m {
+ .p-col-m{
      display: inline-block;
  }
 }
-.my-p-calendar {
+.my-p-calendar{
  font-size: 10px;
 }
 :not(.sb-show-main) > .sb-main,
 :not(.sb-show-nopreview) > .sb-nopreview,
-:not(.sb-show-errordisplay) > .sb-errordisplay {
+:not(.sb-show-errordisplay) > .sb-errordisplay{
  display: none;
 }
 .descField{
@@ -82,7 +82,7 @@ img.my-left-top {
  font-weight: 900;
  color: #606062;
 }
-.valueField p {
+.valueField p{
  text-align: justify;
  width: 100%;
  height:10px;
