@@ -1,14 +1,15 @@
 /*
- * This file was last modified at 2021.02.23 11:02 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.23 11:21 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * store.js
  * $Id$
  */
 
-import { createStore, combineReducers } from "redux";
 import booksReducer from '../reducers/books';
 import filtersReducer from '../reducers/filters';
+
+import {createStore, combineReducers} from "redux";
 
 const demoState = {
     books: [

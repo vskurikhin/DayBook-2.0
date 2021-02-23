@@ -1,14 +1,15 @@
 /*
- * This file was last modified at 2021.02.23 11:02 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.23 11:21 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * BookFilters.jsx
  * $Id$
  */
 
+import {filterText, startYear, endYear, sortBy} from '../../actions/filters';
+
 import React from 'react';
-import { connect } from 'react-redux';
-import { filterText, startYear, endYear, sortBy } from '../actions/filters';
+import {connect} from 'react-redux';
 
 class BookFilters extends React.Component {
     constructor(props) {
