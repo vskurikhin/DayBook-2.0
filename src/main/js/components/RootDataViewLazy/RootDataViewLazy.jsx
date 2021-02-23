@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.23 10:30 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.24 00:07 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RootDataViewLazy.jsx
@@ -111,7 +111,7 @@ const RootDataViewLazy = (props) => {
 
     const renderContextMenu = (e, id) => {
         if (isAdmin(props)) {
-            items[1].command = () => history.push("/edit?id=" + id);
+            items[1].command = () => history.push("/edit/" + id);
             items[2].command = () => history.push("/delete?id=" + id);
             cm.current.show(e);
         }
@@ -142,8 +142,11 @@ const RootDataViewLazy = (props) => {
                             <td className="my-article-first-th" rowSpan="3">
                                 {renderImg(record)}
                             </td>
-                            <td className="valueField my-article-second-th" colSpan="2"
-                                rowSpan="2">{renderContent(record)}
+                            <td className="valueField my-article-second-th"
+                                colSpan="2"
+                                rowSpan="2"><div dangerouslySetInnerHTML={{
+                                    __html: renderContent(record)
+                                }}/>
                                 {isArticle(record) ? renderSummaryIncludeAnchor(record) : null}
                                 {isNewsLinks(record) ? renderLinkNewsLinks(record) : null}
                             </td>

@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.22 17:38 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.24 00:07 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NavigationBar.jsx
@@ -22,6 +22,7 @@ const SECTIONS = [
     {title: 'Login', href: '/login', anonymously: true},
     {title: 'Signup', href: '/signup', anonymously: true},
     {title: 'Create', href: '/create', admin: true},
+    {title: 'Edit', href: '/edit/00000000-0000-0000-0000-000000000001', admin: true},
     {title: 'Log Out', href: '/', handleClick: true},
 ]
 

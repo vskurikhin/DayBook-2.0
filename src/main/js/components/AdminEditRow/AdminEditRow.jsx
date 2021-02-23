@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.21 20:37 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.24 00:07 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * AdminEditRow.jsx
@@ -21,6 +21,7 @@ export class AdminEditRow extends Component {
 
     constructor(props) {
         super(props);
+        console.log("id=" + props.id)
     }
 
     componentDidMount() {

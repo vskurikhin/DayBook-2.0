@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.22 17:38 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.24 00:07 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * AdminCreateView.jsx
@@ -124,10 +124,9 @@ class AdminCreateView extends Component {
 }
 
 const mapStateToProps = state => ({
-    currentUser: state.currentUser,
-    currentDate: state.currentDate
+    ...state.currentUser,
+    ...state.currentDate
 })
-
 
 const mapDispatchToProps = dispatch => ({
     adminCreateNewsEntry: value => dispatch(adminCreateNewsEntry(value))

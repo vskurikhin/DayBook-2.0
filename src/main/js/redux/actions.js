@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.21 20:37 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.24 00:07 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * actions.js
@@ -77,6 +77,32 @@ export const adminCreateNewsEntry = value => {
     }
 }
 
+export const adminUpdateNewsEntry = value => {
+    return dispatch => {
+        const token = localStorage.token;
+        if (token) {
+            console.log('adminUpdateNewsEntry value: ' + JSON.stringify(value))
+            return fetch("/api/v1/resource/record/news-entry", {
+                method: "PUT",
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(value)
+            })
+                .then(resp => resp.json())
+                .then(data => {
+                    if (data.message) {
+                        //тут ваша логика
+                    } else {
+                        console.log('adminCreateNewsEntry data: ' + JSON.stringify(data))
+                    }
+                })
+        }
+    }
+}
+
 export const getProfileFetch = () => {
     return dispatch => {
         const token = localStorage.token;
@@ -118,4 +144,5 @@ export const setCalendarDate = (date = {
     "month": now.getMonth() + 1,
     "date": now.getDay()
 }) => ({type: 'CALENDAR_DATE', payload: date});
+
 export const setLocale = (locale = '') => ({type: 'LOCALE', payload: locale});

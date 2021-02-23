@@ -55,7 +55,7 @@
  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
  appearance: none;
  border-radius: 3px;
- width: 22.2em;
+ width: 22.4em;
 }
 .my-p-button{
  color: #ffffff;
@@ -91,10 +91,8 @@ body{
  -webkit-font-smoothing: antialiased;
  -moz-osx-font-smoothing: grayscale;
  font-size: 14px;
- min-width:550px;
  font-weight: 400;
  font-family: "Open Sans","Helvetica Neue",sans-serif;
- _width: expression( document.body.clientWidth > 550 ? "550px" : "auto" );
 }
 /* Increase the font size of the heading */
 .header h1{

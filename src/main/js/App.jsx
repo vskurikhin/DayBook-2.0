@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.21 20:37 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.24 00:07 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * App.jsx
@@ -8,7 +8,6 @@
 
 import './App.scss';
 
-import AdminCreate from './components/AdminCreate/AdminCreate';
 import AdminEdit from './components/AdminEdit/AdminEdit';
 import Calendar from './components/Calendar/Calendar';
 import Home from './components/Home/Home';
@@ -25,6 +24,7 @@ import {
 } from "react-router";
 import {compose} from 'redux';
 import {connect} from 'react-redux';
+import AdminCreate from "./components/AdminCreate/AdminCreate";
 
 class App extends Component {
   componentDidMount = () => {
@@ -32,7 +32,7 @@ class App extends Component {
   }
 
   render() {
-    const { history } = this.props
+    const {history} = this.props
 
     return (
       <div className="App">
@@ -42,7 +42,8 @@ class App extends Component {
           <Route history={history} path='/login' component={Login} />
           <Route history={history} path='/signup' component={Signup} />
           <Route history={history} path='/create' component={AdminCreate} />
-          <Route history={history} path='/edit' component={AdminEdit} />
+          <Route history={history} path='/edit/:id' component={AdminEdit} />
+
           <Redirect from='/' to='/home'/>
         </Switch>
       </div>
