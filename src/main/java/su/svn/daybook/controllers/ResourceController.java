@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.22 14:28 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.24 00:07 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * ResourceController.java
@@ -20,14 +20,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 import su.svn.daybook.domain.dao.db.db.RecordNewsEntryService;
 import su.svn.daybook.domain.model.NewsEntryDto;
@@ -75,9 +68,17 @@ public class ResourceController {
     }
 
     @Operation(summary = "get news entry record by id")
+    @GetMapping(value = "/record/news-entry/{id}")
+    @PreAuthorize("permitAll() or hasPermission()")
+    public Mono<NewsEntryDto> readNewsEntry(@PathVariable("id") UUID id) {
+        log.debug("getNewsEntry({})", id);
+        return recordNewsEntryService.getNewsEntry(id);
+    }
+
+    @Operation(summary = "get news entry record by id")
     @GetMapping(value = "/record/fetch/{id}")
     @PreAuthorize("permitAll() or hasPermission()")
-    public Mono<NewsEntryRecordDto> readNewsEntry(@PathVariable("id") UUID id) {
+    public Mono<NewsEntryRecordDto> read(@PathVariable("id") UUID id) {
         log.debug("getNewsEntry({})", id);
         return recordNewsEntryService.getNewsEntryRecord(id);
     }
@@ -90,5 +91,15 @@ public class ResourceController {
             @RequestParam("size") @Parameter(name = "size", required = true, example = "999") int size) {
         log.debug("readRecords()");
         return recordNewsEntryService.getRecords(page, size);
+    }
+
+    @Operation(summary = "update news entry record", security = @SecurityRequirement(name = "bearerAuth"))
+    @PutMapping(value = "/record/news-entry")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public Mono<ResponseEntity<?>> updateNewsEntryRecord(@RequestBody NewsEntryDto dto) {
+        log.debug("createNewsEntryRecord({})", dto);
+        log.debug("createNewsEntryRecord: authentication={}", SecurityContextHolder.getContext().getAuthentication());
+        return recordNewsEntryService.updateNewsEntryNew(dto)
+                .map(a -> ResponseEntity.status(HttpStatus.OK).body("Updated: " + a.getId()));
     }
 }

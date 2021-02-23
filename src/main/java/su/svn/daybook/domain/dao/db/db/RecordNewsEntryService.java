@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.22 14:28 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.24 00:07 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RecordNewsEntryService.java
@@ -29,6 +29,7 @@ import javax.annotation.Nonnull;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Function;
 
 @Slf4j
 @Service
@@ -103,6 +104,31 @@ public class RecordNewsEntryService {
     }
 
     @Transactional(readOnly = true)
+    public Mono<NewsEntryDto> getNewsEntry(UUID id) {
+        return newsEntryDao.monoById(id)
+                .flatMap(newsEntry -> findRecordConvertToNewsEntry(newsEntry, id));
+    }
+
+    private Mono<NewsEntryDto> findRecordConvertToNewsEntry(NewsEntry newsEntry, UUID id) {
+        return recordDao.monoById(id)
+                .map(record -> buildNewsEntryDto(newsEntry, record));
+    }
+
+    private NewsEntryDto buildNewsEntryDto(NewsEntry newsEntry, Record record) {
+        return NewsEntryDto.builder()
+                .id(record.getId().toString())
+                .newsGroupId(newsEntry.getNewsGroupId().toString())
+                .title(newsEntry.getTitle())
+                .content(newsEntry.getContent())
+                .createTime(newsEntry.getCreateTime())
+                .updateTime(newsEntry.getUpdateTime())
+                .enabled(newsEntry.getEnabled())
+                .visible(newsEntry.getVisible())
+                .flags(newsEntry.getFlags())
+                .build();
+    }
+
+    @Transactional(readOnly = true)
     public Mono<Page<AllRecordView>> getRecords(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, DEFAULT_SORT);
         return Mono.from(findAllRecordViewToPage(pageable, size));
@@ -148,5 +174,37 @@ public class RecordNewsEntryService {
                 .build();
 
         return insertNewsEntry(record, newsEntry);
+    }
+
+    @Transactional
+    public  Mono<NewsEntry> updateNewsEntryNew(NewsEntryDto dto) {
+
+        NewsEntry newsEntry = NewsEntry.builder()
+                .id(UUID.fromString(dto.getId()))
+                .newsGroupId(UUID.fromString(dto.getNewsGroupId()))
+                .title(dto.getTitle())
+                .content(dto.getContent())
+                .createTime(LocalDateTime.now())
+                .updateTime(LocalDateTime.now())
+                .enabled(true)
+                .visible(true)
+                .build();
+
+        Record record = Record.builder()
+                .id(UUID.fromString(dto.getId()))
+                .position(Integer.MAX_VALUE / 2)
+                .type(NewsEntry.class.getSimpleName())
+                .createTime(LocalDateTime.now())
+                .updateTime(LocalDateTime.now())
+                .enabled(true)
+                .visible(true)
+                .build();
+
+        return recordDao.save(record).flatMap(new Function<Record, Mono<NewsEntry>>() {
+            @Override
+            public Mono<NewsEntry> apply(Record record) {
+                return newsEntryDao.save(newsEntry);
+            }
+        });
     }
 }
