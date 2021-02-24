@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.24 00:07 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.24 18:51 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * ResourceController.java
@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 import su.svn.daybook.domain.dao.db.db.RecordNewsEntryService;
 import su.svn.daybook.domain.model.NewsEntryDto;
-import su.svn.daybook.domain.model.NewsEntryRecordDto;
 import su.svn.daybook.domain.model.db.db.AllRecordView;
 import su.svn.daybook.domain.security.ProfileResponse;
 
@@ -73,14 +72,6 @@ public class ResourceController {
     public Mono<NewsEntryDto> readNewsEntry(@PathVariable("id") UUID id) {
         log.debug("getNewsEntry({})", id);
         return recordNewsEntryService.getNewsEntry(id);
-    }
-
-    @Operation(summary = "get news entry record by id")
-    @GetMapping(value = "/record/fetch/{id}")
-    @PreAuthorize("permitAll() or hasPermission()")
-    public Mono<NewsEntryRecordDto> read(@PathVariable("id") UUID id) {
-        log.debug("getNewsEntry({})", id);
-        return recordNewsEntryService.getNewsEntryRecord(id);
     }
 
     @Operation(summary = "get all records")
