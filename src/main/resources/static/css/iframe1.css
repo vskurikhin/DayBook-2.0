@@ -128,7 +128,7 @@ table.news-entry tr:hover td{color:#455261;cursor:default;}
  display: inline-block;
  width: 100%;
 }
-.my-news-entry-date-th{min-width: 230px;width: 10%;color:#455261;text-align: right;}
+.my-news-entry-date-th{min-width: 245px;width: 10%;color:#455261;text-align: right;}
 .my-news-entry-user-th{
  color: #000;
  color: rgba(0, 0, 0, 0.2);

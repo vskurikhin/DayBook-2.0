@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.21 16:52 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.24 18:51 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * HomeRow.jsx
@@ -32,7 +32,6 @@ export class HomeRow extends Component {
             width: '100%',
             height: '100%'
         };
-        const propValues = this.props;
 
         return (
             <div className="my-row">
@@ -47,7 +46,7 @@ export class HomeRow extends Component {
                 </div>
                 <div className="my-main" id='main'>
                     <IFrame style={divStyle} name='iframe1' id='iframe1'>
-                        <RootDataViewLazy props={propValues}/>
+                        <RootDataViewLazy/>
                     </IFrame>
                 </div>
             </div>

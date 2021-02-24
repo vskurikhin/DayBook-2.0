@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.24 00:07 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.24 18:51 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RootDataViewLazy.jsx
@@ -18,12 +18,11 @@ import React, {useState, useEffect, useRef} from 'react';
 import moment from 'moment';
 import {ContextMenu} from 'primereact/contextmenu';
 import {DataView} from 'primereact/dataview';
-import {Panel} from 'primereact/panel';
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {useHistory, withRouter} from 'react-router-dom';
 
-const NUMBER_OF_ELEMENTS = 3;
+const NUMBER_OF_ELEMENTS = 99;
 const TIMEOUT = 33;
 
 const RootDataViewLazy = (props) => {
@@ -74,10 +73,10 @@ const RootDataViewLazy = (props) => {
 
     useEffect(() => {
         setTimeout(() => {
-            allRecordService.getCarsLazy(null, numberOfElements, totalRecords).then(function (resItems) {
-                setTotalRecords(resItems.data.totalElements);
-                setNumberOfElements(resItems.data.numberOfElements);
-                setRecords(resItems.data.content);
+            allRecordService.getCarsLazy(null, numberOfElements).then(function (resItems) {
+                setTotalRecords(resItems['data'].totalElements);
+                setNumberOfElements(resItems['data'].numberOfElements);
+                setRecords(resItems['data'].content);
                 setFirst(0);
                 setLoading(false);
             }).catch(function (error) {
@@ -90,11 +89,10 @@ const RootDataViewLazy = (props) => {
         setLoading(true);
         //imitate delay of a backend call
         setTimeout(() => {
-            let min = totalRecords - event.originalEvent.page*NUMBER_OF_ELEMENTS;
-            min = min < NUMBER_OF_ELEMENTS ? min : NUMBER_OF_ELEMENTS;
-            allRecordService.getCarsLazy(event.originalEvent, numberOfElements, min).then(function (resItems) {
+            allRecordService.getCarsLazy(event.originalEvent, numberOfElements).then(function (resItems) {
                 setFirst(event.originalEvent.first);
-                setRecords(resItems.data.content);
+                setRecords(resItems['data'].content);
+                setTotalRecords(resItems['data'].totalElements);
                 setLoading(false);
             }).catch(function (error) {
                 console.log(error);
@@ -117,97 +115,148 @@ const RootDataViewLazy = (props) => {
         }
     }
 
-    const isArticle = (record) => record.type === "Article";
-    const isNewsEntry = (record) => record.type === "NewsEntry";
-    const isNewsLinks = (record) => record.type === "NewsLinks";
+    const isArticle = (type) => type === "Article";
+    const isNewsEntry = (type) => type === "NewsEntry";
+    const isNewsLinks = (type) => type === "NewsLinks";
 
     const renderListItem = (record) => {
-        if (isArticle(record) || isNewsEntry(record) || isNewsLinks(record))
+        if (isArticle(record.type) || isNewsEntry(record.type) || isNewsLinks(record.type))
             return renderListItemEntity(record);
         return (
-            <div style={{padding: '.5em', border: 0}}  key={record.id}/>
+            <div style={{padding: '.5em', border: 0}}>record.id</div>
         );
     }
 
-    const renderListItemEntity = (record) => {
+    const renderListItemEntity = (value) => {
+
+        if (value === {}) return (
+            <div/>
+        );
+        const {id, tags, updateTime, ...record} = value;
+
         return (
-            <div style={{padding: '.5em', border: 0}} className="p-col-12 p-md-4" key={record.id}>
-                <Panel header={renderTitle(record)} style={{textAlign: 'left'}}>
-                    <table aria-haspopup
-                           className="news-entry"
-                           id={record.id}
-                           onContextMenu={(e) => renderContextMenu(e, record.id)}>
-                        <tbody>
-                        <tr>
-                            <td className="my-article-first-th" rowSpan="3">
-                                {renderImg(record)}
-                            </td>
-                            <td className="valueField my-article-second-th"
-                                colSpan="2"
-                                rowSpan="2"><div dangerouslySetInnerHTML={{
-                                    __html: renderContent(record)
-                                }}/>
-                                {isArticle(record) ? renderSummaryIncludeAnchor(record) : null}
-                                {isNewsLinks(record) ? renderLinkNewsLinks(record) : null}
-                            </td>
-                            <td/>
-                        </tr>
-                        <tr>
-                            <td/>
-                        </tr>
-                        <tr>
-                            <td>{renderUserName(record)}</td>
-                            <td className="my-article-date-th">{moment(record.updateTime).format("dddd, MMM DD at HH:mm a")}</td>
-                            <td/>
-                        </tr>
-                        <tr>
-                            <td className="my-article-user-th">{record.tags}</td>
-                            <td/>
-                            <td/>
-                            <td/>
-                        </tr>
-                        </tbody>
-                    </table>
-                </Panel>
+            <div style={{padding: '.5em', border: 0}} className="p-col-12 p-md-4">
+                <div id={id}
+                     className="p-panel p-component"
+                     style={{textAlign: 'left'}}>
+                    <div className="p-panel-header">
+                        <span aria-label={id} className="p-panel-title"
+                        >{renderTitle(id, record)}</span>
+                        <div className="p-panel-icons"/>
+                    </div>
+                    <div aria-labelledby={id}
+                         aria-hidden="false"
+                         className="p-toggleable-content"
+                         role="region">
+                        <div className="p-panel-content">
+                            <table aria-haspopup
+                                   className="news-entry"
+                                   onContextMenu={(e) => renderContextMenu(e, id)}>
+                                <tbody>
+                                <tr>
+                                    <td className="my-news-entry-first-th" rowSpan="3">
+                                        {renderImg(id, record)}
+                                    </td>
+                                    <td className="valueField my-news-entry-second-th"
+                                        colSpan="2"
+                                        rowSpan="2">
+                                        <div dangerouslySetInnerHTML={{
+                                            __html: renderContent(id, record)
+                                        }}
+                                        />{renderAfterContent(id, record)}</td>
+                                    <td/>
+                                </tr>
+                                <tr>
+                                    <td/>
+                                </tr>
+                                <tr>
+                                    <td>{renderUserName(id, record)}</td>
+                                    <td className="my-news-entry-date-th"
+                                    >{moment(updateTime).format("dddd, MMM DD at HH:mm a")}</td>
+                                    <td/>
+                                </tr>
+                                <tr>
+                                    <td className="my-news-entry-user-th">{tags}</td>
+                                    <td/>
+                                    <td/>
+                                    <td/>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }
 
-    const renderTitle = (record) => {
-        if (isArticle(record))
+    const renderTitle = (id, value) => {
+        const {type, ...record} = value;
+        if (isArticle(type))
             return record['articleTitle'];
-        if (isNewsEntry(record))
+        if (isNewsEntry(type))
             return record['newsEntryTitle'];
-        if (isNewsLinks(record))
+        if (isNewsLinks(type))
             return record['newsLinksTitle'];
-        return (
-            <div style={{padding: '.5em', border: 0}} key={record.id}/>
-        );
+        return "title for " + id;
     }
 
-    const renderImg = (record) => {
-        if (isArticle(record))
+    const renderImg = (id, value) => {
+        const {type, ...record} = value;
+        if (isArticle(type))
             return renderImgArticle(record);
-        if (isNewsEntry(record))
+        if (isNewsEntry(type))
             return renderImgNewsEntry(record);
-        if (isNewsLinks(record))
+        if (isNewsLinks(type))
             return renderImgNewsLinks(record);
         return (
-            <div style={{padding: '.5em', border: 0}}  key={record.id}/>
+            <div style={{padding: '.5em', border: 0}}>image for id</div>
         );
     }
 
-    const renderUserName = (record) => {
-        if (isArticle(record))
+    const renderUserName = (id, value) => {
+        const {type, ...record} = value;
+        if (isArticle(type))
             return record['articleUserName'];
-        if (isNewsEntry(record))
+        if (isNewsEntry(type))
             return record['newsEntryUserName'];
-        if (isNewsLinks(record))
+        if (isNewsLinks(type))
             return record['newsLinksUserName'];
-        return (
-            <div style={{padding: '.5em', border: 0}}  key={record.id}/>
-        );
+        return "username for " + id;
     }
+
+    const renderContent = (id, value) => {
+        const {type, ...record} = value;
+        if (isArticle(type))
+            return record['articleSummary'];
+        if (isNewsEntry(type))
+            return record['newsEntryContent'];
+        if (isNewsLinks(type))
+            return null;
+        return "content for " + id;
+    }
+
+    const renderAfterContent = (id, value) => {
+        const {type, ...record} = value;
+        if (isArticle(type))
+            return renderSummaryIncludeAnchor(id, record);
+        if (isNewsLinks(type))
+            return renderLinkNewsLinks(id, record);
+        return "after content for " + id;
+
+    }
+
+    const renderSummaryIncludeAnchor = (id, record) => (
+        <ul>
+            <li><a href={record['articleInclude']}>{record['articleAnchor']}</a></li>
+        </ul>
+    )
+
+    const renderLinkNewsLinks = (id, record) => (
+        <ul>
+            <li><a href={record.links}>{record.links}</a></li>
+        </ul>
+    )
 
     const renderImgArticle = (record) => (
         <img alt={record['articleTitle']}
@@ -239,32 +288,8 @@ const RootDataViewLazy = (props) => {
         />
     )
 
-    const renderContent = (record) => {
-        if (isArticle(record))
-            return record['articleSummary'];
-        if (isNewsEntry(record))
-            return record['newsEntryContent'];
-        if (isNewsLinks(record))
-            return null;
-        return (
-            <div style={{padding: '.5em', border: 0}} key={record.id}/>
-        );
-    }
-
-    const renderSummaryIncludeAnchor = (record) => (
-        <ul>
-            <li><a href={record['articleInclude']}>{record['articleAnchor']}</a></li>
-        </ul>
-    )
-
-    const renderLinkNewsLinks = (record) => (
-        <ul>
-            <li><a href={record.links}>{record.links}</a></li>
-        </ul>
-    )
-
     const itemTemplate = (record, layout) => {
-        if ( ! record) return;
+        if (!record) return;
 
         if (layout === 'grid')
             return renderGridItem(record);

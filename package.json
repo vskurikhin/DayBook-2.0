@@ -22,7 +22,7 @@
     "node-sass": "^4.14.1",
     "primeflex": "^2.0.0",
     "primeicons": "^4.1.0",
-    "primereact": "^6.0.2",
+    "primereact": "^6.0.1",
     "prop-types": "^15.7.2",
     "react": "^16.14.0",
     "react-bootstrap-table-next": "^3.3.5",
@@ -45,7 +45,6 @@
     "simple-react-calendar": "^2.2.8",
     "underscore": "^1.11.0",
     "url-loader": "^4.1.0",
-    "use-axios-request": "^0.4.0",
     "uuid": "3.2.1"
   },
   "devDependencies": {

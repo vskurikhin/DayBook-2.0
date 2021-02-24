@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.24 00:07 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.24 18:51 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RecordNewsEntryService.java
@@ -90,17 +90,6 @@ public class RecordNewsEntryService {
         return i != null && i == 1
                 ? newsEntryDao.insert(newsEntry).map(integer -> newsEntry)
                 : Mono.error(new RuntimeException(" doOnInsert catch i: " + i));
-    }
-
-    @Transactional(readOnly = true)
-    public Mono<NewsEntryRecordDto> getNewsEntryRecord(UUID id) {
-        return newsEntryDao.monoById(id)
-                .flatMap(newsEntry -> findRecordConvertToNewsEntryRecord(newsEntry, id));
-    }
-
-    private Mono<NewsEntryRecordDto> findRecordConvertToNewsEntryRecord(NewsEntry newsEntry, UUID id) {
-        return recordDao.monoById(id)
-                .map(record -> new NewsEntryRecordDto(record, newsEntry));
     }
 
     @Transactional(readOnly = true)

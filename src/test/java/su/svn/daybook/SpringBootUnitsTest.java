@@ -12,7 +12,6 @@ import su.svn.daybook.domain.security.TestDataSecurity;
 import su.svn.daybook.services.security.AuthenticationManager;
 import su.svn.daybook.services.security.JWTUtil;
 import su.svn.daybook.services.security.PBKDF2Encoder;
-import su.svn.daybook.services.security.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
