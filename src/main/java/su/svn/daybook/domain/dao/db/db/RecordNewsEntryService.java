@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.24 18:51 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.24 19:08 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RecordNewsEntryService.java
@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import su.svn.daybook.domain.model.NewsEntryDto;
-import su.svn.daybook.domain.model.NewsEntryRecordDto;
 import su.svn.daybook.domain.model.db.db.AllRecordView;
 import su.svn.daybook.domain.model.db.db.NewsEntry;
 import su.svn.daybook.domain.model.db.db.Record;
