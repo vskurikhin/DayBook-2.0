@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.24 00:07 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.25 22:27 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * App.jsx
@@ -42,7 +42,7 @@ class App extends Component {
           <Route history={history} path='/login' component={Login} />
           <Route history={history} path='/signup' component={Signup} />
           <Route history={history} path='/create' component={AdminCreate} />
-          <Route history={history} path='/edit/:id' component={AdminEdit} />
+          <Route history={history} path='/edit/:object/:id' component={AdminEdit} />
 
           <Redirect from='/' to='/home'/>
         </Switch>

@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.24 18:51 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.25 22:27 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * AllRecordService.js
@@ -21,6 +21,8 @@ export class AllRecordService {
         return axios
             .get(API_V1_RESOURCE_RECORDS + "?page=" + page + "&first=" + first + "&size=" + numberOfElements, config)
             .then(function (response) {
+                console.log('getCarsLazy(' + event + ',' + numberOfElements + ') data: ');
+                console.log(response.data);
                 const length = response.data.content.length;
                 for (let i = length; i < numberOfElements; i++) {
                     response.data.content.push({});

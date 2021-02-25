@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.25 16:07 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.25 22:27 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * AdminCreateTabView.jsx
@@ -7,9 +7,10 @@
  */
 
 import {adminCreateNewsEntry} from "../../redux/actions";
-import AdminCreateView from "../AdminCreateView/AdminCreateView";
+import AdminCreateArticleView from "../AdminCreateArticleView/AdminCreateArticleView";
+import AdminCreateNewsEntryView from "../AdminCreateNewsEntryView/AdminCreateNewsEntryView";
 
-import React, {Component, useState} from 'react';
+import React, {Component} from 'react';
 import {TabView, TabPanel} from 'primereact/tabview';
 import {compose} from "redux";
 import {connect} from "react-redux";
@@ -27,13 +28,11 @@ class AdminCreateTabView extends Component {
             <div className="card">
                 <h5>Default</h5>
                 <TabView>
-                    <TabPanel header="Header I">
-                        <AdminCreateView/>
+                    <TabPanel header="Create News Entry">
+                        <AdminCreateNewsEntryView/>
                     </TabPanel>
-                    <TabPanel header="Header II">
-                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-                            architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione
-                            voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.</p>
+                    <TabPanel header="Create Article">
+                        <AdminCreateArticleView/>
                     </TabPanel>
                     <TabPanel header="Header III">
                         <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati
