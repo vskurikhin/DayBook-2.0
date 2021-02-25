@@ -1,12 +1,12 @@
 /*
- * This file was last modified at 2021.02.21 20:37 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.25 16:07 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * AdminCreateRow.jsx
  * $Id$
  */
 
-import AdminCreateView from "../AdminCreateView/AdminCreateView";
+import AdminCreateTabView from "../AdminCreateTabView/AdminCreateTabView";
 import IFrame from "../IFrame/IFrame";
 import {loadCssListIframe1} from "../../lib/CssListIframe1";
 import {logDate} from "../../lib/formatDate";
@@ -56,7 +56,7 @@ export class AdminCreateRow extends Component {
                 </div>
                 <div className="my-main" id='main'>
                     <IFrame style={divStyle} name='iframe1' id='iframe1'>
-                        <AdminCreateView/>
+                        <AdminCreateTabView/>
                     </IFrame>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.24 18:51 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.25 16:07 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RootDataViewLazy.jsx
@@ -74,10 +74,9 @@ const RootDataViewLazy = (props) => {
     useEffect(() => {
         setTimeout(() => {
             allRecordService.getCarsLazy(null, numberOfElements).then(function (resItems) {
-                setTotalRecords(resItems['data'].totalElements);
-                setNumberOfElements(resItems['data'].numberOfElements);
-                setRecords(resItems['data'].content);
                 setFirst(0);
+                setRecords(resItems['data'].content);
+                setTotalRecords(resItems['data'].totalElements);
                 setLoading(false);
             }).catch(function (error) {
                 console.log(error);
@@ -123,7 +122,7 @@ const RootDataViewLazy = (props) => {
         if (isArticle(record.type) || isNewsEntry(record.type) || isNewsLinks(record.type))
             return renderListItemEntity(record);
         return (
-            <div style={{padding: '.5em', border: 0}}>record.id</div>
+            <div aria-labelledby={"empty_record_" + record.id}/>
         );
     }
 
@@ -242,8 +241,9 @@ const RootDataViewLazy = (props) => {
             return renderSummaryIncludeAnchor(id, record);
         if (isNewsLinks(type))
             return renderLinkNewsLinks(id, record);
-        return "after content for " + id;
-
+        return (
+            <div aria-labelledby={"after_content_for_" + id}/>
+        );
     }
 
     const renderSummaryIncludeAnchor = (id, record) => (

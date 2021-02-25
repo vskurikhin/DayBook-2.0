@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.01.19 21:06 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.25 16:07 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * ArticleDao.java
@@ -18,7 +18,7 @@ import su.svn.daybook.domain.model.db.db.Article;
 
 import java.util.UUID;
 
-public interface ArticleDao extends ReactiveCrudRepository<Article, UUID> {
+public interface ArticleDao extends ReactiveCrudRepository<Article, UUID>, ArticleCustomizedDao {
 
     @Query("SELECT * FROM db.article WHERE id = :id AND enabled")
     Mono<Article> monoById(UUID id);
