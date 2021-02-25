@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.25 16:07 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.25 22:27 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RootDataViewLazy.jsx
@@ -12,6 +12,7 @@ import 'primeflex/primeflex.css';
 
 import {AllRecordService} from '../../service/AllRecordService';
 import {isAdmin} from '../../lib/userTool'
+import {kebabize} from "../../lib/kebabize";
 import {setCalendarDate} from "../../redux/actions";
 
 import React, {useState, useEffect, useRef} from 'react';
@@ -106,9 +107,9 @@ const RootDataViewLazy = (props) => {
         );
     }
 
-    const renderContextMenu = (e, id) => {
+    const renderContextMenu = (e, type, id) => {
         if (isAdmin(props)) {
-            items[1].command = () => history.push("/edit/" + id);
+            items[1].command = () => history.push("/edit/" + kebabize(type) + '/' + id);
             items[2].command = () => history.push("/delete?id=" + id);
             cm.current.show(e);
         }
@@ -150,7 +151,7 @@ const RootDataViewLazy = (props) => {
                         <div className="p-panel-content">
                             <table aria-haspopup
                                    className="news-entry"
-                                   onContextMenu={(e) => renderContextMenu(e, id)}>
+                                   onContextMenu={(e) => renderContextMenu(e, record.type, id)}>
                                 <tbody>
                                 <tr>
                                     <td className="my-news-entry-first-th" rowSpan="3">

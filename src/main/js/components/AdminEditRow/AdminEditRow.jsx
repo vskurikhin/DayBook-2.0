@@ -1,21 +1,25 @@
 /*
- * This file was last modified at 2021.02.24 00:07 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.25 22:27 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * AdminEditRow.jsx
  * $Id$
  */
 
+import AdminEditArticleView from "../AdminEditArticleView/AdminEditArticleView";
 import AdminEditView from "../AdminEditView/AdminEditView";
 import IFrame from "../IFrame/IFrame";
 import {loadCssListIframe1} from "../../lib/CssListIframe1";
-import {logDate} from "../../lib/formatDate";
 import {setCalendarDate} from "../../redux/actions";
 
 import React, {Component} from 'react';
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {withRouter} from "react-router";
+
+const isArticle = object => object === 'article';
+const isNewsEntry = object => object === 'news-entry';
+const isNewsLinks = object => object === 'news-links';
 
 export class AdminEditRow extends Component {
 
@@ -28,12 +32,26 @@ export class AdminEditRow extends Component {
         loadCssListIframe1()
     }
 
-    getCurrentUser() {
-        return this.props.currentUser['currentUser'];
+    getObject() {
+        if (this.props.match.params !== undefined) {
+            return this.props.match.params.object;
+        }
+        return null;
     }
 
-    getCurrentDate() {
-        return this.props.currentDate['currentDate'];
+    renderEdit(object) {
+        if (isArticle(object)) return (
+            <AdminEditArticleView/>
+        );
+        if (isNewsEntry(object)) return (
+            <AdminEditView/>
+        );
+        if (isNewsLinks(object)) return (
+            <AdminEditView/>
+        );
+        return (
+            <div/>
+        );
     }
 
     render() {
@@ -42,7 +60,9 @@ export class AdminEditRow extends Component {
             width: '100%',
             height: '100%'
         };
-        logDate("HomeRow.render: currentDate=", this.getCurrentDate());
+        console.log('AdminEditRow.render');
+        console.log(this.props);
+        const object = this.getObject();
 
         return (
             <div className="my-row">
@@ -57,14 +77,13 @@ export class AdminEditRow extends Component {
                 </div>
                 <div className="my-main" id='main'>
                     <IFrame style={divStyle} name='iframe1' id='iframe1'>
-                        <AdminEditView/>
+                        {this.renderEdit(object)}
                     </IFrame>
                 </div>
             </div>
         )
     }
 }
-
 
 const mapStateToProps = state => ({
     currentUser: state.currentUser,

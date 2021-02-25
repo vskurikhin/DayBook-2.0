@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.24 00:07 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.25 22:27 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * actions.js
@@ -51,39 +51,38 @@ export const userLoginFetch = user => {
     }
 }
 
+const API_V1_RESOURCE_RECORD = '/api/v1/resource/record';
+
+export const adminCreateArticle = (value) => {
+    return resourceRecord('POST', 'article', value);
+}
+
+export const adminUpdateArticle = (value) => {
+    return resourceRecord('PUT', 'article', value);
+}
+
 export const adminCreateNewsEntry = value => {
-    return dispatch => {
-        const token = localStorage.token;
-        if (token) {
-            console.log('adminCreateNewsEntry value: ' + JSON.stringify(value))
-            return fetch("/api/v1/resource/record/news-entry", {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(value)
-            })
-                .then(resp => resp.json())
-                .then(data => {
-                    if (data.message) {
-                        //тут ваша логика
-                    } else {
-                        console.log('adminCreateNewsEntry data: ' + JSON.stringify(data))
-                    }
-                })
-        }
-    }
+    return resourceRecord('POST', 'news-entry', value);
 }
 
 export const adminUpdateNewsEntry = value => {
+    return resourceRecord('PUT', 'news-entry', value);
+}
+
+export const adminCreateNewsLinks = value => {
+    return resourceRecord('POST', 'news-links', value);
+}
+
+export const adminUpdateNewsLinks = value => {
+    return resourceRecord('PUT', 'news-links', value);
+}
+
+export const resourceRecord = (method, object, value) => {
     return dispatch => {
         const token = localStorage.token;
         if (token) {
-            console.log('adminUpdateNewsEntry value: ' + JSON.stringify(value))
-            return fetch("/api/v1/resource/record/news-entry", {
-                method: "PUT",
+            return fetch(API_V1_RESOURCE_RECORD + '/' + object, {
+                method: method,
                 headers: {
                     'Content-Type': 'application/json',
                     Accept: 'application/json',
@@ -96,7 +95,8 @@ export const adminUpdateNewsEntry = value => {
                     if (data.message) {
                         //тут ваша логика
                     } else {
-                        console.log('adminCreateNewsEntry data: ' + JSON.stringify(data))
+                        console.log('resourceRecord(' + method + ',' + object + ', value) data: ');
+                        console.log(data);
                     }
                 })
         }

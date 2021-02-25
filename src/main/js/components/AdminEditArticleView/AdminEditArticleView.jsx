@@ -1,30 +1,45 @@
 /*
- * This file was last modified at 2021.02.24 00:07 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.25 22:27 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
- * AdminCreateView.jsx
+ * AdminEditArticleView.jsx
  * $Id$
  */
 
-import {adminCreateNewsEntry} from '../../redux/actions';
+import {adminUpdateArticle} from '../../redux/actions';
+import {recordService} from '../../service/RecordService';
 
 import React, {Component} from 'react';
-import {Button} from 'primereact/button';
-import {InputMask} from 'primereact/inputmask';
-import {InputTextarea} from 'primereact/inputtextarea';
-import {InputText} from 'primereact/inputtext';
+import axios from 'axios';
+import {Button} from "primereact/button";
+import {InputMask} from "primereact/inputmask";
+import {InputTextarea} from "primereact/inputtextarea";
+import {InputText} from "primereact/inputtext";
 import {Redirect} from "react-router";
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 
-class AdminCreateView extends Component {
+class AdminEditArticleView extends Component {
+
     state = {
-        newsGroupId: "00000000-0000-0000-0000-000000000001",
-        title: "",
-        content: "",
+        data: {
+            id: null,
+            newsGroupId: "00000000-0000-0000-0000-000000000001",
+            title: "",
+            include: "",
+            anchor: "",
+            summary: "",
+            userName: null,
+            createTime: "",
+            updateTime: "",
+            enabled: true,
+            visible: true,
+            flags: null,
+        },
         redirectToReferrer: false
-    }
+    };
+    cancelTokenSource = axios.CancelToken.source();
 
     constructor(props) {
         super(props);
@@ -32,21 +47,42 @@ class AdminCreateView extends Component {
 
     handleChange = event => {
         this.setState({
-            [event.target.name]: event.target.value
+            data: {
+                ...this.state.data,
+                [event.target.name]: event.target.value
+            }
         });
+    }
+
+    componentDidMount() {
+        console.log('AdminEditView.componentDidMount');
+        console.log(this.props);
+        recordService.getArticle(this.props.match.params.id, this.handleSubscriptionChange, this.cancelTokenSource);
+    }
+
+    componentWillUnmount() {
+        this.cancelTokenSource.cancel();
+    }
+
+    handleSubscriptionChange = dataSource => {
+        this.setState(dataSource);
     }
 
     handleSubmit = event => {
         event.preventDefault()
-        this.props.adminCreateNewsEntry(this.state)
+        console.log(this.state);
+        this.props.adminUpdateArticle(this.state.data)
         this.setState({redirectToReferrer: true})
     }
 
     render() {
-        const redirectToReferrer = this.state.redirectToReferrer;
-        if (redirectToReferrer === true) {
-            return <Redirect to="/home" />
+        if (this.state.redirectToReferrer === true) {
+            return <Redirect to="/home"/>
         }
+        if (this.state.data instanceof Promise) return (
+            <div>Loading...</div>
+        );
+        console.log(this.state);
         return (
             <div className="dataview-demo">
                 <form onSubmit={this.handleSubmit}>
@@ -64,7 +100,7 @@ class AdminCreateView extends Component {
                                             name='newsGroupId'
                                             onChange={this.handleChange}
                                             slotChar="00000000-0000-0000-0000-000000000001"
-                                            value={this.state.newsGroupId}
+                                            value={this.state.data.newsGroupId}
                                         />
                                     </div>
                                     <div className="my-divTableCellRight">&nbsp;</div>
@@ -72,6 +108,7 @@ class AdminCreateView extends Component {
                                 <div className="my-divTableRow">
                                     <div className="my-divTableCellLeft">&nbsp;</div>
                                     <div className="my-divTableCell">
+                                        <label className="my-label"><b>Title:</b></label><br/>
                                         <span className="p-float-label">
                                             <InputText
                                                 className="my-p-inputtext"
@@ -79,25 +116,62 @@ class AdminCreateView extends Component {
                                                 name='title'
                                                 onChange={this.handleChange}
                                                 type="text"
-                                                value={this.state.title}
+                                                value={this.state.data.title}
                                             />
-                                            <label htmlFor="title"><b>title</b></label>
                                         </span>
                                     </div>
                                     <div className="my-divTableCellRight">&nbsp;</div>
                                 </div>
+
                                 <div className="my-divTableRow">
                                     <div className="my-divTableCellLeft">&nbsp;</div>
                                     <div className="my-divTableCell">
-                                        <label className="my-label"><b>Content:</b></label><br/>
+                                        <label className="my-label"><b>Include:</b></label><br/>
+                                        <span className="p-float-label">
+                                            <InputText
+                                                className="my-p-inputtext"
+                                                id="include"
+                                                name='include'
+                                                onChange={this.handleChange}
+                                                type="text"
+                                                value={this.state.data.include}
+                                            />
+                                        </span>
+                                    </div>
+                                    <div className="my-divTableCellRight">&nbsp;</div>
+                                </div>
+
+                                <div className="my-divTableRow">
+                                    <div className="my-divTableCellLeft">&nbsp;</div>
+                                    <div className="my-divTableCell">
+                                        <label className="my-label"><b>Anchor:</b></label><br/>
+                                        <span className="p-float-label">
+                                            <InputText
+                                                className="my-p-inputtext"
+                                                id="anchor"
+                                                name='anchor'
+                                                onChange={this.handleChange}
+                                                type="text"
+                                                value={this.state.data.anchor}
+                                            />
+                                        </span>
+                                    </div>
+                                    <div className="my-divTableCellRight">&nbsp;</div>
+                                </div>
+
+
+                                <div className="my-divTableRow">
+                                    <div className="my-divTableCellLeft">&nbsp;</div>
+                                    <div className="my-divTableCell">
+                                        <label className="my-label"><b>Summary:</b></label><br/>
                                         <InputTextarea
                                             className="my-p-inputtext"
                                             autoResize
                                             cols={30}
-                                            name='content'
+                                            name='summary'
                                             onChange={this.handleChange}
                                             rows={5}
-                                            value={this.state.content}
+                                            value={this.state.data.summary}
                                         />
                                     </div>
                                     <div className="my-divTableCellRight">&nbsp;</div>
@@ -129,10 +203,10 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    adminCreateNewsEntry: value => dispatch(adminCreateNewsEntry(value))
+    adminUpdateArticle: value => dispatch(adminUpdateArticle(value))
 })
 
 export default compose(
     withRouter,
     connect(mapStateToProps, mapDispatchToProps)
-)(AdminCreateView);
+)(AdminEditArticleView);
