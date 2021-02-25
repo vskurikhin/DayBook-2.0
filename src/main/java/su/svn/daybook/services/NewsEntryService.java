@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.25 16:07 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.25 19:38 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NewsEntryService.java
@@ -18,6 +18,7 @@ import su.svn.daybook.domain.dao.db.db.RecordDao;
 import su.svn.daybook.domain.model.NewsEntryDto;
 import su.svn.daybook.domain.model.db.db.NewsEntry;
 import su.svn.daybook.domain.model.db.db.Record;
+import su.svn.daybook.exceptions.NameRequiredException;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -70,7 +71,8 @@ public class NewsEntryService extends AbstractService<NewsEntry> {
     public  Mono<NewsEntryDto> read(UUID id) {
         log.trace("read({})", id);
         return entryDao.monoById(id)
-                .flatMap(newsEntry -> findRecordConvertToNewsEntry(newsEntry, id));
+                .flatMap(entry -> findRecordConvertToNewsEntry(entry, id))
+                .switchIfEmpty(Mono.error(NameRequiredException.notFoundException(id)));
     }
 
     @Transactional
