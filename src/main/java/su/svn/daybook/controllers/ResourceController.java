@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.25 20:16 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.25 16:07 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * ResourceController.java
@@ -10,6 +10,10 @@ package su.svn.daybook.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +44,7 @@ import su.svn.daybook.domain.security.ProfileResponse;
 import su.svn.daybook.services.ArticleService;
 import su.svn.daybook.services.NewsEntryService;
 
+import java.sql.Date;
 import java.util.UUID;
 
 @Slf4j
@@ -77,7 +82,15 @@ public class ResourceController {
         return Mono.just(ResponseEntity.ok("{}"));
     }
 
-    @Operation(summary = "create news entry record", security = @SecurityRequirement(name = "bearerAuth"))
+    @Operation(
+            operationId = "createArticle", summary = "Create article record", tags = {"Resource Controller"},
+            responses = {
+                    @ApiResponse(responseCode = "201", description = "successful operation",
+                            content = @Content(schema = @Schema(implementation = ResponseDto.class))),
+                    @ApiResponse(responseCode = "400", description = "Bad Request",
+                            content = @Content(schema = @Schema(implementation = ResponseDto.class))),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content)},
+            security = @SecurityRequirement(name = "bearerAuth"))
     @PostMapping(value = "/record/article")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public Mono<ResponseEntity<?>> createArticle(@RequestBody ArticleDto dto) {
@@ -86,7 +99,15 @@ public class ResourceController {
                 .map(a -> getBody(a, HttpStatus.CREATED, "Created"));
     }
 
-    @Operation(summary = "create news entry record", security = @SecurityRequirement(name = "bearerAuth"))
+    @Operation(
+            operationId = "createNewsEntry", summary = "Create news entry record", tags = {"Resource Controller"},
+            responses = {
+                    @ApiResponse(responseCode = "201", description = "successful operation",
+                            content = @Content(schema = @Schema(implementation = ResponseDto.class))),
+                    @ApiResponse(responseCode = "400", description = "Bad Request",
+                            content = @Content(schema = @Schema(implementation = ResponseDto.class))),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content)},
+            security = @SecurityRequirement(name = "bearerAuth"))
     @PostMapping(value = "/record/news-entry")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public Mono<ResponseEntity<?>> createNewsEntry(@RequestBody NewsEntryDto dto) {
@@ -95,23 +116,43 @@ public class ResourceController {
                 .map(a -> getBody(a, HttpStatus.CREATED, "Created"));
     }
 
-    @Operation(summary = "get news entry record by id")
+    @Operation(
+            operationId = "readArticle", summary = "Find article by Id", tags = {"Resource Controller"},
+            parameters = {@Parameter(in = ParameterIn.PATH, name = "id", description = "Article Id")},
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "successful operation",
+                            content = @Content(schema = @Schema(implementation = ArticleDto.class))),
+                    @ApiResponse(responseCode = "400", description = "Invalid article Id supplied"),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+                    @ApiResponse(responseCode = "404", description = "Article not found",
+                            content = @Content(schema = @Schema(implementation = ResponseDto.class)))},
+            security = @SecurityRequirement(name = "bearerAuth"))
     @GetMapping(value = "/record/article/{id}")
-    @PreAuthorize("permitAll() or hasPermission()")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public Mono<ArticleDto> readArticle(@PathVariable("id") UUID id) {
         log.debug("getNewsEntry({})", id);
         return articleService.read(id);
     }
 
-    @Operation(summary = "get news entry record by id")
+    @Operation(
+            operationId = "readNewsEntry", summary = "Find news entry by Id", tags = {"Resource Controller"},
+            parameters = {@Parameter(in = ParameterIn.PATH, name = "id", description = "Article Id")},
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "successful operation",
+                            content = @Content(schema = @Schema(implementation = NewsEntryDto.class))),
+                    @ApiResponse(responseCode = "400", description = "Invalid news entry Id supplied"),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+                    @ApiResponse(responseCode = "404", description = "News entry not found",
+                            content = @Content(schema = @Schema(implementation = ResponseDto.class)))},
+            security = @SecurityRequirement(name = "bearerAuth"))
     @GetMapping(value = "/record/news-entry/{id}")
-    @PreAuthorize("permitAll() or hasPermission()")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public Mono<NewsEntryDto> readNewsEntry(@PathVariable("id") UUID id) {
         log.debug("getNewsEntry({})", id);
         return newsEntryService.read(id);
     }
 
-    @Operation(summary = "get all records")
+    @Operation(summary = "Get all records")
     @GetMapping(value = "/records")
     @PreAuthorize("permitAll() or hasPermission()")
     public Mono<Page<AllRecordView>> readRecords(
@@ -121,7 +162,15 @@ public class ResourceController {
         return recordNewsEntryService.getRecords(page, size);
     }
 
-    @Operation(summary = "update news entry record", security = @SecurityRequirement(name = "bearerAuth"))
+    @Operation(
+            operationId = "updateArticle", summary = "Update article record", tags = {"Resource Controller"},
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "successful operation",
+                            content = @Content(schema = @Schema(implementation = ResponseDto.class))),
+                    @ApiResponse(responseCode = "400", description = "Bad Request",
+                            content = @Content(schema = @Schema(implementation = ResponseDto.class))),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content)},
+            security = @SecurityRequirement(name = "bearerAuth"))
     @PutMapping(value = "/record/article")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public Mono<ResponseEntity<?>> updateArticle(@RequestBody ArticleDto dto) {
@@ -130,7 +179,15 @@ public class ResourceController {
                 .map(a -> getBody(a, HttpStatus.OK, "Updated"));
     }
 
-    @Operation(summary = "update news entry record", security = @SecurityRequirement(name = "bearerAuth"))
+    @Operation(
+            operationId = "updateNewsEntry", summary = "Update news entry record", tags = {"Resource Controller"},
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "successful operation",
+                            content = @Content(schema = @Schema(implementation = ResponseDto.class))),
+                    @ApiResponse(responseCode = "400", description = "Bad Request",
+                            content = @Content(schema = @Schema(implementation = ResponseDto.class))),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content)},
+            security = @SecurityRequirement(name = "bearerAuth"))
     @PutMapping(value = "/record/news-entry")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public Mono<ResponseEntity<?>> updateNewsEntry(@RequestBody NewsEntryDto dto) {
@@ -142,6 +199,7 @@ public class ResourceController {
     private ResponseEntity<?> getBody(DBUuidEntry a, HttpStatus ok, String message) {
         ResponseDto response = ResponseDto.builder()
                 .message(message + ": " + a.getId())
+                .timestamp(new Date(new java.util.Date().getTime()))
                 .status("success")
                 .build();
         return ResponseEntity.status(ok).body(response);
