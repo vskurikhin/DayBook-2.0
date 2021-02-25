@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.01.13 00:44 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.24 19:25 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RecordDto.java
@@ -8,7 +8,11 @@
 
 package su.svn.daybook.domain.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import su.svn.daybook.domain.model.db.db.Record;
 
 import java.io.Serializable;
@@ -17,6 +21,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Builder(builderClassName = "Builder")
 public class RecordDto<T extends DBUuidEntry> implements Serializable {
+
+    private static final long serialVersionUID = -2469972395793373903L;
 
     @Getter
     @Setter
