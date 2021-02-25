@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.25 16:07 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.25 20:16 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * ResourceController.java
@@ -122,7 +122,7 @@ public class ResourceController {
     }
 
     @Operation(summary = "update news entry record", security = @SecurityRequirement(name = "bearerAuth"))
-    @PutMapping(value = "/record/news-entry")
+    @PutMapping(value = "/record/article")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public Mono<ResponseEntity<?>> updateArticle(@RequestBody ArticleDto dto) {
         log.debug("updateArticle({}): authentication={}", dto, SecurityContextHolder.getContext().getAuthentication());
