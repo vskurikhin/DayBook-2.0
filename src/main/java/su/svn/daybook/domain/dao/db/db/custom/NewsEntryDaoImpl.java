@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.22 14:28 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.25 16:07 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NewsEntryDaoImpl.java
@@ -13,20 +13,18 @@ import io.r2dbc.spi.ConnectionFactory;
 import io.r2dbc.spi.Result;
 import io.r2dbc.spi.Statement;
 import lombok.extern.slf4j.Slf4j;
-import org.reactivestreams.Publisher;
 import org.springframework.data.r2dbc.core.DatabaseClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import su.svn.daybook.domain.dao.db.db.NewsEntryCustomizedDao;
 import su.svn.daybook.domain.model.db.db.NewsEntry;
 
-import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.UUID;
 
 @Slf4j
 public class NewsEntryDaoImpl implements NewsEntryCustomizedDao {
+
 
     private final ConnectionFactory connectionFactory;
 
@@ -67,40 +65,13 @@ public class NewsEntryDaoImpl implements NewsEntryCustomizedDao {
                 .bind("userName", entry.getUserName())
                 .bind("title", entry.getTitle());
 
-        if (entry.getEnabled() != null)
-            execSpec = execSpec.bind("enabled", entry.getEnabled());
-        else
-            execSpec = execSpec.bind("enabled", true);
-
-        if (entry.getVisible() != null)
-            execSpec = execSpec.bind("visible", entry.getVisible());
-        else
-            execSpec = execSpec.bind("visible", true);
-
-        if (entry.getNewsGroupId() != null)
-            execSpec = execSpec.bind("newsGroupId", entry.getNewsGroupId());
-        else
-            execSpec = execSpec.bindNull("newsGroupId", UUID.class);
-
-        if (entry.getContent() != null)
-            execSpec = execSpec.bind("content", entry.getContent());
-        else
-            execSpec = execSpec.bindNull("content", String.class);
-
-        if (entry.getCreateTime() != null)
-            execSpec = execSpec.bind("createTime", entry.getCreateTime());
-        else
-            execSpec = execSpec.bind("createTime", LocalDateTime.now());
-
-        if (entry.getUpdateTime() != null)
-            execSpec = execSpec.bind("updateTime", entry.getUpdateTime());
-        else
-            execSpec = execSpec.bind("updateTime", LocalDateTime.now());
-
-        if (entry.getFlags() != null)
-            execSpec = execSpec.bind("flags", entry.getFlags());
-        else
-            execSpec = execSpec.bindNull("flags", Integer.class);
+        execSpec = GenericExecuteSpec.setBoolean(execSpec, entry::getEnabled, true,"visible");
+        execSpec = GenericExecuteSpec.setBoolean(execSpec, entry::getVisible, true,"enabled");
+        execSpec = GenericExecuteSpec.setUuid(execSpec, entry::getNewsGroupId, "newsGroupId");
+        execSpec = GenericExecuteSpec.setString(execSpec, entry::getContent, "content");
+        execSpec = GenericExecuteSpec.setLocalDateTimeNow(execSpec, entry::getCreateTime, "createTime");
+        execSpec = GenericExecuteSpec.setLocalDateTimeNow(execSpec, entry::getUpdateTime, "updateTime");
+        execSpec = GenericExecuteSpec.setInteger(execSpec, entry::getFlags, "flags");
 
         return execSpec.fetch().rowsUpdated();
     }
@@ -146,4 +117,5 @@ public class NewsEntryDaoImpl implements NewsEntryCustomizedDao {
     private Statement insertStatement(Connection connection, NewsEntry newsEntry) {
         return statementBinding(connection.createStatement(INSERT), newsEntry);
     }
+
 }

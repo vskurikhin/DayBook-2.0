@@ -1,9 +1,5 @@
 /*
-<<<<<<< HEAD
- * This file was last modified at 2021.02.02 19:34 by Victor N. Skurikhin.
-=======
- * This file was last modified at 2021.02.01 23:11 by Victor N. Skurikhin.
->>>>>>> e97099662bc293d42117c78731fbdd3ea84a0e76
+ * This file was last modified at 2021.02.25 16:07 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NewsLinks.java
@@ -22,6 +18,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
+import su.svn.daybook.domain.model.DBUserOwnedEntry;
 import su.svn.daybook.domain.model.DBUuidEntry;
 import su.svn.daybook.domain.model.RecordEntry;
 
@@ -35,7 +32,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder(builderClassName = "Builder")
 @Table("db.news_links")
-public class NewsLinks implements Serializable, RecordEntry {
+public class NewsLinks implements Serializable, RecordEntry, DBUserOwnedEntry {
 
     private static final long serialVersionUID = 4690421013674698951L;
 
