@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.25 22:27 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.26 10:44 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * AllRecordService.js
@@ -8,13 +8,17 @@
 
 import axios from 'axios';
 
+import {API_V1_RESOURCE_RECORDS} from '../config/api';
 import {getConfigHeadersAuthorization} from '../lib/axiosConfig';
+import {ApiService} from "./ApiService";
 
-const API_V1_RESOURCE_RECORDS = "/api/v1/resource/records";
+export class AllRecordService extends ApiService {
 
-export class AllRecordService {
+    constructor(url, cancelTokenSource) {
+        super(url, cancelTokenSource);
+    }
 
-    getCarsLazy(event, numberOfElements) {
+    getRecordsLazy(event, numberOfElements) {
         const config = getConfigHeadersAuthorization(localStorage.token);
         const first = event !== null ? event.first : 0;
         const page = event !== null ? event.page : 0;

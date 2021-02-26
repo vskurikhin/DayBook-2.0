@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.22 22:44 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.26 10:44 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * CalendarDataView.jsx
@@ -21,20 +21,6 @@ const CalendarDataView = (date) => {
     const [totalRecords, setTotalRecords] = useState(0);
     const [loading, setLoading] = useState(true);
     const [first, setFirst] = useState(0);
-    const carservice = new AllRecordService();
-
-    useEffect(() => {
-        setTimeout(() => {
-            carservice.getCarsLazy(0, 0, rows).then(function (resItems) {
-                // TODO setTotalRecords(resItems.data.headers.resultCount);
-                setCars(resItems.data.data);
-            }).catch(function (error) {
-                console.log(error);
-            });
-            setFirst(0);
-            setLoading(false);
-        }, 25);
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const renderGridItem = (car) => {
         return (

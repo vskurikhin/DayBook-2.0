@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.25 22:27 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.26 10:44 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RootDataViewLazy.jsx
@@ -10,6 +10,7 @@ import 'primeicons/primeicons.css';
 import 'primereact/resources/primereact.css';
 import 'primeflex/primeflex.css';
 
+import {API_V1_RESOURCE_RECORDS} from '../../config/api';
 import {AllRecordService} from '../../service/AllRecordService';
 import {isAdmin} from '../../lib/userTool'
 import {kebabize} from "../../lib/kebabize";
@@ -22,6 +23,7 @@ import {DataView} from 'primereact/dataview';
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {useHistory, withRouter} from 'react-router-dom';
+import axios from "axios";
 
 const NUMBER_OF_ELEMENTS = 99;
 const TIMEOUT = 33;
@@ -34,7 +36,8 @@ const RootDataViewLazy = (props) => {
     const [totalRecords, setTotalRecords] = useState(NUMBER_OF_ELEMENTS);
     const [numberOfElements, setNumberOfElements] = useState(NUMBER_OF_ELEMENTS);
     const isMounted = useRef(false);
-    const allRecordService = new AllRecordService();
+    const cancelTokenSource = axios.CancelToken.source();
+    const allRecordService = new AllRecordService(API_V1_RESOURCE_RECORDS, cancelTokenSource);
     const cm = useRef(null);
     const history = useHistory();
     const items = [
@@ -74,7 +77,7 @@ const RootDataViewLazy = (props) => {
 
     useEffect(() => {
         setTimeout(() => {
-            allRecordService.getCarsLazy(null, numberOfElements).then(function (resItems) {
+            allRecordService.getRecordsLazy(null, numberOfElements).then(function (resItems) {
                 setFirst(0);
                 setRecords(resItems['data'].content);
                 setTotalRecords(resItems['data'].totalElements);
@@ -89,7 +92,7 @@ const RootDataViewLazy = (props) => {
         setLoading(true);
         //imitate delay of a backend call
         setTimeout(() => {
-            allRecordService.getCarsLazy(event.originalEvent, numberOfElements).then(function (resItems) {
+            allRecordService.getRecordsLazy(event.originalEvent, numberOfElements).then(function (resItems) {
                 setFirst(event.originalEvent.first);
                 setRecords(resItems['data'].content);
                 setTotalRecords(resItems['data'].totalElements);

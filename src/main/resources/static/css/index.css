@@ -55,6 +55,20 @@
  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
  appearance: none;
  border-radius: 3px;
+ min-width: 22.4em;
+ width: 100%;
+}
+.my-p-inputtext-uuid{
+ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+ font-size: 1rem;
+ color: #333333;
+ background: #ffffff;
+ padding: 0.429rem 0.429rem;
+ border: 1px solid #a6a6a6;
+ transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+ appearance: none;
+ border-radius: 3px;
+ min-width: 22.4em;
  width: 22.4em;
 }
 .my-p-button{
@@ -79,6 +93,7 @@ label.my-label{
     transition-duration: 0.2s;
     margin-bottom: 0.33rem;
     margin-left: 0.6em;
+    display:inline-block;
 }
 /* Ensure proper sizing */
 * {
@@ -179,7 +194,7 @@ img.my-left-top{
 /* Header/logo Title */
 .my-header{
  position: absolute;
- height: 90px;
+ height: 52px;
  width: 100%;
  padding: 4px;
  text-align: center;
@@ -189,7 +204,7 @@ img.my-left-top{
 /* Style the top navigation bar */
 .my-navbar{
  position: absolute;
- top: 90px;
+ top: 52px;
  height: 44px;
  width: 100%;
  overflow: hidden;
@@ -217,7 +232,7 @@ img.my-left-top{
 /* Column container */
 .my-row{
  position: absolute;
- top: 134px;
+ top: 96px;
  bottom: 10px;
  width: 100%;
  display: -ms-flexbox; /* IE10 */

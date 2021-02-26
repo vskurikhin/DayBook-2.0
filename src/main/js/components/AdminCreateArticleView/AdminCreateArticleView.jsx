@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.25 22:27 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.26 10:44 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * AdminCreateArticleView.jsx
@@ -60,7 +60,7 @@ class AdminCreateArticleView extends Component {
                                     <div className="my-divTableCell">
                                         <label className="my-label"><b>News group Id:</b></label><br/>
                                         <InputMask
-                                            className="my-p-inputtext"
+                                            className="my-p-inputtext-uuid"
                                             id="inputmask"
                                             mask="********-****-****-****-************"
                                             name='newsGroupId'

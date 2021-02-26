@@ -1,8 +1,8 @@
 /*
- * This file was last modified at 2021.02.25 22:27 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.26 10:44 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
- * AdminEditView.jsx
+ * AdminEditNewsEntryView.jsx
  * $Id$
  */
 
@@ -20,7 +20,7 @@ import {compose} from "redux";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 
-class AdminEditView extends Component {
+class AdminEditNewsEntryView extends Component {
 
     state = {
         data: {
@@ -92,7 +92,7 @@ class AdminEditView extends Component {
                                     <div className="my-divTableCell">
                                         <label className="my-label"><b>News group Id:</b></label><br/>
                                         <InputMask
-                                            className="my-p-inputtext"
+                                            className="my-p-inputtext-uuid"
                                             id="inputmask"
                                             mask="********-****-****-****-************"
                                             name='newsGroupId'
@@ -169,4 +169,4 @@ const mapDispatchToProps = dispatch => ({
 export default compose(
     withRouter,
     connect(mapStateToProps, mapDispatchToProps)
-)(AdminEditView);
+)(AdminEditNewsEntryView);
