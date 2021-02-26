@@ -2,52 +2,38 @@
  * This file was last modified at 2021.02.26 17:46 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
- * NewsGroup.java
+ * NewsGroupDto.java
  * $Id$
  */
 
-package su.svn.daybook.domain.model.db.db;
+package su.svn.daybook.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.Table;
-import su.svn.daybook.domain.model.DBUserOwnedEntry;
-import su.svn.daybook.domain.model.DBUuidEntry;
+import lombok.*;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(builderClassName = "Builder")
-@Table("db.news_group")
-public class NewsGroup implements Serializable, DBUuidEntry, DBUserOwnedEntry {
+public class NewsGroupDto implements Serializable {
 
-    private static final long serialVersionUID = 3819198386326222965L;
+    private static final long serialVersionUID = -5414596730445774715L;
 
-    @Id
     @Getter
     @Setter
+    @Size(max = 37)
     @Schema(description = "news group id", example = "00000000-0000-0000-FFFF-000000101001")
-    @Column("id")
-    private UUID id;
+    private String id;
 
     @Getter
     @Setter
     @NotNull
     @Size(max = 64)
-    @Schema(description = "group name", example = "string", required = true)
-    @Column("group_name")
     private String groupName;
 
     @Getter
@@ -55,49 +41,38 @@ public class NewsGroup implements Serializable, DBUuidEntry, DBUserOwnedEntry {
     @NotNull
     @Size(max = 64)
     @Schema(description = "user name", example = "login")
-    @Column("user_name")
     private String userName;
 
     @Getter
     @NotNull
     @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
-    @Schema(description = "create time", example = "1970-01-01T00:00:00Z")
-    @Column("create_time")
+    @Schema(description = "create time", example = "1970-01-01T00:00:00")
     private LocalDateTime createTime;
 
     @Getter
     @Setter
     @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
-    @Schema(description = "update time", example = "1970-01-01T00:00:00Z")
-    @Column("update_time")
+    @Schema(description = "update time", example = "1970-01-01T00:00:00")
     private LocalDateTime updateTime;
 
     @Getter
     @Setter
-    @Column("enabled")
     private Boolean enabled;
 
     @Getter
     @Setter
-    @Column("visible")
     private Boolean visible;
 
     @Getter
     @Setter
-    @Column("flags")
     private Integer flags;
 
     @Override
-    public Class<? extends DBUuidEntry> getEClass() {
-        return NewsGroup.class;
-    }
-
-    @Override
     public String toString() {
-        return "NewsGroup{" +
-                "id=" + id +
-                ", userName='" + userName + '\'' +
+        return "NewsGroupDto{" +
+                "id='" + id + '\'' +
                 ", groupName='" + groupName + '\'' +
+                ", userName='" + userName + '\'' +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
                 ", enabled=" + enabled +
@@ -108,18 +83,18 @@ public class NewsGroup implements Serializable, DBUuidEntry, DBUserOwnedEntry {
 
     public boolean equals(final Object o) {
         if (o == this) return true;
-        if (!(o instanceof NewsGroup)) return false;
-        final NewsGroup other = (NewsGroup) o;
+        if (!(o instanceof NewsGroupDto)) return false;
+        final NewsGroupDto other = (NewsGroupDto) o;
         if (!other.canEqual((Object) this)) return false;
         final Object this$id = this.id;
         final Object other$id = other.id;
         if (this$id == null ? other$id != null : !this$id.equals(other$id)) return false;
-        final Object this$userName = this.userName;
-        final Object other$userName = other.userName;
-        if (this$userName == null ? other$userName != null : !this$userName.equals(other$userName)) return false;
         final Object this$groupName = this.groupName;
         final Object other$groupName = other.groupName;
         if (this$groupName == null ? other$groupName != null : !this$groupName.equals(other$groupName)) return false;
+        final Object this$userName = this.userName;
+        final Object other$userName = other.userName;
+        if (this$userName == null ? other$userName != null : !this$userName.equals(other$userName)) return false;
         final Object this$createTime = this.createTime;
         final Object other$createTime = other.createTime;
         if (this$createTime == null ? other$createTime != null : !this$createTime.equals(other$createTime))
@@ -141,7 +116,7 @@ public class NewsGroup implements Serializable, DBUuidEntry, DBUserOwnedEntry {
     }
 
     protected boolean canEqual(final Object other) {
-        return other instanceof NewsGroup;
+        return other instanceof NewsGroupDto;
     }
 
     public int hashCode() {
@@ -149,10 +124,10 @@ public class NewsGroup implements Serializable, DBUuidEntry, DBUserOwnedEntry {
         int result = 1;
         final Object $id = this.id;
         result = result * PRIME + ($id == null ? 43 : $id.hashCode());
-        final Object $userName = this.userName;
-        result = result * PRIME + ($userName == null ? 43 : $userName.hashCode());
         final Object $groupName = this.groupName;
         result = result * PRIME + ($groupName == null ? 43 : $groupName.hashCode());
+        final Object $userName = this.userName;
+        result = result * PRIME + ($userName == null ? 43 : $userName.hashCode());
         final Object $createTime = this.createTime;
         result = result * PRIME + ($createTime == null ? 43 : $createTime.hashCode());
         final Object $updateTime = this.updateTime;
