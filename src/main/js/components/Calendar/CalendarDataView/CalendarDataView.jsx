@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.26 10:44 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.27 00:06 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * CalendarDataView.jsx
@@ -10,17 +10,13 @@ import 'primeicons/primeicons.css';
 import 'primereact/resources/primereact.css';
 import 'primeflex/primeflex.css';
 
-import {AllRecordService} from '../../service/AllRecordService';
-
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {DataView} from 'primereact/dataview';
 
 const CalendarDataView = (date) => {
     const rows = 6;
     const [cars, setCars] = useState([]);
     const [totalRecords, setTotalRecords] = useState(0);
-    const [loading, setLoading] = useState(true);
-    const [first, setFirst] = useState(0);
 
     const renderGridItem = (car) => {
         return (

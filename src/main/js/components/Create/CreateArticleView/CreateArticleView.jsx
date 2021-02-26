@@ -1,19 +1,21 @@
 /*
- * This file was last modified at 2021.02.26 10:44 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.27 00:06 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
- * AdminCreateNewsEntryView.jsx
+ * CreateArticleView.jsx
  * $Id$
  */
 
-import {API_V1_RESOURCE_NEWS_GROUPS} from '../../config/api';
-import {ApiService} from '../../service/ApiService';
-import {adminCreateNewsEntry} from '../../redux/actions';
+import {API_V1_RESOURCE_NEWS_GROUPS} from "../../../config/api";
+import {DEFAULT_NEWS_GROUP_ID} from "../../../config/consts";
+import {adminCreateArticle} from '../../../redux/actions';
+import './DropdownDemo.css';
 
 import React, {Component} from 'react';
 import axios from "axios";
+import {ApiService} from "../../../service/ApiService";
 import {Button} from 'primereact/button';
-import {InputMask} from 'primereact/inputmask';
+import {Dropdown} from "primereact/dropdown";
 import {InputTextarea} from 'primereact/inputtextarea';
 import {InputText} from 'primereact/inputtext';
 import {Redirect} from "react-router";
@@ -21,29 +23,25 @@ import {compose} from "redux";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 
-class AdminCreateNewsEntryView extends Component {
-
+class CreateArticleView extends Component {
     state = {
-        newsGroupId: "00000000-0000-0000-0000-000000000001",
-        title: "",
         content: "",
+        newsGroupId: DEFAULT_NEWS_GROUP_ID,
+        newsGroupNames: [],
         redirectToReferrer: false,
-        data: {
-            id: null,
-            groupName: "",
-            userName: null,
-            createTime: "",
-            updateTime: "",
-            enabled: true,
-            visible: true,
-            flags: null,
-        },
+        selectedNewsGroup: "",
+        title: "",
     }
     cancelTokenSource = axios.CancelToken.source();
-    newsGroupService = new ApiService(API_V1_RESOURCE_NEWS_GROUPS, this.cancelTokenSource);
+    newsGroupService = new ApiService(API_V1_RESOURCE_NEWS_GROUPS + '/all', this.cancelTokenSource);
 
     constructor(props) {
         super(props);
+    }
+
+    onNewsGroupChange = (e) => {
+        this.setState({selectedNewsGroup: e.value});
+        this.setState({newsGroupId: e.value.id});
     }
 
     handleChange = event => {
@@ -54,28 +52,28 @@ class AdminCreateNewsEntryView extends Component {
 
     handleSubmit = event => {
         event.preventDefault()
-        this.props.adminCreateNewsEntry(this.state)
+        this.props.adminCreateArticleView(this.state)
         this.setState({redirectToReferrer: true})
     }
 
-    handleSubscriptionChange = dataSource => {
-        this.setState(dataSource);
+    handleNewsGroupChange = value => {
+        this.setState({newsGroupNames: value.data});
+        const mayBeFirst = value.data.filter(x => x.id === DEFAULT_NEWS_GROUP_ID);
+        this.setState({selectedNewsGroup: mayBeFirst.length > 0 ? mayBeFirst[0] : null})
     }
 
     componentDidMount() {
-        console.log('AdminCreateNewsEntryView.componentDidMount');
-        console.log(this.props);
-        this.newsGroupService.getAll(null, this.handleSubscriptionChange);
+        this.newsGroupService.getAll(null, this.handleNewsGroupChange);
     }
 
     componentWillUnmount() {
-        console.log('AdminCreateNewsEntryView.componentWillUnmount');
         this.cancelTokenSource.cancel();
     }
 
     render() {
-        if (this.state.redirectToReferrer === true) {
-            return <Redirect to="/home"/>
+        const redirectToReferrer = this.state.redirectToReferrer;
+        if (redirectToReferrer === true) {
+            return <Redirect to="/home" />
         }
         return (
             <div className="dataview-demo">
@@ -85,22 +83,18 @@ class AdminCreateNewsEntryView extends Component {
                             <div className="my-divTableBody">
                                 <div className="my-divTableRow">
                                     <div className="my-divTableCellLeft">&nbsp;</div>
-
                                     <div className="my-divTableCell">
                                         <label className="my-label"><b>News group Id:</b></label><br/>
-                                        <InputMask
-                                            className="my-p-inputtext-uuid"
-                                            id="inputmask"
-                                            mask="********-****-****-****-************"
-                                            name='newsGroupId'
-                                            onChange={this.handleChange}
-                                            slotChar="00000000-0000-0000-0000-000000000001"
-                                            value={this.state.newsGroupId}
+                                        <Dropdown
+                                            onChange={this.onNewsGroupChange}
+                                            optionLabel="groupName"
+                                            options={this.state.newsGroupNames}
+                                            placeholder="Select a News group"
+                                            value={this.state.selectedNewsGroup}
                                         />
                                     </div>
                                     <div className="my-divTableCellRight">&nbsp;</div>
                                 </div>
-
                                 <div className="my-divTableRow">
                                     <div className="my-divTableCellLeft">&nbsp;</div>
                                     <div className="my-divTableCell">
@@ -122,20 +116,55 @@ class AdminCreateNewsEntryView extends Component {
                                 <div className="my-divTableRow">
                                     <div className="my-divTableCellLeft">&nbsp;</div>
                                     <div className="my-divTableCell">
-                                        <label className="my-label"><b>Content:</b></label><br/>
-                                        <InputTextarea
-                                            className="my-p-inputtext"
-                                            autoResize
-                                            cols={30}
-                                            name='content'
-                                            onChange={this.handleChange}
-                                            rows={5}
-                                            value={this.state.content}
-                                        />
+                                        <span className="p-float-label">
+                                            <InputText
+                                                className="my-p-inputtext"
+                                                id="include"
+                                                name='include'
+                                                onChange={this.handleChange}
+                                                type="text"
+                                                value={this.state.include}
+                                            />
+                                            <label htmlFor="include"><b>include</b></label>
+                                        </span>
                                     </div>
                                     <div className="my-divTableCellRight">&nbsp;</div>
                                 </div>
 
+                                <div className="my-divTableRow">
+                                    <div className="my-divTableCellLeft">&nbsp;</div>
+                                    <div className="my-divTableCell">
+                                        <span className="p-float-label">
+                                            <InputText
+                                                className="my-p-inputtext"
+                                                id="anchor"
+                                                name='anchor'
+                                                onChange={this.handleChange}
+                                                type="text"
+                                                value={this.state.anchor}
+                                            />
+                                            <label htmlFor="anchor"><b>anchor</b></label>
+                                        </span>
+                                    </div>
+                                    <div className="my-divTableCellRight">&nbsp;</div>
+                                </div>
+
+                                <div className="my-divTableRow">
+                                    <div className="my-divTableCellLeft">&nbsp;</div>
+                                    <div className="my-divTableCell">
+                                        <label className="my-label"><b>Summary:</b></label><br/>
+                                        <InputTextarea
+                                            className="my-p-inputtext"
+                                            autoResize
+                                            cols={30}
+                                            name='summary'
+                                            onChange={this.handleChange}
+                                            rows={5}
+                                            value={this.state.summary}
+                                        />
+                                    </div>
+                                    <div className="my-divTableCellRight">&nbsp;</div>
+                                </div>
                                 <div className="my-divTableRow">
                                     <div className="my-divTableCellLeft">&nbsp;</div>
                                     <div className="my-divTableCell">
@@ -163,10 +192,10 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    adminCreateNewsEntry: value => dispatch(adminCreateNewsEntry(value))
+    adminCreateArticleView: value => dispatch(adminCreateArticle(value))
 })
 
 export default compose(
     withRouter,
     connect(mapStateToProps, mapDispatchToProps)
-)(AdminCreateNewsEntryView);
+)(CreateArticleView);

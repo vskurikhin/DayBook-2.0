@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.26 17:46 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.27 00:06 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NewsGroupController.java
@@ -25,7 +25,7 @@ import su.svn.daybook.services.NewsGroupService;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/news-group")
+@RequestMapping("/api/v1/resource")
 @Tag(name = "News group Controller", description = "News group APIs for the DayBook project.")
 public class NewsGroupController {
 
@@ -36,7 +36,7 @@ public class NewsGroupController {
     }
 
     @Operation(summary = "Get all of news groups")
-    @GetMapping(value = "/all")
+    @GetMapping(value = "/news-group/all")
     @PreAuthorize("permitAll() or hasPermission()")
     public Flux<NewsGroup> readAll() {
         log.debug("readRecords()");
@@ -44,7 +44,7 @@ public class NewsGroupController {
     }
 
     @Operation(summary = "Get all of news groups like by prefix")
-    @GetMapping(value = "/like")
+    @GetMapping(value = "/news-group/like")
     @PreAuthorize("permitAll() or hasPermission()")
     public Flux<NewsGroup> readAllLike(String prefix) {
         log.debug("readRecords()");
@@ -52,7 +52,7 @@ public class NewsGroupController {
     }
 
     @Operation(summary = "Get page of news group")
-    @GetMapping(value = "/page")
+    @GetMapping(value = "/news-group/page")
     @PreAuthorize("permitAll() or hasPermission()")
     public Mono<Page<NewsGroup>> readPage(
             @RequestParam("page") @Parameter(name = "page", required = true, example = "0") int page,

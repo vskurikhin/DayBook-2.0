@@ -1,23 +1,27 @@
 /*
- * This file was last modified at 2021.02.25 16:07 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.27 00:06 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
- * AdminCreateRow.jsx
+ * EditRow.jsx
  * $Id$
  */
 
-import AdminCreateTabView from "../AdminCreateTabView/AdminCreateTabView";
-import IFrame from "../IFrame/IFrame";
-import {loadCssListIframe1} from "../../lib/CssListIframe1";
-import {logDate} from "../../lib/formatDate";
-import {setCalendarDate} from "../../redux/actions";
+import EditArticleView from "../EditArticleView/EditArticleView";
+import EditNewsEntryView from "../EditNewsEntryView/EditNewsEntryView";
+import IFrame from "../../IFrame/IFrame";
+import {loadCssListIframe1} from "../../../lib/CssListIframe1";
+import {setCalendarDate} from "../../../redux/actions";
 
 import React, {Component} from 'react';
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {withRouter} from "react-router";
 
-export class AdminCreateRow extends Component {
+const isArticle = object => object === 'article';
+const isNewsEntry = object => object === 'news-entry';
+const isNewsLinks = object => object === 'news-links';
+
+class EditRow extends Component {
 
     constructor(props) {
         super(props);
@@ -27,12 +31,26 @@ export class AdminCreateRow extends Component {
         loadCssListIframe1()
     }
 
-    getCurrentUser() {
-        return this.props.currentUser['currentUser'];
+    getObject() {
+        if (this.props.match.params !== undefined) {
+            return this.props.match.params.object;
+        }
+        return null;
     }
 
-    getCurrentDate() {
-        return this.props.currentDate['currentDate'];
+    renderEdit(object) {
+        if (isArticle(object)) return (
+            <EditArticleView/>
+        );
+        if (isNewsEntry(object)) return (
+            <EditNewsEntryView/>
+        );
+        if (isNewsLinks(object)) return (
+            <EditNewsEntryView/>
+        );
+        return (
+            <div/>
+        );
     }
 
     render() {
@@ -41,7 +59,7 @@ export class AdminCreateRow extends Component {
             width: '100%',
             height: '100%'
         };
-        logDate("HomeRow.render: currentDate=", this.getCurrentDate());
+        const object = this.getObject();
 
         return (
             <div className="my-row">
@@ -56,7 +74,7 @@ export class AdminCreateRow extends Component {
                 </div>
                 <div className="my-main" id='main'>
                     <IFrame style={divStyle} name='iframe1' id='iframe1'>
-                        <AdminCreateTabView/>
+                        {this.renderEdit(object)}
                     </IFrame>
                 </div>
             </div>
@@ -64,10 +82,9 @@ export class AdminCreateRow extends Component {
     }
 }
 
-
 const mapStateToProps = state => ({
-    currentUser: state.currentUser,
-    currentDate: state.currentDate
+    user: state.currentUser,
+    date: state.currentDate
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -77,4 +94,4 @@ const mapDispatchToProps = dispatch => ({
 export default compose(
     withRouter,
     connect(mapStateToProps, mapDispatchToProps)
-)(AdminCreateRow);
+)(EditRow);

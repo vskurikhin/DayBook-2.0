@@ -39,7 +39,7 @@
 /* Column container */
 .my-row{
  position: absolute;
- top: 52px;
+ top: 96px;
  bottom: 10px;
  width: 100%;
  display: -ms-flexbox; /* IE10 */

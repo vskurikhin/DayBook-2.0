@@ -1,29 +1,29 @@
 /*
- * This file was last modified at 2021.02.24 00:07 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.27 00:06 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
- * AdminEdit.jsx
+ * Create.jsx
  * $Id$
  */
 
-import AdminEditRow from "../AdminEditRow/AdminEditRow";
+import AdminCreateRow from "./CreateRow/CreateRow";
 import Header from "../Header/Header";
 import NavigationBar from "../NavigationBar/NavigationBar";
 import {setCalendarDate} from "../../redux/actions";
 
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {withRouter} from "react-router";
 
-class AdminEdit extends Component {
+class Create extends Component {
 
     render () {
         return (
             <div>
                 <Header />
                 <NavigationBar />
-                <AdminEditRow />
+                <AdminCreateRow />
                 <div className="my-footer">
                 </div>
             </div>
@@ -32,8 +32,8 @@ class AdminEdit extends Component {
 }
 
 const mapStateToProps = state => ({
-    currentUser: state.currentUser,
-    currentDate: state.currentDate
+    user: state.currentUser,
+    date: state.currentDate
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -43,4 +43,4 @@ const mapDispatchToProps = dispatch => ({
 export default compose(
     withRouter,
     connect(mapStateToProps, mapDispatchToProps)
-)(AdminEdit);
+)(Create);

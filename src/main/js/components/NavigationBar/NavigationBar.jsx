@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.26 10:44 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.27 00:06 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NavigationBar.jsx
@@ -25,7 +25,7 @@ const SECTIONS = [
     {title: 'Log Out', href: '/', handleClick: true},
 ]
 
-class Header extends Component {
+class NavigationBar extends Component {
 
     handleClick = event => {
         event.preventDefault()
@@ -33,10 +33,6 @@ class Header extends Component {
         localStorage.removeItem("token")
         // удаление из Redux хранилица
         this.props.logoutUser()
-    }
-
-    getCurrentUser() {
-        return this.props.currentUser['currentUser'];
     }
 
     link(title, href, handleClick) {
@@ -99,7 +95,7 @@ class Header extends Component {
 }
 
 const mapStateToProps = state => ({
-    currentUser: state.currentUser
+    user: state.currentUser
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -110,4 +106,4 @@ const mapDispatchToProps = dispatch => ({
 export default compose(
     withRouter,
     connect(mapStateToProps, mapDispatchToProps)
-)(Header);
+)(NavigationBar);

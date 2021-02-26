@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.25 22:27 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.27 00:06 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * App.jsx
@@ -8,8 +8,9 @@
 
 import './App.scss';
 
-import AdminEdit from './components/AdminEdit/AdminEdit';
 import Calendar from './components/Calendar/Calendar';
+import Create from "./components/Create/Create";
+import Edit from './components/Edit/Edit';
 import Home from './components/Home/Home';
 import Login from './components/Login/Login';
 import Signup from './components/Signup/Signup'
@@ -24,7 +25,6 @@ import {
 } from "react-router";
 import {compose} from 'redux';
 import {connect} from 'react-redux';
-import AdminCreate from "./components/AdminCreate/AdminCreate";
 
 class App extends Component {
   componentDidMount = () => {
@@ -41,8 +41,8 @@ class App extends Component {
           <Route history={history} path='/calendar' component={Calendar} />
           <Route history={history} path='/login' component={Login} />
           <Route history={history} path='/signup' component={Signup} />
-          <Route history={history} path='/create' component={AdminCreate} />
-          <Route history={history} path='/edit/:object/:id' component={AdminEdit} />
+          <Route history={history} path='/create' component={Create} />
+          <Route history={history} path='/edit/:object/:id' component={Edit} />
 
           <Redirect from='/' to='/home'/>
         </Switch>
@@ -52,8 +52,8 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  currentUser: state.currentUser,
-  currentDate: state.currentDate
+  user: state.currentUser,
+  date: state.currentDate
 })
 
 const mapDispatchToProps = dispatch => ({
