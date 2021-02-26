@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.25 22:27 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.26 10:44 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * AdminEditRow.jsx
@@ -7,7 +7,7 @@
  */
 
 import AdminEditArticleView from "../AdminEditArticleView/AdminEditArticleView";
-import AdminEditView from "../AdminEditView/AdminEditView";
+import AdminEditView from "../AdminEditNewsEntryView/AdminEditNewsEntryView";
 import IFrame from "../IFrame/IFrame";
 import {loadCssListIframe1} from "../../lib/CssListIframe1";
 import {setCalendarDate} from "../../redux/actions";

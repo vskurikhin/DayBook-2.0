@@ -6,4 +6,5 @@ label.my-label{
     transition-duration: 0.2s;
     margin-bottom: 0.33rem;
     margin-left: 0.6em;
+    display:inline-block;
 }

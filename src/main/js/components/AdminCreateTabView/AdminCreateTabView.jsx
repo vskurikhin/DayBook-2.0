@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.25 22:27 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.26 10:44 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * AdminCreateTabView.jsx
@@ -26,15 +26,20 @@ class AdminCreateTabView extends Component {
 
         return (
             <div className="card">
-                <h5>Default</h5>
+                <h1>Create</h1>
                 <TabView>
-                    <TabPanel header="Create News Entry">
-                        <AdminCreateNewsEntryView/>
+                    <TabPanel header="News Group">
+                        <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati
+                            cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
+                            Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.</p>
                     </TabPanel>
-                    <TabPanel header="Create Article">
+                    <TabPanel header="Article">
                         <AdminCreateArticleView/>
                     </TabPanel>
-                    <TabPanel header="Header III">
+                    <TabPanel header="News Entry">
+                        <AdminCreateNewsEntryView/>
+                    </TabPanel>
+                    <TabPanel header="News Links">
                         <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati
                             cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
                             Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.</p>

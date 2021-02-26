@@ -55,6 +55,20 @@
  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
  appearance: none;
  border-radius: 3px;
+ min-width: 22.4em;
+ width: 100%;
+}
+.my-p-inputtext-uuid{
+ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+ font-size: 1rem;
+ color: #333333;
+ background: #ffffff;
+ padding: 0.429rem 0.429rem;
+ border: 1px solid #a6a6a6;
+ transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+ appearance: none;
+ border-radius: 3px;
+ min-width: 22.4em;
  width: 22.4em;
 }
 .my-p-button{

@@ -1,7 +1,7 @@
 /* Header/logo Title */
 .my-header{
  position: absolute;
- height: 90px;
+ height: 52px;
  width: 100%;
  padding: 4px;
  text-align: center;
@@ -11,7 +11,7 @@
 /* Style the top navigation bar */
 .my-navbar{
  position: absolute;
- top: 90px;
+ top: 52px;
  height: 44px;
  width: 100%;
  overflow: hidden;
@@ -39,7 +39,7 @@
 /* Column container */
 .my-row{
  position: absolute;
- top: 134px;
+ top: 96px;
  bottom: 10px;
  width: 100%;
  display: -ms-flexbox; /* IE10 */

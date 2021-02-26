@@ -6,6 +6,7 @@ label.my-label{
     transition-duration: 0.2s;
     margin-bottom: 0.33rem;
     margin-left: 0.6em;
+    display:inline-block;
 }
 .p-dataview .p-paginator-top.p-paginator{
  margin: 0;
@@ -128,7 +129,7 @@ table.news-entry tr:hover td{color:#455261;cursor:default;}
  display: inline-block;
  width: 100%;
 }
-.my-news-entry-date-th{min-width: 245px;width: 10%;color:#455261;text-align: right;}
+.my-news-entry-date-th{min-width: 260px;width: 10%;color:#455261;text-align: right;}
 .my-news-entry-user-th{
  color: #000;
  color: rgba(0, 0, 0, 0.2);
