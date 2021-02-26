@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.26 10:44 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.27 00:06 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RootDataViewLazy.jsx
@@ -17,13 +17,13 @@ import {kebabize} from "../../lib/kebabize";
 import {setCalendarDate} from "../../redux/actions";
 
 import React, {useState, useEffect, useRef} from 'react';
+import axios from "axios";
 import moment from 'moment';
 import {ContextMenu} from 'primereact/contextmenu';
 import {DataView} from 'primereact/dataview';
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {useHistory, withRouter} from 'react-router-dom';
-import axios from "axios";
 
 const NUMBER_OF_ELEMENTS = 99;
 const TIMEOUT = 33;
@@ -320,8 +320,8 @@ const RootDataViewLazy = (props) => {
 }
 
 const mapStateToProps = state => ({
-    currentUser: state.currentUser,
-    currentDate: state.currentDate
+    user: state.currentUser,
+    date: state.currentDate
 })
 
 const mapDispatchToProps = dispatch => ({

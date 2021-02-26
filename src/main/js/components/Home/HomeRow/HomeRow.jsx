@@ -1,15 +1,15 @@
 /*
- * This file was last modified at 2021.02.24 18:51 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.27 00:06 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * HomeRow.jsx
  * $Id$
  */
 
-import IFrame from '../IFrame/IFrame'
-import RootDataViewLazy from '../RootDataViewLazy/RootDataViewLazy'
-import {loadCssListIframe1} from '../../lib/CssListIframe1'
-import {setCalendarDate} from "../../redux/actions";
+import IFrame from '../../IFrame/IFrame'
+import RootDataViewLazy from '../../RootDataViewLazy/RootDataViewLazy'
+import {loadCssListIframe1} from '../../../lib/CssListIframe1'
+import {setCalendarDate} from "../../../redux/actions";
 
 import React, {Component} from 'react'
 import {compose} from "redux";
@@ -55,8 +55,8 @@ export class HomeRow extends Component {
 }
 
 const mapStateToProps = state => ({
-    currentUser: state.currentUser,
-    currentDate: state.currentDate
+    user: state.currentUser,
+    date: state.currentDate
 })
 
 const mapDispatchToProps = dispatch => ({

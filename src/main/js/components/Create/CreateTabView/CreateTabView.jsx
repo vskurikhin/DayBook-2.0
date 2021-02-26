@@ -1,22 +1,18 @@
 /*
- * This file was last modified at 2021.02.26 10:44 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.27 00:06 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
- * AdminCreateTabView.jsx
+ * CreateTabView.jsx
  * $Id$
  */
 
-import {adminCreateNewsEntry} from "../../redux/actions";
-import AdminCreateArticleView from "../AdminCreateArticleView/AdminCreateArticleView";
-import AdminCreateNewsEntryView from "../AdminCreateNewsEntryView/AdminCreateNewsEntryView";
+import CreateArticleView from "../CreateArticleView/CreateArticleView";
+import CreateNewsEntryView from "../CreateNewsEntryView/CreateNewsEntryView";
 
 import React, {Component} from 'react';
 import {TabView, TabPanel} from 'primereact/tabview';
-import {compose} from "redux";
-import {connect} from "react-redux";
-import {withRouter} from "react-router-dom";
 
-class AdminCreateTabView extends Component {
+export default class CreateTabView extends Component {
 
     constructor(props) {
         super(props);
@@ -34,10 +30,10 @@ class AdminCreateTabView extends Component {
                             Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.</p>
                     </TabPanel>
                     <TabPanel header="Article">
-                        <AdminCreateArticleView/>
+                        <CreateArticleView/>
                     </TabPanel>
                     <TabPanel header="News Entry">
-                        <AdminCreateNewsEntryView/>
+                        <CreateNewsEntryView/>
                     </TabPanel>
                     <TabPanel header="News Links">
                         <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati
@@ -49,17 +45,3 @@ class AdminCreateTabView extends Component {
         );
     }
 }
-
-const mapStateToProps = state => ({
-    ...state.currentUser,
-    ...state.currentDate
-})
-
-const mapDispatchToProps = dispatch => ({
-    adminCreateNewsEntry: value => dispatch(adminCreateNewsEntry(value))
-})
-
-export default compose(
-    withRouter,
-    connect(mapStateToProps, mapDispatchToProps)
-)(AdminCreateTabView);

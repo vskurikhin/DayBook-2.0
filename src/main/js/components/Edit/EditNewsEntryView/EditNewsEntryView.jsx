@@ -1,18 +1,20 @@
 /*
- * This file was last modified at 2021.02.26 10:44 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.27 00:06 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
- * AdminEditArticleView.jsx
+ * EditNewsEntryView.jsx
  * $Id$
  */
 
-import {adminUpdateArticle} from '../../redux/actions';
-import {recordService} from '../../service/RecordService';
+import {API_V1_RESOURCE_NEWS_GROUPS} from "../../../config/api";
+import {adminUpdateNewsEntry} from '../../../redux/actions';
+import {recordService} from '../../../service/RecordService';
 
 import React, {Component} from 'react';
 import axios from 'axios';
+import {ApiService} from "../../../service/ApiService";
 import {Button} from "primereact/button";
-import {InputMask} from "primereact/inputmask";
+import {Dropdown} from "primereact/dropdown";
 import {InputTextarea} from "primereact/inputtextarea";
 import {InputText} from "primereact/inputtext";
 import {Redirect} from "react-router";
@@ -20,16 +22,14 @@ import {compose} from "redux";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 
-class AdminEditArticleView extends Component {
+class EditNewsEntryView extends Component {
 
     state = {
         data: {
             id: null,
-            newsGroupId: "00000000-0000-0000-0000-000000000001",
+            newsGroupId: null,
             title: "",
-            include: "",
-            anchor: "",
-            summary: "",
+            content: "",
             userName: null,
             createTime: "",
             updateTime: "",
@@ -37,9 +37,12 @@ class AdminEditArticleView extends Component {
             visible: true,
             flags: null,
         },
-        redirectToReferrer: false
+        redirectToReferrer: false,
+        newsGroupNames: [],
+        selectedNewsGroup: ""
     };
     cancelTokenSource = axios.CancelToken.source();
+    newsGroupService = new ApiService(API_V1_RESOURCE_NEWS_GROUPS + '/all', this.cancelTokenSource);
 
     constructor(props) {
         super(props);
@@ -54,25 +57,46 @@ class AdminEditArticleView extends Component {
         });
     }
 
+    onNewsGroupChange = (e) => {
+        this.setState({selectedNewsGroup: e.value});
+        this.setState({data: {
+                ...this.state.data,
+                newsGroupId: e.value.id
+            }
+        });
+    }
+
+    handleSubscriptionChange = value => {
+        this.setState({data: value.data});
+        this.mayBeSetSelectedNewsGroup();
+    }
+
+    handleNewsGroupChange = value => {
+        this.setState({newsGroupNames: value.data});
+    }
+
+    mayBeSetSelectedNewsGroup = () => {
+        const mayBeItem = this.state.newsGroupNames.filter(x => x.id === this.state.data.newsGroupId);
+        this.setState({selectedNewsGroup: mayBeItem.length > 0 ? mayBeItem[0] : null})
+    }
+
+    handleSubmit = event => {
+        event.preventDefault();
+        this.props.adminUpdateNewsEntry(this.state.data)
+        this.setState({redirectToReferrer: true})
+    }
+
     componentDidMount() {
-        console.log('AdminEditView.componentDidMount');
-        console.log(this.props);
-        recordService.getArticle(this.props.match.params.id, this.handleSubscriptionChange, this.cancelTokenSource);
+        this.newsGroupService.getAll(null, this.handleNewsGroupChange).finally(
+            () => recordService.getNewsEntry(
+                this.props.match.params.id,
+                this.handleSubscriptionChange,
+                this.cancelTokenSource)
+        );
     }
 
     componentWillUnmount() {
         this.cancelTokenSource.cancel();
-    }
-
-    handleSubscriptionChange = dataSource => {
-        this.setState(dataSource);
-    }
-
-    handleSubmit = event => {
-        event.preventDefault()
-        console.log(this.state);
-        this.props.adminUpdateArticle(this.state.data)
-        this.setState({redirectToReferrer: true})
     }
 
     render() {
@@ -93,18 +117,17 @@ class AdminEditArticleView extends Component {
                                     <div className="my-divTableCellLeft">&nbsp;</div>
                                     <div className="my-divTableCell">
                                         <label className="my-label"><b>News group Id:</b></label><br/>
-                                        <InputMask
-                                            className="my-p-inputtext-uuid"
-                                            id="inputmask"
-                                            mask="********-****-****-****-************"
-                                            name='newsGroupId'
-                                            onChange={this.handleChange}
-                                            slotChar="00000000-0000-0000-0000-000000000001"
-                                            value={this.state.data.newsGroupId}
+                                        <Dropdown
+                                            onChange={this.onNewsGroupChange}
+                                            optionLabel="groupName"
+                                            options={this.state.newsGroupNames}
+                                            placeholder="Select a News group"
+                                            value={this.state.selectedNewsGroup}
                                         />
                                     </div>
                                     <div className="my-divTableCellRight">&nbsp;</div>
                                 </div>
+
                                 <div className="my-divTableRow">
                                     <div className="my-divTableCellLeft">&nbsp;</div>
                                     <div className="my-divTableCell">
@@ -126,56 +149,20 @@ class AdminEditArticleView extends Component {
                                 <div className="my-divTableRow">
                                     <div className="my-divTableCellLeft">&nbsp;</div>
                                     <div className="my-divTableCell">
-                                        <label className="my-label"><b>Include:</b></label><br/>
-                                        <span className="p-float-label">
-                                            <InputText
-                                                className="my-p-inputtext"
-                                                id="include"
-                                                name='include'
-                                                onChange={this.handleChange}
-                                                type="text"
-                                                value={this.state.data.include}
-                                            />
-                                        </span>
-                                    </div>
-                                    <div className="my-divTableCellRight">&nbsp;</div>
-                                </div>
-
-                                <div className="my-divTableRow">
-                                    <div className="my-divTableCellLeft">&nbsp;</div>
-                                    <div className="my-divTableCell">
-                                        <label className="my-label"><b>Anchor:</b></label><br/>
-                                        <span className="p-float-label">
-                                            <InputText
-                                                className="my-p-inputtext"
-                                                id="anchor"
-                                                name='anchor'
-                                                onChange={this.handleChange}
-                                                type="text"
-                                                value={this.state.data.anchor}
-                                            />
-                                        </span>
-                                    </div>
-                                    <div className="my-divTableCellRight">&nbsp;</div>
-                                </div>
-
-
-                                <div className="my-divTableRow">
-                                    <div className="my-divTableCellLeft">&nbsp;</div>
-                                    <div className="my-divTableCell">
-                                        <label className="my-label"><b>Summary:</b></label><br/>
+                                        <label className="my-label"><b>Content:</b></label><br/>
                                         <InputTextarea
                                             className="my-p-inputtext"
                                             autoResize
                                             cols={30}
-                                            name='summary'
+                                            name='content'
                                             onChange={this.handleChange}
                                             rows={5}
-                                            value={this.state.data.summary}
+                                            value={this.state.data.content}
                                         />
                                     </div>
                                     <div className="my-divTableCellRight">&nbsp;</div>
                                 </div>
+
                                 <div className="my-divTableRow">
                                     <div className="my-divTableCellLeft">&nbsp;</div>
                                     <div className="my-divTableCell">
@@ -198,15 +185,15 @@ class AdminEditArticleView extends Component {
 }
 
 const mapStateToProps = state => ({
-    ...state.currentUser,
-    ...state.currentDate
+    user: state.currentUser,
+    date: state.currentDate
 })
 
 const mapDispatchToProps = dispatch => ({
-    adminUpdateArticle: value => dispatch(adminUpdateArticle(value))
+    adminUpdateNewsEntry: value => dispatch(adminUpdateNewsEntry(value))
 })
 
 export default compose(
     withRouter,
     connect(mapStateToProps, mapDispatchToProps)
-)(AdminEditArticleView);
+)(EditNewsEntryView);

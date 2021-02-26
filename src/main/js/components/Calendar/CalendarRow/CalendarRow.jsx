@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.22 22:44 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.27 00:06 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * CalendarRow.jsx
@@ -7,11 +7,11 @@
  */
 
 import CalendarDataView from '../CalendarDataView/CalendarDataView'
-import IFrame from '../IFrame/IFrame'
+import IFrame from '../../IFrame/IFrame'
 import SimpleReactCalendar from 'simple-react-calendar'
-import {formatDate, logDate} from '../../lib/formatDate'
-import {loadCssListIframe1} from '../../lib/CssListIframe1'
-import {setCalendarDate} from '../../redux/actions'
+import {formatDate, logDate} from '../../../lib/formatDate'
+import {loadCssListIframe1} from '../../../lib/CssListIframe1'
+import {setCalendarDate} from '../../../redux/actions'
 
 import React, {Component} from 'react'
 import {compose} from "redux";
@@ -31,16 +31,11 @@ export class CalendarRow extends Component {
         loadCssListIframe1();
     }
 
-    getCurrentUser() {
-        return this.props.currentUser['currentUser'];
-    }
-
     getCurrentDate() {
-        return this.props.currentDate['currentDate'];
+        return this.props.date['currentDate'];
     }
 
     calendarRowSetState(date) {
-        this.state = {calendarDate: date};
         this.setState({calendarDate: date})
         this.props.handleCalendarDate(date)
     }
@@ -91,8 +86,8 @@ export class CalendarRow extends Component {
 }
 
 const mapStateToProps = state => ({
-    currentUser: state.currentUser,
-    currentDate: state.currentDate
+    user: state.currentUser,
+    date: state.currentDate
 })
 
 const mapDispatchToProps = dispatch => ({
