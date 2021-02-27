@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.27 00:06 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.27 11:03 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NavigationBar.jsx
@@ -29,8 +29,8 @@ class NavigationBar extends Component {
 
     handleClick = event => {
         event.preventDefault()
-        // Удаление token из localStorage
-        localStorage.removeItem("token")
+        // Удаление token из sessionStorage
+        window.sessionStorage.removeItem("token")
         // удаление из Redux хранилица
         this.props.logoutUser()
     }
