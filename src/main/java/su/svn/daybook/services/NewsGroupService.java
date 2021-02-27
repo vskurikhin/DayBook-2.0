@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.27 00:06 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.27 11:33 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NewsGroupService.java
@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import su.svn.daybook.domain.dao.db.db.NewsGroupDao;
-import su.svn.daybook.domain.dao.db.db.RecordDao;
 import su.svn.daybook.domain.model.NewsGroupDto;
 import su.svn.daybook.domain.model.db.db.NewsGroup;
 import su.svn.daybook.exceptions.NameRequiredException;
@@ -55,8 +54,7 @@ public class NewsGroupService extends AbstractService<NewsGroup> {
 
         entry.setId(UUID.randomUUID());
 
-        return entryDao.insert(entry)
-                .map(e -> entry)
+        return super.insert(entryDao::insert, entry)
                 .switchIfEmpty(Mono.error(NameRequiredException.notFoundException(entry)));
     }
 
@@ -116,16 +114,6 @@ public class NewsGroupService extends AbstractService<NewsGroup> {
         setUserName(SecurityContextHolder.getContext(), entry);
 
         return entryDao.save(entry);
-    }
-
-    @Override
-    protected RecordDao getRecordDao() {
-        return null;
-    }
-
-    @Override
-    protected Mono<Integer> insertEntry(NewsGroup entry) {
-        return entryDao.insert(entry);
     }
 
     private NewsGroupDto buildDto(NewsGroup entry) {

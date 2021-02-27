@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.25 19:38 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.27 11:33 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NewsEntryService.java
@@ -25,7 +25,7 @@ import java.util.UUID;
 
 @Slf4j
 @Service
-public class NewsEntryService extends AbstractService<NewsEntry> {
+public class NewsEntryService extends AbstractRecordService<NewsEntry> {
 
     private final NewsEntryDao entryDao;
 
