@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.22 14:28 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.27 15:53 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RecordDaoImpl.java
@@ -66,30 +66,11 @@ public class RecordDaoImpl implements RecordCustomizedDao {
                 .bind("type", entry.getType())
                 .bind("userName", entry.getUserName());
 
-        if (entry.getEnabled() != null)
-            execSpec = execSpec.bind("enabled", entry.getEnabled());
-        else
-            execSpec = execSpec.bind("enabled", true);
-
-        if (entry.getVisible() != null)
-            execSpec = execSpec.bind("visible", entry.getVisible());
-        else
-            execSpec = execSpec.bind("visible", true);
-
-        if (entry.getCreateTime() != null)
-            execSpec = execSpec.bind("createTime", entry.getCreateTime());
-        else
-            execSpec = execSpec.bind("createTime", LocalDateTime.now());
-
-        if (entry.getUpdateTime() != null)
-            execSpec = execSpec.bind("updateTime", entry.getUpdateTime());
-        else
-            execSpec = execSpec.bind("updateTime", LocalDateTime.now());
-
-        if (entry.getFlags() != null)
-            execSpec = execSpec.bind("flags", entry.getFlags());
-        else
-            execSpec = execSpec.bindNull("flags", Integer.class);
+        execSpec = GenericExecuteSpec.setBoolean(execSpec, entry::getVisible, true,"enabled");
+        execSpec = GenericExecuteSpec.setBoolean(execSpec, entry::getEnabled, true,"visible");
+        execSpec = GenericExecuteSpec.setLocalDateTimeNow(execSpec, entry::getCreateTime, "createTime");
+        execSpec = GenericExecuteSpec.setLocalDateTimeNow(execSpec, entry::getUpdateTime, "updateTime");
+        execSpec = GenericExecuteSpec.setInteger(execSpec, entry::getFlags, "flags");
 
         return execSpec.fetch().rowsUpdated();
     }

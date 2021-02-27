@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.25 16:07 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.27 15:53 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NewsEntryDaoImpl.java
@@ -65,8 +65,8 @@ public class NewsEntryDaoImpl implements NewsEntryCustomizedDao {
                 .bind("userName", entry.getUserName())
                 .bind("title", entry.getTitle());
 
-        execSpec = GenericExecuteSpec.setBoolean(execSpec, entry::getEnabled, true,"visible");
         execSpec = GenericExecuteSpec.setBoolean(execSpec, entry::getVisible, true,"enabled");
+        execSpec = GenericExecuteSpec.setBoolean(execSpec, entry::getEnabled, true,"visible");
         execSpec = GenericExecuteSpec.setUuid(execSpec, entry::getNewsGroupId, "newsGroupId");
         execSpec = GenericExecuteSpec.setString(execSpec, entry::getContent, "content");
         execSpec = GenericExecuteSpec.setLocalDateTimeNow(execSpec, entry::getCreateTime, "createTime");
@@ -117,5 +117,4 @@ public class NewsEntryDaoImpl implements NewsEntryCustomizedDao {
     private Statement insertStatement(Connection connection, NewsEntry newsEntry) {
         return statementBinding(connection.createStatement(INSERT), newsEntry);
     }
-
 }

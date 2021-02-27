@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.27 11:33 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.27 15:53 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * ArticleService.java
@@ -39,7 +39,7 @@ public class ArticleService extends AbstractRecordService<Article> {
     @Transactional
     public Mono<Article> create(ArticleDto dto) {
         log.trace("create({})", dto);
-        Article newsEntry = Article.builder()
+        Article entry = Article.builder()
                 .newsGroupId(UUID.fromString(dto.getNewsGroupId()))
                 .title(dto.getTitle())
                 .anchor(dto.getAnchor())
@@ -50,7 +50,7 @@ public class ArticleService extends AbstractRecordService<Article> {
                 .enabled(true)
                 .visible(true)
                 .build();
-        setUserName(SecurityContextHolder.getContext(), newsEntry);
+        setUserName(SecurityContextHolder.getContext(), entry);
 
         Record record = Record.builder()
                 .position(Integer.MAX_VALUE / 2)
@@ -63,9 +63,15 @@ public class ArticleService extends AbstractRecordService<Article> {
         setUserName(SecurityContextHolder.getContext(), record);
 
         record.setId(UUID.randomUUID());
-        newsEntry.setId(record.getId());
+        entry.setId(record.getId());
 
-        return insert(record, newsEntry);
+        return this.create(record, entry);
+    }
+
+    @Transactional
+    public Mono<Article> create(Record record, Article entry) {
+        log.trace("create({}, {})", record, entry);
+        return super.insert(record, entry);
     }
 
     @Transactional(readOnly = true)
@@ -80,7 +86,7 @@ public class ArticleService extends AbstractRecordService<Article> {
     public Mono<Article> update(ArticleDto dto) {
         log.trace("update({})", dto);
 
-        Article newsEntry = Article.builder()
+        Article entry = Article.builder()
                 .id(UUID.fromString(dto.getId()))
                 .newsGroupId(UUID.fromString(dto.getNewsGroupId()))
                 .title(dto.getTitle())
@@ -92,7 +98,7 @@ public class ArticleService extends AbstractRecordService<Article> {
                 .enabled(true)
                 .visible(true)
                 .build();
-        setUserName(SecurityContextHolder.getContext(), newsEntry);
+        setUserName(SecurityContextHolder.getContext(), entry);
 
         Record record = Record.builder()
                 .id(UUID.fromString(dto.getId()))
@@ -105,7 +111,13 @@ public class ArticleService extends AbstractRecordService<Article> {
                 .build();
         setUserName(SecurityContextHolder.getContext(), record);
 
-        return recordDao.save(record).flatMap(r -> entryDao.save(newsEntry));
+        return this.update(record, entry);
+    }
+
+    @Transactional
+    public Mono<Article> update(Record record, Article entry) {
+        log.trace("update({}, {})", record, entry);
+        return recordDao.save(record).flatMap(r -> entryDao.save(entry));
     }
 
     @Override

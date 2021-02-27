@@ -29,7 +29,7 @@ application:
 
 logging:
   level:
-    ROOT: INFO
+    ROOT: DEBUG
     io:
       r2dbc:
         h2: DEBUG
@@ -37,13 +37,13 @@ logging:
       springframework:
         core:
           codec:
-            CharSequenceEncoder: INFO
+            CharSequenceEncoder: DEBUG
         web:
           server:
             session:
-              DefaultWebSessionManager: INFO
+              DefaultWebSessionManager: DEBUG
             adapter:
-              HttpWebHandlerAdapter: INFO
+              HttpWebHandlerAdapter: DEBUG
       thymeleaf:
         TemplateEngine: INFO
     su:

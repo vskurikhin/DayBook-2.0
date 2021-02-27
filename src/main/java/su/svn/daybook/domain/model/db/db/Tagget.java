@@ -2,12 +2,14 @@
  * This file was last modified at 2021.02.27 15:53 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
- * TagLabel.java
+ * Tagget.java
  * $Id$
  */
 
-package su.svn.daybook.domain.model.db.dictionary;
+package su.svn.daybook.domain.model.db.db;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,78 +18,90 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
-import su.svn.daybook.domain.model.DBStringEntry;
-import su.svn.daybook.domain.model.DBUserOwnedEntry;
+import su.svn.daybook.domain.model.DBUuidEntry;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(builderClassName = "Builder")
-@Table("dictionary.tag_label")
-public class TagLabel implements Serializable, DBStringEntry, DBUserOwnedEntry {
+@Table("db.tagget")
+public class Tagget implements Serializable, DBUuidEntry {
 
-    private static final long serialVersionUID = 7430969393917118489L;
+    private static final long serialVersionUID = -501840369791942962L;
 
     @Id
     @Getter
     @Setter
-    @Size(max = 16)
     @Column("id")
-    private String id;
+    @Schema(description = "Tagget id", example = "00000000-0000-0000-FFFF-000000101001")
+    private UUID id;
 
     @Getter
     @Setter
     @NotNull
-    @Size(max = 128)
-    @Column("label")
-    private String label;
+    @Column("record_id")
+    @Schema(description = "record id", example = "00000000-0000-0000-FFFF-000000101001")
+    private UUID recordId;
+
+    @Getter
+    @Setter
+    @NotNull
+    @Column("tag_label_id")
+    private Long tagLabelId;
 
     @Getter
     @Setter
     @NotNull
     @Size(max = 64)
-    @Column("user_name")
+    @Schema(description = "user name", example = "login")
+    @Column("record_user_name")
     private String userName;
 
     @Getter
     @NotNull
-    @Column("create_time")
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
+    @Schema(description = "create time", example = "1970-01-01T00:00:00")
+    @Column("record_create_time")
     private LocalDateTime createTime;
 
     @Getter
     @Setter
-    @Column("update_time")
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
+    @Schema(description = "update time", example = "1970-01-01T00:00:00")
+    @Column("record_update_time")
     private LocalDateTime updateTime;
 
     @Getter
     @Setter
-    @Column("enabled")
+    @Column("record_enabled")
     private Boolean enabled;
 
     @Getter
     @Setter
-    @Column("visible")
+    @Column("record_visible")
     private Boolean visible;
 
     @Getter
     @Setter
-    @Column("flags")
+    @Column("record_flags")
     private Integer flags;
 
     @Override
-    public Class<? extends DBStringEntry> getEClass() {
-        return TagLabel.class;
+    public Class<? extends DBUuidEntry> getEClass() {
+        return Tagget.class;
     }
 
     @Override
     public String toString() {
-        return "TagLabel{" +
-                "id='" + id + '\'' +
-                ", label='" + label + '\'' +
+        return "Tagget{" +
+                "id=" + id +
+                ", recordId=" + recordId +
+                ", tagLabelId=" + tagLabelId +
                 ", userName='" + userName + '\'' +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
@@ -99,15 +113,19 @@ public class TagLabel implements Serializable, DBStringEntry, DBUserOwnedEntry {
 
     public boolean equals(final Object o) {
         if (o == this) return true;
-        if (!(o instanceof TagLabel)) return false;
-        final TagLabel other = (TagLabel) o;
+        if ( ! (o instanceof Tagget)) return false;
+        final Tagget other = (Tagget) o;
         if (!other.canEqual((Object) this)) return false;
         final Object this$id = this.id;
         final Object other$id = other.id;
         if (this$id == null ? other$id != null : !this$id.equals(other$id)) return false;
-        final Object this$label = this.label;
-        final Object other$label = other.label;
-        if (this$label == null ? other$label != null : !this$label.equals(other$label)) return false;
+        final Object this$recordId = this.recordId;
+        final Object other$recordId = other.recordId;
+        if (this$recordId == null ? other$recordId != null : !this$recordId.equals(other$recordId)) return false;
+        final Object this$tagLabelId = this.tagLabelId;
+        final Object other$tagLabelId = other.tagLabelId;
+        if (this$tagLabelId == null ? other$tagLabelId != null : !this$tagLabelId.equals(other$tagLabelId))
+            return false;
         final Object this$userName = this.userName;
         final Object other$userName = other.userName;
         if (this$userName == null ? other$userName != null : !this$userName.equals(other$userName)) return false;
@@ -132,7 +150,7 @@ public class TagLabel implements Serializable, DBStringEntry, DBUserOwnedEntry {
     }
 
     protected boolean canEqual(final Object other) {
-        return other instanceof TagLabel;
+        return other instanceof Tagget;
     }
 
     public int hashCode() {
@@ -140,8 +158,10 @@ public class TagLabel implements Serializable, DBStringEntry, DBUserOwnedEntry {
         int result = 1;
         final Object $id = this.id;
         result = result * PRIME + ($id == null ? 43 : $id.hashCode());
-        final Object $label = this.label;
-        result = result * PRIME + ($label == null ? 43 : $label.hashCode());
+        final Object $recordId = this.recordId;
+        result = result * PRIME + ($recordId == null ? 43 : $recordId.hashCode());
+        final Object $tagLabelId = this.tagLabelId;
+        result = result * PRIME + ($tagLabelId == null ? 43 : $tagLabelId.hashCode());
         final Object $userName = this.userName;
         result = result * PRIME + ($userName == null ? 43 : $userName.hashCode());
         final Object $createTime = this.createTime;

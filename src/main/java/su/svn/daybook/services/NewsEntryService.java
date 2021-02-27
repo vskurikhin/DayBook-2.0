@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.27 11:33 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.27 15:53 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NewsEntryService.java
@@ -64,7 +64,13 @@ public class NewsEntryService extends AbstractRecordService<NewsEntry> {
         record.setId(UUID.randomUUID());
         newsEntry.setId(record.getId());
 
-        return insert(record, newsEntry);
+        return super.insert(record, newsEntry);
+    }
+
+    @Transactional
+    public  Mono<NewsEntry> create(Record record, NewsEntry entry) {
+        log.trace("create({}, {})", record, entry);
+        return super.insert(record, entry);
     }
 
     @Transactional(readOnly = true)
@@ -79,7 +85,7 @@ public class NewsEntryService extends AbstractRecordService<NewsEntry> {
     public  Mono<NewsEntry> update(NewsEntryDto dto) {
         log.trace("update({})", dto);
 
-        NewsEntry newsEntry = NewsEntry.builder()
+        NewsEntry entry = NewsEntry.builder()
                 .id(UUID.fromString(dto.getId()))
                 .newsGroupId(UUID.fromString(dto.getNewsGroupId()))
                 .title(dto.getTitle())
@@ -89,7 +95,7 @@ public class NewsEntryService extends AbstractRecordService<NewsEntry> {
                 .enabled(true)
                 .visible(true)
                 .build();
-        setUserName(SecurityContextHolder.getContext(), newsEntry);
+        setUserName(SecurityContextHolder.getContext(), entry);
 
         Record record = Record.builder()
                 .id(UUID.fromString(dto.getId()))
@@ -102,7 +108,13 @@ public class NewsEntryService extends AbstractRecordService<NewsEntry> {
                 .build();
         setUserName(SecurityContextHolder.getContext(), record);
 
-        return recordDao.save(record).flatMap(r -> entryDao.save(newsEntry));
+        return this.update(record, entry);
+    }
+
+    @Transactional
+    public  Mono<NewsEntry> update(Record record, NewsEntry entry) {
+        log.trace("update({}, {})", record, entry);
+        return recordDao.save(record).flatMap(r -> entryDao.save(entry));
     }
 
     @Override
