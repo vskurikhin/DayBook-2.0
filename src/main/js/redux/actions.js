@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.27 00:06 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.27 11:03 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * actions.js
@@ -7,8 +7,11 @@
  */
 
 import {API_V1_RESOURCE_RECORD} from '../config/api';
+import {RT_COOKIE_OPTIONS, RT_TTL} from '../config/consts';
+import Cookies from 'js-cookie';
 
 export const userPostFetch = user => {
+
     return dispatch => {
         return fetch("/api/v1/users", {
             method: "POST",
@@ -23,7 +26,16 @@ export const userPostFetch = user => {
                 if (data.message) {
                     //Тут прописываем логику
                 } else {
-                    localStorage.setItem("token", data.jwt)
+                    if (data['rt'] !== undefined) {
+                        let date = new Date(Date.now() + RT_TTL);
+                        date = date.toUTCString();
+                        const options = {
+                            ...RT_COOKIE_OPTIONS,
+                            expires: date
+                        };
+                        Cookies.set('rt', data.rt, options);
+                    }
+                    window.sessionStorage.setItem("token", data.jwt)
                     dispatch(loginUser(data.user))
                 }
             })
@@ -46,7 +58,16 @@ export const userLoginFetch = user => {
                 if (data.message) {
                     //тут ваша логика
                 } else {
-                    localStorage.setItem("token", data.token)
+                    if (data.rt) {
+                        let date = new Date(Date.now() + RT_TTL);
+                        date = date.toUTCString();
+                        const options = {
+                            ...RT_COOKIE_OPTIONS,
+                            expires: date
+                        };
+                        Cookies.set('rt', data.rt, options);
+                    }
+                    window.sessionStorage.setItem("token", data.token)
                     dispatch(loginUser(data.user))
                 }
             })
@@ -79,7 +100,7 @@ export const adminUpdateNewsLinks = value => {
 
 export const resourceRecord = (method, object, value) => {
     return dispatch => {
-        const token = localStorage.token;
+        const token = window.sessionStorage.token;
         if (token) {
             return fetch(API_V1_RESOURCE_RECORD + '/' + object, {
                 method: method,
@@ -105,7 +126,7 @@ export const resourceRecord = (method, object, value) => {
 
 export const getProfileFetch = () => {
     return dispatch => {
-        const token = localStorage.token;
+        const token = window.sessionStorage.token;
         if (token) {
             return fetch("/api/v1/resource/profile", {
                 method: "GET",
@@ -119,7 +140,7 @@ export const getProfileFetch = () => {
                 .then(data => {
                     if (data.message) {
                         // Будет ошибка если token не дествительный
-                        localStorage.removeItem("token")
+                        window.sessionStorage.removeItem("token")
                     } else {
                         dispatch(loginUser(data.user))
                     }

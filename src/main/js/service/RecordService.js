@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.25 22:27 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.27 11:03 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RecordService.js
@@ -28,7 +28,7 @@ class RecordService {
 
     getRecord(id, object, thenFunction, cancelTokenSource) {
         const config = {
-            ...getConfigHeadersAuthorization(localStorage.token),
+            ...getConfigHeadersAuthorization(window.sessionStorage.token),
             cancelToken: cancelTokenSource.token
         };
         axios.get(API_V1_RESOURCE_RECORD_FETCH + object + '/' + id, config)

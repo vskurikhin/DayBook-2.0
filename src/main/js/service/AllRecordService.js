@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.26 10:44 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.27 11:03 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * AllRecordService.js
@@ -19,7 +19,7 @@ export class AllRecordService extends ApiService {
     }
 
     getRecordsLazy(event, numberOfElements) {
-        const config = getConfigHeadersAuthorization(localStorage.token);
+        const config = getConfigHeadersAuthorization(window.sessionStorage.token);
         const first = event !== null ? event.first : 0;
         const page = event !== null ? event.page : 0;
         return axios
