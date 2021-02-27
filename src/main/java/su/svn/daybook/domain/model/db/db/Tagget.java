@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.27 15:53 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.27 22:28 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * Tagget.java
@@ -52,7 +52,7 @@ public class Tagget implements Serializable, DBUuidEntry {
     @Setter
     @NotNull
     @Column("tag_label_id")
-    private Long tagLabelId;
+    private String tagLabelId;
 
     @Getter
     @Setter

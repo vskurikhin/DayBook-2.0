@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.27 15:53 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.27 22:28 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * TagLabelService.java
@@ -22,7 +22,8 @@ import su.svn.daybook.domain.model.db.dictionary.TagLabel;
 import su.svn.daybook.exceptions.NameRequiredException;
 
 import java.time.LocalDateTime;
-import java.util.function.Function;
+import java.util.Collection;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -53,31 +54,49 @@ public class TagLabelService {
     @Transactional
     public Mono<TagLabel> create(TagLabel entry) {
         log.trace("create({})", entry);
+        return doCreate(entry).flatMap(i -> doOnInsert(i, entry))
+                .switchIfEmpty(Mono.error(NameRequiredException.notFoundException(entry)));
+    }
 
+    @Transactional
+    public Flux<TagLabel> create(Collection<TagLabel> entries) {
+        log.trace("create({})", entries);
+        return Flux.fromStream(entries.stream()).flatMap(this::create);
+    }
+
+    private Mono<Integer> doCreate(TagLabel entry) {
+        log.trace("create({})", entry);
         return entryDao.dictionaryNextValTagLabelSeq()
                 .flatMap(id -> setIdInsert(id, entry))
                 .doOnSuccess(i -> log.debug("insert {} count of entry: {}", i, entry))
-                .doOnError(e -> log.error("insert ", e))
-                .flatMap(i -> doOnInsert(i, entry))
-                .switchIfEmpty(Mono.error(NameRequiredException.notFoundException(entry)));
+                .doOnError(e -> log.error("insert ", e));
     }
 
     @Transactional(readOnly = true)
     public Flux<TagLabelDto> readAll() {
-        return entryDao.findAll().map(new Function<TagLabel, TagLabelDto>() {
-            @Override
-            public TagLabelDto apply(TagLabel tagLabel) {
-                return TagLabelDto.builder()
-                        .id(tagLabel.getId())
-                        .label(tagLabel.getLabel())
-                        .userName(tagLabel.getUserName())
-                        .createTime(tagLabel.getCreateTime())
-                        .updateTime(tagLabel.getUpdateTime())
-                        .enabled(tagLabel.getEnabled())
-                        .visible(tagLabel.getVisible())
-                        .build();
-            }
-        });
+        return entryDao.findAll().map(this::buildTagLabelDto);
+    }
+
+    @Transactional(readOnly = true)
+    public Flux<TagLabelDto> readLabelIn(Set<String> labels) {
+        return entryDao.fluxAllLabelIn(labels).map(this::buildTagLabelDto);
+    }
+
+    @Transactional(readOnly = true)
+    public Flux<TagLabel> entriesLabelIn(Set<String> labels) {
+        return entryDao.fluxAllLabelIn(labels);
+    }
+
+    public TagLabelDto buildTagLabelDto(TagLabel tagLabel) {
+        return TagLabelDto.builder()
+                .id(tagLabel.getId())
+                .label(tagLabel.getLabel())
+                .userName(tagLabel.getUserName())
+                .createTime(tagLabel.getCreateTime())
+                .updateTime(tagLabel.getUpdateTime())
+                .enabled(tagLabel.getEnabled())
+                .visible(tagLabel.getVisible())
+                .build();
     }
 
     @Transactional
@@ -115,8 +134,10 @@ public class TagLabelService {
     }
 
     protected void setUserName(SecurityContext context, DBUserOwnedEntry entry) {
+
         String userName = SecurityContextUtil.getName(context);
         log.trace("insert => userName: {}", userName);
+
         if (userName != null) {
             entry.setUserName(userName);
         }

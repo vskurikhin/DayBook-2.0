@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.27 15:53 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.27 22:28 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * WebSecurityConfiguration.java
@@ -66,6 +66,7 @@ public class WebSecurityConfiguration {
                 .pathMatchers(HttpMethod.GET, "/api/v1/resource/record/fetch/**").permitAll()
                 .pathMatchers(HttpMethod.GET, "/api/v1/resource/records").permitAll()
                 .pathMatchers(HttpMethod.GET, "/api/v1/resource/tag-label/all").permitAll()
+                .pathMatchers(HttpMethod.GET, "/api/v1/resource/tag-label/in").permitAll()
                 .pathMatchers(HttpMethod.GET, "/css/**").permitAll()
                 .pathMatchers(HttpMethod.GET, "/favicon.ico").permitAll()
                 .pathMatchers(HttpMethod.GET, "/generated/**").permitAll()

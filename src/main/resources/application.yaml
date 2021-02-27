@@ -29,21 +29,21 @@ application:
 
 logging:
   level:
-    ROOT: DEBUG
+    ROOT: INFO
     io:
       r2dbc:
-        h2: DEBUG
+        h2: INFO
     org:
       springframework:
         core:
           codec:
-            CharSequenceEncoder: DEBUG
+            CharSequenceEncoder: INFO
         web:
           server:
             session:
-              DefaultWebSessionManager: DEBUG
+              DefaultWebSessionManager: INFO
             adapter:
-              HttpWebHandlerAdapter: DEBUG
+              HttpWebHandlerAdapter: INFO
       thymeleaf:
         TemplateEngine: INFO
     su:

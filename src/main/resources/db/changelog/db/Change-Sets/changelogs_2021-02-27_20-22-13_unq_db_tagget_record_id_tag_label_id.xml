@@ -1,0 +1,22 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd"
+        logicalFilePath="./src/main/resources/db/changelog/db/Change-Sets/changelogs_2021-02-27_20-22-13_unq_db_tagget_record_id_tag_label_id.xml">
+
+  <changeSet id="2021-02-27_20-22-13" author="Victor N. Skurikhin">
+      <sql>
+          <![CDATA[
+            CREATE UNIQUE INDEX IF NOT EXISTS UNQ_db_tagget_record_id_tag_label_id ON db.tagget (record_id, tag_label_id);
+          ]]>
+      </sql>
+      <rollback>
+          <sql>
+            <![CDATA[
+              DROP INDEX IF EXISTS db.UNQ_db_tagget_record_id_tag_label_id;
+            ]]>
+          </sql>
+      </rollback>
+  </changeSet>
+</databaseChangeLog>
