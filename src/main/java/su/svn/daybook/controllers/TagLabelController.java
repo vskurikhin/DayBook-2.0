@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.27 15:53 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.27 22:28 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * TagLabelController.java
@@ -19,15 +19,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import su.svn.daybook.domain.model.DBStringEntry;
-import su.svn.daybook.domain.model.ResponseDto;
-import su.svn.daybook.domain.model.TagLabelDto;
+import su.svn.daybook.domain.model.*;
 import su.svn.daybook.services.TagLabelService;
+import su.svn.daybook.services.TaggetService;
 
 import java.sql.Date;
+import java.util.Set;
 
 @Slf4j
 @RestController
@@ -37,8 +41,28 @@ public class TagLabelController {
 
     private final TagLabelService tagLabelService;
 
-    public TagLabelController(TagLabelService tagLabelService) {
+    private final TaggetService taggetService;
+
+    public TagLabelController(TagLabelService tagLabelService, TaggetService taggetService) {
         this.tagLabelService = tagLabelService;
+        this.taggetService = taggetService;
+    }
+
+    @Operation(
+            operationId = "addTags", summary = "Add tags to record", tags = {"Resource Controller"},
+            responses = {
+                    @ApiResponse(responseCode = "201", description = "successful operation",
+                            content = @Content(schema = @Schema(implementation = ResponseDto.class))),
+                    @ApiResponse(responseCode = "400", description = "Bad Request",
+                            content = @Content(schema = @Schema(implementation = ResponseDto.class))),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content)},
+            security = @SecurityRequirement(name = "bearerAuth"))
+    @PostMapping(value = "/add-tags")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public Mono<ResponseEntity<?>> addTags(@RequestBody TagsForRecordDto dto) {
+        log.debug("addTags({}): authentication={}", dto, SecurityContextHolder.getContext().getAuthentication());
+        return taggetService.addTags(dto)
+                .map(a -> getBody(a, HttpStatus.CREATED, "Added for"));
     }
 
     @Operation(
@@ -58,7 +82,7 @@ public class TagLabelController {
                 .map(a -> getBody(a, HttpStatus.CREATED, "Created"));
     }
 
-    @Operation(summary = "Get all of news groups")
+    @Operation(summary = "Get all of tag label")
     @GetMapping(value = "/tag-label/all")
     @PreAuthorize("permitAll() or hasPermission()")
     public Flux<TagLabelDto> readAll() {
@@ -66,7 +90,15 @@ public class TagLabelController {
         return tagLabelService.readAll();
     }
 
-    private ResponseEntity<?> getBody(DBStringEntry a, HttpStatus ok, String message) {
+    @Operation(summary = "Find tag by labels")
+    @GetMapping(value = "/tag-label/in")
+    @PreAuthorize("permitAll() or hasPermission()")
+    public Flux<TagLabelDto> readLabelIn(String[] labels) {
+        log.debug("readLabelIn()");
+        return tagLabelService.readLabelIn(Set.of(labels));
+    }
+
+    private ResponseEntity<?> getBody(DBEntry<?> a, HttpStatus ok, String message) {
         ResponseDto response = ResponseDto.builder()
                 .message(message + ": " + a.getId())
                 .timestamp(new Date(new java.util.Date().getTime()))
