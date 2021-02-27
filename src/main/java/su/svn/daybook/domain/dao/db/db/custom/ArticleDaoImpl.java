@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.25 16:07 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.27 15:53 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * ArticleDaoImpl.java
@@ -41,8 +41,8 @@ public class ArticleDaoImpl implements ArticleCustomizedDao {
 
         execSpec = GenericExecuteSpec.setLocalDateTimeNow(execSpec, entry::getCreateTime, "createTime");
         execSpec = GenericExecuteSpec.setLocalDateTimeNow(execSpec, entry::getUpdateTime, "updateTime");
-        execSpec = GenericExecuteSpec.setBoolean(execSpec, entry::getEnabled, true,"visible");
         execSpec = GenericExecuteSpec.setBoolean(execSpec, entry::getVisible, true,"enabled");
+        execSpec = GenericExecuteSpec.setBoolean(execSpec, entry::getEnabled, true,"visible");
         execSpec = GenericExecuteSpec.setInteger(execSpec, entry::getFlags, "flags");
 
         return execSpec.fetch().rowsUpdated();

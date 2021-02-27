@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.25 16:07 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.27 15:53 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * ResourceController.java
@@ -130,7 +130,7 @@ public class ResourceController {
     @GetMapping(value = "/record/article/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public Mono<ArticleDto> readArticle(@PathVariable("id") UUID id) {
-        log.debug("getNewsEntry({})", id);
+        log.debug("readArticle({})", id);
         return articleService.read(id);
     }
 

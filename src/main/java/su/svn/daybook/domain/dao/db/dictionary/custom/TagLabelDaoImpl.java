@@ -2,34 +2,35 @@
  * This file was last modified at 2021.02.27 15:53 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
- * NewsGroupDaoImpl.java
+ * TagLabelDaoImpl.java
  * $Id$
  */
 
-package su.svn.daybook.domain.dao.db.db.custom;
+package su.svn.daybook.domain.dao.db.dictionary.custom;
 
 import org.springframework.data.r2dbc.core.DatabaseClient;
 import reactor.core.publisher.Mono;
-import su.svn.daybook.domain.dao.db.db.NewsGroupCustomizedDao;
-import su.svn.daybook.domain.model.db.db.NewsGroup;
+import su.svn.daybook.domain.dao.db.db.custom.GenericExecuteSpec;
+import su.svn.daybook.domain.dao.db.dictionary.TagLabelCustomizedDao;
+import su.svn.daybook.domain.model.db.dictionary.TagLabel;
 
-public class NewsGroupDaoImpl implements NewsGroupCustomizedDao {
+public class TagLabelDaoImpl implements TagLabelCustomizedDao {
 
     private final DatabaseClient client;
 
-    public NewsGroupDaoImpl(DatabaseClient client) {
+    public TagLabelDaoImpl(DatabaseClient client) {
         this.client = client;
     }
 
-    public static final String INSERT_ENTRY = "INSERT INTO db.news_group " +
-            " (id, group_name, user_name,  create_time, update_time, enabled, visible, flags) VALUES " +
-            " (:id, :groupName, :userName, :createTime, :updateTime, :enabled, :visible, :flags)";
+    public static final String INSERT_ENTRY = "INSERT INTO dictionary.tag_label " +
+            " (id, label, user_name,  create_time, update_time, enabled, visible, flags) VALUES " +
+            " (:id, :label, :userName, :createTime, :updateTime, :enabled, :visible, :flags)";
 
     @Override
-    public Mono<Integer> insert(NewsGroup entry) {
+    public Mono<Integer> insert(TagLabel entry) {
         DatabaseClient.GenericExecuteSpec execSpec = client.execute(INSERT_ENTRY)
                 .bind("id", entry.getId())
-                .bind("groupName", entry.getGroupName())
+                .bind("label", entry.getLabel())
                 .bind("userName", entry.getUserName());
 
         execSpec = GenericExecuteSpec.setLocalDateTimeNow(execSpec, entry::getCreateTime, "createTime");

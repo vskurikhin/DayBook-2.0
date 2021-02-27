@@ -2,22 +2,16 @@
  * This file was last modified at 2021.02.27 15:53 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
- * TagLabel.java
+ * TagLabelDto.java
  * $Id$
  */
 
-package su.svn.daybook.domain.model.db.dictionary;
+package su.svn.daybook.domain.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.*;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.Table;
-import su.svn.daybook.domain.model.DBStringEntry;
-import su.svn.daybook.domain.model.DBUserOwnedEntry;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -27,65 +21,57 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(builderClassName = "Builder")
-@Table("dictionary.tag_label")
-public class TagLabel implements Serializable, DBStringEntry, DBUserOwnedEntry {
+public class TagLabelDto implements Serializable  {
 
-    private static final long serialVersionUID = 7430969393917118489L;
+    private static final long serialVersionUID = 3635058631153606999L;
 
     @Id
     @Getter
     @Setter
     @Size(max = 16)
-    @Column("id")
+    @Schema(description = "Tag label id", example = "0fffffffffffffff")
     private String id;
 
     @Getter
     @Setter
     @NotNull
     @Size(max = 128)
-    @Column("label")
+    @Schema(description = "Tag label", example = "label")
     private String label;
 
     @Getter
     @Setter
     @NotNull
     @Size(max = 64)
-    @Column("user_name")
+    @Schema(description = "user name", example = "login")
     private String userName;
 
     @Getter
-    @NotNull
-    @Column("create_time")
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
+    @Schema(description = "create time", example = "1970-01-01T00:00:00")
     private LocalDateTime createTime;
 
     @Getter
     @Setter
-    @Column("update_time")
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
+    @Schema(description = "update time", example = "1970-01-01T00:00:00")
     private LocalDateTime updateTime;
 
     @Getter
     @Setter
-    @Column("enabled")
     private Boolean enabled;
 
     @Getter
     @Setter
-    @Column("visible")
     private Boolean visible;
 
     @Getter
     @Setter
-    @Column("flags")
     private Integer flags;
 
     @Override
-    public Class<? extends DBStringEntry> getEClass() {
-        return TagLabel.class;
-    }
-
-    @Override
     public String toString() {
-        return "TagLabel{" +
+        return "TagLabelDto{" +
                 "id='" + id + '\'' +
                 ", label='" + label + '\'' +
                 ", userName='" + userName + '\'' +
@@ -99,8 +85,8 @@ public class TagLabel implements Serializable, DBStringEntry, DBUserOwnedEntry {
 
     public boolean equals(final Object o) {
         if (o == this) return true;
-        if (!(o instanceof TagLabel)) return false;
-        final TagLabel other = (TagLabel) o;
+        if (!(o instanceof TagLabelDto)) return false;
+        final TagLabelDto other = (TagLabelDto) o;
         if (!other.canEqual((Object) this)) return false;
         final Object this$id = this.id;
         final Object other$id = other.id;
@@ -132,7 +118,7 @@ public class TagLabel implements Serializable, DBStringEntry, DBUserOwnedEntry {
     }
 
     protected boolean canEqual(final Object other) {
-        return other instanceof TagLabel;
+        return other instanceof TagLabelDto;
     }
 
     public int hashCode() {

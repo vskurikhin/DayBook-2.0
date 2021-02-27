@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.27 00:06 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.27 15:53 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NewsGroupController.java
@@ -39,16 +39,16 @@ public class NewsGroupController {
     @GetMapping(value = "/news-group/all")
     @PreAuthorize("permitAll() or hasPermission()")
     public Flux<NewsGroup> readAll() {
-        log.debug("readRecords()");
-        return newsGroupService.getAll();
+        log.debug("readAll()");
+        return newsGroupService.readAll();
     }
 
     @Operation(summary = "Get all of news groups like by prefix")
     @GetMapping(value = "/news-group/like")
     @PreAuthorize("permitAll() or hasPermission()")
     public Flux<NewsGroup> readAllLike(String prefix) {
-        log.debug("readRecords()");
-        return newsGroupService.getAllLike(prefix);
+        log.debug("readAllLike()");
+        return newsGroupService.readAllLike(prefix);
     }
 
     @Operation(summary = "Get page of news group")
@@ -57,7 +57,7 @@ public class NewsGroupController {
     public Mono<Page<NewsGroup>> readPage(
             @RequestParam("page") @Parameter(name = "page", required = true, example = "0") int page,
             @RequestParam("size") @Parameter(name = "size", required = true, example = "999") int size) {
-        log.debug("readRecords()");
-        return newsGroupService.getPage(page, size);
+        log.debug("readPage()");
+        return newsGroupService.readPage(page, size);
     }
 }

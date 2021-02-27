@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.27 00:06 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.27 15:53 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NameRequiredException.java
@@ -11,6 +11,7 @@ package su.svn.daybook.exceptions;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 import org.webjars.NotFoundException;
+import su.svn.daybook.domain.model.DBStringEntry;
 import su.svn.daybook.domain.model.DBUuidEntry;
 
 import javax.annotation.Nonnull;
@@ -32,9 +33,16 @@ public class NameRequiredException extends ResponseStatusException {
         return new NameRequiredException(HttpStatus.NOT_FOUND, message, notFoundException);
     }
 
-
     @Nonnull
     public static Exception notFoundException(DBUuidEntry entry) {
+        String message = "Can't create: " + entry.getEClass().getSimpleName();
+        Exception notFoundException = new IllegalCallerException(message);
+
+        return new NameRequiredException(HttpStatus.NOT_FOUND, message, notFoundException);
+    }
+
+    @Nonnull
+    public static Exception notFoundException(DBStringEntry entry) {
         String message = "Can't create: " + entry.getEClass().getSimpleName();
         Exception notFoundException = new IllegalCallerException(message);
 
