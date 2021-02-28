@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.27 15:53 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.28 23:25 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NewsEntryService.java
@@ -15,9 +15,11 @@ import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 import su.svn.daybook.domain.dao.db.db.NewsEntryDao;
 import su.svn.daybook.domain.dao.db.db.RecordDao;
+import su.svn.daybook.domain.dao.db.db.TaggetRecordViewDao;
 import su.svn.daybook.domain.model.NewsEntryDto;
 import su.svn.daybook.domain.model.db.db.NewsEntry;
 import su.svn.daybook.domain.model.db.db.Record;
+import su.svn.daybook.domain.model.db.db.TaggetRecordView;
 import su.svn.daybook.exceptions.NameRequiredException;
 
 import java.time.LocalDateTime;
@@ -31,9 +33,12 @@ public class NewsEntryService extends AbstractRecordService<NewsEntry> {
 
     private final RecordDao recordDao;
 
-    public NewsEntryService(NewsEntryDao articleDao, RecordDao recordDao) {
+    private final TaggetRecordViewDao taggetRecordViewDao;
+
+    public NewsEntryService(NewsEntryDao articleDao, RecordDao recordDao, TaggetRecordViewDao taggetRecordViewDao) {
         this.entryDao = articleDao;
         this.recordDao = recordDao;
+        this.taggetRecordViewDao = taggetRecordViewDao;
     }
 
     @Transactional
@@ -77,7 +82,7 @@ public class NewsEntryService extends AbstractRecordService<NewsEntry> {
     public  Mono<NewsEntryDto> read(UUID id) {
         log.trace("read({})", id);
         return entryDao.monoById(id)
-                .flatMap(entry -> findRecordConvertToNewsEntry(entry, id))
+                .flatMap(entry -> findRecordConvertToDto(entry, id))
                 .switchIfEmpty(Mono.error(NameRequiredException.notFoundException(id)));
     }
 
@@ -128,17 +133,19 @@ public class NewsEntryService extends AbstractRecordService<NewsEntry> {
     }
 
 
-    private Mono<NewsEntryDto> findRecordConvertToNewsEntry(NewsEntry newsEntry, UUID id) {
-        return recordDao.monoById(id)
-                .map(record -> buildNewsEntryDto(newsEntry, record));
+    private Mono<NewsEntryDto> findRecordConvertToDto(NewsEntry newsEntry, UUID id) {
+        return taggetRecordViewDao.monoById(id)
+                .map(record -> buildDto(newsEntry, record));
     }
 
-    private NewsEntryDto buildNewsEntryDto(NewsEntry dto, Record record) {
+    private NewsEntryDto buildDto(NewsEntry dto, TaggetRecordView record) {
+        log.trace("buildNewsEntryDto({}, {})", dto, record);
         return NewsEntryDto.builder()
                 .id(record.getId().toString())
                 .newsGroupId(dto.getNewsGroupId().toString())
                 .title(dto.getTitle())
                 .content(dto.getContent())
+                .tags(CollectionUtil.getTags(record.getTags()))
                 .createTime(dto.getCreateTime())
                 .updateTime(dto.getUpdateTime())
                 .enabled(dto.getEnabled())
@@ -146,4 +153,5 @@ public class NewsEntryService extends AbstractRecordService<NewsEntry> {
                 .flags(dto.getFlags())
                 .build();
     }
+
 }

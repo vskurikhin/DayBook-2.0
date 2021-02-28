@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.27 22:28 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.28 23:25 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * TaggetService.java
@@ -48,16 +48,18 @@ public class TaggetService extends AbstractService<Tagget> {
     @Transactional
     public Mono<Record> addTags(TagsForRecordDto tags) {
         log.trace("addTags({})", tags);
-        return recordDao.monoById(tags.getRecord().getId())
+        return recordDao.monoById(tags.getId())
                 .flatMap(record -> Mono.from(addTags(record, tags)));
     }
 
     private Publisher<Record> addTags(Record record, TagsForRecordDto tags) {
         log.trace("addTags({}, {})", record, tags);
-        int maxSize = tags.getTags().size();
+        if (null == tags.getTags() || tags.getTags().isEmpty()) {
+            return Flux.just(record);
+        }
         return tagLabelService.readLabelIn(tags.getTags())
-                .buffer(maxSize)
-                .flatMap(listTagLabels -> addTags(record, new HashSet<>(listTagLabels), tags.getTags()));
+                .buffer(tags.getTags().size())
+                .flatMap(labels -> addTags(record, new HashSet<>(labels), tags.getTags()));
     }
 
     private Publisher<Record> addTags(Record record, Set<TagLabelDto> saved, Set<String> tags) {

@@ -191,6 +191,72 @@ img.my-left-top{
  display: inline-block;
  width: 100%;
 }
+
+
+
+
+#pr_id_3 {
+ min-width: 22.4em;
+ width: 100%;
+}
+.p-fluid .p-autocomplete {
+ display: -ms-flexbox;
+ display: flex;
+}
+.p-autocomplete {
+ display: -ms-inline-flexbox;
+ display: inline-flex;
+ position: relative;
+}
+.p-component, .p-component * {
+ -webkit-box-sizing: border-box;
+ box-sizing: border-box;
+}
+.p-component {
+ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+ font-size: 1rem;
+ font-weight: normal;
+}
+.p-fluid .p-inputtext {
+ width: 100%;
+}
+.p-autocomplete .p-autocomplete-multiple-container {
+ padding: 0.25rem 0.5rem;
+}
+.p-inputtext {
+ margin: 0;
+}
+.p-autocomplete-multiple-container {
+ -ms-flex-align: center;
+ -ms-flex-wrap: wrap;
+ align-items: center;
+ cursor: text;
+ display: -ms-flexbox;
+ display: flex;
+ flex-wrap: wrap;
+ list-style-type: none;
+ margin: 0;
+ min-width: 22.4em;
+ overflow: hidden;
+ padding: 0;
+ width: 100%;
+}
+
+
+
+.p-button.my-p-button-sm {
+ font-size: 0.775rem;
+ padding: 0.275375rem 0.775rem;
+}
+
+
+
+.demo-wrapper {
+ box-sizing: content-box;
+ height: 400px;
+ border: 1px solid #a6a6a6;
+}
+
 /* Header/logo Title */
 .my-header{
  position: absolute;

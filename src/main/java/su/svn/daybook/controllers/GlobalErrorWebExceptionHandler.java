@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.25 19:38 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.28 23:25 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * GlobalErrorWebExceptionHandler.java
@@ -43,6 +43,7 @@ public class GlobalErrorWebExceptionHandler extends AbstractErrorWebExceptionHan
     public static final String EXCEPTION = "exception";
     public static final String MESSAGE = "message";
     public static final String ERROR = "error";
+    public static final String TRACE = "trace";
 
     public GlobalErrorWebExceptionHandler(
             ErrorAttributes errorAttributes,
@@ -64,6 +65,7 @@ public class GlobalErrorWebExceptionHandler extends AbstractErrorWebExceptionHan
         Map<String, Object> errorAttributeMap = getErrorAttributes(request, errorAttributeOptions);
         errorPropertiesMap.put(ERROR, errorAttributeMap.get(EXCEPTION));
         errorPropertiesMap.put(MESSAGE, errorAttributeMap.get(MESSAGE));
+        log.error("trace: {}", errorAttributeMap.get(TRACE));
 
         if (ORG_WEBJARS_NOT_FOUND_EXCEPTION.equals(errorAttributeMap.get(EXCEPTION))) {
             return ServerResponse.status(HttpStatus.NOT_FOUND)

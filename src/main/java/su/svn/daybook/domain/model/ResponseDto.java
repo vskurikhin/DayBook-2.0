@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.25 19:38 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.28 23:25 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * ResponseDto.java
@@ -8,11 +8,7 @@
 
 package su.svn.daybook.domain.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.sql.Date;
@@ -46,6 +42,10 @@ import java.sql.Date;
 
     @Getter
     @Setter
+    private Object object;
+
+    @Getter
+    @Setter
     private Date timestamp;
 
     @Override
@@ -56,6 +56,7 @@ import java.sql.Date;
                 ", path='" + path + '\'' +
                 ", requestId='" + requestId + '\'' +
                 ", status='" + status + '\'' +
+                ", object=" + object +
                 ", timestamp=" + timestamp +
                 '}';
     }
@@ -80,6 +81,9 @@ import java.sql.Date;
         final Object this$status = this.status;
         final Object other$status = other.status;
         if (this$status == null ? other$status != null : !this$status.equals(other$status)) return false;
+        final Object this$object = this.object;
+        final Object other$object = other.object;
+        if (this$object == null ? other$object != null : !this$object.equals(other$object)) return false;
         final Object this$timestamp = this.timestamp;
         final Object other$timestamp = other.timestamp;
         if (this$timestamp == null ? other$timestamp != null : !this$timestamp.equals(other$timestamp)) return false;
@@ -103,6 +107,8 @@ import java.sql.Date;
         result = result * PRIME + ($requestId == null ? 43 : $requestId.hashCode());
         final Object $status = this.status;
         result = result * PRIME + ($status == null ? 43 : $status.hashCode());
+        final Object $object = this.object;
+        result = result * PRIME + ($object == null ? 43 : $object.hashCode());
         final Object $timestamp = this.timestamp;
         result = result * PRIME + ($timestamp == null ? 43 : $timestamp.hashCode());
         return result;

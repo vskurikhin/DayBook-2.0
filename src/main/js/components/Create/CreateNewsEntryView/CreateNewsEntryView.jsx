@@ -1,19 +1,20 @@
 /*
- * This file was last modified at 2021.02.27 00:06 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.28 23:25 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * CreateNewsEntryView.jsx
  * $Id$
  */
 
-import {API_V1_RESOURCE_NEWS_GROUPS} from '../../../config/api';
+import {API_V1_RESOURCE_NEWS_GROUPS, API_V1_RESOURCE_TAG_LABEL} from '../../../config/api';
 import {DEFAULT_NEWS_GROUP_ID} from '../../../config/consts';
 import {ApiService} from '../../../service/ApiService';
-import {adminCreateNewsEntry} from '../../../redux/actions';
+import {createNewsEntry} from '../../../redux/actions';
 import './DropdownDemo.css';
 
 import React, {Component} from 'react';
 import axios from "axios";
+import {AutoComplete} from 'primereact/autocomplete';
 import {Button} from 'primereact/button';
 import {Dropdown} from 'primereact/dropdown';
 import {InputTextarea} from 'primereact/inputtextarea';
@@ -26,49 +27,103 @@ import {withRouter} from "react-router-dom";
 class CreateNewsEntryView extends Component {
 
     state = {
-        content: "",
-        newsGroupId: DEFAULT_NEWS_GROUP_ID,
+        data: {
+            id: null,
+            newsGroupId: DEFAULT_NEWS_GROUP_ID,
+            title: "",
+            content: "",
+            userName: null,
+            createTime: "",
+            updateTime: "",
+            enabled: true,
+            visible: true,
+            flags: null,
+            tags: null
+        },
         newsGroupNames: [],
         redirectToReferrer: false,
         selectedNewsGroup: "",
-        title: "",
+        filteredTagLabels: [],
+        tagLabels: [],
+        selectedTags: []
     }
     cancelTokenSource = axios.CancelToken.source();
     newsGroupService = new ApiService(API_V1_RESOURCE_NEWS_GROUPS + '/all', this.cancelTokenSource);
+    tagLabelService = new ApiService(API_V1_RESOURCE_TAG_LABEL + '/all', this.cancelTokenSource);
 
     constructor(props) {
         super(props);
     }
 
-    onNewsGroupChange = (e) => {
-        this.setState({selectedNewsGroup: e.value});
-        this.setState({newsGroupId: e.value.id});
-    }
-
-    handleChange = event => {
-        this.setState({
-            [event.target.name]: event.target.value
-        });
-    }
-
-    handleSubmit = event => {
-        event.preventDefault()
-        this.props.adminCreateNewsEntry(this.state)
-        this.setState({redirectToReferrer: true})
-    }
-
     handleNewsGroupChange = value => {
         this.setState({newsGroupNames: value.data});
         const mayBeFirst = value.data.filter(x => x.id === DEFAULT_NEWS_GROUP_ID);
-        this.setState({selectedNewsGroup: mayBeFirst.length > 0 ? mayBeFirst[0] : null})
+        this.setState({selectedNewsGroup: mayBeFirst.length > 0 ? mayBeFirst[0] : null});
+    }
+
+    handleTagLabelChange = value => {
+        this.setState({tagLabels: value.data});
+    }
+
+    handleSubmit = event => {
+        event.preventDefault();
+        this.props.createNewsEntryView(this.state.data);
+        this.setState({redirectToReferrer: true});
     }
 
     componentDidMount() {
         this.newsGroupService.getAll(null, this.handleNewsGroupChange);
+        this.tagLabelService.getAll(null, this.handleTagLabelChange);
     }
 
     componentWillUnmount() {
         this.cancelTokenSource.cancel();
+    }
+
+    onChangeDefault = event => {
+        this.setState({
+            data: {
+                ...this.state.data,
+                [event.target.name]: event.target.value
+            }
+        });
+    }
+
+    onNewsGroupChange = (e) => {
+        this.setState({selectedNewsGroup: e.value});
+        this.setState({
+            data: {
+                ...this.state.data,
+                newsGroupId: e.value.id
+            }
+        });
+    }
+
+    onTagLabelsChange = (e) => {
+        this.setState({selectedTags: e.value});
+        const tags = e.value.map(t => t.label);
+        this.setState({
+            data: {
+                ...this.state.data,
+                tags: tags
+            }
+        });
+    }
+
+    searchTagLabels = (event) => {
+        setTimeout(() => {
+            let filteredTagLabels;
+            if ( ! event.query.trim().length) {
+                filteredTagLabels = [...this.state.tagLabels];
+            }
+            else {
+                filteredTagLabels = this.state.tagLabels.filter((tagLabel) => {
+                    return tagLabel.label.toLowerCase().startsWith(event.query.toLowerCase());
+                });
+            }
+
+            this.setState({filteredTagLabels: filteredTagLabels});
+        }, 250);
     }
 
     render() {
@@ -99,16 +154,36 @@ class CreateNewsEntryView extends Component {
                                 <div className="my-divTableRow">
                                     <div className="my-divTableCellLeft">&nbsp;</div>
                                     <div className="my-divTableCell">
+                                        <label className="my-label"><b>Tags:</b></label><br/>
+                                        <span className="p-float-label">
+                                            <AutoComplete
+                                                completeMethod={this.searchTagLabels}
+                                                field="label"
+                                                multiple onChange={this.onTagLabelsChange}
+                                                style={{with: '100%'}}
+                                                panelStyle={{with: '100%'}}
+                                                suggestions={this.state.filteredTagLabels}
+                                                value={this.state.selectedTags}
+                                            />
+                                        </span>
+                                    </div>
+                                    <div className="my-divTableCellRight">&nbsp;</div>
+                                </div>
+
+                                <div className="my-divTableRow">
+                                    <div className="my-divTableCellLeft">&nbsp;</div>
+                                    <div className="my-divTableCell">
                                         <span className="p-float-label">
                                             <InputText
                                                 className="my-p-inputtext"
                                                 id="title"
                                                 name='title'
-                                                onChange={this.handleChange}
+                                                onChange={this.onChangeDefault}
+                                                style={{with: '100%'}}
                                                 type="text"
-                                                value={this.state.title}
+                                                value={this.state.data.title}
                                             />
-                                            <label htmlFor="title"><b>title</b></label>
+                                            <label htmlFor="title"><b>Title:</b></label>
                                         </span>
                                     </div>
                                     <div className="my-divTableCellRight">&nbsp;</div>
@@ -123,9 +198,10 @@ class CreateNewsEntryView extends Component {
                                             autoResize
                                             cols={30}
                                             name='content'
-                                            onChange={this.handleChange}
+                                            onChange={this.onChangeDefault}
                                             rows={5}
-                                            value={this.state.content}
+                                            style={{with: '100%'}}
+                                            value={this.state.data.content}
                                         />
                                     </div>
                                     <div className="my-divTableCellRight">&nbsp;</div>
@@ -154,11 +230,10 @@ class CreateNewsEntryView extends Component {
 
 const mapStateToProps = state => ({
     user: state.currentUser,
-    date: state.currentDate
 })
 
 const mapDispatchToProps = dispatch => ({
-    adminCreateNewsEntry: value => dispatch(adminCreateNewsEntry(value))
+    createNewsEntryView: value => dispatch(createNewsEntry(value)),
 })
 
 export default compose(

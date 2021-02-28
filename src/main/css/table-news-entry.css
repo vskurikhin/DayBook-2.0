@@ -23,3 +23,10 @@ table.news-entry tr:hover td{color:#455261;cursor:default;}
  font-family: Arial, sans-serif;
  text-align: right;
 }
+.my-news-entry-tags-th{
+ color: #000;
+ color: rgba(0, 0, 0, 0.2);
+ font-size: 8pt;
+ font-family: Arial, sans-serif;
+ text-align: left;
+}
