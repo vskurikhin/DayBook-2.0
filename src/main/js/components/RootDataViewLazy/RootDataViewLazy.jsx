@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.27 00:06 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.28 23:25 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RootDataViewLazy.jsx
@@ -9,6 +9,7 @@
 import 'primeicons/primeicons.css';
 import 'primereact/resources/primereact.css';
 import 'primeflex/primeflex.css';
+import './Button.css';
 
 import {API_V1_RESOURCE_RECORDS} from '../../config/api';
 import {AllRecordService} from '../../service/AllRecordService';
@@ -19,16 +20,18 @@ import {setCalendarDate} from "../../redux/actions";
 import React, {useState, useEffect, useRef} from 'react';
 import axios from "axios";
 import moment from 'moment';
+import {Button} from 'primereact/button';
 import {ContextMenu} from 'primereact/contextmenu';
 import {DataView} from 'primereact/dataview';
 import {compose} from "redux";
 import {connect} from "react-redux";
+import {map} from 'underscore'
 import {useHistory, withRouter} from 'react-router-dom';
 
 const NUMBER_OF_ELEMENTS = 99;
 const TIMEOUT = 33;
 
-const RootDataViewLazy = (props) => {
+const RootDataViewLazy = props => {
     const [records, setRecords] = useState([]);
     const [layout, setLayout] = useState('list');
     const [loading, setLoading] = useState(true);
@@ -163,10 +166,11 @@ const RootDataViewLazy = (props) => {
                                     <td className="valueField my-news-entry-second-th"
                                         colSpan="2"
                                         rowSpan="2">
-                                        <div dangerouslySetInnerHTML={{
+                                        <div align="justify" dangerouslySetInnerHTML={{
                                             __html: renderContent(id, record)
                                         }}
-                                        />{renderAfterContent(id, record)}</td>
+                                        />
+                                        {renderAfterContent(id, record)}</td>
                                     <td/>
                                 </tr>
                                 <tr>
@@ -179,10 +183,8 @@ const RootDataViewLazy = (props) => {
                                     <td/>
                                 </tr>
                                 <tr>
-                                    <td className="my-news-entry-user-th">{tags}</td>
                                     <td/>
-                                    <td/>
-                                    <td/>
+                                    <td className="my-news-entry-tags-th" colSpan="2">{renderTags(tags)}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -292,6 +294,38 @@ const RootDataViewLazy = (props) => {
         />
     )
 
+    const renderTags = (tags) => {
+        console.log("renderTags");
+        console.log(tags);
+        const items = [];
+        for (let object in tags) {
+            // noinspection JSUnfilteredForInLoop
+            let index = Object.keys(tags).indexOf(object);
+            items.push({index: index, value: tags[index]});
+        }
+        console.log(items);
+        return (
+            <div>{map(items, ({index, value}) => (
+                <Button
+                    style={{marginLeft: "2px"}}
+                    key={index}
+                    label={value}
+                    className="my-p-button-sm p-button-rounded p-button-secondary"
+                    disabled
+                />
+            ))}</div>
+        )
+    }
+
+    const renderButton = (index, value) => (
+        <Button
+            key={index}
+            label={value}
+            className="p-button-sm p-button-rounded p-button-secondary"
+            disabled
+        />
+    )
+
     const itemTemplate = (record, layout) => {
         if (!record) return;
 
@@ -300,6 +334,8 @@ const RootDataViewLazy = (props) => {
         else if (layout === 'list')
             return renderListItem(record);
     }
+    console.log("RootDataViewLazy");
+    console.log(props);
 
     return (
         <div className="dataview-demo">
@@ -320,8 +356,9 @@ const RootDataViewLazy = (props) => {
 }
 
 const mapStateToProps = state => ({
+    date: state.currentDate,
+    record: state.updatedRecord,
     user: state.currentUser,
-    date: state.currentDate
 })
 
 const mapDispatchToProps = dispatch => ({

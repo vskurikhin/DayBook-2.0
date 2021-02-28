@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.22 14:28 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.28 23:25 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NewsEntryDto.java
@@ -20,6 +20,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -83,6 +84,10 @@ public class NewsEntryDto implements Serializable {
     @Setter
     private Integer flags;
 
+    @Getter
+    @Setter
+    private Set<String> tags;
+
     @Override
     public String toString() {
         return "NewsEntryDto{" +
@@ -96,6 +101,7 @@ public class NewsEntryDto implements Serializable {
                 ", enabled=" + enabled +
                 ", visible=" + visible +
                 ", flags=" + flags +
+                ", tags=" + tags +
                 '}';
     }
 
@@ -137,6 +143,9 @@ public class NewsEntryDto implements Serializable {
         final Object this$flags = this.flags;
         final Object other$flags = other.flags;
         if (this$flags == null ? other$flags != null : !this$flags.equals(other$flags)) return false;
+        final Object this$tags = this.tags;
+        final Object other$tags = other.tags;
+        if (this$tags == null ? other$tags != null : !this$tags.equals(other$tags)) return false;
         return true;
     }
 
@@ -167,6 +176,8 @@ public class NewsEntryDto implements Serializable {
         result = result * PRIME + ($visible == null ? 43 : $visible.hashCode());
         final Object $flags = this.flags;
         result = result * PRIME + ($flags == null ? 43 : $flags.hashCode());
+        final Object $tags = this.tags;
+        result = result * PRIME + ($tags == null ? 43 : $tags.hashCode());
         return result;
     }
 }

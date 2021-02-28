@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.27 22:28 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.28 23:25 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * TagLabelController.java
@@ -101,8 +101,9 @@ public class TagLabelController {
     private ResponseEntity<?> getBody(DBEntry<?> a, HttpStatus ok, String message) {
         ResponseDto response = ResponseDto.builder()
                 .message(message + ": " + a.getId())
-                .timestamp(new Date(new java.util.Date().getTime()))
                 .status("success")
+                .object(a)
+                .timestamp(new Date(new java.util.Date().getTime()))
                 .build();
         return ResponseEntity.status(ok).body(response);
     }

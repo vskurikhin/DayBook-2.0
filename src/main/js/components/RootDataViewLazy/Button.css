@@ -1,0 +1,29 @@
+.button-demo .p-button {
+ margin-right: .5rem;
+}
+.button-demo .p-buttonset .p-button {
+ margin-right: 0;
+}
+.button-demo .sizes .button {
+ margin-bottom: .5rem;
+ display: block;
+}
+.button-demo .sizes .button:last-child {
+ margin-bottom: 0;
+}
+.p-button.my-p-button-sm {
+ font-size: 0.775rem;
+ padding: 0.275375rem 0.775rem;
+}
+@media screen and (max-width: 960px) {
+ .button-demo .p-button {
+  margin-bottom: .5rem;
+ }
+ .button-demo .p-button:not(.p-button-icon-only) {
+  display: flex;
+  width: 100%;
+ }
+ .button-demo .p-buttonset .p-button {
+  margin-bottom: 0;
+ }
+}

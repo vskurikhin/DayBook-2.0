@@ -1,13 +1,13 @@
 /*
- * This file was last modified at 2021.02.27 00:06 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.28 23:25 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * EditNewsEntryView.jsx
  * $Id$
  */
 
-import {API_V1_RESOURCE_NEWS_GROUPS} from "../../../config/api";
-import {adminUpdateNewsEntry} from '../../../redux/actions';
+import {API_V1_RESOURCE_NEWS_GROUPS, API_V1_RESOURCE_TAG_LABEL} from "../../../config/api";
+import {updateNewsEntry} from '../../../redux/actions';
 import {recordService} from '../../../service/RecordService';
 
 import React, {Component} from 'react';
@@ -39,10 +39,14 @@ class EditNewsEntryView extends Component {
         },
         redirectToReferrer: false,
         newsGroupNames: [],
-        selectedNewsGroup: ""
+        selectedNewsGroup: "",
+        filteredTagLabels: [],
+        tagLabels: [],
+        selectedTags: []
     };
     cancelTokenSource = axios.CancelToken.source();
     newsGroupService = new ApiService(API_V1_RESOURCE_NEWS_GROUPS + '/all', this.cancelTokenSource);
+    tagLabelService = new ApiService(API_V1_RESOURCE_TAG_LABEL + '/all', this.cancelTokenSource);
 
     constructor(props) {
         super(props);
@@ -52,7 +56,8 @@ class EditNewsEntryView extends Component {
         this.setState({
             data: {
                 ...this.state.data,
-                [event.target.name]: event.target.value
+                [event.target.name]: event.target.value,
+                tags: ["label1", "label2", "label3"]
             }
         });
     }
@@ -82,7 +87,7 @@ class EditNewsEntryView extends Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        this.props.adminUpdateNewsEntry(this.state.data)
+        this.props.editNewsEntryView(this.state.data)
         this.setState({redirectToReferrer: true})
     }
 
@@ -186,11 +191,10 @@ class EditNewsEntryView extends Component {
 
 const mapStateToProps = state => ({
     user: state.currentUser,
-    date: state.currentDate
 })
 
 const mapDispatchToProps = dispatch => ({
-    adminUpdateNewsEntry: value => dispatch(adminUpdateNewsEntry(value))
+    editNewsEntryView: value => dispatch(updateNewsEntry(value))
 })
 
 export default compose(

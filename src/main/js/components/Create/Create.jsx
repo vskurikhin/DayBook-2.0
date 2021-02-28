@@ -1,20 +1,17 @@
 /*
- * This file was last modified at 2021.02.27 00:06 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.28 23:25 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * Create.jsx
  * $Id$
  */
 
-import AdminCreateRow from "./CreateRow/CreateRow";
+import CreateRow from "./CreateRow/CreateRow";
 import Header from "../Header/Header";
 import NavigationBar from "../NavigationBar/NavigationBar";
-import {setCalendarDate} from "../../redux/actions";
 
-import React, { Component } from 'react';
-import {compose} from "redux";
+import React, {Component} from 'react';
 import {connect} from "react-redux";
-import {withRouter} from "react-router";
 
 class Create extends Component {
 
@@ -23,7 +20,7 @@ class Create extends Component {
             <div>
                 <Header />
                 <NavigationBar />
-                <AdminCreateRow />
+                <CreateRow />
                 <div className="my-footer">
                 </div>
             </div>
@@ -33,14 +30,6 @@ class Create extends Component {
 
 const mapStateToProps = state => ({
     user: state.currentUser,
-    date: state.currentDate
 })
 
-const mapDispatchToProps = dispatch => ({
-    handleCalendarDate: value => dispatch(setCalendarDate(value))
-})
-
-export default compose(
-    withRouter,
-    connect(mapStateToProps, mapDispatchToProps)
-)(Create);
+export default connect(mapStateToProps)(Create);

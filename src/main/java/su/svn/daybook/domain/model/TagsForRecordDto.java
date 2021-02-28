@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.27 22:28 by Victor N. Skurikhin.
+ * This file was last modified at 2021.02.28 23:25 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * TagsForRecordDto.java
@@ -9,13 +9,17 @@
 package su.svn.daybook.domain.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.*;
-import su.svn.daybook.domain.model.db.db.Record;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Set;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,7 +30,7 @@ public class TagsForRecordDto implements Serializable {
 
     @Getter
     @Setter
-    private Record record;
+    private UUID id;
 
     @Getter
     @Setter
@@ -44,7 +48,7 @@ public class TagsForRecordDto implements Serializable {
     @Override
     public String toString() {
         return "TagsForRecordDto{" +
-                "record=" + record +
+                "id=" + id +
                 ", tags=" + tags +
                 ", userName='" + userName + '\'' +
                 '}';
@@ -55,9 +59,9 @@ public class TagsForRecordDto implements Serializable {
         if (!(o instanceof TagsForRecordDto)) return false;
         final TagsForRecordDto other = (TagsForRecordDto) o;
         if (!other.canEqual((Object) this)) return false;
-        final Object this$record = this.record;
-        final Object other$record = other.record;
-        if (this$record == null ? other$record != null : !this$record.equals(other$record)) return false;
+        final Object this$id = this.id;
+        final Object other$id = other.id;
+        if (this$id == null ? other$id != null : !this$id.equals(other$id)) return false;
         final Object this$tags = this.tags;
         final Object other$tags = other.tags;
         if (this$tags == null ? other$tags != null : !this$tags.equals(other$tags)) return false;
@@ -74,8 +78,8 @@ public class TagsForRecordDto implements Serializable {
     public int hashCode() {
         final int PRIME = 59;
         int result = 1;
-        final Object $record = this.record;
-        result = result * PRIME + ($record == null ? 43 : $record.hashCode());
+        final Object $id = this.id;
+        result = result * PRIME + ($id == null ? 43 : $id.hashCode());
         final Object $tags = this.tags;
         result = result * PRIME + ($tags == null ? 43 : $tags.hashCode());
         final Object $userName = this.userName;
