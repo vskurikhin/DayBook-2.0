@@ -1,16 +1,16 @@
 /*
- * This file was last modified at 2021.02.27 00:06 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.01 20:59 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * EditRow.jsx
  * $Id$
  */
 
-import EditArticleView from "../EditArticleView/EditArticleView";
-import EditNewsEntryView from "../EditNewsEntryView/EditNewsEntryView";
-import IFrame from "../../IFrame/IFrame";
-import {loadCssListIframe1} from "../../../lib/CssListIframe1";
-import {setCalendarDate} from "../../../redux/actions";
+import EditArticleView from "./ArticleView/EditArticleView";
+import EditNewsEntryView from "./NewsEntryView/EditNewsEntryView";
+import IFrame from "../IFrame/IFrame";
+import {loadCssListIframe1} from "../../lib/CssListIframe1";
+import {setCalendarDate} from "../../redux/actions";
 
 import React, {Component} from 'react';
 import {compose} from "redux";

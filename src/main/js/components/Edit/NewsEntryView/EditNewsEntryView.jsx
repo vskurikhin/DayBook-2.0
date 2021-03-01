@@ -1,18 +1,20 @@
 /*
- * This file was last modified at 2021.02.28 23:25 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.01 20:59 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
- * EditArticleView.jsx
+ * EditNewsEntryView.jsx
  * $Id$
  */
 
-import {API_V1_RESOURCE_NEWS_GROUPS} from "../../../config/api";
-import {updateArticle} from '../../../redux/actions';
+import './DropdownDemo.css';
+import {API_V1_RESOURCE_NEWS_GROUPS, API_V1_RESOURCE_TAG_LABEL} from "../../../config/api";
+import {ApiService} from "../../../service/ApiService";
 import {recordService} from '../../../service/RecordService';
+import {updateNewsEntry} from '../../../redux/actions';
 
 import React, {Component} from 'react';
 import axios from 'axios';
-import {ApiService} from "../../../service/ApiService";
+import {AutoComplete} from 'primereact/autocomplete';
 import {Button} from "primereact/button";
 import {Dropdown} from "primereact/dropdown";
 import {InputTextarea} from "primereact/inputtextarea";
@@ -21,18 +23,15 @@ import {Redirect} from "react-router";
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
-import {AutoComplete} from "primereact/autocomplete";
 
-class EditArticleView extends Component {
+class EditNewsEntryView extends Component {
 
     state = {
         data: {
             id: null,
             newsGroupId: null,
             title: "",
-            include: "",
-            anchor: "",
-            summary: "",
+            content: "",
             userName: null,
             createTime: "",
             updateTime: "",
@@ -40,12 +39,16 @@ class EditArticleView extends Component {
             visible: true,
             flags: null,
         },
+        redirectToReferrer: false,
         newsGroupNames: [],
         selectedNewsGroup: "",
-        redirectToReferrer: false
+        filteredTagLabels: [],
+        tagLabels: [],
+        selectedTags: []
     };
     cancelTokenSource = axios.CancelToken.source();
     newsGroupService = new ApiService(API_V1_RESOURCE_NEWS_GROUPS + '/all', this.cancelTokenSource);
+    tagLabelService = new ApiService(API_V1_RESOURCE_TAG_LABEL + '/all', this.cancelTokenSource);
 
     constructor(props) {
         super(props);
@@ -60,7 +63,7 @@ class EditArticleView extends Component {
 
     mayBeSetSelectedNewsGroup = () => {
         const mayBeItem = this.state.newsGroupNames.filter(x => x.id === this.state.data.newsGroupId);
-        this.setState({selectedNewsGroup: mayBeItem.length > 0 ? mayBeItem[0] : null})
+        this.setState({selectedNewsGroup: mayBeItem.length > 0 ? mayBeItem[0] : null});
     }
 
     handleNewsGroupChange = value => {
@@ -69,8 +72,8 @@ class EditArticleView extends Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        this.props.editArticleView(this.state.data)
-        this.setState({redirectToReferrer: true})
+        this.props.editNewsEntryView(this.state.data);
+        this.setState({redirectToReferrer: true});
     }
 
     handleTagLabelChange = value => {
@@ -79,7 +82,7 @@ class EditArticleView extends Component {
 
     componentDidMount() {
         this.newsGroupService.getAll(null, this.handleNewsGroupChange).finally(
-            () => recordService.getArticle(
+            () => recordService.getNewsEntry(
                 this.props.match.params.id,
                 this.handleSubscriptionChange,
                 this.cancelTokenSource)
@@ -143,7 +146,6 @@ class EditArticleView extends Component {
         if (this.state.data instanceof Promise) return (
             <div>Loading...</div>
         );
-        console.log(this.state);
         return (
             <div className="dataview-demo">
                 <form onSubmit={this.handleSubmit}>
@@ -173,9 +175,10 @@ class EditArticleView extends Component {
                                             <AutoComplete
                                                 completeMethod={this.searchTagLabels}
                                                 field="label"
-                                                multiple onChange={this.onTagLabelsChange}
-                                                style={{with: '100%'}}
+                                                multiple
+                                                onChange={this.onTagLabelsChange}
                                                 panelStyle={{with: '100%'}}
+                                                style={{with: '100%'}}
                                                 suggestions={this.state.filteredTagLabels}
                                                 value={this.state.selectedTags}
                                             />
@@ -187,6 +190,7 @@ class EditArticleView extends Component {
                                 <div className="my-divTableRow">
                                     <div className="my-divTableCellLeft">&nbsp;</div>
                                     <div className="my-divTableCell">
+                                        <label className="my-label"><b>Title:</b></label><br/>
                                         <span className="p-float-label">
                                             <InputText
                                                 className="my-p-inputtext"
@@ -194,11 +198,9 @@ class EditArticleView extends Component {
                                                 name='title'
                                                 onChange={this.onChangeDefault}
                                                 type="text"
-                                                style={{with: '100%'}}
                                                 value={this.state.data.title}
                                             />
                                         </span>
-                                        <label htmlFor="title"><b>Title:</b></label>
                                     </div>
                                     <div className="my-divTableCellRight">&nbsp;</div>
                                 </div>
@@ -206,54 +208,15 @@ class EditArticleView extends Component {
                                 <div className="my-divTableRow">
                                     <div className="my-divTableCellLeft">&nbsp;</div>
                                     <div className="my-divTableCell">
-                                        <span className="p-float-label">
-                                            <InputText
-                                                className="my-p-inputtext"
-                                                id="include"
-                                                name='include'
-                                                onChange={this.onChangeDefault}
-                                                type="text"
-                                                style={{with: '100%'}}
-                                                value={this.state.data.include}
-                                            />
-                                        </span>
-                                        <label htmlFor="include"><b>Include:</b></label>
-                                    </div>
-                                    <div className="my-divTableCellRight">&nbsp;</div>
-                                </div>
-
-                                <div className="my-divTableRow">
-                                    <div className="my-divTableCellLeft">&nbsp;</div>
-                                    <div className="my-divTableCell">
-                                        <span className="p-float-label">
-                                            <InputText
-                                                className="my-p-inputtext"
-                                                id="anchor"
-                                                name='anchor'
-                                                onChange={this.onChangeDefault}
-                                                type="text"
-                                                style={{with: '100%'}}
-                                                value={this.state.data.anchor}
-                                            />
-                                        </span>
-                                        <label htmlFor="anchor"><b>Anchor:</b></label>
-                                    </div>
-                                    <div className="my-divTableCellRight">&nbsp;</div>
-                                </div>
-
-                                <div className="my-divTableRow">
-                                    <div className="my-divTableCellLeft">&nbsp;</div>
-                                    <div className="my-divTableCell">
-                                        <label className="my-label"><b>Summary:</b></label><br/>
+                                        <label className="my-label"><b>Content:</b></label><br/>
                                         <InputTextarea
                                             className="my-p-inputtext"
                                             autoResize
                                             cols={30}
-                                            name='summary'
+                                            name='content'
                                             onChange={this.onChangeDefault}
                                             rows={5}
-                                            style={{with: '100%'}}
-                                            value={this.state.data.summary}
+                                            value={this.state.data.content}
                                         />
                                     </div>
                                     <div className="my-divTableCellRight">&nbsp;</div>
@@ -285,10 +248,10 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    editArticleView: value => dispatch(updateArticle(value))
+    editNewsEntryView: value => dispatch(updateNewsEntry(value))
 })
 
 export default compose(
     withRouter,
     connect(mapStateToProps, mapDispatchToProps)
-)(EditArticleView);
+)(EditNewsEntryView);

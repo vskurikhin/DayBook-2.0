@@ -1,13 +1,13 @@
 /*
- * This file was last modified at 2021.02.27 00:06 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.01 20:59 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * CreateTabView.jsx
  * $Id$
  */
 
-import CreateArticleView from "../CreateArticleView/CreateArticleView";
-import CreateNewsEntryView from "../CreateNewsEntryView/CreateNewsEntryView";
+import CreateArticleView from "./ArticleView/CreateArticleView";
+import CreateNewsEntryView from "./NewsEntryView/CreateNewsEntryView";
 
 import React, {Component} from 'react';
 import {TabView, TabPanel} from 'primereact/tabview';
