@@ -1,52 +1,49 @@
 /*
- * This file was last modified at 2021.02.28 23:25 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.01 20:59 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
- * CreateArticleView.jsx
+ * EditArticleView.jsx
  * $Id$
  */
 
 import {API_V1_RESOURCE_NEWS_GROUPS, API_V1_RESOURCE_TAG_LABEL} from "../../../config/api";
-import {DEFAULT_NEWS_GROUP_ID} from "../../../config/consts";
-import {createArticle} from '../../../redux/actions';
-import './DropdownDemo.css';
+import {ApiService} from "../../../service/ApiService";
+import {recordService} from '../../../service/RecordService';
+import {updateArticle} from '../../../redux/actions';
 
 import React, {Component} from 'react';
-import axios from "axios";
-import {ApiService} from "../../../service/ApiService";
-import {Button} from 'primereact/button';
+import axios from 'axios';
+import {AutoComplete} from "primereact/autocomplete";
+import {Button} from "primereact/button";
 import {Dropdown} from "primereact/dropdown";
-import {InputTextarea} from 'primereact/inputtextarea';
-import {InputText} from 'primereact/inputtext';
+import {InputTextarea} from "primereact/inputtextarea";
+import {InputText} from "primereact/inputtext";
 import {Redirect} from "react-router";
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
-import {AutoComplete} from "primereact/autocomplete";
 
-class CreateArticleView extends Component {
+class EditArticleView extends Component {
+
     state = {
         data: {
             id: null,
-            newsGroupId: DEFAULT_NEWS_GROUP_ID,
+            newsGroupId: null,
             title: "",
-            content: "",
+            include: "",
+            anchor: "",
+            summary: "",
             userName: null,
             createTime: "",
             updateTime: "",
             enabled: true,
             visible: true,
             flags: null,
-            tags: null
         },
-        newsGroupId: DEFAULT_NEWS_GROUP_ID,
         newsGroupNames: [],
-        redirectToReferrer: false,
         selectedNewsGroup: "",
-        filteredTagLabels: [],
-        tagLabels: [],
-        selectedTags: []
-    }
+        redirectToReferrer: false
+    };
     cancelTokenSource = axios.CancelToken.source();
     newsGroupService = new ApiService(API_V1_RESOURCE_NEWS_GROUPS + '/all', this.cancelTokenSource);
     tagLabelService = new ApiService(API_V1_RESOURCE_TAG_LABEL + '/all', this.cancelTokenSource);
@@ -55,16 +52,26 @@ class CreateArticleView extends Component {
         super(props);
     }
 
-    handleSubmit = event => {
-        event.preventDefault()
-        this.props.createArticleView(this.state.data)
-        this.setState({redirectToReferrer: true})
+    handleSubscriptionChange = value => {
+        this.setState({data: value.data});
+        this.mayBeSetSelectedNewsGroup();
+        const selectedTags = value.data.tags.map(label => {return {label: label}});
+        this.setState({selectedTags: selectedTags});
+    }
+
+    mayBeSetSelectedNewsGroup = () => {
+        const mayBeItem = this.state.newsGroupNames.filter(x => x.id === this.state.data.newsGroupId);
+        this.setState({selectedNewsGroup: mayBeItem.length > 0 ? mayBeItem[0] : null})
     }
 
     handleNewsGroupChange = value => {
         this.setState({newsGroupNames: value.data});
-        const mayBeFirst = value.data.filter(x => x.id === DEFAULT_NEWS_GROUP_ID);
-        this.setState({selectedNewsGroup: mayBeFirst.length > 0 ? mayBeFirst[0] : null})
+    }
+
+    handleSubmit = event => {
+        event.preventDefault();
+        this.props.editArticleView(this.state.data)
+        this.setState({redirectToReferrer: true})
     }
 
     handleTagLabelChange = value => {
@@ -72,7 +79,12 @@ class CreateArticleView extends Component {
     }
 
     componentDidMount() {
-        this.newsGroupService.getAll(null, this.handleNewsGroupChange);
+        this.newsGroupService.getAll(null, this.handleNewsGroupChange).finally(
+            () => recordService.getArticle(
+                this.props.match.params.id,
+                this.handleSubscriptionChange,
+                this.cancelTokenSource)
+        );
         this.tagLabelService.getAll(null, this.handleTagLabelChange);
     }
 
@@ -84,14 +96,18 @@ class CreateArticleView extends Component {
         this.setState({
             data: {
                 ...this.state.data,
-                [event.target.name]: event.target.value
+                [event.target.name]: event.target.value,
             }
         });
     }
 
     onNewsGroupChange = (e) => {
         this.setState({selectedNewsGroup: e.value});
-        this.setState({newsGroupId: e.value.id});
+        this.setState({data: {
+                ...this.state.data,
+                newsGroupId: e.value.id
+            }
+        });
     }
 
     onTagLabelsChange = (e) => {
@@ -122,10 +138,12 @@ class CreateArticleView extends Component {
     }
 
     render() {
-        const redirectToReferrer = this.state.redirectToReferrer;
-        if (redirectToReferrer === true) {
-            return <Redirect to="/home" />
+        if (this.state.redirectToReferrer === true) {
+            return <Redirect to="/home"/>
         }
+        if (this.state.data instanceof Promise) return (
+            <div>Loading...</div>
+        );
         return (
             <div className="dataview-demo">
                 <form onSubmit={this.handleSubmit}>
@@ -175,12 +193,12 @@ class CreateArticleView extends Component {
                                                 id="title"
                                                 name='title'
                                                 onChange={this.onChangeDefault}
-                                                style={{with: '100%'}}
                                                 type="text"
+                                                style={{with: '100%'}}
                                                 value={this.state.data.title}
                                             />
-                                            <label htmlFor="title"><b>Title:</b></label>
                                         </span>
+                                        <label htmlFor="title"><b>Title:</b></label>
                                     </div>
                                     <div className="my-divTableCellRight">&nbsp;</div>
                                 </div>
@@ -195,10 +213,11 @@ class CreateArticleView extends Component {
                                                 name='include'
                                                 onChange={this.onChangeDefault}
                                                 type="text"
+                                                style={{with: '100%'}}
                                                 value={this.state.data.include}
                                             />
-                                            <label htmlFor="include"><b>Include:</b></label>
                                         </span>
+                                        <label htmlFor="include"><b>Include:</b></label>
                                     </div>
                                     <div className="my-divTableCellRight">&nbsp;</div>
                                 </div>
@@ -213,10 +232,11 @@ class CreateArticleView extends Component {
                                                 name='anchor'
                                                 onChange={this.onChangeDefault}
                                                 type="text"
+                                                style={{with: '100%'}}
                                                 value={this.state.data.anchor}
                                             />
-                                            <label htmlFor="anchor"><b>Anchor:</b></label>
                                         </span>
+                                        <label htmlFor="anchor"><b>Anchor:</b></label>
                                     </div>
                                     <div className="my-divTableCellRight">&nbsp;</div>
                                 </div>
@@ -232,11 +252,13 @@ class CreateArticleView extends Component {
                                             name='summary'
                                             onChange={this.onChangeDefault}
                                             rows={5}
+                                            style={{with: '100%'}}
                                             value={this.state.data.summary}
                                         />
                                     </div>
                                     <div className="my-divTableCellRight">&nbsp;</div>
                                 </div>
+
                                 <div className="my-divTableRow">
                                     <div className="my-divTableCellLeft">&nbsp;</div>
                                     <div className="my-divTableCell">
@@ -263,10 +285,10 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    createArticleView: value => dispatch(createArticle(value)),
+    editArticleView: value => dispatch(updateArticle(value))
 })
 
 export default compose(
     withRouter,
     connect(mapStateToProps, mapDispatchToProps)
-)(CreateArticleView);
+)(EditArticleView);

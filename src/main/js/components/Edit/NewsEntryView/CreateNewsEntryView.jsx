@@ -1,33 +1,35 @@
 /*
- * This file was last modified at 2021.02.28 23:25 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.01 20:59 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
- * EditNewsEntryView.jsx
+ * CreateNewsEntryView.jsx
  * $Id$
  */
 
-import {API_V1_RESOURCE_NEWS_GROUPS, API_V1_RESOURCE_TAG_LABEL} from "../../../config/api";
-import {updateNewsEntry} from '../../../redux/actions';
-import {recordService} from '../../../service/RecordService';
+import './DropdownDemo.css';
+import {API_V1_RESOURCE_NEWS_GROUPS, API_V1_RESOURCE_TAG_LABEL} from '../../../config/api';
+import {ApiService} from '../../../service/ApiService';
+import {DEFAULT_NEWS_GROUP_ID} from '../../../config/consts';
+import {createNewsEntry} from '../../../redux/actions';
 
 import React, {Component} from 'react';
-import axios from 'axios';
-import {ApiService} from "../../../service/ApiService";
-import {Button} from "primereact/button";
-import {Dropdown} from "primereact/dropdown";
-import {InputTextarea} from "primereact/inputtextarea";
-import {InputText} from "primereact/inputtext";
+import axios from "axios";
+import {AutoComplete} from 'primereact/autocomplete';
+import {Button} from 'primereact/button';
+import {Dropdown} from 'primereact/dropdown';
+import {InputTextarea} from 'primereact/inputtextarea';
+import {InputText} from 'primereact/inputtext';
 import {Redirect} from "react-router";
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 
-class EditNewsEntryView extends Component {
+class CreateNewsEntryView extends Component {
 
     state = {
         data: {
             id: null,
-            newsGroupId: null,
+            newsGroupId: DEFAULT_NEWS_GROUP_ID,
             title: "",
             content: "",
             userName: null,
@@ -36,14 +38,15 @@ class EditNewsEntryView extends Component {
             enabled: true,
             visible: true,
             flags: null,
+            tags: null
         },
-        redirectToReferrer: false,
         newsGroupNames: [],
+        redirectToReferrer: false,
         selectedNewsGroup: "",
         filteredTagLabels: [],
         tagLabels: [],
         selectedTags: []
-    };
+    }
     cancelTokenSource = axios.CancelToken.source();
     newsGroupService = new ApiService(API_V1_RESOURCE_NEWS_GROUPS + '/all', this.cancelTokenSource);
     tagLabelService = new ApiService(API_V1_RESOURCE_TAG_LABEL + '/all', this.cancelTokenSource);
@@ -52,56 +55,75 @@ class EditNewsEntryView extends Component {
         super(props);
     }
 
-    handleChange = event => {
+    handleSubmit = event => {
+        event.preventDefault();
+        this.props.createNewsEntryView(this.state.data);
+        this.setState({redirectToReferrer: true});
+    }
+
+    handleNewsGroupChange = value => {
+        this.setState({newsGroupNames: value.data});
+        const mayBeFirst = value.data.filter(x => x.id === DEFAULT_NEWS_GROUP_ID);
+        this.setState({selectedNewsGroup: mayBeFirst.length > 0 ? mayBeFirst[0] : null});
+    }
+
+    handleTagLabelChange = value => {
+        this.setState({tagLabels: value.data});
+    }
+
+    componentDidMount() {
+        this.newsGroupService.getAll(null, this.handleNewsGroupChange);
+        this.tagLabelService.getAll(null, this.handleTagLabelChange);
+    }
+
+    componentWillUnmount() {
+        this.cancelTokenSource.cancel();
+    }
+
+    onChangeDefault = event => {
         this.setState({
             data: {
                 ...this.state.data,
-                [event.target.name]: event.target.value,
-                tags: ["label1", "label2", "label3"]
+                [event.target.name]: event.target.value
             }
         });
     }
 
     onNewsGroupChange = (e) => {
         this.setState({selectedNewsGroup: e.value});
-        this.setState({data: {
+        this.setState({
+            data: {
                 ...this.state.data,
                 newsGroupId: e.value.id
             }
         });
     }
 
-    handleSubscriptionChange = value => {
-        this.setState({data: value.data});
-        this.mayBeSetSelectedNewsGroup();
+    onTagLabelsChange = (e) => {
+        this.setState({selectedTags: e.value});
+        const tags = e.value.map(t => t.label);
+        this.setState({
+            data: {
+                ...this.state.data,
+                tags: tags
+            }
+        });
     }
 
-    handleNewsGroupChange = value => {
-        this.setState({newsGroupNames: value.data});
-    }
+    searchTagLabels = (event) => {
+        setTimeout(() => {
+            let filteredTagLabels;
+            if ( ! event.query.trim().length) {
+                filteredTagLabels = [...this.state.tagLabels];
+            }
+            else {
+                filteredTagLabels = this.state.tagLabels.filter((tagLabel) => {
+                    return tagLabel.label.toLowerCase().startsWith(event.query.toLowerCase());
+                });
+            }
 
-    mayBeSetSelectedNewsGroup = () => {
-        const mayBeItem = this.state.newsGroupNames.filter(x => x.id === this.state.data.newsGroupId);
-        this.setState({selectedNewsGroup: mayBeItem.length > 0 ? mayBeItem[0] : null})
-    }
-
-    handleSubmit = event => {
-        event.preventDefault();
-        this.props.editNewsEntryView(this.state.data)
-        this.setState({redirectToReferrer: true})
-    }
-
-    componentDidMount() {
-        this.newsGroupService.getAll(null, this.handleNewsGroupChange).finally(
-            () => recordService.getNewsEntry(
-                this.props.match.params.id,
-                this.handleSubscriptionChange,
-                this.cancelTokenSource)
-        );
-    }
-
-    componentWillUnmount() {
-        this.cancelTokenSource.cancel();
+            this.setState({filteredTagLabels: filteredTagLabels});
+        }, 250);
     }
 
     render() {
@@ -111,7 +133,6 @@ class EditNewsEntryView extends Component {
         if (this.state.data instanceof Promise) return (
             <div>Loading...</div>
         );
-        console.log(this.state);
         return (
             <div className="dataview-demo">
                 <form onSubmit={this.handleSubmit}>
@@ -121,7 +142,7 @@ class EditNewsEntryView extends Component {
                                 <div className="my-divTableRow">
                                     <div className="my-divTableCellLeft">&nbsp;</div>
                                     <div className="my-divTableCell">
-                                        <label className="my-label"><b>News group Id:</b></label><br/>
+                                        <label className="my-label"><b>News groups:</b></label><br/>
                                         <Dropdown
                                             onChange={this.onNewsGroupChange}
                                             optionLabel="groupName"
@@ -136,16 +157,36 @@ class EditNewsEntryView extends Component {
                                 <div className="my-divTableRow">
                                     <div className="my-divTableCellLeft">&nbsp;</div>
                                     <div className="my-divTableCell">
-                                        <label className="my-label"><b>Title:</b></label><br/>
+                                        <label className="my-label"><b>Tags:</b></label><br/>
+                                        <span className="p-float-label">
+                                            <AutoComplete
+                                                completeMethod={this.searchTagLabels}
+                                                field="label"
+                                                multiple onChange={this.onTagLabelsChange}
+                                                style={{with: '100%'}}
+                                                panelStyle={{with: '100%'}}
+                                                suggestions={this.state.filteredTagLabels}
+                                                value={this.state.selectedTags}
+                                            />
+                                        </span>
+                                    </div>
+                                    <div className="my-divTableCellRight">&nbsp;</div>
+                                </div>
+
+                                <div className="my-divTableRow">
+                                    <div className="my-divTableCellLeft">&nbsp;</div>
+                                    <div className="my-divTableCell">
                                         <span className="p-float-label">
                                             <InputText
                                                 className="my-p-inputtext"
                                                 id="title"
                                                 name='title'
-                                                onChange={this.handleChange}
+                                                onChange={this.onChangeDefault}
+                                                style={{with: '100%'}}
                                                 type="text"
                                                 value={this.state.data.title}
                                             />
+                                            <label htmlFor="title"><b>Title:</b></label>
                                         </span>
                                     </div>
                                     <div className="my-divTableCellRight">&nbsp;</div>
@@ -160,8 +201,9 @@ class EditNewsEntryView extends Component {
                                             autoResize
                                             cols={30}
                                             name='content'
-                                            onChange={this.handleChange}
+                                            onChange={this.onChangeDefault}
                                             rows={5}
+                                            style={{with: '100%'}}
                                             value={this.state.data.content}
                                         />
                                     </div>
@@ -194,10 +236,10 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    editNewsEntryView: value => dispatch(updateNewsEntry(value))
+    createNewsEntryView: value => dispatch(createNewsEntry(value)),
 })
 
 export default compose(
     withRouter,
     connect(mapStateToProps, mapDispatchToProps)
-)(EditNewsEntryView);
+)(CreateNewsEntryView);
