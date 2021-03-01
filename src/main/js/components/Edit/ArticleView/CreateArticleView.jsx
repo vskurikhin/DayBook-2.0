@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.01 20:59 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.01 21:06 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * CreateArticleView.jsx
@@ -70,15 +70,6 @@ class CreateArticleView extends Component {
         this.setState({tagLabels: value.data});
     }
 
-    componentDidMount() {
-        this.newsGroupService.getAll(null, this.handleNewsGroupChange);
-        this.tagLabelService.getAll(null, this.handleTagLabelChange);
-    }
-
-    componentWillUnmount() {
-        this.cancelTokenSource.cancel();
-    }
-
     onChangeDefault = event => {
         this.setState({
             data: {
@@ -123,6 +114,15 @@ class CreateArticleView extends Component {
 
             this.setState({filteredTagLabels: filteredTagLabels});
         }, 250);
+    }
+
+    componentDidMount() {
+        this.newsGroupService.getAll(null, this.handleNewsGroupChange);
+        this.tagLabelService.getAll(null, this.handleTagLabelChange);
+    }
+
+    componentWillUnmount() {
+        this.cancelTokenSource.cancel();
     }
 
     render() {

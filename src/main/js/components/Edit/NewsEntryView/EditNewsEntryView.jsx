@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.01 20:59 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.01 21:06 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * EditNewsEntryView.jsx
@@ -54,6 +54,12 @@ class EditNewsEntryView extends Component {
         super(props);
     }
 
+    handleSubmit = event => {
+        event.preventDefault();
+        this.props.editNewsEntryView(this.state.data);
+        this.setState({redirectToReferrer: true});
+    }
+
     handleSubscriptionChange = value => {
         this.setState({data: value.data});
         this.mayBeSetSelectedNewsGroup();
@@ -70,28 +76,8 @@ class EditNewsEntryView extends Component {
         this.setState({newsGroupNames: value.data});
     }
 
-    handleSubmit = event => {
-        event.preventDefault();
-        this.props.editNewsEntryView(this.state.data);
-        this.setState({redirectToReferrer: true});
-    }
-
     handleTagLabelChange = value => {
         this.setState({tagLabels: value.data});
-    }
-
-    componentDidMount() {
-        this.newsGroupService.getAll(null, this.handleNewsGroupChange).finally(
-            () => recordService.getNewsEntry(
-                this.props.match.params.id,
-                this.handleSubscriptionChange,
-                this.cancelTokenSource)
-        );
-        this.tagLabelService.getAll(null, this.handleTagLabelChange);
-    }
-
-    componentWillUnmount() {
-        this.cancelTokenSource.cancel();
     }
 
     onChangeDefault = event => {
@@ -137,6 +123,20 @@ class EditNewsEntryView extends Component {
 
             this.setState({filteredTagLabels: filteredTagLabels});
         }, 250);
+    }
+
+    componentDidMount() {
+        this.newsGroupService.getAll(null, this.handleNewsGroupChange).finally(
+            () => recordService.getNewsEntry(
+                this.props.match.params.id,
+                this.handleSubscriptionChange,
+                this.cancelTokenSource)
+        );
+        this.tagLabelService.getAll(null, this.handleTagLabelChange);
+    }
+
+    componentWillUnmount() {
+        this.cancelTokenSource.cancel();
     }
 
     render() {
