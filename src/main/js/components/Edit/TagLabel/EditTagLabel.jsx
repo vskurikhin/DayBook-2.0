@@ -3,12 +3,12 @@
  * This file was last modified at 2021.03.02 19:04 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
- * EditNewsGroup.jsx
+ * EditTagLabel.jsx
  * $Id$
  */
 
-import NewsGroupView from "./NewsGroupView";
-import {updateNewsGroup} from "../../../redux/actions";
+import TagLabelView from './TagLabelView';
+import {updateTagLabel} from "../../../redux/actions";
 
 import {Redirect} from "react-router";
 import {compose} from "redux";
@@ -16,12 +16,12 @@ import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import React from "react";
 
-class EditNewsGroup extends NewsGroupView {
+class EditTagLabel extends TagLabelView {
 
     state = {
         data: {
             id: null,
-            groupName: "",
+            label: "",
             userName: null,
             createTime: "",
             updateTime: "",
@@ -39,7 +39,7 @@ class EditNewsGroup extends NewsGroupView {
 
     handleSubmit = event => {
         event.preventDefault();
-        this.props.updateNewsGroupView(this.state.data);
+        this.props.updateTagLabelView(this.state.data);
         this.setState({redirectToReferrer: true});
     }
 
@@ -59,10 +59,10 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    updateNewsGroupView: value => dispatch(updateNewsGroup(value)),
+    updateTagLabelView: value => dispatch(updateTagLabel(value)),
 })
 
 export default compose(
     withRouter,
     connect(mapStateToProps, mapDispatchToProps)
-)(EditNewsGroup);
+)(EditTagLabel);

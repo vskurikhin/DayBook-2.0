@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.02 17:18 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.02 19:04 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * actions.js
@@ -11,6 +11,10 @@ import {API_V1_RESOURCE, API_V1_RESOURCE_RECORD} from '../config/api';
 export const createNewsGroup = value => resource('POST', 'news-group', value);
 
 export const updateNewsGroup = value => resource('PUT', 'news-group', value);
+
+export const createTagLabel = value => resource('POST', 'tag-label', value);
+
+export const updateTagLabel = value => resource('PUT', 'tag-label', value);
 
 export const createArticle = value => resourceRecord('POST', 'article', value);
 

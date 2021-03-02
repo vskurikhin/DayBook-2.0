@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.02 17:18 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.02 19:04 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * CreateTabView.jsx
@@ -9,23 +9,46 @@
 import CreateArticleView from "./Article/CreateArticle";
 import CreateNewsEntryView from "./NewsEntry/CreateNewsEntry";
 import CreateNewsGroup from "./NewsGroup/CreateNewsGroup";
+import CreateTagLabel from "./TagLabel/CreateTagLabel";
 
 import React, {Component} from 'react';
 import {TabView, TabPanel} from 'primereact/tabview';
 
+const DEFAULT_ACTIVE_INDEX = 2;
+
 export default class CreateTabView extends Component {
+
+    state = {
+        activeIndex: DEFAULT_ACTIVE_INDEX
+    }
 
     constructor(props) {
         super(props);
+        this.defaultActiveIndex = this.defaultActiveIndex.bind(this);
     }
-x
+
+    defaultActiveIndex() {
+        this.setActiveIndex(DEFAULT_ACTIVE_INDEX);
+    }
+
+    setActiveIndex(index) {
+        this.setState({activeIndex: index});
+    }
+
     render() {
+        const values = {
+            ...this.props,
+            defaultActiveIndex: this.defaultActiveIndex
+        }
         return (
             <div className="tab-view">
                 <h1>Create</h1>
-                <TabView>
+                <TabView activeIndex={this.state.activeIndex} onTabChange={(e) => this.setActiveIndex(e.index)}>
                     <TabPanel header="News Group">
-                        <CreateNewsGroup/>
+                        <CreateNewsGroup defaultActiveIndex={this.defaultActiveIndex} />
+                    </TabPanel>
+                    <TabPanel header="Tag Label">
+                        <CreateTagLabel defaultActiveIndex={this.defaultActiveIndex} />
                     </TabPanel>
                     <TabPanel header="Article">
                         <CreateArticleView/>
