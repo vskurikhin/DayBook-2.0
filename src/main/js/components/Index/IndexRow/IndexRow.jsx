@@ -1,8 +1,8 @@
 /*
- * This file was last modified at 2021.02.27 00:06 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.02 17:18 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
- * HomeRow.jsx
+ * IndexRow.jsx
  * $Id$
  */
 
@@ -16,7 +16,7 @@ import {compose} from "redux";
 import {connect} from "react-redux";
 import {withRouter} from "react-router";
 
-export class HomeRow extends Component {
+export class IndexRow extends Component {
 
     constructor(props) {
         super(props);
@@ -66,4 +66,4 @@ const mapDispatchToProps = dispatch => ({
 export default compose(
     withRouter,
     connect(mapStateToProps, mapDispatchToProps)
-)(HomeRow);
+)(IndexRow);

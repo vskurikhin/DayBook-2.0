@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.28 23:25 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.02 17:18 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * TagLabelController.java
@@ -29,8 +29,8 @@ import reactor.core.publisher.Mono;
 import su.svn.daybook.domain.model.*;
 import su.svn.daybook.services.TagLabelService;
 import su.svn.daybook.services.TaggetService;
+import su.svn.daybook.utils.BodyUtil;
 
-import java.sql.Date;
 import java.util.Set;
 
 @Slf4j
@@ -62,7 +62,7 @@ public class TagLabelController {
     public Mono<ResponseEntity<?>> addTags(@RequestBody TagsForRecordDto dto) {
         log.debug("addTags({}): authentication={}", dto, SecurityContextHolder.getContext().getAuthentication());
         return taggetService.addTags(dto)
-                .map(a -> getBody(a, HttpStatus.CREATED, "Added for"));
+                .map(a -> BodyUtil.getBody(a, HttpStatus.CREATED, "Added for"));
     }
 
     @Operation(
@@ -79,7 +79,7 @@ public class TagLabelController {
     public Mono<ResponseEntity<?>> createTagLabel(@RequestBody TagLabelDto dto) {
         log.debug("createArticle({}): authentication={}", dto, SecurityContextHolder.getContext().getAuthentication());
         return tagLabelService.create(dto)
-                .map(a -> getBody(a, HttpStatus.CREATED, "Created"));
+                .map(a -> BodyUtil.getBody(a, HttpStatus.CREATED, "Created"));
     }
 
     @Operation(summary = "Get all of tag label")
@@ -98,13 +98,4 @@ public class TagLabelController {
         return tagLabelService.readLabelIn(Set.of(labels));
     }
 
-    private ResponseEntity<?> getBody(DBEntry<?> a, HttpStatus ok, String message) {
-        ResponseDto response = ResponseDto.builder()
-                .message(message + ": " + a.getId())
-                .status("success")
-                .object(a)
-                .timestamp(new Date(new java.util.Date().getTime()))
-                .build();
-        return ResponseEntity.status(ok).body(response);
-    }
 }

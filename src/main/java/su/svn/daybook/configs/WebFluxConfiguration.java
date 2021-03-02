@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.01.13 00:44 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.02 17:18 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * WebFluxConfiguration.java
@@ -14,7 +14,9 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.CacheControl;
 import org.springframework.web.reactive.config.EnableWebFlux;
+import org.springframework.web.reactive.config.ResourceHandlerRegistry;
 import org.springframework.web.reactive.config.ViewResolverRegistry;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
 import org.springframework.web.reactive.function.server.RouterFunction;
@@ -27,6 +29,8 @@ import org.thymeleaf.spring5.view.reactive.ThymeleafReactiveViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
+import java.util.concurrent.TimeUnit;
+
 @Configuration
 @EnableWebFlux
 public class WebFluxConfiguration implements ApplicationContextAware, WebFluxConfigurer {
@@ -36,6 +40,19 @@ public class WebFluxConfiguration implements ApplicationContextAware, WebFluxCon
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.context = applicationContext;
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/css/**")
+                .addResourceLocations("/public", "classpath:/static/css/")
+                .setCacheControl(CacheControl.maxAge(10, TimeUnit.MINUTES).noTransform().cachePublic());
+        registry.addResourceHandler("/generated/**")
+                .addResourceLocations("classpath:static/generated/")
+                .setCacheControl(CacheControl.maxAge(30, TimeUnit.SECONDS).noTransform().cachePublic());
+        registry.addResourceHandler("/raw-svg/**")
+                .addResourceLocations("classpath:/static/raw-svg/")
+                .setCacheControl(CacheControl.maxAge(1, TimeUnit.DAYS).noTransform().cachePublic());
     }
 
     @Bean
@@ -76,11 +93,6 @@ public class WebFluxConfiguration implements ApplicationContextAware, WebFluxCon
     }
 
     @Bean
-    public RouterFunction<ServerResponse> cssRouter() {
-        return RouterFunctions.resources("/css/**", new ClassPathResource("static/css/"));
-    }
-
-    @Bean
     public RouterFunction<ServerResponse> dataRouter() {
         return RouterFunctions.resources("/data/**", new ClassPathResource("static/data/"));
     }
@@ -88,16 +100,6 @@ public class WebFluxConfiguration implements ApplicationContextAware, WebFluxCon
     @Bean
     public RouterFunction<ServerResponse> fontsRouter() {
         return RouterFunctions.resources("/fonts/**", new ClassPathResource("static/fonts/"));
-    }
-
-    @Bean
-    public RouterFunction<ServerResponse> generatedRouter() {
-        return RouterFunctions.resources("/generated/**", new ClassPathResource("static/generated/"));
-    }
-
-    @Bean
-    public RouterFunction<ServerResponse> raw_svgRouter() {
-        return RouterFunctions.resources("/raw-svg/**", new ClassPathResource("static/raw-svg/"));
     }
 
     @Bean
