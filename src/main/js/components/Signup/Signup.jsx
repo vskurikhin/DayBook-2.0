@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.22 17:38 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.02 23:08 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * Signup.jsx
@@ -8,12 +8,18 @@
 
 import Header from '../Header/Header'
 import NavigationBar from '../NavigationBar/NavigationBar'
-import {userPostFetch} from '../../redux/actions'
+import {locales} from "../../config/locales";
+import {userLoginFetch, userPostFetch} from '../../redux/actions'
 
 import React, {Component} from 'react'
 import {Button} from "primereact/button";
 import {InputText} from "primereact/inputtext";
+import {Text, TranslationsProvider} from "@eo-locale/react";
+import {Translator} from '@eo-locale/core';
 import {connect} from 'react-redux'
+import {compose} from "redux";
+import {withRouter} from "react-router";
+import Side from "../Side/Side";
 
 class Signup extends Component {
     state = {
@@ -34,30 +40,24 @@ class Signup extends Component {
     }
 
     render() {
+        const translator = new Translator(this.props.locale.language, locales);
         return (
             <div>
-                <Header/>
-                <NavigationBar/>
-                <div className="my-row">
-                    <div className="my-side">
-                        <h1>Home</h1>
-                        <h2>About Me</h2>
-                        <h5>Photo of me:</h5>
-                        <div className="fakeimg">Image</div>
-                        <p>Some text about me in culpa qui officia deserunt mollit anim..</p>
-                        <h3>More Text</h3>
-                        <p>Lorem ipsum dolor sit ame.</p>
-                    </div>
-                    <div className="my-main" name='main'>
-                        <form onSubmit={this.handleSubmit}>
-                            <div className="my-divTable">
-                                <div className="my-divTableBody">
-                                    <div className="my-divTableRow">
-                                        <div className="my-divTableCellLeft">&nbsp;</div>
-                                        <div className="my-divTableCell">
-                                            <h1>Sign-up</h1>
-                                            <br/>
-                                            <span className="p-float-label">
+                <TranslationsProvider language={this.props.locale.language} locales={locales}>
+                    <Header/>
+                    <NavigationBar/>
+                    <div className="my-row">
+                        <Side/>
+                        <div className="my-main" name='main'>
+                            <form onSubmit={this.handleSubmit}>
+                                <div className="my-divTable">
+                                    <div className="my-divTableBody">
+                                        <div className="my-divTableRow">
+                                            <div className="my-divTableCellLeft">&nbsp;</div>
+                                            <div className="my-divTableCell">
+                                                <h1>Sign-up</h1>
+                                                <br/>
+                                                <span className="p-float-label">
                                                         <InputText
                                                             className="my-p-inputtext"
                                                             id="Username"
@@ -65,31 +65,31 @@ class Signup extends Component {
                                                             onChange={this.handleChange}
                                                             value={this.state.username}
                                                         />
-                                                        <label htmlFor="Username"><b>Username:</b></label>
+                                                        <label htmlFor="Username"><b><Text id='Username'/>:</b></label>
                                                     </span>
+                                            </div>
+                                            <div className="my-divTableCellRight">&nbsp;</div>
                                         </div>
-                                        <div className="my-divTableCellRight">&nbsp;</div>
-                                    </div>
-                                    <div className="my-divTableRow">
-                                        <div className="my-divTableCellLeft">&nbsp;</div>
-                                        <div className="my-divTableCell">
-                                            <label className="my-label"><b>Password:</b></label><br/>
-                                            <input
-                                                className="my-p-inputtext"
-                                                name='password'
-                                                onChange={this.handleChange}
-                                                placeholder='Password'
-                                                type='password'
-                                                value={this.state.password}
-                                            /><br/>
+                                        <div className="my-divTableRow">
+                                            <div className="my-divTableCellLeft">&nbsp;</div>
+                                            <div className="my-divTableCell">
+                                                <label className="my-label"><b><Text id='Password'/>:</b></label><br/>
+                                                <input
+                                                    className="my-p-inputtext"
+                                                    name='password'
+                                                    onChange={this.handleChange}
+                                                    placeholder={translator.getMessageById('Password')}
+                                                    type='password'
+                                                    value={this.state.password}
+                                                /><br/>
+                                            </div>
+                                            <div className="my-divTableCellRight">&nbsp;</div>
                                         </div>
-                                        <div className="my-divTableCellRight">&nbsp;</div>
-                                    </div>
-                                    <div className="my-divTableRow">
-                                        <div className="my-divTableCellLeft">&nbsp;</div>
-                                        <div className="my-divTableCell">
-                                            <br/>
-                                            <span className="p-float-label">
+                                        <div className="my-divTableRow">
+                                            <div className="my-divTableCellLeft">&nbsp;</div>
+                                            <div className="my-divTableCell">
+                                                <br/>
+                                                <span className="p-float-label">
                                                         <InputText
                                                             className="my-p-inputtext"
                                                             id="Email"
@@ -99,35 +99,43 @@ class Signup extends Component {
                                                         />
                                                         <label htmlFor="Email"><b>E-mail:</b></label>
                                                     </span>
+                                            </div>
+                                            <div className="my-divTableCellRight">&nbsp;</div>
                                         </div>
-                                        <div className="my-divTableCellRight">&nbsp;</div>
-                                    </div>
-                                    <div className="my-divTableRow">
-                                        <div className="my-divTableCellLeft">&nbsp;</div>
-                                        <div className="my-divTableCell">
-                                            <Button
-                                                className="my-p-button"
-                                                icon="pi pi-check"
-                                                iconPos="right"
-                                                label="Submit"
-                                            />
+                                        <div className="my-divTableRow">
+                                            <div className="my-divTableCellLeft">&nbsp;</div>
+                                            <div className="my-divTableCell">
+                                                <Button
+                                                    className="my-p-button"
+                                                    icon="pi pi-check"
+                                                    iconPos="right"
+                                                    label="Submit"
+                                                />
+                                            </div>
+                                            <div className="my-divTableCellRight">&nbsp;</div>
                                         </div>
-                                        <div className="my-divTableCellRight">&nbsp;</div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
-                </div>
-                <div className="my-footer">
-                </div>
+                    <div className="my-footer">
+                    </div>
+                </TranslationsProvider>
             </div>
         )
     }
 }
 
-const mapDispatchToProps = dispatch => ({
-    userPostFetch: userInfo => dispatch(userPostFetch(userInfo))
+const mapStateToProps = state => ({
+    locale: state.language
 })
 
-export default connect(null, mapDispatchToProps)(Signup);
+const mapDispatchToProps = dispatch => ({
+    userLoginFetch: userInfo => dispatch(userLoginFetch(userInfo))
+})
+
+export default compose(
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps)
+)(Signup);

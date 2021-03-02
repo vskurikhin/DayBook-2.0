@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.27 00:06 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.02 23:08 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * CalendarRow.jsx
@@ -17,6 +17,8 @@ import React, {Component} from 'react'
 import {compose} from "redux";
 import {connect, ReactReduxContext} from 'react-redux'
 import {withRouter} from "react-router";
+import {Text, TranslationsProvider} from "@eo-locale/react";
+import {locales} from "../../../config/locales";
 
 export class CalendarRow extends Component {
 
@@ -69,8 +71,9 @@ export class CalendarRow extends Component {
 
         return (
             <div className="my-row">
+                <TranslationsProvider language={this.props.locale.language} locales={locales}>
                 <div className="my-side">
-                    <h1>Calendar</h1>
+                    <h1><Text id='Calendar'/></h1>
                     <ReactReduxContext.Consumer>
                         { ({store}) => this.renderCalendar(store) }
                     </ReactReduxContext.Consumer>
@@ -80,14 +83,15 @@ export class CalendarRow extends Component {
                         <CalendarDataView date={formatDate(this.getCurrentDate())}/>
                     </IFrame>
                 </div>
+                </TranslationsProvider>
             </div>
         )
     }
 }
 
 const mapStateToProps = state => ({
-    user: state.currentUser,
-    date: state.currentDate
+    date: state.currentDate,
+    locale: state.language
 })
 
 const mapDispatchToProps = dispatch => ({
