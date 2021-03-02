@@ -1,13 +1,13 @@
 /*
- * This file was last modified at 2021.03.01 20:59 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.01 23:42 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * CreateTabView.jsx
  * $Id$
  */
 
-import CreateArticleView from "./ArticleView/CreateArticleView";
-import CreateNewsEntryView from "./NewsEntryView/CreateNewsEntryView";
+import CreateArticleView from "./Article/CreateArticle";
+import CreateNewsEntryView from "./NewsEntry/CreateNewsEntry";
 
 import React, {Component} from 'react';
 import {TabView, TabPanel} from 'primereact/tabview';
@@ -19,9 +19,8 @@ export default class CreateTabView extends Component {
     }
 
     render() {
-
         return (
-            <div className="card">
+            <div className="tab-view">
                 <h1>Create</h1>
                 <TabView>
                     <TabPanel header="News Group">

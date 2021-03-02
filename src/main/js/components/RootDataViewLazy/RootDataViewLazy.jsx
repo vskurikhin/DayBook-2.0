@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.28 23:25 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.01 23:42 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RootDataViewLazy.jsx
@@ -295,15 +295,12 @@ const RootDataViewLazy = props => {
     )
 
     const renderTags = (tags) => {
-        console.log("renderTags");
-        console.log(tags);
         const items = [];
         for (let object in tags) {
             // noinspection JSUnfilteredForInLoop
             let index = Object.keys(tags).indexOf(object);
             items.push({index: index, value: tags[index]});
         }
-        console.log(items);
         return (
             <div>{map(items, ({index, value}) => (
                 <Button
@@ -334,8 +331,6 @@ const RootDataViewLazy = props => {
         else if (layout === 'list')
             return renderListItem(record);
     }
-    console.log("RootDataViewLazy");
-    console.log(props);
 
     return (
         <div className="dataview-demo">
