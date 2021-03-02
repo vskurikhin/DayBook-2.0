@@ -11,6 +11,7 @@
   "author": "Victor N. Skurikhin",
   "license": "UNLICENSED",
   "dependencies": {
+    "@eo-locale/core": "^1.4.14",
     "axios": "^0.21.1",
     "bootstrap": "^4.5.2",
     "classname": "0.0.0",
