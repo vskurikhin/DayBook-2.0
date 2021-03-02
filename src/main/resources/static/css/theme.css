@@ -52,7 +52,7 @@
 .p-link:focus {
   outline: 0 none;
   outline-offset: 0;
-  box-shadow: 0 0 0 0.2rem #8dcdff;
+  box-shadow: 0 0 0 0.1rem rgba(0,0,0,0.1);
 }
 
 .p-autocomplete .p-autocomplete-loader {
@@ -70,7 +70,7 @@
 .p-autocomplete .p-autocomplete-multiple-container:not(.p-disabled).p-focus {
   outline: 0 none;
   outline-offset: 0;
-  box-shadow: 0 0 0 0.2rem #8dcdff;
+  box-shadow: 0 0 0 0.1rem rgba(141,205,255,0.9);
   border-color: #007ad9;
 }
 .p-autocomplete .p-autocomplete-multiple-container .p-autocomplete-input-token {
@@ -174,7 +174,7 @@
 .p-datepicker .p-datepicker-header .p-datepicker-next:focus {
   outline: 0 none;
   outline-offset: 0;
-  box-shadow: 0 0 0 0.2rem #8dcdff;
+  box-shadow: 0 0 0 0.1rem rgba(141,205,255,0.9);
 }
 .p-datepicker .p-datepicker-header .p-datepicker-title {
   line-height: 2rem;
@@ -185,7 +185,8 @@
 .p-datepicker .p-datepicker-header .p-datepicker-title select:focus {
   outline: 0 none;
   outline-offset: 0;
-  box-shadow: 0 0 0 0.2rem #8dcdff;
+  box-shadow: 0 0 0 0.1rem rgba(141,205,255,0.9);
+
   border-color: #007ad9;
 }
 .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month {
@@ -219,7 +220,7 @@
 .p-datepicker table td > span:focus {
   outline: 0 none;
   outline-offset: 0;
-  box-shadow: 0 0 0 0.2rem #8dcdff;
+  box-shadow: 0 0 0 0.1rem rgba(141,205,255,0.9);
 }
 .p-datepicker table td.p-datepicker-today > span {
   background: #d0d0d0;
@@ -258,7 +259,7 @@
 .p-datepicker .p-timepicker button:focus {
   outline: 0 none;
   outline-offset: 0;
-  box-shadow: 0 0 0 0.2rem #8dcdff;
+  box-shadow: 0 0 0 0.1rem rgba(141,205,255,0.9);
 }
 .p-datepicker .p-timepicker button:last-child {
   margin-top: 0.2em;
@@ -304,7 +305,7 @@
 .p-datepicker:not(.p-disabled) table td span:not(.p-highlight):not(.p-disabled):focus {
   outline: 0 none;
   outline-offset: 0;
-  box-shadow: 0 0 0 0.2rem #8dcdff;
+  box-shadow: 0 0 0 0.1rem rgba(141,205,255,0.9);
 }
 .p-datepicker:not(.p-disabled) .p-monthpicker .p-monthpicker-month:not(.p-highlight):not(.p-disabled):hover {
   background: #eaeaea;
@@ -312,7 +313,7 @@
 .p-datepicker:not(.p-disabled) .p-monthpicker .p-monthpicker-month:not(.p-highlight):not(.p-disabled):focus {
   outline: 0 none;
   outline-offset: 0;
-  box-shadow: 0 0 0 0.2rem #8dcdff;
+  box-shadow: 0 0 0 0.1rem rgba(141,205,255,0.9);
 }
 
 .p-datepicker-mask.p-component-overlay {
@@ -361,7 +362,6 @@
 .p-cascadeselect.p-invalid.p-component {
   border-color: #a80000;
 }
-
 .p-cascadeselect-panel {
   background: #ffffff;
   color: #333333;
@@ -3064,7 +3064,6 @@
 .p-tabview .p-tabview-nav li .p-tabview-nav-link:not(.p-disabled):focus {
   outline: 0 none;
   outline-offset: 0;
-  box-shadow: 0 0 0 0.2rem #8dcdff;
 }
 .p-tabview .p-tabview-nav li:not(.p-highlight):not(.p-disabled):hover .p-tabview-nav-link {
   background: #dbdbdb;
@@ -3084,7 +3083,6 @@
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
 }
-
 .p-toolbar {
   background: #f4f4f4;
   border: 1px solid #c8c8c8;

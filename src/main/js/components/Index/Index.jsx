@@ -1,18 +1,18 @@
 /*
- * This file was last modified at 2021.02.27 00:06 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.02 17:18 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
- * Home.jsx
+ * Index.jsx
  * $Id$
  */
 
 import Header from '../Header/Header'
 import NavigationBar from '../NavigationBar/NavigationBar'
-import HomeRow from './HomeRow/HomeRow'
+import HomeRow from './IndexRow/IndexRow'
 
 import React, { Component } from 'react'
 
-export default class Home extends Component {
+export default class Index extends Component {
 
   render () {
     return (

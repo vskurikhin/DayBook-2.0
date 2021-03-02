@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.28 23:25 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.02 17:18 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * actions.js
@@ -7,6 +7,10 @@
  */
 
 import {API_V1_RESOURCE, API_V1_RESOURCE_RECORD} from '../config/api';
+
+export const createNewsGroup = value => resource('POST', 'news-group', value);
+
+export const updateNewsGroup = value => resource('PUT', 'news-group', value);
 
 export const createArticle = value => resourceRecord('POST', 'article', value);
 
@@ -20,16 +24,20 @@ export const createNewsLinks = value => resourceRecord('POST', 'news-links', val
 
 export const updateNewsLinks = value => resourceRecord('PUT', 'news-links', value);
 
+export const logMessage = (label, message) => {
+    console.log(label);
+    console.log(message);
+}
+
 export const resourceRecord = (method, object, value) => {
     return dispatch => {
         const token = window.sessionStorage.token;
         if (token) {
-            return resource(API_V1_RESOURCE_RECORD, method, object, value, token)
+            return urlMethod(API_V1_RESOURCE_RECORD, method, object, value, token)
                 .then(resp => resp.json())
                 .then(data => {
                     if (data.message) {
-                        console.log('resourceRecord message: ');
-                        console.log(data.message);
+                        logMessage('resourceRecord message: ', data.message);
                         // noinspection EqualityComparisonWithCoercionJS
                         if ('success' == data.status) {
                             dispatch(resourceTags({
@@ -38,8 +46,25 @@ export const resourceRecord = (method, object, value) => {
                             }));
                         }
                     } else {
-                        console.log('resourceRecord data: ');
-                        console.log(data);
+                        logMessage('resourceRecord data: ', data);
+                    }
+                })
+        }
+    }
+}
+
+export const resource = (method, object, value) => {
+    return dispatch => {
+        const token = window.sessionStorage.token;
+        if (token) {
+            console.log("resourceTags(" + JSON.stringify(value) + ")")
+            return urlMethod(API_V1_RESOURCE, method, object, value, token)
+                .then(resp => resp.json())
+                .then(data => {
+                    if (data.message) {
+                        logMessage('resource message: ', data.message);
+                    } else {
+                        logMessage('resource data: ', data);
                     }
                 })
         }
@@ -51,27 +76,25 @@ export const resourceTags = (value, props) => {
         const token = window.sessionStorage.token;
         if (token) {
             console.log("resourceTags(" + JSON.stringify(value) + ")")
-            return resource(API_V1_RESOURCE, 'POST', 'add-tags', value, token)
+            return urlMethod(API_V1_RESOURCE, 'POST', 'add-tags', value, token)
                 .then(resp => resp.json())
                 .then(data => {
                     if (data.message) {
-                        console.log('resourceTags message: ');
-                        console.log(data.message);
+                        logMessage('resourceTags message: ', data.message);
                         // noinspection EqualityComparisonWithCoercionJS
                         if ('success' == data.status) {
                             console.log(data.object);
                             dispatch(setUpdatedRecord(data.object));
                         }
                     } else {
-                        console.log('resourceTags data: ');
-                        console.log(data);
+                        logMessage('resourceTags data: ', data);
                     }
                 })
         }
     }
 }
 
-export const resource = (url, method, object, value, token) => {
+export const urlMethod = (url, method, object, value, token) => {
     return fetch(url + '/' + object, {
         method: method,
         headers: {

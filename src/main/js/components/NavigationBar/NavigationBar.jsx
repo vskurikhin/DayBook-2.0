@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.27 11:03 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.02 17:18 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NavigationBar.jsx
@@ -17,11 +17,11 @@ import {map} from 'underscore'
 import {withRouter} from 'react-router'
 
 const SECTIONS = [
-    {title: 'Home', href: '/', global: true},
+    {title: 'Index', href: '/', global: true},
     {title: 'Calendar', href: '/calendar', global: true},
+    {title: 'Create', href: '/create', admin: true},
     {title: 'Login', href: '/login', anonymously: true},
     {title: 'Signup', href: '/signup', anonymously: true},
-    {title: 'Create', href: '/create', admin: true},
     {title: 'Log Out', href: '/', handleClick: true},
 ]
 

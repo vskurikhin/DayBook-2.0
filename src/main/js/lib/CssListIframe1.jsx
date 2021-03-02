@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.22 17:38 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.02 17:18 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * CssListIframe1.jsx
@@ -9,7 +9,7 @@
 const FILES = [
     '/css/primeicons.css',
     '/css/primereact.min.css',
-    '/css/theme.css',
+    '/css/theme.min.css',
     '/css/index.css',
     '/css/iframe1.css'
 ]

@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.22 17:38 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.02 17:18 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * Login.jsx
@@ -38,7 +38,7 @@ class Login extends Component {
     render() {
         const redirectToReferrer = this.state.redirectToReferrer;
         if (redirectToReferrer === true) {
-            return <Redirect to="/home"/>
+            return <Redirect to="/index"/>
         }
         return (
             <div>
