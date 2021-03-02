@@ -11,7 +11,7 @@ import './App.scss';
 import Calendar from './components/Calendar/Calendar';
 import Create from "./components/Edit/Create";
 import Edit from './components/Edit/Edit';
-import Index from './components/Index';
+import CIndex from './components/Index/CIndex';
 import Login from './components/Login/Login';
 import Signup from './components/Signup/Signup'
 import {getProfileFetch, logoutUser} from './redux/actions';
@@ -37,7 +37,7 @@ class App extends Component {
     return (
       <div className="App">
         <Switch>
-          <Route history={history} path='/index' component={Index} />
+          <Route history={history} path='/index' component={CIndex} />
           <Route history={history} path='/calendar' component={Calendar} />
           <Route history={history} path='/create' component={Create} />
           <Route history={history} path='/login' component={Login} />
