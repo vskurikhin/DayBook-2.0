@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.01 23:42 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.02 23:08 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RootDataViewLazy.jsx
@@ -23,6 +23,7 @@ import moment from 'moment';
 import {Button} from 'primereact/button';
 import {ContextMenu} from 'primereact/contextmenu';
 import {DataView} from 'primereact/dataview';
+import {DateTime} from '@eo-locale/react';
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {map} from 'underscore'
@@ -179,7 +180,14 @@ const RootDataViewLazy = props => {
                                 <tr>
                                     <td>{renderUserName(id, record)}</td>
                                     <td className="my-news-entry-date-th"
-                                    >{moment(updateTime).format("dddd, MMM DD at HH:mm a")}</td>
+                                    ><DateTime
+                                        language={props.locale.language}
+                                        value={moment(updateTime)}
+                                        day="numeric"
+                                        month="long"
+                                        weekday="long"
+                                        year="numeric"
+                                    /></td>
                                     <td/>
                                 </tr>
                                 <tr>
@@ -352,6 +360,7 @@ const RootDataViewLazy = props => {
 
 const mapStateToProps = state => ({
     date: state.currentDate,
+    locale: state.language,
     record: state.updatedRecord,
     user: state.currentUser,
 })

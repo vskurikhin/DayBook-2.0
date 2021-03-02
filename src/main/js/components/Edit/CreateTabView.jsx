@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.02 19:04 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.02 23:08 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * CreateTabView.jsx
@@ -13,10 +13,14 @@ import CreateTagLabel from "./TagLabel/CreateTagLabel";
 
 import React, {Component} from 'react';
 import {TabView, TabPanel} from 'primereact/tabview';
+import {Translator} from "@eo-locale/core";
+import {locales} from "../../config/locales";
+import {connect} from "react-redux";
+import {Text, TranslationsProvider} from "@eo-locale/react";
 
 const DEFAULT_ACTIVE_INDEX = 2;
 
-export default class CreateTabView extends Component {
+class CreateTabView extends Component {
 
     state = {
         activeIndex: DEFAULT_ACTIVE_INDEX
@@ -36,33 +40,43 @@ export default class CreateTabView extends Component {
     }
 
     render() {
-        const values = {
-            ...this.props,
-            defaultActiveIndex: this.defaultActiveIndex
-        }
+        const translator = new Translator(this.props.locale.language, locales);
         return (
             <div className="tab-view">
-                <h1>Create</h1>
-                <TabView activeIndex={this.state.activeIndex} onTabChange={(e) => this.setActiveIndex(e.index)}>
-                    <TabPanel header="News Group">
-                        <CreateNewsGroup defaultActiveIndex={this.defaultActiveIndex} />
-                    </TabPanel>
-                    <TabPanel header="Tag Label">
-                        <CreateTagLabel defaultActiveIndex={this.defaultActiveIndex} />
-                    </TabPanel>
-                    <TabPanel header="Article">
-                        <CreateArticleView/>
-                    </TabPanel>
-                    <TabPanel header="News Entry">
-                        <CreateNewsEntryView/>
-                    </TabPanel>
-                    <TabPanel header="News Links">
-                        <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati
-                            cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
-                            Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.</p>
-                    </TabPanel>
-                </TabView>
+                <TranslationsProvider language={this.props.locale.language} locales={locales}>
+                    <h1><Text id='Create'/></h1>
+                    <TabView activeIndex={this.state.activeIndex} onTabChange={(e) => this.setActiveIndex(e.index)}>
+                        <TabPanel header={translator.getMessageById('News_Group')}>
+                            <CreateNewsGroup defaultActiveIndex={this.defaultActiveIndex}/>
+                        </TabPanel>
+                        <TabPanel header={translator.getMessageById('Tag_Label')}>
+                            <CreateTagLabel defaultActiveIndex={this.defaultActiveIndex}/>
+                        </TabPanel>
+                        <TabPanel header={translator.getMessageById('Article')}>
+                            <CreateArticleView/>
+                        </TabPanel>
+                        <TabPanel header={translator.getMessageById('News_Entry')}>
+                            <CreateNewsEntryView/>
+                        </TabPanel>
+                        <TabPanel header={translator.getMessageById('News_Links')}>
+                            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium
+                                voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint
+                                occaecati
+                                cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi,
+                                id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita
+                                distinctio.
+                                Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo
+                                minus.</p>
+                        </TabPanel>
+                    </TabView>
+                </TranslationsProvider>
             </div>
         );
     }
 }
+
+const mapStateToProps = state => ({
+    locale: state.language
+})
+
+export default connect(mapStateToProps)(CreateTabView);
