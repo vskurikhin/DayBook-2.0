@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.02 23:08 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.03 16:35 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RootDataViewLazy.jsx
@@ -167,7 +167,7 @@ const RootDataViewLazy = props => {
                                     <td className="valueField my-news-entry-second-th"
                                         colSpan="2"
                                         rowSpan="2">
-                                        <div align="justify" dangerouslySetInnerHTML={{
+                                        <div style={{all: 'unset'}} align="justify" dangerouslySetInnerHTML={{
                                             __html: renderContent(id, record)
                                         }}
                                         />
