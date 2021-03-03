@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.02 17:18 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.03 19:19 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * WebFluxConfiguration.java
@@ -35,6 +35,8 @@ import java.util.concurrent.TimeUnit;
 @EnableWebFlux
 public class WebFluxConfiguration implements ApplicationContextAware, WebFluxConfigurer {
 
+    private final String publicDirectory = System.getProperty("user.dir") + "/public/";
+
     ApplicationContext context;
 
     @Override
@@ -45,11 +47,14 @@ public class WebFluxConfiguration implements ApplicationContextAware, WebFluxCon
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/css/**")
-                .addResourceLocations("/public", "classpath:/static/css/")
+                .addResourceLocations("classpath:/static/css/")
                 .setCacheControl(CacheControl.maxAge(10, TimeUnit.MINUTES).noTransform().cachePublic());
         registry.addResourceHandler("/generated/**")
                 .addResourceLocations("classpath:static/generated/")
                 .setCacheControl(CacheControl.maxAge(30, TimeUnit.SECONDS).noTransform().cachePublic());
+        registry.addResourceHandler("/public/**")
+                .addResourceLocations("file:" + publicDirectory)
+                .setCacheControl(CacheControl.maxAge(10, TimeUnit.HOURS).noTransform().cachePublic());
         registry.addResourceHandler("/raw-svg/**")
                 .addResourceLocations("classpath:/static/raw-svg/")
                 .setCacheControl(CacheControl.maxAge(1, TimeUnit.DAYS).noTransform().cachePublic());

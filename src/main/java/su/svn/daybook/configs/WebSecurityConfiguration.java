@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.27 22:28 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.03 19:19 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * WebSecurityConfiguration.java
@@ -70,6 +70,7 @@ public class WebSecurityConfiguration {
                 .pathMatchers(HttpMethod.GET, "/css/**").permitAll()
                 .pathMatchers(HttpMethod.GET, "/favicon.ico").permitAll()
                 .pathMatchers(HttpMethod.GET, "/generated/**").permitAll()
+                .pathMatchers(HttpMethod.GET, "/public/**").permitAll()
                 .pathMatchers(HttpMethod.GET, "/raw-svg/**").permitAll()
                 .pathMatchers(HttpMethod.GET, "/static/favicon.ico").permitAll()
                 .pathMatchers(HttpMethod.GET, "/swagger-ui.html").permitAll()
