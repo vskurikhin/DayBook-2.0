@@ -2,11 +2,11 @@
  * This file was last modified at 2021.03.04 13:41 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
- * CreateTagLabel.jsx
+ * Upload.jsx
  * $Id$
  */
 
-import TagLabelView from './TagLabelView';
+import UploadView from './UploadView';
 import {createTagLabel} from '../../../redux/actions';
 
 import React from 'react';
@@ -14,20 +14,10 @@ import {compose} from "redux";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 
-class CreateTagLabel extends TagLabelView {
+class Upload extends UploadView {
 
     state = {
-        data: {
-            id: null,
-            label: "",
-            userName: null,
-            createTime: "",
-            updateTime: "",
-            enabled: true,
-            visible: true,
-            flags: null,
-            tags: null
-        },
+        toast: null,
         redirectToReferrer: false,
     }
 
@@ -36,14 +26,14 @@ class CreateTagLabel extends TagLabelView {
         this.handler = this.handler.bind(this);
     }
 
-    handler(){
+    handler() {
         this.props.defaultActiveIndex();
     }
 
-    handleSubmit = event => {
-        event.preventDefault();
-        this.props.createTagLabelView(this.state.data);
-        this.setState({redirectToReferrer: true});
+    onBeforeSend(event) {
+        console.log(event);
+        const token = window.sessionStorage.token;
+        event.xhr.setRequestHeader('Authorization', `Bearer ${token}`);
     }
 
     render() {
@@ -53,7 +43,7 @@ class CreateTagLabel extends TagLabelView {
         if (this.state.data instanceof Promise) return (
             <div>Loading...</div>
         );
-        return this.tagLabelView();
+        return this.uploadView();
     }
 }
 
@@ -68,4 +58,4 @@ const mapDispatchToProps = dispatch => ({
 export default compose(
     withRouter,
     connect(mapStateToProps, mapDispatchToProps)
-)(CreateTagLabel);
+)(Upload);

@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.03 19:19 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.04 13:41 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * WebSecurityConfiguration.java
@@ -14,14 +14,12 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
-import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 
-import org.springframework.security.web.server.context.NoOpServerSecurityContextRepository;
+import org.springframework.security.web.server.header.XFrameOptionsServerHttpHeadersWriter;
 import reactor.core.publisher.Mono;
 import su.svn.daybook.services.security.AuthenticationManager;
-import su.svn.daybook.services.security.JwtAuthenticationFilter;
 import su.svn.daybook.services.security.SecurityContextRepository;
 
 @Configuration
@@ -52,6 +50,8 @@ public class WebSecurityConfiguration {
                 .csrf().disable()
                 .formLogin().disable()
                 .httpBasic().disable()
+                .headers().frameOptions().mode(XFrameOptionsServerHttpHeadersWriter.Mode.SAMEORIGIN)
+                .and()
                 .authenticationManager(authenticationManager)
                 .securityContextRepository(securityContextRepository)
                 .authorizeExchange()

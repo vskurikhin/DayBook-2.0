@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.02 23:08 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.04 13:41 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * CreateTabView.jsx
@@ -10,6 +10,7 @@ import CreateArticleView from "./Article/CreateArticle";
 import CreateNewsEntryView from "./NewsEntry/CreateNewsEntry";
 import CreateNewsGroup from "./NewsGroup/CreateNewsGroup";
 import CreateTagLabel from "./TagLabel/CreateTagLabel";
+import Upload from "./Upload/Upload";
 
 import React, {Component} from 'react';
 import {TabView, TabPanel} from 'primereact/tabview';
@@ -52,11 +53,11 @@ class CreateTabView extends Component {
                         <TabPanel header={translator.getMessageById('Tag_Label')}>
                             <CreateTagLabel defaultActiveIndex={this.defaultActiveIndex}/>
                         </TabPanel>
-                        <TabPanel header={translator.getMessageById('Article')}>
-                            <CreateArticleView/>
-                        </TabPanel>
                         <TabPanel header={translator.getMessageById('News_Entry')}>
                             <CreateNewsEntryView/>
+                        </TabPanel>
+                        <TabPanel header={translator.getMessageById('Article')}>
+                            <CreateArticleView/>
                         </TabPanel>
                         <TabPanel header={translator.getMessageById('News_Links')}>
                             <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium
@@ -67,6 +68,9 @@ class CreateTabView extends Component {
                                 distinctio.
                                 Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo
                                 minus.</p>
+                        </TabPanel>
+                        <TabPanel header={translator.getMessageById('Upload')}>
+                            <Upload/>
                         </TabPanel>
                     </TabView>
                 </TranslationsProvider>

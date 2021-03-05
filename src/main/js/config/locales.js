@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.02 23:08 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.04 13:41 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * locales.js
@@ -25,6 +25,7 @@ export const locales = [
             SVN_DayBook_Website: 'SVN DayBook Website',
             Signup: 'Signup',
             Tag_Label: 'Tag Label',
+            Upload: 'Upload',
             Username: 'Username',
             hello: 'Hello {name}!',
             language: 'Russian',
@@ -48,6 +49,7 @@ export const locales = [
             SVN_DayBook_Website: 'SVN Веб-сайт Дневник',
             Signup: 'Зарегистрироваться',
             Tag_Label: 'Тег-Метки',
+            Upload: 'Загрузить',
             Username: 'Имя пользователя',
             hello: 'Привет {name}!',
             language: 'English',
