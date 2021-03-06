@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.28 23:25 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.06 16:57 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * ResourceController.java
@@ -34,9 +34,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
-import su.svn.daybook.domain.dao.db.db.RecordNewsEntryService;
+import su.svn.daybook.services.RecordNewsEntryService;
 import su.svn.daybook.domain.model.ArticleDto;
-import su.svn.daybook.domain.model.DBUuidEntry;
 import su.svn.daybook.domain.model.NewsEntryDto;
 import su.svn.daybook.domain.model.ResponseDto;
 import su.svn.daybook.domain.model.db.db.AllRecordView;
@@ -44,8 +43,9 @@ import su.svn.daybook.domain.security.ProfileResponse;
 import su.svn.daybook.services.ArticleService;
 import su.svn.daybook.services.NewsEntryService;
 
-import java.sql.Date;
 import java.util.UUID;
+
+import static su.svn.daybook.utils.BodyUtil.getBody;
 
 @Slf4j
 @RestController
@@ -194,15 +194,5 @@ public class ResourceController {
         log.debug("updateNewsEntry({}): authentication={}", dto, SecurityContextHolder.getContext().getAuthentication());
         return newsEntryService.update(dto)
                 .map(a -> getBody(a, HttpStatus.OK, "Updated"));
-    }
-
-    private ResponseEntity<?> getBody(DBUuidEntry a, HttpStatus ok, String message) {
-        ResponseDto response = ResponseDto.builder()
-                .message(message + ": " + a.getId())
-                .status("success")
-                .object(a)
-                .timestamp(new Date(new java.util.Date().getTime()))
-                .build();
-        return ResponseEntity.status(ok).body(response);
     }
 }

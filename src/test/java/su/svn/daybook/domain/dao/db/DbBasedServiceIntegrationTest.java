@@ -9,7 +9,6 @@ import org.springframework.data.r2dbc.connectionfactory.R2dbcTransactionManager;
 import org.springframework.data.r2dbc.core.DatabaseClient;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.reactive.TransactionalOperator;
-import su.svn.daybook.domain.dao.db.db.RecordNewsEntryService;
 import su.svn.daybook.domain.security.User;
 import su.svn.daybook.services.security.DbUserService;
 import su.svn.daybook.services.security.UserService;
@@ -29,9 +28,6 @@ class DbBasedServiceIntegrationTest {
 
     @Autowired
     UserService userService;
-
-    @Autowired
-    RecordNewsEntryService recordNewsEntryService;
 
     DatabaseClient databaseClient;
 

@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2020.12.23 09:24 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.06 16:57 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * EhCacheConfiguration.java
@@ -9,83 +9,33 @@
 package su.svn.daybook.configs;
 
 import org.ehcache.Cache;
-import org.ehcache.CacheManager;
-import org.ehcache.config.builders.CacheConfigurationBuilder;
-import org.ehcache.config.builders.CacheManagerBuilder;
-import org.ehcache.config.builders.ExpiryPolicyBuilder;
-import org.ehcache.config.builders.ResourcePoolsBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import su.svn.daybook.domain.model.DBLongEntry;
-import su.svn.daybook.domain.model.DBStringEntry;
-import su.svn.daybook.domain.model.DBUuidEntry;
-
-import java.time.Duration;
-import java.util.UUID;
+import su.svn.daybook.domain.model.PageAllRecordViewImpl;
+import su.svn.daybook.domain.model.PageAllRecordViewKey;
+import su.svn.daybook.utils.CacheConstructor;
 
 @Configuration
 @EnableCaching
 public class EhCacheConfiguration {
 
-    @Value("${application.cache.long-cache.entries}")
-    private int longCacheEntries;
+    public static final String PAGE_ALL_RECORD_VIEW_CACHE = "pageAllRecordViewCache";
 
-    @Value("${application.cache.long-cache.ttl-ms}")
-    private int longCacheTtl;
+    @Value("${application.cache.page-all-record-view.entries}")
+    private int tagLabelCacheEntries;
 
-    @Value("${application.cache.string-cache.entries}")
-    private int stringCacheEntries;
+    @Value("${application.cache.page-all-record-view.ttl-ms}")
+    private int tagLabelCacheTtl;
 
-    @Value("${application.cache.string-cache.ttl-ms}")
-    private int stringCacheTtl;
-
-    @Value("${application.cache.uuid-cache.entries}")
-    private int uuidCacheEntries;
-
-    @Value("${application.cache.uuid-cache.ttl-ms}")
-    private int uuidCacheTtl;
-
-    @Bean("longCache")
-    public Cache<Long, DBLongEntry> longCache() {
-        ResourcePoolsBuilder rpBuilder = ResourcePoolsBuilder.heap(longCacheEntries);
-        CacheConfigurationBuilder<Long, DBLongEntry> configurationBuilder = CacheConfigurationBuilder
-                .newCacheConfigurationBuilder(Long.class, DBLongEntry.class, rpBuilder)
-                .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofMillis(longCacheTtl)));
-        CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
-                .withCache("preConfigured", configurationBuilder)
-                .build();
-        cacheManager.init();
-
-        return cacheManager.createCache("longCache", configurationBuilder);
-    }
-
-    @Bean("stringCache")
-    public Cache<String, DBStringEntry> stringCache() {
-        ResourcePoolsBuilder rpBuilder = ResourcePoolsBuilder.heap(stringCacheEntries);
-        CacheConfigurationBuilder<String, DBStringEntry> configurationBuilder = CacheConfigurationBuilder
-                .newCacheConfigurationBuilder(String.class, DBStringEntry.class, rpBuilder)
-                .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofMillis(stringCacheTtl)));
-        CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
-                .withCache("preConfigured", configurationBuilder)
-                .build();
-        cacheManager.init();
-
-        return cacheManager.createCache("stringCache", configurationBuilder);
-    }
-
-    @Bean("uuidCache")
-    public Cache<UUID, DBUuidEntry> uuidCache() {
-        ResourcePoolsBuilder rpBuilder = ResourcePoolsBuilder.heap(uuidCacheEntries);
-        CacheConfigurationBuilder<UUID, DBUuidEntry> configurationBuilder = CacheConfigurationBuilder
-                .newCacheConfigurationBuilder(UUID.class, DBUuidEntry.class, rpBuilder)
-                .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofMillis(uuidCacheTtl)));
-        CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
-                .withCache("preConfigured", configurationBuilder)
-                .build();
-        cacheManager.init();
-
-        return cacheManager.createCache("uuidCache", configurationBuilder);
+    @Bean(PAGE_ALL_RECORD_VIEW_CACHE)
+    public Cache<PageAllRecordViewKey, PageAllRecordViewImpl> pageAllRecordViewCache() {
+        return CacheConstructor.<PageAllRecordViewKey, PageAllRecordViewImpl>builder()
+                .cacheEntries(tagLabelCacheEntries)
+                .ttlExpirationInMs(tagLabelCacheTtl)
+                .keyClass(PageAllRecordViewKey.class)
+                .valueClass(PageAllRecordViewImpl.class)
+                .build().create(PAGE_ALL_RECORD_VIEW_CACHE);
     }
 }
