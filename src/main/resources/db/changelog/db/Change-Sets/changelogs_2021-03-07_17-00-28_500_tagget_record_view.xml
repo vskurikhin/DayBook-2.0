@@ -1,0 +1,38 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd"
+        logicalFilePath="./src/main/resources/db/changelog/db/Change-Sets/changelogs_2021-03-07_17-00-28_500_tagget_record_view.xml">
+
+  <changeSet id="2021-03-07_17-00-28" author="Victor N. Skurikhin">
+      <sql>
+          <![CDATA[
+            DROP VIEW db.tagget_record_view;
+            CREATE OR REPLACE VIEW db.tagget_record_view AS SELECT
+                re.id,
+                re.position,
+                re.type,
+                re.user_name,
+                re.public_time,
+                re.visible,
+                (   SELECT array_agg(tl.label)
+                      FROM db.tagget ta
+                      LEFT JOIN dictionary.tag_label tl
+                        ON tl.id = ta.tag_label_id AND tl.enabled AND ta.enabled
+                     WHERE re.id = ta.record_id AND ta.enabled
+                ) tags
+              FROM db.record re
+             GROUP BY
+                re.id,
+                re.position,
+                re.type,
+                re.user_name,
+                re.public_time,
+                re.visible
+            HAVING re.enabled
+            ;
+          ]]>
+      </sql>
+  </changeSet>
+</databaseChangeLog>

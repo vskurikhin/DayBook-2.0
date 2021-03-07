@@ -330,9 +330,13 @@ img.my-left-top{
 .p-link:focus {
  outline: 0 none;
  outline-offset: 0;
- box-shadow: 0 0 0 0.01rem rgba(0,0,0,0.25);
+ box-shadow: 0 0 0 0.1rem rgba(0,0,0,0.1);
 }
-
+.p-tabview .p-tabview-nav li .p-tabview-nav-link:not(.p-disabled):focus {
+ outline: 0 none;
+ outline-offset: 0;
+ box-shadow: 0 0 0 0.1rem rgba(0,0,0,0.1);
+}
 
 
 

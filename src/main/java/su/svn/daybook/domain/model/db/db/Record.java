@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.25 16:07 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.07 23:13 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * Record.java
@@ -75,6 +75,13 @@ public class Record implements Serializable, DBUuidEntry, DBUserOwnedEntry {
     @Getter
     @Setter
     @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
+    @Schema(description = "public time", example = "1970-01-01T00:00:00Z")
+    @Column("public_time")
+    private LocalDateTime publicTime;
+
+    @Getter
+    @Setter
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     @Schema(description = "update time", example = "1970-01-01T00:00:00Z")
     @Column("update_time")
     private LocalDateTime updateTime;
@@ -95,6 +102,11 @@ public class Record implements Serializable, DBUuidEntry, DBUserOwnedEntry {
     private Integer flags;
 
     @Override
+    public Class<? extends DBUuidEntry> getEClass() {
+        return Record.class;
+    }
+
+    @Override
     public String toString() {
         return "Record{" +
                 "id=" + id +
@@ -102,16 +114,12 @@ public class Record implements Serializable, DBUuidEntry, DBUserOwnedEntry {
                 ", type='" + type + '\'' +
                 ", userName='" + userName + '\'' +
                 ", createTime=" + createTime +
+                ", publicTime=" + publicTime +
                 ", updateTime=" + updateTime +
                 ", enabled=" + enabled +
                 ", visible=" + visible +
                 ", flags=" + flags +
                 '}';
-    }
-
-    @Override
-    public Class<? extends DBUuidEntry> getEClass() {
-        return Record.class;
     }
 
     public boolean equals(final Object o) {
@@ -132,6 +140,10 @@ public class Record implements Serializable, DBUuidEntry, DBUserOwnedEntry {
         final Object this$createTime = this.createTime;
         final Object other$createTime = other.createTime;
         if (this$createTime == null ? other$createTime != null : !this$createTime.equals(other$createTime))
+            return false;
+        final Object this$publicTime = this.publicTime;
+        final Object other$publicTime = other.publicTime;
+        if (this$publicTime == null ? other$publicTime != null : !this$publicTime.equals(other$publicTime))
             return false;
         final Object this$updateTime = this.updateTime;
         final Object other$updateTime = other.updateTime;
@@ -165,6 +177,8 @@ public class Record implements Serializable, DBUuidEntry, DBUserOwnedEntry {
         result = result * PRIME + ($userName == null ? 43 : $userName.hashCode());
         final Object $createTime = this.createTime;
         result = result * PRIME + ($createTime == null ? 43 : $createTime.hashCode());
+        final Object $publicTime = this.publicTime;
+        result = result * PRIME + ($publicTime == null ? 43 : $publicTime.hashCode());
         final Object $updateTime = this.updateTime;
         result = result * PRIME + ($updateTime == null ? 43 : $updateTime.hashCode());
         final Object $enabled = this.enabled;

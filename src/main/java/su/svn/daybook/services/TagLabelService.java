@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.27 22:28 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.07 23:13 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * TagLabelService.java
@@ -92,9 +92,6 @@ public class TagLabelService {
                 .id(tagLabel.getId())
                 .label(tagLabel.getLabel())
                 .userName(tagLabel.getUserName())
-                .createTime(tagLabel.getCreateTime())
-                .updateTime(tagLabel.getUpdateTime())
-                .enabled(tagLabel.getEnabled())
                 .visible(tagLabel.getVisible())
                 .build();
     }
@@ -106,9 +103,6 @@ public class TagLabelService {
         TagLabel entry = TagLabel.builder()
                 .id(dto.getId())
                 .label(dto.getLabel())
-                .createTime(dto.getCreateTime())
-                .updateTime(LocalDateTime.now())
-                .enabled(true)
                 .visible(true)
                 .build();
         setUserName(SecurityContextHolder.getContext(), entry);

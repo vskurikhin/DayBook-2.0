@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.07 12:19 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.07 23:13 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RecordNewsEntryService.java
@@ -35,7 +35,7 @@ import java.util.concurrent.Executors;
 @Service
 public class RecordNewsEntryService {
 
-    public static final Sort.Order ORDER_DESC_BY_UPDATE_TIME = Sort.Order.desc("updateTime");
+    public static final Sort.Order ORDER_DESC_BY_UPDATE_TIME = Sort.Order.desc("publicTime");
 
     public static final Sort.Order ORDER_ASC_BY_POSITION = Sort.Order.by("position");
 
@@ -84,7 +84,7 @@ public class RecordNewsEntryService {
 
             return Flux.just(value);
         }
-        return allRecordViewDao.findAllByEnabledIsTrue(pageable)
+        return allRecordViewDao.findAllByOrderByPublicTimeDesc(pageable)
                 .buffer(size)
                 .doOnNext(allRecordViews -> putCacheAllRecordViewToPage(key, allRecordViews))
                 .map(list -> newPage(list, pageable, totalCount));
@@ -104,7 +104,7 @@ public class RecordNewsEntryService {
 
     @Nonnull
     private Flux<List<AllRecordView>> updateCacheAllRecordViewToPage(PageAllRecordViewKey key) {
-        return allRecordViewDao.findAllByEnabledIsTrue(key.getPageable())
+        return allRecordViewDao.findAllByOrderByPublicTimeDesc(key.getPageable())
                 .buffer(key.getSize())
                 .doOnNext(allRecordViews -> putCacheAllRecordViewToPage(key, allRecordViews));
     }

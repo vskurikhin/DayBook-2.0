@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.27 15:53 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.07 23:13 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NewsGroupService.java
@@ -100,9 +100,6 @@ public class NewsGroupService extends AbstractService<NewsGroup> {
         NewsGroup entry = NewsGroup.builder()
                 .id(UUID.fromString(dto.getId()))
                 .groupName(dto.getGroupName())
-                .createTime(dto.getCreateTime())
-                .updateTime(LocalDateTime.now())
-                .enabled(true)
                 .visible(true)
                 .build();
         setUserName(SecurityContextHolder.getContext(), entry);
@@ -137,11 +134,7 @@ public class NewsGroupService extends AbstractService<NewsGroup> {
         return NewsGroupDto.builder()
                 .id(entry.getId().toString())
                 .groupName(entry.getGroupName())
-                .createTime(entry.getCreateTime())
-                .updateTime(entry.getUpdateTime())
-                .enabled(entry.getEnabled())
                 .visible(entry.getVisible())
-                .flags(entry.getFlags())
                 .build();
     }
 }

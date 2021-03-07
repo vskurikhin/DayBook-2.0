@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.01.23 16:21 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.07 23:13 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * TaggetRecordViewDao.java
@@ -20,19 +20,19 @@ import java.util.UUID;
 
 public interface TaggetRecordViewDao extends ReactiveCrudRepository<TaggetRecordView, UUID> {
 
-    @Query("SELECT * FROM db.tagget_record_view WHERE record_id = :id AND record_enabled")
+    @Query("SELECT * FROM db.tagget_record_view WHERE id = :id")
     Mono<TaggetRecordView> monoById(UUID id);
 
-    @Query("SELECT * FROM db.tagget_record_view WHERE record_id = :id AND record_enabled")
+    @Query("SELECT * FROM db.tagget_record_view WHERE id = :id")
     Mono<TaggetRecordView> monoById(Publisher<UUID> id);
 
-    @Query("SELECT * FROM db.tagget_record_view WHERE record_enabled")
+    @Query("SELECT * FROM db.tagget_record_view")
     Flux<TaggetRecordView> fluxAll();
 
-    @Query("SELECT * FROM db.tagget_record_view WHERE record_id IN (:ids) AND record_enabled")
+    @Query("SELECT * FROM db.tagget_record_view WHERE id IN (:ids)")
     Flux<TaggetRecordView> fluxAllById(Iterable<UUID> ids);
 
     @NonNull
-    @Query("SELECT COUNT(*) FROM db.tagget_record_view WHERE record_enabled")
+    @Query("SELECT COUNT(*) FROM db.tagget_record_view")
     Mono<Long> monoCount();
 }

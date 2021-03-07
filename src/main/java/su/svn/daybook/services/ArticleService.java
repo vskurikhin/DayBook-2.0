@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.28 23:25 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.07 23:13 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * ArticleService.java
@@ -53,7 +53,7 @@ public class ArticleService extends AbstractRecordService<Article> {
                 .createTime(LocalDateTime.now())
                 .updateTime(LocalDateTime.now())
                 .enabled(true)
-                .visible(true)
+                .visible(dto.getVisible() != null ? dto.getVisible() : true)
                 .build();
         setUserName(SecurityContextHolder.getContext(), entry);
 
@@ -61,9 +61,10 @@ public class ArticleService extends AbstractRecordService<Article> {
                 .position(Integer.MAX_VALUE / 2)
                 .type(Article.class.getSimpleName())
                 .createTime(LocalDateTime.now())
+                .publicTime(dto.getPublicTime())
                 .updateTime(LocalDateTime.now())
                 .enabled(true)
-                .visible(true)
+                .visible(dto.getVisible() != null ? dto.getVisible() : true)
                 .build();
         setUserName(SecurityContextHolder.getContext(), record);
 
@@ -98,10 +99,9 @@ public class ArticleService extends AbstractRecordService<Article> {
                 .anchor(dto.getAnchor())
                 .include(dto.getInclude())
                 .summary(dto.getSummary())
-                .createTime(dto.getCreateTime())
                 .updateTime(LocalDateTime.now())
                 .enabled(true)
-                .visible(true)
+                .visible(dto.getVisible())
                 .build();
         setUserName(SecurityContextHolder.getContext(), entry);
 
@@ -109,10 +109,10 @@ public class ArticleService extends AbstractRecordService<Article> {
                 .id(UUID.fromString(dto.getId()))
                 .position(Integer.MAX_VALUE / 2)
                 .type(Article.class.getSimpleName())
-                .createTime(dto.getCreateTime())
+                .publicTime(dto.getPublicTime())
                 .updateTime(LocalDateTime.now())
                 .enabled(true)
-                .visible(true)
+                .visible(dto.getVisible())
                 .build();
         setUserName(SecurityContextHolder.getContext(), record);
 
@@ -149,11 +149,7 @@ public class ArticleService extends AbstractRecordService<Article> {
                 .include(entry.getInclude())
                 .summary(entry.getSummary())
                 .tags(CollectionUtil.getTags(record.getTags()))
-                .createTime(entry.getCreateTime())
-                .updateTime(entry.getUpdateTime())
-                .enabled(entry.getEnabled())
                 .visible(entry.getVisible())
-                .flags(entry.getFlags())
                 .build();
     }
 }

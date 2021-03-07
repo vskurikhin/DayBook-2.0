@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.02 17:18 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.07 23:13 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * CreateArticle.jsx
@@ -20,28 +20,27 @@ import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 
 class CreateArticle extends ArticleView {
+
     state = {
         data: {
             id: null,
             newsGroupId: DEFAULT_NEWS_GROUP_ID,
             title: "",
-            content: "",
+            include: "",
+            anchor: "",
+            summary: "",
             userName: null,
-            createTime: "",
-            updateTime: "",
-            enabled: true,
+            publicTime: null,
             visible: true,
-            flags: null,
             tags: null
         },
-        newsGroupId: DEFAULT_NEWS_GROUP_ID,
         newsGroupNames: [],
         redirectToReferrer: false,
         selectedNewsGroup: "",
         filteredTagLabels: [],
         tagLabels: [],
         selectedTags: []
-    }
+    };
     cancelTokenSource = axios.CancelToken.source();
     newsGroupService = new ApiService(API_V1_RESOURCE_NEWS_GROUPS + '/all', this.cancelTokenSource);
     tagLabelService = new ApiService(API_V1_RESOURCE_TAG_LABEL + '/all', this.cancelTokenSource);

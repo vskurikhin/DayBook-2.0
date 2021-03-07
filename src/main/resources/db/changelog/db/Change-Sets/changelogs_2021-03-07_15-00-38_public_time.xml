@@ -1,0 +1,17 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd"
+        logicalFilePath="./src/main/resources/db/changelog/db/Change-Sets/changelogs_2021-03-07_15-00-38_public_time.xml">
+
+  <changeSet id="2021-03-07_15-00-38" author="Victor N. Skurikhin">
+      <sql>
+          <![CDATA[
+            ALTER TABLE db.record ADD public_time TIMESTAMP WITHOUT TIME ZONE DEFAULT now();
+            UPDATE db.record SET public_time = update_time;
+            ALTER TABLE db.record ALTER public_time SET NOT NULL;
+          ]]>
+      </sql>
+  </changeSet>
+</databaseChangeLog>

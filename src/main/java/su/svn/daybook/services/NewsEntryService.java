@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.28 23:25 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.07 23:13 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NewsEntryService.java
@@ -52,7 +52,7 @@ public class NewsEntryService extends AbstractRecordService<NewsEntry> {
                 .createTime(LocalDateTime.now())
                 .updateTime(LocalDateTime.now())
                 .enabled(true)
-                .visible(true)
+                .visible(dto.getVisible() != null ? dto.getVisible() : true)
                 .build();
         setUserName(SecurityContextHolder.getContext(), newsEntry);
 
@@ -62,7 +62,7 @@ public class NewsEntryService extends AbstractRecordService<NewsEntry> {
                 .createTime(LocalDateTime.now())
                 .updateTime(LocalDateTime.now())
                 .enabled(true)
-                .visible(true)
+                .visible(dto.getVisible() != null ? dto.getVisible() : true)
                 .build();
         setUserName(SecurityContextHolder.getContext(), record);
 
@@ -95,10 +95,9 @@ public class NewsEntryService extends AbstractRecordService<NewsEntry> {
                 .newsGroupId(UUID.fromString(dto.getNewsGroupId()))
                 .title(dto.getTitle())
                 .content(dto.getContent())
-                .createTime(dto.getCreateTime())
                 .updateTime(LocalDateTime.now())
                 .enabled(true)
-                .visible(true)
+                .visible(dto.getVisible())
                 .build();
         setUserName(SecurityContextHolder.getContext(), entry);
 
@@ -106,10 +105,9 @@ public class NewsEntryService extends AbstractRecordService<NewsEntry> {
                 .id(UUID.fromString(dto.getId()))
                 .position(Integer.MAX_VALUE / 2)
                 .type(NewsEntry.class.getSimpleName())
-                .createTime(dto.getCreateTime())
                 .updateTime(LocalDateTime.now())
                 .enabled(true)
-                .visible(true)
+                .visible(dto.getVisible())
                 .build();
         setUserName(SecurityContextHolder.getContext(), record);
 
@@ -146,11 +144,7 @@ public class NewsEntryService extends AbstractRecordService<NewsEntry> {
                 .title(dto.getTitle())
                 .content(dto.getContent())
                 .tags(CollectionUtil.getTags(record.getTags()))
-                .createTime(dto.getCreateTime())
-                .updateTime(dto.getUpdateTime())
-                .enabled(dto.getEnabled())
                 .visible(dto.getVisible())
-                .flags(dto.getFlags())
                 .build();
     }
 

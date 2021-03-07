@@ -1011,7 +1011,7 @@ table.article tr:hover td{color:#354264;cursor:default;}
  text-align: right;
 }
 table.news-entry td{font-size:15px}
-table.news-entry td,table.news-entry th{white-space:pre-wrap;padding:10px 5px;line-height:20px;vertical-align: middle;border: 0 solid #455261;}
+table.news-entry td,table.news-entry th{white-space:pre-wrap;padding:7px;margin: 7px;line-height:20px;vertical-align: middle;border: 0 solid #455261;}
 table.news-entry tr:hover td{color:#455261;cursor:default;}
 .my-news-entry-first-th{width: 64px;color:#455261;font-size: 12px;font-weight: 400;}
 .my-news-entry-second-th{width: 95%;color:#455261;font-size: 12px;font-weight: 400;}

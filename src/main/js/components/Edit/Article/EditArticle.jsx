@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.02 17:18 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.07 23:13 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * EditArticle.jsx
@@ -30,15 +30,16 @@ class EditArticle extends ArticleView {
             anchor: "",
             summary: "",
             userName: null,
-            createTime: "",
-            updateTime: "",
-            enabled: true,
+            publicTime: null,
             visible: true,
-            flags: null,
+            tags: null
         },
         newsGroupNames: [],
+        redirectToReferrer: false,
         selectedNewsGroup: "",
-        redirectToReferrer: false
+        filteredTagLabels: [],
+        tagLabels: [],
+        selectedTags: []
     };
     cancelTokenSource = axios.CancelToken.source();
     newsGroupService = new ApiService(API_V1_RESOURCE_NEWS_GROUPS + '/all', this.cancelTokenSource);

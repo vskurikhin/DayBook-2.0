@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.27 15:53 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.07 23:13 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RecordDaoImpl.java
@@ -37,8 +37,8 @@ public class RecordDaoImpl implements RecordCustomizedDao {
     }
 
     public static final String INSERT = "INSERT INTO db.record " +
-            " (id, position, type, user_name, create_time, update_time, enabled, visible, flags) " +
-            " VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)";
+            " (id, position, type, user_name, create_time, public_time, update_time, enabled, visible, flags) " +
+            " VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)";
 
     private Statement statementBinding(Statement statement, Record entry) {
         return statement
@@ -47,15 +47,17 @@ public class RecordDaoImpl implements RecordCustomizedDao {
                 .bind("$3", entry.getType())
                 .bind("$4", entry.getUserName())
                 .bind("$5", entry.getCreateTime())
-                .bind("$6", entry.getUpdateTime())
-                .bind("$7", entry.getEnabled())
-                .bind("$8", entry.getVisible())
-                .bind("$9", entry.getFlags());
+                .bind("$6", entry.getPublicTime())
+                .bind("$7", entry.getUpdateTime())
+                .bind("$8", entry.getEnabled())
+                .bind("$9", entry.getVisible())
+                .bind("$10", entry.getFlags());
     }
 
     public static final String INSERT_RECORD = "INSERT INTO db.record " +
-            " (id, position, type, user_name, create_time, update_time, enabled, visible, flags) " +
-            " VALUES (:id, :position, :type, :userName, :createTime, :updateTime, :enabled, :visible, :flags)";
+            " (id, position, type, user_name, create_time, public_time, update_time, enabled, visible, flags) " +
+            " VALUES " +
+            " (:id, :position, :type, :userName, :createTime, :publicTime, :updateTime, :enabled, :visible, :flags)";
 
     @Override
     public Mono<Integer> insert(Record entry) {
@@ -69,6 +71,7 @@ public class RecordDaoImpl implements RecordCustomizedDao {
         execSpec = GenericExecuteSpec.setBoolean(execSpec, entry::getVisible, true,"enabled");
         execSpec = GenericExecuteSpec.setBoolean(execSpec, entry::getEnabled, true,"visible");
         execSpec = GenericExecuteSpec.setLocalDateTimeNow(execSpec, entry::getCreateTime, "createTime");
+        execSpec = GenericExecuteSpec.setLocalDateTimeNow(execSpec, entry::getPublicTime, "publicTime");
         execSpec = GenericExecuteSpec.setLocalDateTimeNow(execSpec, entry::getUpdateTime, "updateTime");
         execSpec = GenericExecuteSpec.setInteger(execSpec, entry::getFlags, "flags");
 
