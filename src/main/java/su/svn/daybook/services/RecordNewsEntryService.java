@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.06 16:57 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.07 12:19 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RecordNewsEntryService.java
@@ -44,7 +44,6 @@ public class RecordNewsEntryService {
     private final AllRecordViewDao allRecordViewDao;
 
     private final RecordDao recordDao;
-
 
     private final Cache<PageAllRecordViewKey, PageAllRecordViewImpl> pageAllRecordViewCache;
 
@@ -111,7 +110,7 @@ public class RecordNewsEntryService {
     }
 
     private void putCacheAllRecordViewToPage(PageAllRecordViewKey key, List<AllRecordView> allRecordViews) {
-        PageAllRecordViewImpl value = new PageAllRecordViewImpl(allRecordViews, key.getPageable());
+        PageAllRecordViewImpl value = new PageAllRecordViewImpl(allRecordViews, key.getPageable(), key.getTotalCount());
         pageAllRecordViewCache.put(key, value);
     }
 }

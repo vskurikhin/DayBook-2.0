@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.03 16:35 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.07 12:19 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RootDataViewLazy.jsx
@@ -29,7 +29,7 @@ import {connect} from "react-redux";
 import {map} from 'underscore'
 import {useHistory, withRouter} from 'react-router-dom';
 
-const NUMBER_OF_ELEMENTS = 99;
+const NUMBER_OF_ELEMENTS = 10;
 const TIMEOUT = 33;
 
 const RootDataViewLazy = props => {
@@ -167,7 +167,7 @@ const RootDataViewLazy = props => {
                                     <td className="valueField my-news-entry-second-th"
                                         colSpan="2"
                                         rowSpan="2">
-                                        <div style={{all: 'unset'}} align="justify" dangerouslySetInnerHTML={{
+                                        <div align="justify" dangerouslySetInnerHTML={{
                                             __html: renderContent(id, record)
                                         }}
                                         />
