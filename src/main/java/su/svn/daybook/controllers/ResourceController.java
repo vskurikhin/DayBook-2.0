@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.06 16:57 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.07 12:19 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * ResourceController.java
@@ -34,6 +34,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
+import su.svn.daybook.configs.EhCacheConfiguration;
+import su.svn.daybook.services.InvalidateCacheService;
 import su.svn.daybook.services.RecordNewsEntryService;
 import su.svn.daybook.domain.model.ArticleDto;
 import su.svn.daybook.domain.model.NewsEntryDto;
@@ -59,13 +61,17 @@ public class ResourceController {
 
     private final NewsEntryService newsEntryService;
 
+    private final InvalidateCacheService invalidateCacheService;
+
     public ResourceController(
             RecordNewsEntryService recordNewsEntryService,
             ArticleService articleService,
-            NewsEntryService newsEntryService) {
+            NewsEntryService newsEntryService,
+            InvalidateCacheService invalidateCacheService) {
         this.recordNewsEntryService = recordNewsEntryService;
         this.articleService = articleService;
         this.newsEntryService = newsEntryService;
+        this.invalidateCacheService = invalidateCacheService;
     }
 
     @Operation(summary = "profile", security = @SecurityRequirement(name = "bearerAuth"))
@@ -96,6 +102,7 @@ public class ResourceController {
     public Mono<ResponseEntity<?>> createArticle(@RequestBody ArticleDto dto) {
         log.debug("createArticle({}): authentication={}", dto, SecurityContextHolder.getContext().getAuthentication());
         return articleService.create(dto)
+                .map(this::invalidateCacheService)
                 .map(a -> getBody(a, HttpStatus.CREATED, "Created"));
     }
 
@@ -113,6 +120,7 @@ public class ResourceController {
     public Mono<ResponseEntity<?>> createNewsEntry(@RequestBody NewsEntryDto dto) {
         log.debug("createNewsEntry({}}): authentication={}", dto, SecurityContextHolder.getContext().getAuthentication());
         return newsEntryService.create(dto)
+                .map(this::invalidateCacheService)
                 .map(a -> getBody(a, HttpStatus.CREATED, "Created"));
     }
 
@@ -176,6 +184,7 @@ public class ResourceController {
     public Mono<ResponseEntity<?>> updateArticle(@RequestBody ArticleDto dto) {
         log.debug("updateArticle({}): authentication={}", dto, SecurityContextHolder.getContext().getAuthentication());
         return articleService.update(dto)
+                .map(this::invalidateCacheService)
                 .map(a -> getBody(a, HttpStatus.OK, "Updated"));
     }
 
@@ -193,6 +202,12 @@ public class ResourceController {
     public Mono<ResponseEntity<?>> updateNewsEntry(@RequestBody NewsEntryDto dto) {
         log.debug("updateNewsEntry({}): authentication={}", dto, SecurityContextHolder.getContext().getAuthentication());
         return newsEntryService.update(dto)
+                .map(this::invalidateCacheService)
                 .map(a -> getBody(a, HttpStatus.OK, "Updated"));
+    }
+
+    private <X> X invalidateCacheService(X e) {
+        invalidateCacheService.invalidate(EhCacheConfiguration.PAGE_ALL_RECORD_VIEW_CACHE);
+        return e;
     }
 }

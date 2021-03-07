@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.03 19:19 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.07 12:19 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * FileUploadServiceImpl.java
@@ -17,11 +17,9 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.annotation.Nonnull;
-import java.io.BufferedWriter;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import java.io.RandomAccessFile;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -30,19 +28,30 @@ import java.util.stream.Collectors;
 @Service
 public class FileUploadServiceImpl implements FileUploadService {
 
+    private final UnzipService unzipService;
+
     private final String publicDirectory = System.getProperty("user.dir") + "/public/";
+
+    public FileUploadServiceImpl(UnzipService unzipService) {
+        this.unzipService = unzipService;
+    }
 
     // this is for single file upload
     public Flux<String> getLines(FilePart filePart) {
         try (FileOutputStream fos = new FileOutputStream(publicDirectory + filePart.filename())) {
             return filePart.content()
-                    .map(this::fileToString)
-                    .map((String string) -> processAndGetLinesAsList(string, filePart))
-                    .flatMapIterable(Function.identity());
+                    .map(this::fileToBytes)
+                    .map(bytes -> processAndGetLinesAsList(bytes, filePart))
+                    .flatMapIterable(Function.identity())
+                    .doOnComplete(() -> unzipFile(filePart.filename()));
         } catch (IOException | RuntimeException e) {
             log.error("getLines: ", e);
         }
         return Flux.empty();
+    }
+
+    private void unzipFile(String filename) {
+        unzipService.unzipFile(publicDirectory + filename);
     }
 
     @Override
@@ -51,23 +60,24 @@ public class FileUploadServiceImpl implements FileUploadService {
     }
 
     @Nonnull
-    private String fileToString(DataBuffer dataBuffer) {
+    private byte[] fileToBytes(DataBuffer dataBuffer) {
 
         byte[] bytes = new byte[dataBuffer.readableByteCount()];
         dataBuffer.read(bytes);
         DataBufferUtils.release(dataBuffer);
 
-        return new String(bytes, StandardCharsets.UTF_8);
+        return bytes;
     }
 
-    private List<String> processAndGetLinesAsList(String string, FilePart filePart) {
+    private List<String> processAndGetLinesAsList(byte[] bytes, FilePart filePart) {
 
         final String fileName = publicDirectory + filePart.filename();
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
-            writer.append(string);
+        try (RandomAccessFile raf = new RandomAccessFile(fileName, "rw")) {
+            raf.seek(raf.length());
+            raf.write(bytes);
         } catch (IOException | RuntimeException e) {
             log.error("processAndGetLinesAsList: ", e);
         }
-        return string.lines().filter(s -> !s.isBlank()).collect(Collectors.toList());
+        return new String(bytes).lines().filter(s -> !s.isBlank()).collect(Collectors.toList());
     }
 }

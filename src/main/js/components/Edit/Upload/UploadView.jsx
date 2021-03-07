@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.04 13:41 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.07 12:19 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * UploadView.jsx
@@ -39,7 +39,7 @@ export default class UploadView extends EditHandlers {
                                 <div className="my-divTableCell">
                                     <h5>Basic</h5>
                                     <FileUpload
-                                        accept="image/*"
+                                        accept="application/zip"
                                         maxFileSize={10000000}
                                         mode="basic"
                                         name="file"

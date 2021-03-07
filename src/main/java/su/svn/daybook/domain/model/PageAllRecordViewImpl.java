@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.06 16:57 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.07 12:19 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * PageAllRecordViewImpl.java
@@ -19,7 +19,7 @@ public class PageAllRecordViewImpl extends PageImpl<AllRecordView> implements Se
 
     private static final long serialVersionUID = 5902344081066588252L;
 
-    public PageAllRecordViewImpl(List<AllRecordView> content, Pageable pageable) {
-        super(content, pageable, content.size());
+    public PageAllRecordViewImpl(List<AllRecordView> content, Pageable pageable, long total) {
+        super(content, pageable, total);
     }
 }
