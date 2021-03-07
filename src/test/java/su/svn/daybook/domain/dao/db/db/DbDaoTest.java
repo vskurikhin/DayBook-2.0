@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 import static su.svn.daybook.domain.model.db.db.TestDataDb.*;
@@ -31,6 +32,8 @@ public class DbDaoTest {
     static final Class<?> tClass = DbDaoTest.class;
 
     public static final LocalDateTime LOCAL_DATE_TIME_EPOCH = LocalDateTime.of(LocalDate.EPOCH, LocalTime.MIN);
+
+    public static final LocalDateTime LOCAL_DATE_TIME_EPOCH_PLUS = LocalDateTime.of(LocalDate.EPOCH, LocalTime.MIN.plus(13, ChronoUnit.HOURS));
 
     public static final UUID UUID_2 = new UUID(0L, 2L);
 
@@ -88,6 +91,7 @@ public class DbDaoTest {
                 .type("type2")
                 .userName("userName1")
                 .createTime(LOCAL_DATE_TIME_EPOCH)
+                .publicTime(LOCAL_DATE_TIME_EPOCH)
                 .updateTime(LOCAL_DATE_TIME_EPOCH)
                 .enabled(true)
                 .visible(true)
@@ -99,6 +103,7 @@ public class DbDaoTest {
                 .type("type3")
                 .userName("userName1")
                 .createTime(LOCAL_DATE_TIME_EPOCH)
+                .publicTime(LOCAL_DATE_TIME_EPOCH)
                 .updateTime(LOCAL_DATE_TIME_EPOCH)
                 .enabled(true)
                 .visible(true)
@@ -145,7 +150,6 @@ public class DbDaoTest {
                     .expectNextCount(1)
                     .verifyComplete();
             List<Record> list = recordDao.fluxAll().collectList().block();
-            System.err.println("list = " + list);
             assert list != null;
             Assertions.assertTrue(list.contains(record2));
         }
@@ -173,6 +177,8 @@ public class DbDaoTest {
             Hooks.onOperatorDebug();
             List<Record> list = recordDao.fluxAll().collectList().block();
             assert list != null;
+            System.out.println("list.get(0) = " + list.get(0));
+            System.out.println("RECORD_1    = " + RECORD_1);
             Assertions.assertTrue(list.contains(RECORD_1));
         }
 
@@ -358,7 +364,7 @@ public class DbDaoTest {
         @Test
         void executesMonoById() throws IOException {
             Hooks.onOperatorDebug();
-            newsLinksDao.monoById(UUID_1)
+            newsLinksDao.monoById(UUID_2)
                     .as(StepVerifier::create)
                     .assertNext(NEWS_LINKS_1::equals)
                     .verifyComplete();
@@ -376,7 +382,7 @@ public class DbDaoTest {
         @Test
         void executesFluxAllById() throws IOException {
             Hooks.onOperatorDebug();
-            newsLinksDao.fluxAllById(new ArrayList<>() {{ add(UUID_1); }})
+            newsLinksDao.fluxAllById(new ArrayList<>() {{ add(UUID_2); }})
                     .as(StepVerifier::create)
                     .assertNext(NEWS_LINKS_1::equals)
                     .verifyComplete();
@@ -411,7 +417,7 @@ public class DbDaoTest {
         @Test
         void executesMonoById() throws IOException {
             Hooks.onOperatorDebug();
-            newsLinksDao.monoById(UUID_1)
+            newsLinksDao.monoById(UUID_2)
                     .as(StepVerifier::create)
                     .assertNext(LINK_1::equals)
                     .verifyComplete();
@@ -429,7 +435,7 @@ public class DbDaoTest {
         @Test
         void executesFluxAllById() throws IOException {
             Hooks.onOperatorDebug();
-            newsLinksDao.fluxAllById(new ArrayList<>() {{ add(UUID_1); }})
+            newsLinksDao.fluxAllById(new ArrayList<>() {{ add(UUID_2); }})
                     .as(StepVerifier::create)
                     .assertNext(LINK_1::equals)
                     .verifyComplete();
@@ -466,7 +472,7 @@ public class DbDaoTest {
         @Test
         void executesMonoById() throws IOException {
             Hooks.onOperatorDebug();
-            linkDescriptionDao.monoById(UUID_1)
+            linkDescriptionDao.monoById(UUID_2)
                     .as(StepVerifier::create)
                     .assertNext(LINK_DESCRIPTION_1::equals)
                     .verifyComplete();
@@ -484,7 +490,7 @@ public class DbDaoTest {
         @Test
         void executesFluxAllById() throws IOException {
             Hooks.onOperatorDebug();
-            linkDescriptionDao.fluxAllById(new ArrayList<>() {{ add(UUID_1); }})
+            linkDescriptionDao.fluxAllById(new ArrayList<>() {{ add(UUID_2); }})
                     .as(StepVerifier::create)
                     .assertNext(LINK_DESCRIPTION_1::equals)
                     .verifyComplete();
@@ -525,7 +531,7 @@ public class DbDaoTest {
         @Test
         void executesMonoById() throws IOException {
             Hooks.onOperatorDebug();
-            articleDao.monoById(UUID_1)
+            articleDao.monoById(UUID_3)
                     .as(StepVerifier::create)
                     .assertNext(ARTICLE_1::equals)
                     .verifyComplete();
@@ -543,7 +549,7 @@ public class DbDaoTest {
         @Test
         void executesFluxAllById() throws IOException {
             Hooks.onOperatorDebug();
-            articleDao.fluxAllById(new ArrayList<>() {{ add(UUID_1); }})
+            articleDao.fluxAllById(new ArrayList<>() {{ add(UUID_3); }})
                     .as(StepVerifier::create)
                     .assertNext(ARTICLE_1::equals)
                     .verifyComplete();
@@ -555,7 +561,7 @@ public class DbDaoTest {
         @Test
         void executesMonoById() throws IOException {
             Hooks.onOperatorDebug();
-            taggetRecordViewDao.monoById(UUID_1)
+            taggetRecordViewDao.monoById(UUID_3)
                     .as(StepVerifier::create)
                     .assertNext(TAGGET_RECORD_VIEW_1::equals)
                     .verifyComplete();

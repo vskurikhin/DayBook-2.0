@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.UUID;
 
+import static su.svn.daybook.domain.dao.db.db.DbDaoTest.LOCAL_DATE_TIME_EPOCH_PLUS;
+
 public class TestDataDb {
 
     public static final UUID UUID_1 = new UUID(0L, 1L);
@@ -14,9 +16,10 @@ public class TestDataDb {
     public static final Record RECORD_1 = Record.builder()
             .id(UUID_1)
             .position(1)
-            .type("type1")
+            .type("NewsEntry")
             .userName("userName1")
             .createTime(LOCAL_DATE_TIME_EPOCH)
+            .publicTime(LOCAL_DATE_TIME_EPOCH)
             .updateTime(LOCAL_DATE_TIME_EPOCH)
             .enabled(true)
             .visible(true)
@@ -84,13 +87,14 @@ public class TestDataDb {
 
     public static final Article ARTICLE_1 = Article.builder()
             .id(UUID_1)
+            .newsGroupId(UUID_1)
             .title("title1")
             .include("include1")
             .anchor("anchor1")
             .summary("summary1")
             .userName("userName1")
             .createTime(LOCAL_DATE_TIME_EPOCH)
-            .updateTime(LOCAL_DATE_TIME_EPOCH)
+            .updateTime(LOCAL_DATE_TIME_EPOCH_PLUS)
             .enabled(true)
             .visible(true)
             .flags(0)
@@ -101,11 +105,7 @@ public class TestDataDb {
             .position(1)
             .type("type1")
             .userName("userName1")
-            .createTime(LOCAL_DATE_TIME_EPOCH)
-            .updateTime(LOCAL_DATE_TIME_EPOCH)
-            .enabled(true)
             .visible(true)
-            .flags(0)
             .tags(new String[]{"label1"})
             .build();
 }

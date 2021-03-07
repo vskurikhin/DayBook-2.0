@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.07 12:19 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.07 23:13 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RootDataViewLazy.jsx
@@ -139,7 +139,7 @@ const RootDataViewLazy = props => {
         if (value === {}) return (
             <div/>
         );
-        const {id, tags, updateTime, ...record} = value;
+        const {id, tags, publicTime, ...record} = value;
 
         return (
             <div style={{padding: '.5em', border: 0}} className="p-col-12 p-md-4">
@@ -182,7 +182,7 @@ const RootDataViewLazy = props => {
                                     <td className="my-news-entry-date-th"
                                     ><DateTime
                                         language={props.locale.language}
-                                        value={moment(updateTime)}
+                                        value={moment(publicTime)}
                                         day="numeric"
                                         month="long"
                                         weekday="long"
@@ -205,13 +205,9 @@ const RootDataViewLazy = props => {
 
     const renderTitle = (id, value) => {
         const {type, ...record} = value;
-        if (isArticle(type))
-            return record['articleTitle'];
-        if (isNewsEntry(type))
-            return record['newsEntryTitle'];
-        if (isNewsLinks(type))
-            return record['newsLinksTitle'];
-        return "title for " + id;
+        if (record.title === null)
+            return "title for " + id;
+        return record.title;
     }
 
     const renderImg = (id, value) => {
