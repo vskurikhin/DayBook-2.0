@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.07 23:13 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.07 23:38 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * Record.java
@@ -16,6 +16,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 import su.svn.daybook.domain.model.DBUserOwnedEntry;
@@ -66,7 +67,7 @@ public class Record implements Serializable, DBUuidEntry, DBUserOwnedEntry {
     private String userName;
 
     @Getter
-    @NotNull
+    @Transient
     @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     @Schema(description = "create time", example = "1970-01-01T00:00:00Z")
     @Column("create_time")
@@ -74,6 +75,7 @@ public class Record implements Serializable, DBUuidEntry, DBUserOwnedEntry {
 
     @Getter
     @Setter
+    @NotNull
     @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     @Schema(description = "public time", example = "1970-01-01T00:00:00Z")
     @Column("public_time")
@@ -81,6 +83,7 @@ public class Record implements Serializable, DBUuidEntry, DBUserOwnedEntry {
 
     @Getter
     @Setter
+    @NotNull
     @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     @Schema(description = "update time", example = "1970-01-01T00:00:00Z")
     @Column("update_time")

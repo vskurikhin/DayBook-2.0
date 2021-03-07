@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.07 23:13 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.07 23:38 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * ArticleService.java
@@ -61,7 +61,7 @@ public class ArticleService extends AbstractRecordService<Article> {
                 .position(Integer.MAX_VALUE / 2)
                 .type(Article.class.getSimpleName())
                 .createTime(LocalDateTime.now())
-                .publicTime(dto.getPublicTime())
+                .publicTime(dto.getPublicTime() != null ? dto.getPublicTime() : LocalDateTime.now())
                 .updateTime(LocalDateTime.now())
                 .enabled(true)
                 .visible(dto.getVisible() != null ? dto.getVisible() : true)
@@ -109,7 +109,7 @@ public class ArticleService extends AbstractRecordService<Article> {
                 .id(UUID.fromString(dto.getId()))
                 .position(Integer.MAX_VALUE / 2)
                 .type(Article.class.getSimpleName())
-                .publicTime(dto.getPublicTime())
+                .publicTime(dto.getPublicTime() != null ? dto.getPublicTime() : LocalDateTime.now())
                 .updateTime(LocalDateTime.now())
                 .enabled(true)
                 .visible(dto.getVisible())
