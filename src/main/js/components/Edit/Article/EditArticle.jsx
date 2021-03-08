@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.07 23:13 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.07 23:38 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * EditArticle.jsx
@@ -29,7 +29,6 @@ class EditArticle extends ArticleView {
             include: "",
             anchor: "",
             summary: "",
-            userName: null,
             publicTime: null,
             visible: true,
             tags: null

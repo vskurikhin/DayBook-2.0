@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.02 17:18 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.07 23:38 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * CreateNewsEntry.jsx
@@ -28,12 +28,8 @@ class CreateNewsEntry extends NewsEntryView {
             newsGroupId: DEFAULT_NEWS_GROUP_ID,
             title: "",
             content: "",
-            userName: null,
-            createTime: "",
-            updateTime: "",
-            enabled: true,
+            publicTime: null,
             visible: true,
-            flags: null,
             tags: null
         },
         newsGroupNames: [],
