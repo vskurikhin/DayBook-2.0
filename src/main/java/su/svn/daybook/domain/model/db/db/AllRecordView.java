@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.07 23:13 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.08 23:23 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * AllRecordView.java
@@ -8,10 +8,12 @@
 
 package su.svn.daybook.domain.model.db.db;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
@@ -24,7 +26,6 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.UUID;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(builderClassName = "Builder")
@@ -56,7 +57,6 @@ public class AllRecordView implements Serializable, DBUuidEntry {
 
     @Getter
     @NotNull
-    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     @Schema(description = "public time", example = "1970-01-01T00:00:00")
     @Column("public_time")
     private LocalDateTime publicTime;

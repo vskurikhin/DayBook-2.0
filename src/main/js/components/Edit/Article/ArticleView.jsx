@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.02 17:18 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.08 23:23 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * ArticleView.jsx
@@ -7,9 +7,11 @@
  */
 
 import EditHandlers from "../EditHandlers";
+
 import React from 'react';
 import {AutoComplete} from "primereact/autocomplete";
 import {Button} from "primereact/button";
+import {Calendar} from 'primereact/calendar';
 import {Dropdown} from "primereact/dropdown";
 import {InputTextarea} from "primereact/inputtextarea";
 import {InputText} from "primereact/inputtext";
@@ -55,6 +57,24 @@ export default class ArticleView extends EditHandlers {
                                                 suggestions={this.state.filteredTagLabels}
                                                 value={this.state.selectedTags}
                                             />
+                                        </span>
+                                </div>
+                                <div className="my-divTableCellRight">&nbsp;</div>
+                            </div>
+
+                            <div className="my-divTableRow">
+                                <div className="my-divTableCellLeft">&nbsp;</div>
+                                <div className="my-divTableCell">
+                                        <span className="p-float-label">
+                                             <Calendar
+                                                 id="time24"
+                                                 dateFormat="yy-mm-dd"
+                                                 value={this.state.data.publicTime}
+                                                 onChange={this.onPublicTimeChange}
+                                                 showTime
+                                                 showSeconds
+                                             />
+                                            <label htmlFor="title"><b>Time:</b></label>
                                         </span>
                                 </div>
                                 <div className="my-divTableCellRight">&nbsp;</div>
