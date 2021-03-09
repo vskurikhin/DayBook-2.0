@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.07 23:38 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.09 22:38 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * ArticleService.java
@@ -149,6 +149,7 @@ public class ArticleService extends AbstractRecordService<Article> {
                 .include(entry.getInclude())
                 .summary(entry.getSummary())
                 .tags(CollectionUtil.getTags(record.getTags()))
+                .publicTime(record.getPublicTime())
                 .visible(entry.getVisible())
                 .build();
     }

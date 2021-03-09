@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.07 23:13 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.09 22:38 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RootDataViewLazy.jsx
@@ -225,13 +225,9 @@ const RootDataViewLazy = props => {
 
     const renderUserName = (id, value) => {
         const {type, ...record} = value;
-        if (isArticle(type))
-            return record['articleUserName'];
-        if (isNewsEntry(type))
-            return record['newsEntryUserName'];
-        if (isNewsLinks(type))
-            return record['newsLinksUserName'];
-        return "username for " + id;
+        if (record.userName === null)
+            return "username for " + id;
+        return record.userName;
     }
 
     const renderContent = (id, value) => {
