@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.02.25 16:07 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.08 23:23 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * DBMap.java
@@ -8,7 +8,6 @@
 
 package su.svn.daybook.domain.model.db.db;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -68,14 +67,12 @@ public class DBMap implements Serializable, DBUuidEntry, DBUserOwnedEntry {
 
     @Getter
     @NotNull
-    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     @Schema(description = "create time", example = "1970-01-01T00:00:00Z")
     @Column("create_time")
     private LocalDateTime createTime;
 
     @Getter
     @Setter
-    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     @Schema(description = "update time", example = "1970-01-01T00:00:00Z")
     @Column("update_time")
     private LocalDateTime updateTime;

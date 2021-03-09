@@ -81,7 +81,8 @@ server:
 
 spring:
   jackson:
-    date-format: com.fasterxml.jackson.databind.util.ISO8601DateFormat
+    date-format: "yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S][X]"
+    serializer-date-time-format: "yyyy-MM-dd'T'HH:mm:ss.SS"
     default-property-inclusion: non_null
     serialization:
       write_dates_as_timestamps: false

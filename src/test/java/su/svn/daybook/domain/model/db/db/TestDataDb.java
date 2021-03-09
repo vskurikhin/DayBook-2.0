@@ -18,7 +18,6 @@ public class TestDataDb {
             .position(1)
             .type("NewsEntry")
             .userName("userName1")
-            .createTime(LOCAL_DATE_TIME_EPOCH)
             .publicTime(LOCAL_DATE_TIME_EPOCH)
             .updateTime(LOCAL_DATE_TIME_EPOCH)
             .enabled(true)

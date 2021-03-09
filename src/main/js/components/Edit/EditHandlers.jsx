@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.01 23:42 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.08 23:23 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * EditHandlers.jsx
@@ -59,6 +59,17 @@ export default class EditHandlers extends Component {
             data: {
                 ...this.state.data,
                 newsGroupId: event.value.id
+            }
+        });
+    }
+
+    onPublicTimeChange = event => {
+        console.log(`onPublicTimeChange`);
+        console.log(event);
+        this.setState({
+            data: {
+                ...this.state.data,
+                publicTime: event.value
             }
         });
     }
