@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.04 13:41 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.09 22:38 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * locales.js
@@ -11,9 +11,13 @@ export const locales = [
         language: 'en',
         messages: {
             About_Me: 'About Me',
+            Anchor: 'Anchor',
             Article: 'Article',
             Calendar: 'Calendar',
+            Conspectus: 'Conspectus',
+            Content: 'Content',
             Create: 'Create',
+            Include: 'Include',
             Index: 'Index',
             Log_Out: 'Log Out',
             Login: 'Login',
@@ -24,7 +28,11 @@ export const locales = [
             Photo_of_me: 'Photo of me',
             SVN_DayBook_Website: 'SVN DayBook Website',
             Signup: 'Signup',
+            Summary: 'Summary',
             Tag_Label: 'Tag Label',
+            Tags: 'Tags',
+            Time: 'Time',
+            Title: 'Title',
             Upload: 'Upload',
             Username: 'Username',
             hello: 'Hello {name}!',
@@ -35,9 +43,13 @@ export const locales = [
         language: 'ru',
         messages: {
             About_Me: 'Обо мне',
+            Anchor: 'Якорь',
             Article: 'Статья',
             Calendar: 'Календарь',
+            Conspectus: 'Конспект',
+            Content: 'Содержание',
             Create: 'Создать',
+            Include: 'Включать',
             Index: 'Индекс',
             Log_Out: 'Выйти',
             Login: 'Вход',
@@ -48,7 +60,11 @@ export const locales = [
             Photo_of_me: 'Моё фото',
             SVN_DayBook_Website: 'SVN Веб-сайт Дневник',
             Signup: 'Зарегистрироваться',
+            Summary: 'Резюме',
             Tag_Label: 'Тег-Метки',
+            Tags: 'Теги',
+            Time: 'Время',
+            Title: 'Заголовок',
             Upload: 'Загрузить',
             Username: 'Имя пользователя',
             hello: 'Привет {name}!',

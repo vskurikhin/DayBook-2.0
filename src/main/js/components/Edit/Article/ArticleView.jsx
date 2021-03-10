@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.08 23:23 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.09 22:38 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * ArticleView.jsx
@@ -15,6 +15,7 @@ import {Calendar} from 'primereact/calendar';
 import {Dropdown} from "primereact/dropdown";
 import {InputTextarea} from "primereact/inputtextarea";
 import {InputText} from "primereact/inputtext";
+import {Text} from "@eo-locale/react";
 
 export default class ArticleView extends EditHandlers {
 
@@ -31,7 +32,7 @@ export default class ArticleView extends EditHandlers {
                             <div className="my-divTableRow">
                                 <div className="my-divTableCellLeft">&nbsp;</div>
                                 <div className="my-divTableCell">
-                                    <label className="my-label"><b>News group Id:</b></label><br/>
+                                    <label className="my-label"><b><Text id='News_Group'/>:</b></label><br/>
                                     <Dropdown
                                         onChange={this.onNewsGroupChange}
                                         optionLabel="groupName"
@@ -46,18 +47,20 @@ export default class ArticleView extends EditHandlers {
                             <div className="my-divTableRow">
                                 <div className="my-divTableCellLeft">&nbsp;</div>
                                 <div className="my-divTableCell">
-                                    <label className="my-label"><b>Tags:</b></label><br/>
-                                    <span className="p-float-label">
-                                            <AutoComplete
-                                                completeMethod={this.searchTagLabels}
-                                                field="label"
-                                                multiple onChange={this.onTagLabelsChange}
-                                                style={{with: '100%'}}
-                                                panelStyle={{with: '100%'}}
-                                                suggestions={this.state.filteredTagLabels}
-                                                value={this.state.selectedTags}
-                                            />
-                                        </span>
+                                    <span className="p-float-label" style={{minWith: '22.4em'}}>
+                                        <AutoComplete
+                                            id="pr_id_3"
+                                            completeMethod={this.searchTagLabels}
+                                            field="label"
+                                            inputClassName="inputTest"
+                                            multiple
+                                            onChange={this.onTagLabelsChange}
+                                            panelClassName="panelTest"
+                                            suggestions={this.state.filteredTagLabels}
+                                            value={this.state.selectedTags}
+                                        />
+                                        <label htmlFor="time24"><b><Text id='Tags'/>:</b></label>
+                                    </span>
                                 </div>
                                 <div className="my-divTableCellRight">&nbsp;</div>
                             </div>
@@ -69,12 +72,18 @@ export default class ArticleView extends EditHandlers {
                                              <Calendar
                                                  id="time24"
                                                  dateFormat="yy-mm-dd"
-                                                 value={this.state.data.publicTime}
+                                                 hideOnDateTimeSelect={true}
+                                                 inputClassName="inputTest"
                                                  onChange={this.onPublicTimeChange}
-                                                 showTime
+                                                 panelClassName="panelTest"
+                                                 readOnlyInput
+                                                 showOnFocus={true}
                                                  showSeconds
+                                                 showTime
+                                                 locale={this.props.locale.language}
+                                                 value={this.state.data.publicTime}
                                              />
-                                            <label htmlFor="title"><b>Time:</b></label>
+                                             <label htmlFor="time24"><b><Text id='Time'/>:</b></label>
                                         </span>
                                 </div>
                                 <div className="my-divTableCellRight">&nbsp;</div>
@@ -93,7 +102,7 @@ export default class ArticleView extends EditHandlers {
                                                 type="text"
                                                 value={this.state.data.title}
                                             />
-                                            <label htmlFor="title"><b>Title:</b></label>
+                                            <label htmlFor="title"><b><Text id='Title'/>:</b></label>
                                         </span>
                                 </div>
                                 <div className="my-divTableCellRight">&nbsp;</div>
@@ -111,7 +120,7 @@ export default class ArticleView extends EditHandlers {
                                                 type="text"
                                                 value={this.state.data.include}
                                             />
-                                            <label htmlFor="include"><b>Include:</b></label>
+                                            <label htmlFor="include"><b><Text id='Include'/>:</b></label>
                                         </span>
                                 </div>
                                 <div className="my-divTableCellRight">&nbsp;</div>
@@ -129,7 +138,7 @@ export default class ArticleView extends EditHandlers {
                                                 type="text"
                                                 value={this.state.data.anchor}
                                             />
-                                            <label htmlFor="anchor"><b>Anchor:</b></label>
+                                            <label htmlFor="anchor"><b><Text id='Anchor'/>:</b></label>
                                         </span>
                                 </div>
                                 <div className="my-divTableCellRight">&nbsp;</div>
@@ -138,7 +147,7 @@ export default class ArticleView extends EditHandlers {
                             <div className="my-divTableRow">
                                 <div className="my-divTableCellLeft">&nbsp;</div>
                                 <div className="my-divTableCell">
-                                    <label className="my-label"><b>Summary:</b></label><br/>
+                                    <label className="my-label"><b><Text id='Conspectus'/>:</b></label><br/>
                                     <InputTextarea
                                         className="my-p-inputtext"
                                         autoResize

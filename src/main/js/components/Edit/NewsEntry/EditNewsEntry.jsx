@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.07 23:38 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.09 22:38 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * EditNewsEntry.jsx
@@ -19,7 +19,6 @@ import {Redirect} from "react-router";
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
-import {DEFAULT_NEWS_GROUP_ID} from "../../../config/consts";
 
 class EditNewsEntry extends NewsEntryView {
 
@@ -81,6 +80,7 @@ class EditNewsEntry extends NewsEntryView {
 }
 
 const mapStateToProps = state => ({
+    locale: state.language,
     user: state.currentUser,
 })
 

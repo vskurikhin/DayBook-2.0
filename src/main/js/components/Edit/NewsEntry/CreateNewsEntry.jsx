@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.07 23:38 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.09 22:38 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * CreateNewsEntry.jsx
@@ -74,6 +74,7 @@ class CreateNewsEntry extends NewsEntryView {
 }
 
 const mapStateToProps = state => ({
+    locale: state.language,
     user: state.currentUser,
 })
 

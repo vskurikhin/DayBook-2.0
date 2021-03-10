@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.08 23:23 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.09 22:38 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * EditHandlers.jsx
@@ -7,12 +7,24 @@
  */
 
 import React, {Component} from 'react';
+import moment from "moment";
 import {DEFAULT_NEWS_GROUP_ID} from "../../config/consts";
+import {addLocale} from 'primereact/api';
 
 export default class EditHandlers extends Component {
 
     constructor(props) {
         super(props);
+        addLocale('ru', {
+            firstDayOfWeek: 1,
+            dayNames: ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'],
+            dayNamesShort: ['вс.', 'пн.', 'вт.', 'ср.', 'чт.', 'пт.', 'сб.'],
+            dayNamesMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+            monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декадрь'],
+            monthNamesShort: ['янв.', 'фев.', 'март', 'апр.', 'май', 'июнь', 'июль', 'авг.', 'сен.', 'окт.', 'ноя.', 'дек.'],
+            today: 'Сегодня',
+            clear: 'Очистить'
+        });
     }
 
     handleCreateNewsGroupChange = value => {
@@ -27,10 +39,17 @@ export default class EditHandlers extends Component {
 
 
     handleRecordChange = value => {
-        this.setState({data: value.data});
+        this.setState({
+            data: {
+                ...value.data,
+                publicTime: moment(value.data.publicTime).toDate()
+            }
+        });
         this.mayBeSetSelectedNewsGroup();
         const selectedTags = value.data.tags.map(label => {return {label: label}});
         this.setState({selectedTags: selectedTags});
+        console.log('handleRecordChange(' + JSON.stringify(value) + ')');
+        console.log(this.state);
     }
 
     mayBeSetSelectedNewsGroup = () => {

@@ -197,7 +197,10 @@ img.my-left-top{
 
 #pr_id_3 {
  min-width: 22.4em;
- width: 100%;
+}
+#time24 {
+ min-width: 22.4em;
+ width: 22.4em;
 }
 .p-fluid .p-autocomplete {
  display: -ms-flexbox;
@@ -343,7 +346,17 @@ img.my-left-top{
 
 .tab-view {
  margin: 1em;
-}/* Header/logo Title */
+}
+
+
+
+
+.my-scroll pre {
+ overflow: auto;
+ width: 100%;
+}
+
+/* Header/logo Title */
 .my-header{
  position: absolute;
  height: 52px;

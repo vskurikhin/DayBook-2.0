@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.07 23:38 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.09 22:38 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NewsEntryService.java
@@ -146,6 +146,7 @@ public class NewsEntryService extends AbstractRecordService<NewsEntry> {
                 .title(dto.getTitle())
                 .content(dto.getContent())
                 .tags(CollectionUtil.getTags(record.getTags()))
+                .publicTime(record.getPublicTime())
                 .visible(dto.getVisible())
                 .build();
     }
