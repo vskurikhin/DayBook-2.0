@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.09 22:38 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.11 18:14 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * locales.js
@@ -35,6 +35,7 @@ export const locales = [
             Title: 'Title',
             Upload: 'Upload',
             Username: 'Username',
+            daysOfWeek: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
             hello: 'Hello {name}!',
             language: 'Russian',
         }
@@ -67,6 +68,7 @@ export const locales = [
             Title: 'Заголовок',
             Upload: 'Загрузить',
             Username: 'Имя пользователя',
+            daysOfWeek: ['Пн.', 'Вт.', 'Ср.', 'Чт.', 'Пт.', 'Сб.', 'Вс.'],
             hello: 'Привет {name}!',
             language: 'English',
         }

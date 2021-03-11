@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.02 23:08 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.11 18:14 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * CalendarRow.jsx
@@ -11,6 +11,7 @@ import IFrame from '../../IFrame/IFrame'
 import SimpleReactCalendar from 'simple-react-calendar'
 import {formatDate, logDate} from '../../../lib/formatDate'
 import {loadCssListIframe1} from '../../../lib/CssListIframe1'
+import {locales} from "../../../config/locales";
 import {setCalendarDate} from '../../../redux/actions'
 
 import React, {Component} from 'react'
@@ -18,7 +19,6 @@ import {compose} from "redux";
 import {connect, ReactReduxContext} from 'react-redux'
 import {withRouter} from "react-router";
 import {Text, TranslationsProvider} from "@eo-locale/react";
-import {locales} from "../../../config/locales";
 
 export class CalendarRow extends Component {
 
@@ -51,13 +51,19 @@ export class CalendarRow extends Component {
     renderCalendar(store) {
         let calendarDate = store.getState().currentDate.currentDate;
         const selectedDate = new Date(calendarDate.year, calendarDate.month - 1, calendarDate.date);
+        const daysOfWeek = locales
+            .filter(l => l.language === this.props.locale.language)
+            .map(l => l.messages.daysOfWeek)[0];
+        console.log('renderCalendar');
+        console.log(daysOfWeek);
 
         return (
             <SimpleReactCalendar
-                mode="single"
                 activeMonth={selectedDate}
-                selected={selectedDate}
+                daysOfWeek={daysOfWeek}
+                mode="single"
                 onSelect={this.getDocFinancialInfo}
+                selected={selectedDate}
             />
         )
     }
@@ -68,6 +74,7 @@ export class CalendarRow extends Component {
             width: '100%',
             height: '100%'
         };
+        window.__localeId__ = 'ru'
 
         return (
             <div className="my-row">
