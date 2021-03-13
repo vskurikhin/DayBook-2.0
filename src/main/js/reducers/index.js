@@ -7,6 +7,7 @@
  */
 
 import currentDate from './currentDate';
+import currentPage from './currentPage';
 import currentUser from './currentUser';
 import language from './language';
 import updatedRecord from './updatedRecord';
@@ -17,6 +18,7 @@ import {routerReducer} from 'react-router-redux';
 export default combineReducers({
   routing: routerReducer,
   currentDate: currentDate,
+  currentPage,
   currentUser,
   language,
   updatedRecord: updatedRecord,

@@ -84,7 +84,6 @@ class NavigationBar extends Component {
             {title: translator.getMessageById('Calendar'), href: '/calendar', global: true},
             {title: translator.getMessageById('Create'), href: '/create', admin: true},
             {title: translator.getMessageById('Login'), href: '/login', anonymously: true},
-            {title: translator.getMessageById('Signup'), href: '/signup', anonymously: true},
             {title: translator.getMessageById('Log_Out'), href: '/', handleClick: true},
         ]
         return (

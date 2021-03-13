@@ -11,31 +11,38 @@ import 'primereact/resources/primereact.css';
 import 'primeflex/primeflex.css';
 import './Button.css';
 
+import RenderAfterContent from "./RenderAfterContent";
+import RenderImg from "./RenderImg";
+import RenderPublicTime from "./RenderPublicTime";
+import RenderTags, {convertToItems} from "./RenderTags";
 import {API_V1_RESOURCE_RECORDS} from '../../config/api';
 import {AllRecordService} from '../../service/AllRecordService';
 import {isAdmin} from '../../lib/userTool'
+import {isArticle, isNewsEntry, isNewsLinks} from "../../lib/is";
 import {kebabize} from "../../lib/kebabize";
-import {setCalendarDate} from "../../redux/actions";
+import {setCalendarDate, setPage} from "../../redux/actions";
 
 import * as React from "react";
 import axios from "axios";
-import moment from 'moment';
-import {Button} from 'primereact/button';
 import {ContextMenu} from 'primereact/contextmenu';
 import {DataView} from 'primereact/dataview';
-import {DateTime} from '@eo-locale/react';
 import {compose} from "redux";
 import {connect} from "react-redux";
-import {map} from 'underscore'
+import {useEffect, useRef, useState} from "react";
 import {useHistory, withRouter} from 'react-router-dom';
 import {useWindowResize} from "beautiful-react-hooks";
-import {useEffect, useRef, useState} from "react";
 
 
 const NUMBER_OF_ELEMENTS = 10;
 const TIMEOUT = 33;
+export const WINDOW_WIDTH_LIMIT = {
+    BIG: 990,
+    MIDDLE: 660,
+    SMALL: 550
+};
 
-const RootDataViewLazy = props => {
+const rootDataViewLazy = props => {
+
     const [first, setFirst] = useState(0);
     const [layout, setLayout] = useState('list');
     const [loading, setLoading] = useState(true);
@@ -73,11 +80,6 @@ const RootDataViewLazy = props => {
             icon: 'pi pi-fw pi-power-off'
         }
     ];
-    const WINDOW_WIDTH_LIMIT = {
-        BIG: 1100,
-        MIDDLE: 660,
-        SMALL: 550
-    };
 
     useEffect(() => {
         if (isMounted.current) {
@@ -90,7 +92,11 @@ const RootDataViewLazy = props => {
 
     useEffect(() => {
         setTimeout(() => {
-            allRecordService.getRecordsLazy(null, numberOfElements).then(function (resItems) {
+            const event = props.page !== null
+                ? {first: props.page.currentPage.first,
+                    page: props.page.currentPage.page}
+                : {first: 0, page: 0};
+            allRecordService.getRecordsLazy(event, numberOfElements).then(function (resItems) {
                 setFirst(0);
                 setRecords(resItems['data'].content);
                 setTotalRecords(resItems['data'].totalElements);
@@ -119,6 +125,11 @@ const RootDataViewLazy = props => {
                 console.log(error);
             });
         }, TIMEOUT);
+        const page = event !== null
+            ? {first: event.originalEvent.first,
+                page: event.originalEvent.page}
+            : {first: 0, page: 0};
+        props.handlePage(page);
     }
 
     // TODO
@@ -136,16 +147,29 @@ const RootDataViewLazy = props => {
         }
     }
 
-    const isArticle = (type) => type === "Article";
-    const isNewsEntry = (type) => type === "NewsEntry";
-    const isNewsLinks = (type) => type === "NewsLinks";
+    const renderTitle = (id, value) => {
+        const {type, ...record} = value;
+        if (record.title === null)
+            return "title for " + id;
+        return record.title;
+    }
 
-    const renderListItem = (record) => {
-        if (isArticle(record.type) || isNewsEntry(record.type) || isNewsLinks(record.type))
-            return renderListItemEntity(record);
-        return (
-            <div aria-labelledby={"empty_record_" + record.id}/>
-        );
+    const renderUserName = (id, value) => {
+        const {type, ...record} = value;
+        if (record.userName === null)
+            return "username for " + id;
+        return record.userName;
+    }
+
+    const renderContent = (id, value) => {
+        const {type, ...record} = value;
+        if (isArticle(type))
+            return record['articleSummary'];
+        if (isNewsEntry(type))
+            return record['newsEntryContent'];
+        if (isNewsLinks(type))
+            return null;
+        return "content for " + id;
     }
 
     const renderListItemEntity = value => {
@@ -176,7 +200,12 @@ const RootDataViewLazy = props => {
                                 <tbody>
                                 <tr>
                                     <td className="my-news-entry-first-th" rowSpan="3">
-                                        {renderImg(id, record)}
+                                        <RenderImg
+                                            id={id}
+                                            value={record}
+                                            windowWidth={windowWidth}
+                                            {...props}
+                                        />
                                     </td>
                                     <td className="valueField my-news-entry-second-th"
                                         colSpan="2"
@@ -185,21 +214,27 @@ const RootDataViewLazy = props => {
                                             __html: renderContent(id, record)
                                         }}
                                         />
-                                        {renderAfterContent(id, record)}</td>
-                                    <td/>
+                                        <RenderAfterContent id={id} value={record} />
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td/>
                                 </tr>
                                 <tr>
                                     <td>{renderUserName(id, record)}</td>
-                                    <td className="my-news-entry-date-th"
-                                    >{renderPublicTime(publicTime)}</td>
-                                    <td/>
+                                    <td className="my-news-entry-date-th">
+                                    <RenderPublicTime
+                                        publicTime={publicTime}
+                                        windowWidth={windowWidth}
+                                        {...props}
+                                    />
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td/>
-                                    <td className="my-news-entry-tags-th" colSpan="2">{renderTags(tags)}</td>
+                                    <td className="my-news-entry-tags-th" colSpan="2">
+                                        <RenderTags items={convertToItems(tags)} />
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -210,135 +245,12 @@ const RootDataViewLazy = props => {
         );
     }
 
-    const renderTitle = (id, value) => {
-        const {type, ...record} = value;
-        if (record.title === null)
-            return "title for " + id;
-        return record.title;
-    }
-
-    const renderImg = (id, value) => {
-        if (windowWidth < WINDOW_WIDTH_LIMIT.BIG) return null;
-        const {type, ...record} = value;
-        if (isArticle(type))
-            return renderImgArticle(record);
-        if (isNewsEntry(type))
-            return renderImgNewsEntry(record);
-        if (isNewsLinks(type))
-            return renderImgNewsLinks(record);
+    const renderListItem = (record) => {
+        if (isArticle(record.type) || isNewsEntry(record.type) || isNewsLinks(record.type))
+            return renderListItemEntity(record);
         return (
-            <div style={{padding: '.5em', border: 0}}>image for id</div>
+            <div aria-labelledby={"empty_record_" + record.id}/>
         );
-    }
-
-    const renderUserName = (id, value) => {
-        const {type, ...record} = value;
-        if (record.userName === null)
-            return "username for " + id;
-        return record.userName;
-    }
-
-    const renderPublicTime = publicTime => {
-        if (windowWidth < WINDOW_WIDTH_LIMIT.SMALL) return (
-            <DateTime
-                language={props.locale.language}
-                value={moment(publicTime)}
-            />
-        );
-        return (
-            <DateTime
-                language={props.locale.language}
-                value={moment(publicTime)}
-                day="numeric"
-                month={windowWidth > WINDOW_WIDTH_LIMIT.MIDDLE ? "long" : "short"}
-                weekday={windowWidth > WINDOW_WIDTH_LIMIT.MIDDLE ? "long" : "short"}
-                year="numeric"
-            />
-        );
-    }
-
-    const renderContent = (id, value) => {
-        const {type, ...record} = value;
-        if (isArticle(type))
-            return record['articleSummary'];
-        if (isNewsEntry(type))
-            return record['newsEntryContent'];
-        if (isNewsLinks(type))
-            return null;
-        return "content for " + id;
-    }
-
-    const renderAfterContent = (id, value) => {
-        const {type, ...record} = value;
-        if (isArticle(type))
-            return renderSummaryIncludeAnchor(id, record);
-        if (isNewsLinks(type))
-            return renderLinkNewsLinks(id, record);
-        return (
-            <div aria-labelledby={"after_content_for_" + id}/>
-        );
-    }
-
-    const renderSummaryIncludeAnchor = (id, record) => (
-        <ul>
-            <li><a href={record['articleInclude']}>{record['articleAnchor']}</a></li>
-        </ul>
-    )
-
-    const renderLinkNewsLinks = (id, record) => (
-        <ul>
-            <li><a href={record.links}>{record.links}</a></li>
-        </ul>
-    )
-
-    const renderImgArticle = (record) => (
-        <img alt={record['articleTitle']}
-             className="my-left-top"
-             src="/raw-svg/file.svg"
-             srcSet="/raw-svg/file.svg"
-             height="64"
-             width="64"
-        />
-    )
-
-    const renderImgNewsEntry = (record) => (
-        <img alt={record['newsEntryTitle']}
-             className="my-left-top"
-             src="/raw-svg/pause.svg"
-             srcSet="/raw-svg/pause.svg"
-             height="96"
-             width="64"
-        />
-    )
-
-    const renderImgNewsLinks = (record) => (
-        <img alt={record['newsLinksTitle']}
-             className="my-left-top"
-             src="/raw-svg/link.svg"
-             srcSet="/raw-svg/link.svg"
-             height="72"
-             width="64"
-        />
-    )
-
-    const renderTags = (tags) => {
-        const items = [];
-        for (let object in tags) {
-            // noinspection JSUnfilteredForInLoop
-            let index = Object.keys(tags).indexOf(object);
-            items.push({index: index, value: tags[index]});
-        }
-        return (
-            <div>{map(items, ({index, value}) => (
-                <Button
-                    style={{marginLeft: "2px"}}
-                    key={index}
-                    label={value}
-                    className="my-p-button-sm p-button-rounded p-button-secondary"
-                    disabled
-                />
-            ))}</div>
-        )
     }
 
     const itemTemplate = (record, layout) => {
@@ -371,15 +283,17 @@ const RootDataViewLazy = props => {
 const mapStateToProps = state => ({
     date: state.currentDate,
     locale: state.language,
+    page: state.currentPage,
     record: state.updatedRecord,
     user: state.currentUser,
 })
 
 const mapDispatchToProps = dispatch => ({
-    handleCalendarDate: value => dispatch(setCalendarDate(value))
+    handleCalendarDate: value => dispatch(setCalendarDate(value)),
+    handlePage: value => dispatch(setPage(value))
 })
 
 export default compose(
     withRouter,
     connect(mapStateToProps, mapDispatchToProps)
-)(RootDataViewLazy);
+)(rootDataViewLazy);
