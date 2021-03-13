@@ -6,8 +6,6 @@ table.news-links tr:hover td{color:#455261;cursor:default;}
 .my-news-links-second-th p{
  text-align: justify;
  width: 100%;
- height:10px;
- line-height:10px;
  margin:0;
 }
 .my-news-links-second-th p:after{

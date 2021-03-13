@@ -14,6 +14,7 @@
     "@eo-locale/core": "^1.4.14",
     "@eo-locale/react": "^1.4.14",
     "axios": "^0.21.1",
+    "beautiful-react-hooks": "^0.31.1",
     "bootstrap": "^4.5.2",
     "classname": "0.0.0",
     "css": "^3.0.0",
