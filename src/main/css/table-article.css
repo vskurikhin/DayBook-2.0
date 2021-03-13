@@ -6,8 +6,6 @@ table.article tr:hover td{color:#354264;cursor:default;}
 .my-article-second-th p{
  text-align: justify;
  width: 100%;
- height:10px;
- line-height:10px;
  margin:0;
 }
 .my-article-second-th p:after{

@@ -182,8 +182,6 @@ img.my-left-top{
 .valueField p{
  text-align: justify;
  width: 100%;
- height:10px;
- line-height:10px;
  margin:0;
 }
 .valueField p:after{
@@ -356,7 +354,13 @@ img.my-left-top{
  width: 100%;
 }
 
-/* Header/logo Title */
+
+
+p {
+ text-align: justify;
+ text-justify: inter-word;
+ line-height: 1.25em;
+}/* Header/logo Title */
 .my-header{
  position: absolute;
  height: 52px;

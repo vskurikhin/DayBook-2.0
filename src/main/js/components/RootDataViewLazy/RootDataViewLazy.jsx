@@ -17,7 +17,7 @@ import {isAdmin} from '../../lib/userTool'
 import {kebabize} from "../../lib/kebabize";
 import {setCalendarDate} from "../../redux/actions";
 
-import React, {useState, useEffect, useRef} from 'react';
+import * as React from "react";
 import axios from "axios";
 import moment from 'moment';
 import {Button} from 'primereact/button';
@@ -28,17 +28,21 @@ import {compose} from "redux";
 import {connect} from "react-redux";
 import {map} from 'underscore'
 import {useHistory, withRouter} from 'react-router-dom';
+import {useWindowResize} from "beautiful-react-hooks";
+import {useEffect, useRef, useState} from "react";
+
 
 const NUMBER_OF_ELEMENTS = 10;
 const TIMEOUT = 33;
 
 const RootDataViewLazy = props => {
-    const [records, setRecords] = useState([]);
+    const [first, setFirst] = useState(0);
     const [layout, setLayout] = useState('list');
     const [loading, setLoading] = useState(true);
-    const [first, setFirst] = useState(0);
-    const [totalRecords, setTotalRecords] = useState(NUMBER_OF_ELEMENTS);
     const [numberOfElements, setNumberOfElements] = useState(NUMBER_OF_ELEMENTS);
+    const [records, setRecords] = useState([]);
+    const [totalRecords, setTotalRecords] = useState(NUMBER_OF_ELEMENTS);
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const isMounted = useRef(false);
     const cancelTokenSource = axios.CancelToken.source();
     const allRecordService = new AllRecordService(API_V1_RESOURCE_RECORDS, cancelTokenSource);
@@ -69,6 +73,11 @@ const RootDataViewLazy = props => {
             icon: 'pi pi-fw pi-power-off'
         }
     ];
+    const WINDOW_WIDTH_LIMIT = {
+        BIG: 1100,
+        MIDDLE: 660,
+        SMALL: 550
+    };
 
     useEffect(() => {
         if (isMounted.current) {
@@ -91,6 +100,11 @@ const RootDataViewLazy = props => {
             });
         }, TIMEOUT);
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    // noinspection JSAnnotator
+    useWindowResize((event: React.SyntheticEvent) => {
+        setWindowWidth(window.innerWidth);
+    });
 
     const onPage = (event) => {
         setLoading(true);
@@ -134,7 +148,7 @@ const RootDataViewLazy = props => {
         );
     }
 
-    const renderListItemEntity = (value) => {
+    const renderListItemEntity = value => {
 
         if (value === {}) return (
             <div/>
@@ -180,14 +194,7 @@ const RootDataViewLazy = props => {
                                 <tr>
                                     <td>{renderUserName(id, record)}</td>
                                     <td className="my-news-entry-date-th"
-                                    ><DateTime
-                                        language={props.locale.language}
-                                        value={moment(publicTime)}
-                                        day="numeric"
-                                        month="long"
-                                        weekday="long"
-                                        year="numeric"
-                                    /></td>
+                                    >{renderPublicTime(publicTime)}</td>
                                     <td/>
                                 </tr>
                                 <tr>
@@ -211,6 +218,7 @@ const RootDataViewLazy = props => {
     }
 
     const renderImg = (id, value) => {
+        if (windowWidth < WINDOW_WIDTH_LIMIT.BIG) return null;
         const {type, ...record} = value;
         if (isArticle(type))
             return renderImgArticle(record);
@@ -228,6 +236,25 @@ const RootDataViewLazy = props => {
         if (record.userName === null)
             return "username for " + id;
         return record.userName;
+    }
+
+    const renderPublicTime = publicTime => {
+        if (windowWidth < WINDOW_WIDTH_LIMIT.SMALL) return (
+            <DateTime
+                language={props.locale.language}
+                value={moment(publicTime)}
+            />
+        );
+        return (
+            <DateTime
+                language={props.locale.language}
+                value={moment(publicTime)}
+                day="numeric"
+                month={windowWidth > WINDOW_WIDTH_LIMIT.MIDDLE ? "long" : "short"}
+                weekday={windowWidth > WINDOW_WIDTH_LIMIT.MIDDLE ? "long" : "short"}
+                year="numeric"
+            />
+        );
     }
 
     const renderContent = (id, value) => {
@@ -313,15 +340,6 @@ const RootDataViewLazy = props => {
             ))}</div>
         )
     }
-
-    const renderButton = (index, value) => (
-        <Button
-            key={index}
-            label={value}
-            className="p-button-sm p-button-rounded p-button-secondary"
-            disabled
-        />
-    )
 
     const itemTemplate = (record, layout) => {
         if (!record) return;
