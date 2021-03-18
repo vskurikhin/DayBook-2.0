@@ -6,10 +6,10 @@
  * $Id$
  */
 
-import {WINDOW_WIDTH_LIMIT} from "./RootDataViewLazy";
 import {isArticle, isNewsEntry, isNewsLinks} from "../../lib/is";
 
 import React from 'react'
+import {WINDOW_WIDTH_LIMIT} from "../../config/consts";
 
 export const renderImg = props => {
 

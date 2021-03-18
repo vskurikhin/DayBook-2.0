@@ -14,5 +14,7 @@ export const API_V1_RESOURCE_TAG_LABEL = API_V1_RESOURCE + '/tag-label';
 
 export const API_V1_RESOURCE_RECORDS = API_V1_RESOURCE + '/records';
 
+export const API_V1_RESOURCE_RECORDS_BY_DATE = API_V1_RESOURCE + '/records/by-date';
+
 export const API_V1_RESOURCE_RECORD = API_V1_RESOURCE + '/record';
 

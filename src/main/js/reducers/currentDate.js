@@ -9,7 +9,7 @@
 const now = new Date();
 
 const initialState = {
-    currentDate: {"year":now.getFullYear(),"month":now.getMonth()+1,"date":now.getDay()}
+    currentDate: {"year":now.getFullYear(),"month":now.getMonth()+1,"date":now.getDate()}
 }
 
 export default function currentDate(state = initialState, action) {

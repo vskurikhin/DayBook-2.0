@@ -6,17 +6,17 @@
  * $Id$
  */
 
-import CalendarDataView from '../CalendarDataView/CalendarDataView'
-import IFrame from '../../IFrame/IFrame'
-import SimpleReactCalendar from 'simple-react-calendar'
-import {formatDate, logDate} from '../../../lib/formatDate'
-import {loadCssListIframe1} from '../../../lib/CssListIframe1'
+import CalendarDataView from "../CalendarDataView/CalendarDataView";
+import IFrame from '../../IFrame/IFrame';
+import SimpleReactCalendar from 'simple-react-calendar';
+import {logDate} from '../../../lib/formatDate';
+import {loadCssListIframe1} from '../../../lib/CssListIframe1';
 import {locales} from "../../../config/locales";
-import {setCalendarDate} from '../../../redux/actions'
+import {setCalendarDate} from '../../../redux/actions';
 
-import React, {Component} from 'react'
+import React, {Component} from 'react';
 import {compose} from "redux";
-import {connect, ReactReduxContext} from 'react-redux'
+import {connect, ReactReduxContext} from 'react-redux';
 import {withRouter} from "react-router";
 import {Text, TranslationsProvider} from "@eo-locale/react";
 
@@ -24,9 +24,7 @@ export class CalendarRow extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            calendarDate: this.getCurrentDate()
-        };
+        this.state = {calendarDate: this.getCurrentDate()};
     }
 
     componentDidMount() {
@@ -38,7 +36,7 @@ export class CalendarRow extends Component {
     }
 
     calendarRowSetState(date) {
-        this.setState({calendarDate: date})
+        this.setState({calendarDate: date});
         this.props.handleCalendarDate(date)
     }
 
@@ -80,12 +78,12 @@ export class CalendarRow extends Component {
                 <div className="my-side">
                     <h1><Text id='Calendar'/></h1>
                     <ReactReduxContext.Consumer>
-                        { ({store}) => this.renderCalendar(store) }
+                        {({store}) => this.renderCalendar(store)}
                     </ReactReduxContext.Consumer>
                 </div>
                 <div className="my-main">
                     <IFrame style={divStyle} name='iframe1' id='iframe1'>
-                        <CalendarDataView date={formatDate(this.getCurrentDate())}/>
+                        <CalendarDataView/>
                     </IFrame>
                 </div>
                 </TranslationsProvider>

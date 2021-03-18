@@ -8,22 +8,27 @@
 
 import axios from 'axios';
 
-import {API_V1_RESOURCE_RECORDS} from '../config/api';
+import {API_V1_RESOURCE_RECORDS, API_V1_RESOURCE_RECORDS_BY_DATE} from '../config/api';
 import {getConfigHeadersAuthorization} from '../lib/axiosConfig';
 import {ApiService} from "./ApiService";
 
 export class AllRecordService extends ApiService {
 
-    constructor(url, cancelTokenSource) {
+    constructor(cancelTokenSource, date) {
+        const url = date !== undefined ? API_V1_RESOURCE_RECORDS_BY_DATE : API_V1_RESOURCE_RECORDS;
         super(url, cancelTokenSource);
+        this.date = date;
     }
 
-    getRecordsLazy(event, numberOfElements) {
+    getRecordsLazy(event, numberOfElements, date) {
         const config = getConfigHeadersAuthorization(window.sessionStorage.token);
         const first = event !== null ? event.first : 0;
         const page = event !== null ? event.page : 0;
+        const apiUrl = date !== undefined ? API_V1_RESOURCE_RECORDS_BY_DATE : API_V1_RESOURCE_RECORDS;
+        const baseUrl = apiUrl + "?page=" + page + "&first=" + first + "&size=" + numberOfElements;
+        const url = date !== undefined ? baseUrl + "&date=" + date : baseUrl;
         return axios
-            .get(API_V1_RESOURCE_RECORDS + "?page=" + page + "&first=" + first + "&size=" + numberOfElements, config)
+            .get(url, config)
             .then(function (response) {
                 const length = response.data.content.length;
                 for (let i = length; i < numberOfElements; i++) {
