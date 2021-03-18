@@ -54,8 +54,6 @@ export class CalendarRow extends Component {
         const daysOfWeek = locales
             .filter(l => l.language === this.props.locale.language)
             .map(l => l.messages.daysOfWeek)[0];
-        console.log('renderCalendar');
-        console.log(daysOfWeek);
 
         return (
             <SimpleReactCalendar

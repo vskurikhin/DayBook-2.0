@@ -199,6 +199,7 @@ export const setCalendarDate = (date = {
     "date": now.getDay()
 }) => ({type: 'CALENDAR_DATE', payload: date});
 
+export const setPage = (value = {}) => ({type: 'UPDATED_PAGE', payload: value});
 
 export const setLanguage = (value = {}) => ({type: 'UPDATED_LANGUAGE', payload: value});
 

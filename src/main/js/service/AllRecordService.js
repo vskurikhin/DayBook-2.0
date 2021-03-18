@@ -25,8 +25,6 @@ export class AllRecordService extends ApiService {
         return axios
             .get(API_V1_RESOURCE_RECORDS + "?page=" + page + "&first=" + first + "&size=" + numberOfElements, config)
             .then(function (response) {
-                console.log('getCarsLazy(' + event + ',' + numberOfElements + ') data: ');
-                console.log(response.data);
                 const length = response.data.content.length;
                 for (let i = length; i < numberOfElements; i++) {
                     response.data.content.push({});
