@@ -11,50 +11,42 @@ import 'primereact/resources/primereact.css';
 import 'primeflex/primeflex.css';
 import './Button.css';
 
-import RenderAfterContent from "./RenderAfterContent";
-import RenderImg from "./RenderImg";
-import RenderPublicTime from "./RenderPublicTime";
-import RenderTags, {convertToItems} from "./RenderTags";
-import {API_V1_RESOURCE_RECORDS} from '../../config/api';
+import RenderTBody from "../RenderTBody/RenderTBody";
+import isEmpty from "../../lib/isEmpty";
+import renderTitle from "../RenderTBody/renderTitle";
 import {AllRecordService} from '../../service/AllRecordService';
+import {NUMBER_OF_ELEMENTS, TIMEOUT} from "../../config/consts";
 import {isAdmin} from '../../lib/userTool'
 import {isArticle, isNewsEntry, isNewsLinks} from "../../lib/is";
 import {kebabize} from "../../lib/kebabize";
 import {setCalendarDate, setPage} from "../../redux/actions";
 
 import * as React from "react";
+import {useEffect, useRef, useState} from "react";
 import axios from "axios";
 import {ContextMenu} from 'primereact/contextmenu';
 import {DataView} from 'primereact/dataview';
 import {compose} from "redux";
 import {connect} from "react-redux";
-import {useEffect, useRef, useState} from "react";
 import {useHistory, withRouter} from 'react-router-dom';
 import {useWindowResize} from "beautiful-react-hooks";
 
-
-const NUMBER_OF_ELEMENTS = 10;
-const TIMEOUT = 33;
-export const WINDOW_WIDTH_LIMIT = {
-    BIG: 990,
-    MIDDLE: 660,
-    SMALL: 550
-};
 
 const rootDataViewLazy = props => {
 
     const [first, setFirst] = useState(0);
     const [layout, setLayout] = useState('list');
     const [loading, setLoading] = useState(true);
-    const [numberOfElements, setNumberOfElements] = useState(NUMBER_OF_ELEMENTS);
     const [records, setRecords] = useState([]);
     const [totalRecords, setTotalRecords] = useState(NUMBER_OF_ELEMENTS);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
     const isMounted = useRef(false);
     const cancelTokenSource = axios.CancelToken.source();
-    const allRecordService = new AllRecordService(API_V1_RESOURCE_RECORDS, cancelTokenSource);
+    const allRecordService = new AllRecordService(cancelTokenSource);
     const cm = useRef(null);
     const history = useHistory();
+
     const items = [
         {
             label: 'New',
@@ -93,15 +85,18 @@ const rootDataViewLazy = props => {
     useEffect(() => {
         setTimeout(() => {
             const event = props.page !== null
-                ? {first: props.page.currentPage.first,
-                    page: props.page.currentPage.page}
+                ? {
+                    first: props.page.currentPage.first,
+                    page: props.page.currentPage.page
+                }
                 : {first: 0, page: 0};
-            allRecordService.getRecordsLazy(event, numberOfElements).then(function (resItems) {
-                setFirst(0);
-                setRecords(resItems['data'].content);
-                setTotalRecords(resItems['data'].totalElements);
-                setLoading(false);
-            }).catch(function (error) {
+            allRecordService.getRecordsLazy(event, NUMBER_OF_ELEMENTS)
+                .then(function (resItems) {
+                    setFirst(0);
+                    setRecords(resItems['data'].content);
+                    setTotalRecords(resItems['data'].totalElements);
+                    setLoading(false);
+                }).catch(function (error) {
                 console.log(error);
             });
         }, TIMEOUT);
@@ -109,31 +104,35 @@ const rootDataViewLazy = props => {
 
     // noinspection JSAnnotator
     useWindowResize((event: React.SyntheticEvent) => {
-        setWindowWidth(window.innerWidth);
+        if (Math.abs(windowWidth - window.innerWidth) > 10)
+            setWindowWidth(window.innerWidth);
     });
 
-    const onPage = (event) => {
+    const onPage = event => {
         setLoading(true);
         //imitate delay of a backend call
         setTimeout(() => {
-            allRecordService.getRecordsLazy(event.originalEvent, numberOfElements).then(function (resItems) {
-                setFirst(event.originalEvent.first);
-                setRecords(resItems['data'].content);
-                setTotalRecords(resItems['data'].totalElements);
-                setLoading(false);
-            }).catch(function (error) {
+            allRecordService.getRecordsLazy(event.originalEvent, NUMBER_OF_ELEMENTS)
+                .then(function (resItems) {
+                    setFirst(event.originalEvent.first);
+                    setRecords(resItems['data'].content);
+                    setTotalRecords(resItems['data'].totalElements);
+                    setLoading(false);
+                }).catch(function (error) {
                 console.log(error);
             });
         }, TIMEOUT);
         const page = event !== null
-            ? {first: event.originalEvent.first,
-                page: event.originalEvent.page}
+            ? {
+                first: event.originalEvent.first,
+                page: event.originalEvent.page
+            }
             : {first: 0, page: 0};
         props.handlePage(page);
     }
 
     // TODO
-    const renderGridItem = (record) => {
+    const renderGridItem = record => {
         return (
             <div/>
         );
@@ -147,35 +146,10 @@ const rootDataViewLazy = props => {
         }
     }
 
-    const renderTitle = (id, value) => {
-        const {type, ...record} = value;
-        if (record.title === null)
-            return "title for " + id;
-        return record.title;
-    }
-
-    const renderUserName = (id, value) => {
-        const {type, ...record} = value;
-        if (record.userName === null)
-            return "username for " + id;
-        return record.userName;
-    }
-
-    const renderContent = (id, value) => {
-        const {type, ...record} = value;
-        if (isArticle(type))
-            return record['articleSummary'];
-        if (isNewsEntry(type))
-            return record['newsEntryContent'];
-        if (isNewsLinks(type))
-            return null;
-        return "content for " + id;
-    }
-
     const renderListItemEntity = value => {
 
-        if (value === {}) return (
-            <div/>
+        if (isEmpty(value)) return (
+            <div style={{border: 0}} />
         );
         const {id, tags, publicTime, ...record} = value;
 
@@ -197,46 +171,14 @@ const rootDataViewLazy = props => {
                             <table aria-haspopup
                                    className="news-entry"
                                    onContextMenu={(e) => renderContextMenu(e, record.type, id)}>
-                                <tbody>
-                                <tr>
-                                    <td className="my-news-entry-first-th" rowSpan="3">
-                                        <RenderImg
-                                            id={id}
-                                            value={record}
-                                            windowWidth={windowWidth}
-                                            {...props}
-                                        />
-                                    </td>
-                                    <td className="valueField my-news-entry-second-th"
-                                        colSpan="2"
-                                        rowSpan="2">
-                                        <div align="justify" dangerouslySetInnerHTML={{
-                                            __html: renderContent(id, record)
-                                        }}
-                                        />
-                                        <RenderAfterContent id={id} value={record} />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td/>
-                                </tr>
-                                <tr>
-                                    <td>{renderUserName(id, record)}</td>
-                                    <td className="my-news-entry-date-th">
-                                    <RenderPublicTime
-                                        publicTime={publicTime}
-                                        windowWidth={windowWidth}
-                                        {...props}
-                                    />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td/>
-                                    <td className="my-news-entry-tags-th" colSpan="2">
-                                        <RenderTags items={convertToItems(tags)} />
-                                    </td>
-                                </tr>
-                                </tbody>
+                                <RenderTBody
+                                    id={id}
+                                    publicTime={publicTime}
+                                    tags={tags}
+                                    value={record}
+                                    windowWidth={windowWidth}
+                                    {...props}
+                                />
                             </table>
                         </div>
                     </div>
@@ -245,11 +187,11 @@ const rootDataViewLazy = props => {
         );
     }
 
-    const renderListItem = (record) => {
+    const renderListItem = record => {
         if (isArticle(record.type) || isNewsEntry(record.type) || isNewsLinks(record.type))
             return renderListItemEntity(record);
         return (
-            <div aria-labelledby={"empty_record_" + record.id}/>
+            <div style={{border: 0}} aria-labelledby={"empty_record_" + record.id}/>
         );
     }
 
@@ -272,7 +214,7 @@ const rootDataViewLazy = props => {
                       loading={loading}
                       onPage={onPage}
                       paginator paginatorPosition={'both'}
-                      rows={numberOfElements}
+                      rows={NUMBER_OF_ELEMENTS}
                       totalRecords={totalRecords}
                       value={records}
             />

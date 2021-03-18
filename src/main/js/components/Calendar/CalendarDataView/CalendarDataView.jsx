@@ -10,29 +10,107 @@ import 'primeicons/primeicons.css';
 import 'primereact/resources/primereact.css';
 import 'primeflex/primeflex.css';
 
-import React, {useState} from 'react';
+import RenderTBody from "../../RenderTBody/RenderTBody";
+import isEmpty from "../../../lib/isEmpty";
+import renderTitle from "../../RenderTBody/renderTitle";
+import {AllRecordService} from "../../../service/AllRecordService";
+import {NUMBER_OF_ELEMENTS, TIMEOUT} from "../../../config/consts";
+import {formatDate} from "../../../lib/formatDate";
+import {setCalendarDate, setPage} from "../../../redux/actions";
+
+import React, {Component} from 'react';
+import axios from "axios";
 import {DataView} from 'primereact/dataview';
+import {compose} from "redux";
+import {withRouter} from "react-router-dom";
+import {connect} from "react-redux";
 
-const CalendarDataView = (date) => {
-    const rows = 6;
-    const [cars, setCars] = useState([]);
-    const [totalRecords, setTotalRecords] = useState(0);
+export class CalendarDataView extends Component {
 
-    const renderGridItem = (car) => {
+    cancelTokenSource = axios.CancelToken.source();
+
+    constructor(props) {
+        super(props);
+        console.log('CalendarDataView.constructor');
+        console.log(props);
+        this.update = this.update.bind(this);
+        this.state = {
+            first: 0,
+            layout: 'list',
+            loading: false,
+            records: [],
+            totalRecords: 0,
+        };
+        this.allRecordService = new AllRecordService(this.cancelTokenSource, this.props.date);
+    }
+
+    setRecords = value => {
+        console.log('CalendarDataView.setRecords');
+        this.setState({
+            ...this.state,
+            loading: false,
+            records: value['data'].content,
+            totalRecords: value['data'].totalElements,
+        });
+        console.log('CalendarDataView.setRecords');
+        console.log(this.state);
+    }
+
+    update = () => {
+        const event = {first: 0, page: 0};
+        this.allRecordService.getRecordsLazy(event, NUMBER_OF_ELEMENTS, this.props.date)
+            .then(this.setRecords)
+            .catch(error => console.log(error));
+    }
+
+    componentDidMount() {
+        this.update();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.date !== prevProps.date) {
+            this.update();
+        }
+    }
+
+    componentWillUnmount() {
+        this.cancelTokenSource.cancel();
+    }
+
+    renderListItemEntity = value => {
+
+        if (isEmpty(value)) {
+            return (
+                <div style={{border: 0}} />
+            );
+        }
+        const {id, tags, publicTime, ...record} = value;
+
         return (
-            <div className="p-col-12"  key={record.id}>
-                <div className="car-details">
-                    <div>
-                        <div className="p-grid">
-                            <div className="p-col-12">type: <b>{record.type}</b></div>
-                            <div className="p-col-12">updateTime: <b>{record.updateTime}</b></div>
-                            <div className="p-col-12">
-                                <img src="/raw-svg/sitemap.svg"
-                                     srcSet="/raw-svg/sitemap.svg"
-                                     alt={record.visible}
-                                />Brand: <b>{record.visible}</b>
-                            </div>
-                            <div className="p-col-12">tags: <b>{record.tags}</b></div>
+            <div style={{padding: '.5em', border: 0}} className="p-col-12 p-md-4">
+                <div id={id}
+                     className="p-panel p-component"
+                     style={{textAlign: 'left'}}>
+                    <div className="p-panel-header">
+                        <span aria-label={id} className="p-panel-title"
+                        >{renderTitle(id, record)}</span>
+                        <div className="p-panel-icons"/>
+                    </div>
+                    <div aria-labelledby={id}
+                         aria-hidden="false"
+                         className="p-toggleable-content"
+                         role="region">
+                        <div className="p-panel-content">
+                            <table aria-haspopup className="news-entry">
+                                <RenderTBody
+                                    id={id}
+                                    publicTime={publicTime}
+                                    tags={tags}
+                                    value={record}
+                                    windowWidth={window.innerWidth}
+                                    {...this.props}
+                                />
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -40,16 +118,44 @@ const CalendarDataView = (date) => {
         );
     }
 
-    const itemTemplate = (car) => {
-        return renderGridItem(car);
+    itemTemplate = (record, layout) => {
+        if (!record) return;
+
+        if (layout === 'grid')
+            return this.renderListItemEntity(record);
+        else if (layout === 'list')
+            return this.renderListItemEntity(record);
     }
 
-    return (
-        <div className="dataview-demo">
-            <DataView value={cars} itemTemplate={itemTemplate}
-                      paginator paginatorPosition={'both'} rows={rows} totalRecords={totalRecords} />
-        </div>
-    );
+    render() {
+        return (
+            <div className="dataview-demo">
+                <DataView first={this.state.first}
+                          itemTemplate={this.itemTemplate}
+                          layout={this.state.layout}
+                          lazy
+                          loading={this.state.loading}
+                          rows={NUMBER_OF_ELEMENTS}
+                          totalRecords={this.state.totalRecords}
+                          value={this.state.records}
+                />
+            </div>
+        );
+    }
 }
 
-export default CalendarDataView;
+const mapStateToProps = state => ({
+    date: formatDate(state.currentDate.currentDate),
+    locale: state.language,
+    user: state.currentUser,
+})
+
+const mapDispatchToProps = dispatch => ({
+    handleCalendarDate: value => dispatch(setCalendarDate(value)),
+    handlePage: value => dispatch(setPage(value))
+})
+
+export default compose(
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps)
+)(CalendarDataView);

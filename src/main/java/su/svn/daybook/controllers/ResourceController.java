@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.07 12:19 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.18 08:23 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * ResourceController.java
@@ -45,6 +45,7 @@ import su.svn.daybook.domain.security.ProfileResponse;
 import su.svn.daybook.services.ArticleService;
 import su.svn.daybook.services.NewsEntryService;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 import static su.svn.daybook.utils.BodyUtil.getBody;
@@ -168,6 +169,17 @@ public class ResourceController {
             @RequestParam("size") @Parameter(name = "size", required = true, example = "999") int size) {
         log.debug("readRecords()");
         return recordNewsEntryService.getRecords(page, size);
+    }
+
+    @Operation(summary = "Get all records by date")
+    @GetMapping(value = "/records/by-date")
+    @PreAuthorize("permitAll() or hasPermission()")
+    public Mono<Page<AllRecordView>> getByDate(
+            @RequestParam("page") @Parameter(name = "page", required = true, example = "0") int page,
+            @RequestParam("size") @Parameter(name = "size", required = true, example = "999") int size,
+            @RequestParam("date") @Parameter(name = "date", required = true, example = "1970-01-01") LocalDate date) {
+        log.debug("getByDate()");
+        return recordNewsEntryService.getByDate(page, size, date);
     }
 
     @Operation(

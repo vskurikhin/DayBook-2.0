@@ -6,11 +6,10 @@
  * $Id$
  */
 
-import {WINDOW_WIDTH_LIMIT} from "./RootDataViewLazy";
-
 import * as React from "react";
 import moment from "moment";
 import {DateTime} from "@eo-locale/react";
+import {WINDOW_WIDTH_LIMIT} from "../../config/consts";
 
 const renderPublicTime = props => {
 
