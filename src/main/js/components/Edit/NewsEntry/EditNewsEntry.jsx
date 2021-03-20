@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.09 22:38 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.20 15:52 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * EditNewsEntry.jsx
@@ -10,13 +10,14 @@ import './DropdownDemo.css';
 import NewsEntryView from './NewsEntryView';
 import {API_V1_RESOURCE_NEWS_GROUPS, API_V1_RESOURCE_TAG_LABEL} from "../../../config/api";
 import {ApiService} from "../../../service/ApiService";
+import {getResourceRecord, getResourceRecordError, getResourceRecordPending} from "../../../reducers/resourceRecord";
+import {putNewsEntryRecord} from '../../../lib/resourceRecord';
 import {recordService} from '../../../service/RecordService';
-import {updateNewsEntry} from '../../../redux/actions';
 
 import React from 'react';
 import axios from 'axios';
 import {Redirect} from "react-router";
-import {compose} from "redux";
+import {bindActionCreators, compose} from "redux";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 
@@ -47,10 +48,13 @@ class EditNewsEntry extends NewsEntryView {
         super(props);
     }
 
+    setStateRedirectToReferrer = () => {
+        this.setState({redirectToReferrer: true});
+    }
+
     handleSubmit = event => {
         event.preventDefault();
-        this.props.editNewsEntryView(this.state.data);
-        this.setState({redirectToReferrer: true});
+        this.props.putRecord(this.state.data, this.setStateRedirectToReferrer);
     }
 
     componentDidMount() {
@@ -68,25 +72,28 @@ class EditNewsEntry extends NewsEntryView {
     }
 
     render() {
+        const {pending} = this.props;
         if (this.state.redirectToReferrer === true) {
             return <Redirect to="/index"/>
         }
-        if (this.state.data instanceof Promise) return (
+        if (pending) return (
             <div>Loading...</div>
         );
-        const values = {};
         return this.newsEntryView();
     }
 }
 
 const mapStateToProps = state => ({
+    error: getResourceRecordError(state),
     locale: state.language,
+    pending: getResourceRecordPending(state),
+    record: getResourceRecord(state),
     user: state.currentUser,
 })
 
-const mapDispatchToProps = dispatch => ({
-    editNewsEntryView: value => dispatch(updateNewsEntry(value))
-})
+const mapDispatchToProps = dispatch => bindActionCreators({
+    putRecord: putNewsEntryRecord
+}, dispatch)
 
 export default compose(
     withRouter,
