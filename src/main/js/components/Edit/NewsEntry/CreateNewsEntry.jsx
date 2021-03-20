@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.09 22:38 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.20 20:43 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * CreateNewsEntry.jsx
@@ -11,14 +11,15 @@ import NewsEntryView from './NewsEntryView';
 import {API_V1_RESOURCE_NEWS_GROUPS, API_V1_RESOURCE_TAG_LABEL} from '../../../config/api';
 import {ApiService} from '../../../service/ApiService';
 import {DEFAULT_NEWS_GROUP_ID} from '../../../config/consts';
-import {createNewsEntry} from '../../../redux/actions';
 
 import React from 'react';
 import axios from "axios";
 import {Redirect} from "react-router";
-import {compose} from "redux";
+import {bindActionCreators, compose} from "redux";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
+import {getResourceRecord, getResourceRecordError, getResourceRecordPending} from "../../../reducers/resourceRecord";
+import {postNewsEntryRecord, putNewsEntryRecord} from "../../../lib/resourceRecord";
 
 class CreateNewsEntry extends NewsEntryView {
 
@@ -49,8 +50,7 @@ class CreateNewsEntry extends NewsEntryView {
 
     handleSubmit = event => {
         event.preventDefault();
-        this.props.createNewsEntryView(this.state.data);
-        this.setState({redirectToReferrer: true});
+        this.props.postRecord(this.state.data, this.setStateRedirectToReferrer);
     }
 
     componentDidMount() {
@@ -74,13 +74,16 @@ class CreateNewsEntry extends NewsEntryView {
 }
 
 const mapStateToProps = state => ({
+    error: getResourceRecordError(state),
     locale: state.language,
+    pending: getResourceRecordPending(state),
+    record: getResourceRecord(state),
     user: state.currentUser,
 })
 
-const mapDispatchToProps = dispatch => ({
-    createNewsEntryView: value => dispatch(createNewsEntry(value)),
-})
+const mapDispatchToProps = dispatch => bindActionCreators({
+    postRecord: postNewsEntryRecord
+}, dispatch)
 
 export default compose(
     withRouter,

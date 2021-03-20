@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.02 23:08 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.20 20:43 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * actions.js
@@ -19,10 +19,6 @@ export const updateTagLabel = value => resource('PUT', 'tag-label', value);
 export const createArticle = value => resourceRecord('POST', 'article', value);
 
 export const updateArticle = value => resourceRecord('PUT', 'article', value);
-
-export const createNewsEntry = value => resourceRecord('POST', 'news-entry', value);
-
-export const updateNewsEntry = value => resourceRecord('PUT', 'news-entry', value);
 
 export const createNewsLinks = value => resourceRecord('POST', 'news-links', value);
 

@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.09 22:38 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.20 20:43 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * EditHandlers.jsx
@@ -10,6 +10,7 @@ import React, {Component} from 'react';
 import moment from "moment";
 import {DEFAULT_NEWS_GROUP_ID} from "../../config/consts";
 import {addLocale} from 'primereact/api';
+import {RESOURCE_RECORD_SUCCESS} from "../../redux/resourceRecordActions";
 
 export default class EditHandlers extends Component {
 
@@ -118,5 +119,13 @@ export default class EditHandlers extends Component {
 
             this.setState({filteredTagLabels: filteredTagLabels});
         }, 250);
+    }
+
+    setStateRedirectToReferrer = value => {
+        this.setState({redirectToReferrer: true});
+        return {
+            type: RESOURCE_RECORD_SUCCESS,
+            resourceRecord: value
+        }
     }
 }

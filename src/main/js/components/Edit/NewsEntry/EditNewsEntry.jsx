@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.20 15:52 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.20 20:43 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * EditNewsEntry.jsx
@@ -46,10 +46,6 @@ class EditNewsEntry extends NewsEntryView {
 
     constructor(props) {
         super(props);
-    }
-
-    setStateRedirectToReferrer = () => {
-        this.setState({redirectToReferrer: true});
     }
 
     handleSubmit = event => {
