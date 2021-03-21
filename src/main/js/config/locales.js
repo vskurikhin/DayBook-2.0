@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.11 18:14 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.21 18:04 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * locales.js
@@ -38,6 +38,8 @@ export const locales = [
             daysOfWeek: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
             hello: 'Hello {name}!',
             language: 'Russian',
+            My_name_is: 'Меня зовут Виктор.\n Здесь я пишу об интересующих меня вещах.\n',
+            More_Text: 'Вы можете следить за обновлениями блога с помощью RSS, ВКонтакте, Facebook или Telegram.'
         }
     },
     {
@@ -71,6 +73,8 @@ export const locales = [
             daysOfWeek: ['Пн.', 'Вт.', 'Ср.', 'Чт.', 'Пт.', 'Сб.', 'Вс.'],
             hello: 'Привет {name}!',
             language: 'English',
+            My_name_is: 'Меня зовут Виктор.\n Здесь я пишу об интересующих меня вещах.\n',
+            More_Text: 'Вы можете следить за обновлениями блога с помощью RSS, ВКонтакте, Facebook или Telegram.'
         }
     },
 ];
