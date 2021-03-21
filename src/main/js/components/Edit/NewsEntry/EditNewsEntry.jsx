@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.20 20:43 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.21 13:13 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * EditNewsEntry.jsx
@@ -10,10 +10,17 @@ import './DropdownDemo.css';
 import NewsEntryView from './NewsEntryView';
 import {API_V1_RESOURCE_NEWS_GROUPS, API_V1_RESOURCE_TAG_LABEL} from "../../../config/api";
 import {ApiService} from "../../../service/ApiService";
-import {getResourceRecord, getResourceRecordError, getResourceRecordPending} from "../../../reducers/resourceRecord";
 import {putNewsEntryRecord} from '../../../lib/resourceRecord';
 import {recordService} from '../../../service/RecordService';
+import {
+    getResourceRecord,
+    getResourceRecordError,
+    getResourceRecordPending
+} from "../../../reducers/resourceRecord";
 
+import 'primeicons/primeicons.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeflex/primeflex.css';
 import React from 'react';
 import axios from 'axios';
 import {Redirect} from "react-router";
@@ -53,13 +60,14 @@ class EditNewsEntry extends NewsEntryView {
         this.props.putRecord(this.state.data, this.setStateRedirectToReferrer);
     }
 
+    onFinallyNewsGroupService = () => {
+        const {id} = this.props.match.params;
+        return recordService.getNewsEntry(id, this.handleRecordChange, this.cancelTokenSource);
+    }
+
     componentDidMount() {
-        this.newsGroupService.getAll(null, this.handleEditNewsGroupChange).finally(
-            () => recordService.getNewsEntry(
-                this.props.match.params.id,
-                this.handleRecordChange,
-                this.cancelTokenSource)
-        );
+        this.newsGroupService.getAll(null, this.handleEditNewsGroupChange)
+            .finally(this.onFinallyNewsGroupService);
         this.tagLabelService.getAll(null, this.handleTagLabelChange);
     }
 
@@ -69,7 +77,8 @@ class EditNewsEntry extends NewsEntryView {
 
     render() {
         const {pending} = this.props;
-        if (this.state.redirectToReferrer === true) {
+        const {redirectToReferrer} = this.state;
+        if (redirectToReferrer === true) {
             return <Redirect to="/index"/>
         }
         if (pending) return (

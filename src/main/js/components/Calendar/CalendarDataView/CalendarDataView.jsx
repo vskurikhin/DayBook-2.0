@@ -1,14 +1,10 @@
 /*
- * This file was last modified at 2021.02.27 00:06 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.21 13:13 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * CalendarDataView.jsx
  * $Id$
  */
-
-import 'primeicons/primeicons.css';
-import 'primereact/resources/primereact.css';
-import 'primeflex/primeflex.css';
 
 import RenderTBody from "../../RenderTBody/RenderTBody";
 import isEmpty from "../../../lib/isEmpty";
@@ -18,6 +14,9 @@ import {NUMBER_OF_ELEMENTS, TIMEOUT} from "../../../config/consts";
 import {formatDate} from "../../../lib/formatDate";
 import {setCalendarDate, setPage} from "../../../redux/actions";
 
+import 'primeicons/primeicons.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeflex/primeflex.css';
 import React, {Component} from 'react';
 import axios from "axios";
 import {DataView} from 'primereact/dataview';

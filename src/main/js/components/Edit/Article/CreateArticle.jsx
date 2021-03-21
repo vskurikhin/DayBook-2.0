@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.09 22:38 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.21 13:13 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * CreateArticle.jsx
@@ -10,12 +10,20 @@ import ArticleView from './ArticleView';
 import {API_V1_RESOURCE_NEWS_GROUPS, API_V1_RESOURCE_TAG_LABEL} from "../../../config/api";
 import {ApiService} from "../../../service/ApiService";
 import {DEFAULT_NEWS_GROUP_ID} from "../../../config/consts";
-import {createArticle} from '../../../redux/actions';
+import {postArticleRecord} from "../../../lib/resourceRecord";
+import {
+    getResourceRecord,
+    getResourceRecordError,
+    getResourceRecordPending
+} from "../../../reducers/resourceRecord";
 
+import 'primeicons/primeicons.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeflex/primeflex.css';
 import React from 'react';
 import axios from "axios";
 import {Redirect} from "react-router";
-import {compose} from "redux";
+import {bindActionCreators, compose} from "redux";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 
@@ -49,9 +57,8 @@ class CreateArticle extends ArticleView {
     }
 
     handleSubmit = event => {
-        event.preventDefault()
-        this.props.createArticleView(this.state.data)
-        this.setState({redirectToReferrer: true})
+        event.preventDefault();
+        this.props.postRecord(this.state.data, this.setStateRedirectToReferrer);
     }
 
     componentDidMount() {
@@ -64,11 +71,12 @@ class CreateArticle extends ArticleView {
     }
 
     render() {
-        const redirectToReferrer = this.state.redirectToReferrer;
+        const {pending} = this.props;
+        const {redirectToReferrer} = this.state;
         if (redirectToReferrer === true) {
             return <Redirect to="/index" />
         }
-        if (this.state.data instanceof Promise) return (
+        if (pending) return (
             <div>Loading...</div>
         );
         return this.articleView();
@@ -76,13 +84,16 @@ class CreateArticle extends ArticleView {
 }
 
 const mapStateToProps = state => ({
+    error: getResourceRecordError(state),
     locale: state.language,
+    pending: getResourceRecordPending(state),
+    record: getResourceRecord(state),
     user: state.currentUser,
 })
 
-const mapDispatchToProps = dispatch => ({
-    createArticleView: value => dispatch(createArticle(value)),
-})
+const mapDispatchToProps = dispatch => bindActionCreators({
+    postRecord: postArticleRecord
+}, dispatch)
 
 export default compose(
     withRouter,

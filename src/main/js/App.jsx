@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.20 22:29 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.21 13:13 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * App.jsx
@@ -25,6 +25,7 @@ import {
 } from "react-router";
 import 'primeicons/primeicons.css';
 import 'primereact/resources/primereact.min.css';
+import 'primeflex/primeflex.css';
 import {compose} from 'redux';
 import {connect} from 'react-redux';
 

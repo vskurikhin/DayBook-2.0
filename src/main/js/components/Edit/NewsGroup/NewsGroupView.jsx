@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.02 17:18 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.21 13:13 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NewsGroupView.jsx
@@ -7,9 +7,13 @@
  */
 
 import EditHandlers from "../EditHandlers";
-import {InputText} from "primereact/inputtext";
-import {Button} from "primereact/button";
+
+import 'primeicons/primeicons.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeflex/primeflex.css';
 import React from "react";
+import {Button} from "primereact/button";
+import {InputText} from "primereact/inputtext";
 
 export default class NewsGroupView extends EditHandlers {
 
