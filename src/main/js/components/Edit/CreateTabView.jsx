@@ -1,23 +1,27 @@
 /*
- * This file was last modified at 2021.03.04 13:41 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.21 13:40 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * CreateTabView.jsx
  * $Id$
  */
 
+import 'primeicons/primeicons.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeflex/primeflex.css';
+
 import CreateArticleView from "./Article/CreateArticle";
 import CreateNewsEntryView from "./NewsEntry/CreateNewsEntry";
 import CreateNewsGroup from "./NewsGroup/CreateNewsGroup";
 import CreateTagLabel from "./TagLabel/CreateTagLabel";
 import Upload from "./Upload/Upload";
+import {locales} from "../../config/locales";
 
 import React, {Component} from 'react';
 import {TabView, TabPanel} from 'primereact/tabview';
-import {Translator} from "@eo-locale/core";
-import {locales} from "../../config/locales";
-import {connect} from "react-redux";
 import {Text, TranslationsProvider} from "@eo-locale/react";
+import {Translator} from "@eo-locale/core";
+import {connect} from "react-redux";
 
 const DEFAULT_ACTIVE_INDEX = 2;
 

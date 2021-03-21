@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.21 13:13 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.21 13:40 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * EditNewsEntry.jsx
@@ -18,9 +18,6 @@ import {
     getResourceRecordPending
 } from "../../../reducers/resourceRecord";
 
-import 'primeicons/primeicons.css';
-import 'primereact/resources/primereact.min.css';
-import 'primeflex/primeflex.css';
 import React from 'react';
 import axios from 'axios';
 import {Redirect} from "react-router";
