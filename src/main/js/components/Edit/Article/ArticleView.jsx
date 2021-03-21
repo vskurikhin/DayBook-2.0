@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.09 22:38 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.21 13:13 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * ArticleView.jsx
@@ -8,6 +8,9 @@
 
 import EditHandlers from "../EditHandlers";
 
+import 'primeicons/primeicons.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeflex/primeflex.css';
 import React from 'react';
 import {AutoComplete} from "primereact/autocomplete";
 import {Button} from "primereact/button";

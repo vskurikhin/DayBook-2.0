@@ -1,12 +1,12 @@
 /*
- * This file was last modified at 2021.03.20 15:52 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.21 13:13 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * resourceRecord.js
  * $Id$
  */
 
-import {RESOURCE_RECORD_PENDING, RESOURCE_RECORD_SUCCESS, RESOURCE_RECORD_ERROR} from '../redux/resourceRecordActions';
+import {RESOURCE_RECORD_PENDING, RESOURCE_RECORD_SUCCESS, RESOURCE_RECORD_ERROR} from '../redux/resourceRecord';
 
 const initialState = {
     pending: false,
