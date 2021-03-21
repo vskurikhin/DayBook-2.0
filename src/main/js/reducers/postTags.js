@@ -2,36 +2,36 @@
  * This file was last modified at 2021.03.21 17:13 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
- * resourceRecord.js
+ * postTags.js
  * $Id$
  */
 
 import {
-    RESOURCE_RECORD_PENDING,
-    RESOURCE_RECORD_SUCCESS,
-    RESOURCE_RECORD_ERROR
-} from '../redux/resourceRecord';
+    POST_TAGS_ERROR,
+    POST_TAGS_PENDING,
+    POST_TAGS_SUCCESS
+} from '../redux/postTags';
 
 const initialState = {
     pending: false,
-    resourceRecord: {},
+    tags: {},
     error: null
 }
 
-export default function resourceRecord(state = initialState, action) {
+export default function postTags(state = initialState, action) {
     switch(action.type) {
-        case RESOURCE_RECORD_PENDING:
+        case POST_TAGS_PENDING:
             return {
                 ...state,
                 pending: true
             }
-        case RESOURCE_RECORD_SUCCESS:
+        case POST_TAGS_SUCCESS:
             return {
                 ...state,
                 pending: false,
-                resourceRecord: action.payload
+                tags: action.payload
             }
-        case RESOURCE_RECORD_ERROR:
+        case POST_TAGS_ERROR:
             return {
                 ...state,
                 pending: false,
@@ -42,6 +42,6 @@ export default function resourceRecord(state = initialState, action) {
     }
 }
 
-export const getResourceRecord = state => state.resourceRecord;
-export const getResourceRecordPending = state => state.pending;
-export const getResourceRecordError = state => state.error;
+export const getPostTags = state => state.tags;
+export const getPostTagsPending = state => state.pending;
+export const getPostTagsError = state => state.error;

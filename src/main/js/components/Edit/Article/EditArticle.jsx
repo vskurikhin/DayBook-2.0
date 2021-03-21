@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.21 13:13 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.21 17:13 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * EditArticle.jsx
@@ -10,15 +10,17 @@ import ArticleView from './ArticleView';
 import {API_V1_RESOURCE_NEWS_GROUPS, API_V1_RESOURCE_TAG_LABEL} from "../../../config/api";
 import {ApiService} from "../../../service/ApiService";
 import {recordService} from '../../../service/RecordService';
-import {updateArticle} from '../../../redux/actions';
+import {putArticleRecord} from "../../../lib/resourceRecord";
+import {
+    getResourceRecord,
+    getResourceRecordError,
+    getResourceRecordPending
+} from "../../../reducers/resourceRecord";
 
-import 'primeicons/primeicons.css';
-import 'primereact/resources/primereact.min.css';
-import 'primeflex/primeflex.css';
 import React from 'react';
 import axios from 'axios';
 import {Redirect} from "react-router";
-import {compose} from "redux";
+import {bindActionCreators, compose} from "redux";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 
@@ -53,17 +55,17 @@ class EditArticle extends ArticleView {
 
     handleSubmit = event => {
         event.preventDefault();
-        this.props.editArticleView(this.state.data)
-        this.setState({redirectToReferrer: true})
+        this.props.putRecord(this.state.data, this.setStateRedirectToReferrerRecord)
+    }
+
+    onFinallyNewsGroupService = () => {
+        const {id} = this.props.match.params;
+        return recordService.getNewsEntry(id, this.handleRecordChange, this.cancelTokenSource);
     }
 
     componentDidMount() {
-        this.newsGroupService.getAll(null, this.handleEditNewsGroupChange).finally(
-            () => recordService.getArticle(
-                this.props.match.params.id,
-                this.handleRecordChange,
-                this.cancelTokenSource)
-        );
+        this.newsGroupService.getAll(null, this.handleEditNewsGroupChange)
+            .finally(() => this.onFinallyNewsGroupService());
         this.tagLabelService.getAll(null, this.handleTagLabelChange);
     }
 
@@ -72,10 +74,12 @@ class EditArticle extends ArticleView {
     }
 
     render() {
-        if (this.state.redirectToReferrer === true) {
+        const {pending} = this.props;
+        const {redirectToReferrer} = this.state;
+        if (redirectToReferrer === true) {
             return <Redirect to="/index"/>
         }
-        if (this.state.data instanceof Promise) return (
+        if (pending) return (
             <div>Loading...</div>
         );
         return this.articleView();
@@ -83,13 +87,16 @@ class EditArticle extends ArticleView {
 }
 
 const mapStateToProps = state => ({
+    error: getResourceRecordError(state),
     locale: state.language,
+    pending: getResourceRecordPending(state),
+    record: getResourceRecord(state),
     user: state.currentUser,
 })
 
-const mapDispatchToProps = dispatch => ({
-    editArticleView: value => dispatch(updateArticle(value))
-})
+const mapDispatchToProps = dispatch => bindActionCreators({
+    putRecord: putArticleRecord
+}, dispatch)
 
 export default compose(
     withRouter,

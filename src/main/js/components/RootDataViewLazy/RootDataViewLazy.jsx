@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.21 13:13 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.21 17:13 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * RootDataViewLazy.jsx
@@ -13,21 +13,21 @@ import './Button.css';
 
 import RenderTBody from "../RenderTBody/RenderTBody";
 import isEmpty from "../../lib/isEmpty";
+import kebabize from "../../lib/kebabize";
 import renderTitle from "../RenderTBody/renderTitle";
 import {AllRecordService} from '../../service/AllRecordService';
 import {NUMBER_OF_ELEMENTS, TIMEOUT} from "../../config/consts";
 import {isAdmin} from '../../lib/userTool'
 import {isArticle, isNewsEntry, isNewsLinks} from "../../lib/is";
-import {kebabize} from "../../lib/kebabize";
 import {setCalendarDate, setPage} from "../../redux/actions";
 
 import * as React from "react";
-import {useEffect, useRef, useState} from "react";
 import axios from "axios";
 import {ContextMenu} from 'primereact/contextmenu';
 import {DataView} from 'primereact/dataview';
 import {compose} from "redux";
 import {connect} from "react-redux";
+import {useEffect, useRef, useState} from "react";
 import {useHistory, withRouter} from 'react-router-dom';
 import {useWindowResize} from "beautiful-react-hooks";
 

@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.21 13:13 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.21 17:13 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * EditHandlers.jsx
@@ -11,6 +11,7 @@ import moment from "moment";
 import {DEFAULT_NEWS_GROUP_ID} from "../../config/consts";
 import {addLocale} from 'primereact/api';
 import {RESOURCE_RECORD_SUCCESS} from "../../redux/resourceRecord";
+import {recordService} from "../../service/RecordService";
 
 export default class EditHandlers extends Component {
 
@@ -49,8 +50,6 @@ export default class EditHandlers extends Component {
         this.mayBeSetSelectedNewsGroup();
         const selectedTags = value.data.tags.map(label => {return {label: label}});
         this.setState({selectedTags: selectedTags});
-        console.log('handleRecordChange(' + JSON.stringify(value) + ')');
-        console.log(this.state);
     }
 
     mayBeSetSelectedNewsGroup = () => {
@@ -84,8 +83,6 @@ export default class EditHandlers extends Component {
     }
 
     onPublicTimeChange = event => {
-        console.log(`onPublicTimeChange`);
-        console.log(event);
         this.setState({
             data: {
                 ...this.state.data,
@@ -122,6 +119,10 @@ export default class EditHandlers extends Component {
     }
 
     setStateRedirectToReferrer = value => {
+        this.setState({redirectToReferrer: true});
+    }
+
+    setStateRedirectToReferrerRecord = value => {
         this.setState({redirectToReferrer: true});
         return {
             type: RESOURCE_RECORD_SUCCESS,
