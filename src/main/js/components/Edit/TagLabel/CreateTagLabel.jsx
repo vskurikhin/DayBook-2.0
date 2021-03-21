@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.21 13:40 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.21 17:13 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * CreateTagLabel.jsx
@@ -7,10 +7,15 @@
  */
 
 import TagLabelView from './TagLabelView';
-import {createTagLabel} from '../../../redux/actions';
+import tagLabel from "../../../lib/tagLabel";
+import {
+    getTagLabel,
+    getTagLabelError,
+    getTagLabelPending
+} from "../../../reducers/tagLabel";
 
 import React from 'react';
-import {compose} from "redux";
+import {bindActionCreators, compose} from "redux";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 
@@ -40,13 +45,22 @@ class CreateTagLabel extends TagLabelView {
         this.props.defaultActiveIndex();
     }
 
-    handleSubmit = event => {
-        event.preventDefault();
-        this.props.createTagLabelView(this.state.data);
+    setStateRedirectToReferrer1 = value => {
+        console.log('CreateTagLabel.setStateRedirectToReferrer1');
         this.setState({redirectToReferrer: true});
     }
 
+    handleSubmit = event => {
+        console.log('CreateTagLabel.handleSubmit');
+        event.preventDefault();
+        this.props.tagLabel(this.state.data, this.setStateRedirectToReferrer1);
+    }
+
     render() {
+        console.log('CreateTagLabel.render state');
+        console.log(this.state);
+        console.log('CreateTagLabel.render props');
+        console.log(this.props);
         const {redirectToReferrer} = this.state;
         if (redirectToReferrer === true) {
             this.handler();
@@ -59,12 +73,16 @@ class CreateTagLabel extends TagLabelView {
 }
 
 const mapStateToProps = state => ({
+    error: getTagLabelError(state),
+    locale: state.language,
+    pending: getTagLabelPending(state),
+    tag: getTagLabel(state),
     user: state.currentUser,
 })
 
-const mapDispatchToProps = dispatch => ({
-    createTagLabelView: value => dispatch(createTagLabel(value)),
-})
+const mapDispatchToProps = dispatch => bindActionCreators({
+    tagLabel: tagLabel
+}, dispatch)
 
 export default compose(
     withRouter,

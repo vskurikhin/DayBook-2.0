@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.21 13:40 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.21 17:13 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * CreateArticle.jsx
@@ -55,7 +55,7 @@ class CreateArticle extends ArticleView {
 
     handleSubmit = event => {
         event.preventDefault();
-        this.props.postRecord(this.state.data, this.setStateRedirectToReferrer);
+        this.props.postRecord(this.state.data, this.setStateRedirectToReferrerRecord);
     }
 
     componentDidMount() {
@@ -86,11 +86,11 @@ const mapStateToProps = state => ({
     pending: getResourceRecordPending(state),
     record: getResourceRecord(state),
     user: state.currentUser,
-})
+});
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     postRecord: postArticleRecord
-}, dispatch)
+}, dispatch);
 
 export default compose(
     withRouter,

@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.07 12:19 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.21 17:13 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * userTool.js
@@ -7,9 +7,11 @@
  */
 
 export const isAnonymity = (props) =>  {
-    return JSON.stringify(props.user['currentUser']) === '{}';
+    const {currentUser} = props.user;
+    return JSON.stringify(currentUser) === '{}';
 }
 
 export const isAdmin = (props) =>  {
-    return JSON.stringify(props.user['currentUser']) === '\"Stalker\"';
+    const {currentUser} = props.user;
+    return JSON.stringify(currentUser) === '\"Stalker\"';
 }

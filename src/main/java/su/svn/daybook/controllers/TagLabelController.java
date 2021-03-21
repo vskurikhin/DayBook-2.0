@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.02 17:18 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.21 17:13 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * TagLabelController.java
@@ -26,7 +26,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import su.svn.daybook.domain.model.*;
+import su.svn.daybook.domain.model.ResponseDto;
+import su.svn.daybook.domain.model.TagLabelDto;
+import su.svn.daybook.domain.model.TagsForRecordDto;
 import su.svn.daybook.services.TagLabelService;
 import su.svn.daybook.services.TaggetService;
 import su.svn.daybook.utils.BodyUtil;
@@ -97,5 +99,4 @@ public class TagLabelController {
         log.debug("readLabelIn()");
         return tagLabelService.readLabelIn(Set.of(labels));
     }
-
 }

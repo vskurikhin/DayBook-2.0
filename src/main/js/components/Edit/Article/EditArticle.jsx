@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.21 13:40 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.21 17:13 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * EditArticle.jsx
@@ -55,7 +55,7 @@ class EditArticle extends ArticleView {
 
     handleSubmit = event => {
         event.preventDefault();
-        this.props.putRecord(this.state.data, this.setStateRedirectToReferrer)
+        this.props.putRecord(this.state.data, this.setStateRedirectToReferrerRecord)
     }
 
     onFinallyNewsGroupService = () => {
