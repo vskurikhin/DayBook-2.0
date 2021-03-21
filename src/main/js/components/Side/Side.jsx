@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.02 23:08 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.21 18:04 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * Side.jsx
@@ -21,10 +21,9 @@ class Side extends Component {
                     <h1><Text id='Index'/></h1>
                     <h2><Text id='About_Me'/></h2>
                     <h5><Text id='Photo_of_me'/>:</h5>
-                    <div className="fakeimg">Image</div>
-                    <p>Some text about me in culpa qui officia deserunt mollit anim..</p>
-                    <h3>More Text</h3>
-                    <p>Lorem ipsum dolor sit ame.</p>
+                    <img src="/raw-svg/my-cv-2021-03-21-228x358.png"/>
+                    <p><Text id='My_name_is'/></p>
+                    <h4><Text id='More_Text'/></h4>
                 </div>
             </TranslationsProvider>
         )
