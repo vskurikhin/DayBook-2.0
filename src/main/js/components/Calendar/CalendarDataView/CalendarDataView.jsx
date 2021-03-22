@@ -1,14 +1,14 @@
 /*
- * This file was last modified at 2021.03.21 13:13 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.22 19:30 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * CalendarDataView.jsx
  * $Id$
  */
 
-import RenderTBody from "../../RenderTBody/RenderTBody";
+import RenderTBody from "../../RenderItem/RenderTBody";
 import isEmpty from "../../../lib/isEmpty";
-import renderTitle from "../../RenderTBody/renderTitle";
+import renderTitle from "../../RenderItem/renderTitle";
 import {AllRecordService} from "../../../service/AllRecordService";
 import {NUMBER_OF_ELEMENTS, TIMEOUT} from "../../../config/consts";
 import {formatDate} from "../../../lib/formatDate";

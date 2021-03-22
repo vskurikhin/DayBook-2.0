@@ -1,17 +1,3 @@
-/* Ensure proper sizing */
-* {
- box-sizing: border-box;
-}
-/* Style the body */
-body{
- margin: 0;
- color: #333;
- -webkit-font-smoothing: antialiased;
- -moz-osx-font-smoothing: grayscale;
- font-size: 14px;
- font-weight: 400;
- font-family: "Open Sans","Helvetica Neue",sans-serif;
-}
 /* Increase the font size of the heading */
 .header h1{
  font-size: 40px;
@@ -94,8 +80,6 @@ img.my-left-top{
 }
 
 
-
-
 #pr_id_3 {
  min-width: 22.4em;
 }
@@ -103,56 +87,19 @@ img.my-left-top{
  min-width: 22.4em;
  width: 22.4em;
 }
-.p-fluid .p-autocomplete {
- display: -ms-flexbox;
- display: flex;
-}
-.p-autocomplete {
- display: -ms-inline-flexbox;
- display: inline-flex;
- position: relative;
-}
-.p-component, .p-component * {
- -webkit-box-sizing: border-box;
- box-sizing: border-box;
-}
-.p-component {
- font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
- font-size: 1rem;
- font-weight: normal;
-}
+
 .p-fluid .p-inputtext {
  width: 100%;
-}
-.p-autocomplete .p-autocomplete-multiple-container {
- padding: 0.25rem 0.5rem;
 }
 .p-inputtext {
  margin: 0;
 }
-.p-autocomplete-multiple-container {
- -ms-flex-align: center;
- -ms-flex-wrap: wrap;
- align-items: center;
- cursor: text;
- display: -ms-flexbox;
- display: flex;
- flex-wrap: wrap;
- list-style-type: none;
- margin: 0;
- min-width: 22.4em;
- overflow: hidden;
- padding: 0;
- width: 100%;
-}
-
 
 
 .p-button.my-p-button-sm {
  font-size: 0.775rem;
  padding: 0.275375rem 0.775rem;
 }
-
 
 
 .demo-wrapper {
@@ -163,86 +110,11 @@ img.my-left-top{
 }
 
 
-
-
-
-
-
-.p-tabview .p-tabview-nav {
- background: #ffffff;
- border: 1px solid #dee2e6;
- border-width: 0 0 2px 0;
-}
-.p-tabview-nav {
- display: -ms-flexbox;
- display: flex;
- margin: 0;
- padding: 0;
- list-style-type: none;
- -ms-flex-wrap: wrap;
- flex-wrap: wrap;
-}
-.p-tabview .p-tabview-nav li {
- margin-right: 0;
-}
-.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
- background: #ffffff;
- border-color: #2196F3;
- color: #2196F3;
-}
-.p-tabview .p-tabview-nav li .p-tabview-nav-link {
- border: solid #dee2e6;
- border-width: 0 0 2px 0;
- border-color: transparent transparent #dee2e6 transparent;
- background: #ffffff;
- color: #6c757d;
- padding: 1rem;
- font-weight: 600;
- border-top-right-radius: 3px;
- border-top-left-radius: 3px;
- transition: box-shadow 0.2s;
- margin: 0 0 -2px 0;
-}
-.p-unselectable-text {
- -webkit-user-select: none;
- -moz-user-select: none;
- -ms-user-select: none;
- user-select: none;
-}
-.p-tabview-nav-link {
- cursor: pointer;
- -webkit-user-select: none;
- -moz-user-select: none;
- -ms-user-select: none;
- user-select: none;
- display: -ms-flexbox;
- display: flex;
- -ms-flex-align: center;
- align-items: center;
- position: relative;
- text-decoration: none;
- overflow: hidden;
-}
-.p-tabview .p-tabview-panels {
- background: #ffffff;
- padding: 1rem;
- border: 0 none;
- color: #495057;
- border-bottom-right-radius: 3px;
- border-bottom-left-radius: 3px;
-}
 .p-link:focus {
  outline: 0 none;
  outline-offset: 0;
  box-shadow: 0 0 0 0.1rem rgba(0,0,0,0.1);
 }
-.p-tabview .p-tabview-nav li .p-tabview-nav-link:not(.p-disabled):focus {
- outline: 0 none;
- outline-offset: 0;
- box-shadow: 0 0 0 0.1rem rgba(0,0,0,0.1);
-}
-
-
 
 
 .tab-view {
@@ -250,14 +122,10 @@ img.my-left-top{
 }
 
 
-
-
 .my-scroll pre {
  overflow: auto;
  width: 100%;
 }
-
-
 
 p {
  text-align: justify;

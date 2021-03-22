@@ -1,0 +1,27 @@
+.p-autocomplete {
+ display: -ms-inline-flexbox;
+ display: inline-flex;
+ position: relative;
+}
+.p-autocomplete .p-autocomplete-multiple-container {
+ padding: 0.25rem 0.5rem;
+}
+.p-autocomplete-multiple-container {
+ -ms-flex-align: center;
+ -ms-flex-wrap: wrap;
+ align-items: center;
+ cursor: text;
+ display: -ms-flexbox;
+ display: flex;
+ flex-wrap: wrap;
+ list-style-type: none;
+ margin: 0;
+ min-width: 22.4em;
+ overflow: hidden;
+ padding: 0;
+ width: 100%;
+}
+.p-fluid .p-autocomplete {
+ display: -ms-flexbox;
+ display: flex;
+}

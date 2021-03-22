@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.21 17:13 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.22 19:30 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * EditArticle.jsx
@@ -60,7 +60,7 @@ class EditArticle extends ArticleView {
 
     onFinallyNewsGroupService = () => {
         const {id} = this.props.match.params;
-        return recordService.getNewsEntry(id, this.handleRecordChange, this.cancelTokenSource);
+        return recordService.getArticle(id, this.handleRecordChange, this.cancelTokenSource);
     }
 
     componentDidMount() {
