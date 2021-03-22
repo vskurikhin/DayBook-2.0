@@ -1,3 +1,17 @@
+/* Ensure proper sizing */
+* {
+ box-sizing: border-box;
+}
+/* Style the body */
+body{
+ -moz-osx-font-smoothing: grayscale;
+ -webkit-font-smoothing: antialiased;
+ color: #333;
+ font-family: "Open Sans","Helvetica Neue",sans-serif;
+ font-size: 14px;
+ font-weight: 400;
+ margin: 0;
+}
 .my-divTable{
  display: table;
  width: 100%;
@@ -86,281 +100,16 @@
  color: #ffffff;
 }
 label.my-label{
-    top: -.75rem;
-    font-size: 12px;
-    left: 0.429rem;
-    color: #666666;
-    transition-duration: 0.2s;
-    margin-bottom: 0.33rem;
-    margin-left: 0.6em;
-    display:inline-block;
+ color: #666666;
+ display:inline-block;
+ font-size: 12px;
+ left: 0.429rem;
+ margin-bottom: 0.33rem;
+ margin-left: 0.6em;
+ top: -.75rem;
+ transition-duration: 0.2s;
 }
-/* Ensure proper sizing */
-* {
- box-sizing: border-box;
-}
-/* Style the body */
-body{
- margin: 0;
- color: #333;
- -webkit-font-smoothing: antialiased;
- -moz-osx-font-smoothing: grayscale;
- font-size: 14px;
- font-weight: 400;
- font-family: "Open Sans","Helvetica Neue",sans-serif;
-}
-/* Increase the font size of the heading */
-.header h1{
- font-size: 40px;
-}
-/* Fake image, just for this example */
-.fakeimg{
- background-color: #aaa;
- width: 100%;
- padding: 20px;
-}
-.timestamp-bottom{
- margin-bottom: 15px;
-}
-img.my-left-top{
- float:left; /* Выравнивание по левому краю */
- margin: 17px 17px 17px 17px; /* Отступы вокруг картинки */
- vertical-align: text-top;
-}
-.my-left-top{
- float:left; /* Выравнивание по левому краю */
- margin: 17px 17px 17px 17px; /* Отступы вокруг картинки */
- vertical-align: text-top;
-}
-.center-demo{
- display: flex;
- flex-direction: column;
- align-items: center;
-}
-.p-col-d{
- display: table-cell;
-}
-.p-col-m{
- display: none;
-}
-.leftimg{
- float:left; /* Выравнивание по левому краю */
- margin: 17px 17px 17px 17px; /* Отступы вокруг картинки */
-}
-.rightimg{
- float: right; /* Выравнивание по правому краю  */
- margin: 7px 0 7px 7px; /* Отступы вокруг картинки */
-}
-@media screen and (max-width: 1024px){
- .p-col-d{
-     display: none;
- }
- .p-col-m{
-     display: inline-block;
- }
-}
-.my-p-calendar{
- font-size: 10px;
-}
-:not(.sb-show-main) > .sb-main,
-:not(.sb-show-nopreview) > .sb-nopreview,
-:not(.sb-show-errordisplay) > .sb-errordisplay{
- display: none;
-}
-.descField{
- font-size: 10px;
- font-family: "Helvetica";
- font-weight: 900;
- color: #96989A;
-}
-.valueField{
- font-size: 10px;
- font-family: "Helvetica";
- font-weight: 900;
- color: #606062;
-}
-.valueField p{
- text-align: justify;
- width: 100%;
- margin:0;
-}
-.valueField p:after{
- content: "";
- display: inline-block;
- width: 100%;
-}
-
-
-
-
-#pr_id_3 {
- min-width: 22.4em;
-}
-#time24 {
- min-width: 22.4em;
- width: 22.4em;
-}
-.p-fluid .p-autocomplete {
- display: -ms-flexbox;
- display: flex;
-}
-.p-autocomplete {
- display: -ms-inline-flexbox;
- display: inline-flex;
- position: relative;
-}
-.p-component, .p-component * {
- -webkit-box-sizing: border-box;
- box-sizing: border-box;
-}
-.p-component {
- font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
- font-size: 1rem;
- font-weight: normal;
-}
-.p-fluid .p-inputtext {
- width: 100%;
-}
-.p-autocomplete .p-autocomplete-multiple-container {
- padding: 0.25rem 0.5rem;
-}
-.p-inputtext {
- margin: 0;
-}
-.p-autocomplete-multiple-container {
- -ms-flex-align: center;
- -ms-flex-wrap: wrap;
- align-items: center;
- cursor: text;
- display: -ms-flexbox;
- display: flex;
- flex-wrap: wrap;
- list-style-type: none;
- margin: 0;
- min-width: 22.4em;
- overflow: hidden;
- padding: 0;
- width: 100%;
-}
-
-
-
-.p-button.my-p-button-sm {
- font-size: 0.775rem;
- padding: 0.275375rem 0.775rem;
-}
-
-
-
-.demo-wrapper {
- box-sizing: content-box;
- height: 400px;
- border: 1px solid #a6a6a6;
- border-radius: 3px;
-}
-
-
-
-
-
-
-
-.p-tabview .p-tabview-nav {
- background: #ffffff;
- border: 1px solid #dee2e6;
- border-width: 0 0 2px 0;
-}
-.p-tabview-nav {
- display: -ms-flexbox;
- display: flex;
- margin: 0;
- padding: 0;
- list-style-type: none;
- -ms-flex-wrap: wrap;
- flex-wrap: wrap;
-}
-.p-tabview .p-tabview-nav li {
- margin-right: 0;
-}
-.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
- background: #ffffff;
- border-color: #2196F3;
- color: #2196F3;
-}
-.p-tabview .p-tabview-nav li .p-tabview-nav-link {
- border: solid #dee2e6;
- border-width: 0 0 2px 0;
- border-color: transparent transparent #dee2e6 transparent;
- background: #ffffff;
- color: #6c757d;
- padding: 1rem;
- font-weight: 600;
- border-top-right-radius: 3px;
- border-top-left-radius: 3px;
- transition: box-shadow 0.2s;
- margin: 0 0 -2px 0;
-}
-.p-unselectable-text {
- -webkit-user-select: none;
- -moz-user-select: none;
- -ms-user-select: none;
- user-select: none;
-}
-.p-tabview-nav-link {
- cursor: pointer;
- -webkit-user-select: none;
- -moz-user-select: none;
- -ms-user-select: none;
- user-select: none;
- display: -ms-flexbox;
- display: flex;
- -ms-flex-align: center;
- align-items: center;
- position: relative;
- text-decoration: none;
- overflow: hidden;
-}
-.p-tabview .p-tabview-panels {
- background: #ffffff;
- padding: 1rem;
- border: 0 none;
- color: #495057;
- border-bottom-right-radius: 3px;
- border-bottom-left-radius: 3px;
-}
-.p-link:focus {
- outline: 0 none;
- outline-offset: 0;
- box-shadow: 0 0 0 0.1rem rgba(0,0,0,0.1);
-}
-.p-tabview .p-tabview-nav li .p-tabview-nav-link:not(.p-disabled):focus {
- outline: 0 none;
- outline-offset: 0;
- box-shadow: 0 0 0 0.1rem rgba(0,0,0,0.1);
-}
-
-
-
-
-.tab-view {
- margin: 1em;
-}
-
-
-
-
-.my-scroll pre {
- overflow: auto;
- width: 100%;
-}
-
-
-
-p {
- text-align: justify;
- text-justify: inter-word;
- line-height: 1.25em;
-}/* Header/logo Title */
+/* Header/logo Title */
 .my-header{
  position: absolute;
  height: 52px;
@@ -458,6 +207,139 @@ a.SectionNavigation-Item.Section{
   position: absolute;
   display: none;
  }
+}/* Increase the font size of the heading */
+.header h1{
+ font-size: 40px;
+}
+/* Fake image, just for this example */
+.fakeimg{
+ background-color: #aaa;
+ width: 100%;
+ padding: 20px;
+}
+.timestamp-bottom{
+ margin-bottom: 15px;
+}
+img.my-left-top{
+ float:left; /* Выравнивание по левому краю */
+ margin: 17px 17px 17px 17px; /* Отступы вокруг картинки */
+ vertical-align: text-top;
+}
+.my-left-top{
+ float:left; /* Выравнивание по левому краю */
+ margin: 17px 17px 17px 17px; /* Отступы вокруг картинки */
+ vertical-align: text-top;
+}
+.center-demo{
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+}
+.p-col-d{
+ display: table-cell;
+}
+.p-col-m{
+ display: none;
+}
+.leftimg{
+ float:left; /* Выравнивание по левому краю */
+ margin: 17px 17px 17px 17px; /* Отступы вокруг картинки */
+}
+.rightimg{
+ float: right; /* Выравнивание по правому краю  */
+ margin: 7px 0 7px 7px; /* Отступы вокруг картинки */
+}
+@media screen and (max-width: 1024px){
+ .p-col-d{
+     display: none;
+ }
+ .p-col-m{
+     display: inline-block;
+ }
+}
+.my-p-calendar{
+ font-size: 10px;
+}
+:not(.sb-show-main) > .sb-main,
+:not(.sb-show-nopreview) > .sb-nopreview,
+:not(.sb-show-errordisplay) > .sb-errordisplay{
+ display: none;
+}
+.descField{
+ font-size: 10px;
+ font-family: "Helvetica";
+ font-weight: 900;
+ color: #96989A;
+}
+.valueField{
+ font-size: 10px;
+ font-family: "Helvetica";
+ font-weight: 900;
+ color: #606062;
+}
+.valueField p{
+ text-align: justify;
+ width: 100%;
+ margin:0;
+}
+.valueField p:after{
+ content: "";
+ display: inline-block;
+ width: 100%;
+}
+
+
+#pr_id_3 {
+ min-width: 22.4em;
+}
+#time24 {
+ min-width: 22.4em;
+ width: 22.4em;
+}
+
+.p-fluid .p-inputtext {
+ width: 100%;
+}
+.p-inputtext {
+ margin: 0;
+}
+
+
+.p-button.my-p-button-sm {
+ font-size: 0.775rem;
+ padding: 0.275375rem 0.775rem;
+}
+
+
+.demo-wrapper {
+ box-sizing: content-box;
+ height: 400px;
+ border: 1px solid #a6a6a6;
+ border-radius: 3px;
+}
+
+
+.p-link:focus {
+ outline: 0 none;
+ outline-offset: 0;
+ box-shadow: 0 0 0 0.1rem rgba(0,0,0,0.1);
+}
+
+
+.tab-view {
+ margin: 1em;
+}
+
+
+.my-scroll pre {
+ overflow: auto;
+ width: 100%;
+}
+
+p {
+ text-align: justify;
+ text-justify: inter-word;
+ line-height: 1.25em;
 }.sb-wrapper{
  position: fixed;
  top: 0;

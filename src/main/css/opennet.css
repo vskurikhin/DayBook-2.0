@@ -1,0 +1,35 @@
+a {
+ text-decoration: none;
+}
+a:link {
+ border-bottom: 1px dashed #0000AD;
+ color: #0030AD;
+}
+a:visited {
+ border-bottom: 1px dotted #00B8D4;
+ color: #00B8D4;
+}
+a:hover {
+ border-bottom: 1px solid #0030AD;
+ color : #0030AD;
+}
+a.h:visited {
+ border-bottom: 1px dotted #0080C0;
+ color: #00B0C0;
+}
+small {
+ font-size : 11pt;
+}
+pre {
+ padding-left: 10px;
+ overflow-x: auto;
+ white-space: pre-wrap;
+}
+p.a {
+ text-align: left;
+ margin: 2pt 5pt 2pt 20pt;
+}
+li.l {
+ margin-bottom: 10pt;
+ text-align: left;
+}

@@ -1,0 +1,14 @@
+/* Ensure proper sizing */
+* {
+ box-sizing: border-box;
+}
+/* Style the body */
+body{
+ -moz-osx-font-smoothing: grayscale;
+ -webkit-font-smoothing: antialiased;
+ color: #333;
+ font-family: "Open Sans","Helvetica Neue",sans-serif;
+ font-size: 14px;
+ font-weight: 400;
+ margin: 0;
+}
