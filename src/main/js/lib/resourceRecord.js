@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.21 17:13 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.23 09:40 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * resourceRecord.js
@@ -17,18 +17,15 @@ export const postNewsEntryRecord = (value, f) => resourceRecord('POST', 'news-en
 export const putNewsEntryRecord = (value, f) => resourceRecord('PUT', 'news-entry', value, f);
 
 function checkPostTags(dispatch, data, tags, f) {
-    console.log("checkErrorThenPostTags(" + JSON.stringify(data) + ', ' + JSON.stringify(tags) + ")");
     if (data.error) {
         throw(data.error);
     }
     if ('success' === data.status) {
-        console.log("postTagsCall => postTags");
         postTagsCall(dispatch, {
             id: data.object.id,
             tags: tags,
         }, f);
     }
-
     return data.object;
 }
 
@@ -36,7 +33,6 @@ export default function resourceRecord(method, object, value, f) {
     return dispatch => {
         const token = window.sessionStorage.token;
         if (token) {
-            console.log("resourceRecord(" + object + ', ' + JSON.stringify(value) + ")")
             dispatch(resourceRecordPending());
             return urlMethod(API_V1_RESOURCE_RECORD, method, object, value, token)
                 .then(data => data.json())

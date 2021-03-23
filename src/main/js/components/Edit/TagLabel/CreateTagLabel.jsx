@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.21 17:13 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.23 09:40 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * CreateTagLabel.jsx
@@ -46,21 +46,15 @@ class CreateTagLabel extends TagLabelView {
     }
 
     setStateRedirectToReferrer1 = value => {
-        console.log('CreateTagLabel.setStateRedirectToReferrer1');
         this.setState({redirectToReferrer: true});
     }
 
     handleSubmit = event => {
-        console.log('CreateTagLabel.handleSubmit');
         event.preventDefault();
         this.props.tagLabel(this.state.data, this.setStateRedirectToReferrer1);
     }
 
     render() {
-        console.log('CreateTagLabel.render state');
-        console.log(this.state);
-        console.log('CreateTagLabel.render props');
-        console.log(this.props);
         const {redirectToReferrer} = this.state;
         if (redirectToReferrer === true) {
             this.handler();

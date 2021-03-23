@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.22 19:30 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.23 09:40 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * CalendarDataView.jsx
@@ -30,8 +30,6 @@ export class CalendarDataView extends Component {
 
     constructor(props) {
         super(props);
-        console.log('CalendarDataView.constructor');
-        console.log(props);
         this.update = this.update.bind(this);
         this.state = {
             first: 0,
@@ -44,15 +42,12 @@ export class CalendarDataView extends Component {
     }
 
     setRecords = value => {
-        console.log('CalendarDataView.setRecords');
         this.setState({
             ...this.state,
             loading: false,
             records: value['data'].content,
             totalRecords: value['data'].totalElements,
         });
-        console.log('CalendarDataView.setRecords');
-        console.log(this.state);
     }
 
     update = () => {

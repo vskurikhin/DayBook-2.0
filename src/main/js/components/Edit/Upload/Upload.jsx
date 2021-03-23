@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.04 13:41 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.23 09:40 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * Upload.jsx
@@ -7,12 +7,8 @@
  */
 
 import UploadView from './UploadView';
-import {createTagLabel} from '../../../redux/actions';
 
 import React from 'react';
-import {compose} from "redux";
-import {connect} from "react-redux";
-import {withRouter} from "react-router-dom";
 
 class Upload extends UploadView {
 
@@ -46,16 +42,3 @@ class Upload extends UploadView {
         return this.uploadView();
     }
 }
-
-const mapStateToProps = state => ({
-    user: state.currentUser,
-})
-
-const mapDispatchToProps = dispatch => ({
-    createTagLabelView: value => dispatch(createTagLabel(value)),
-})
-
-export default compose(
-    withRouter,
-    connect(mapStateToProps, mapDispatchToProps)
-)(Upload);

@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.20 20:43 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.23 09:40 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * actions.js
@@ -11,18 +11,6 @@ import {API_V1_RESOURCE, API_V1_RESOURCE_RECORD} from '../config/api';
 export const createNewsGroup = value => resource('POST', 'news-group', value);
 
 export const updateNewsGroup = value => resource('PUT', 'news-group', value);
-
-export const createTagLabel = value => resource('POST', 'tag-label', value);
-
-export const updateTagLabel = value => resource('PUT', 'tag-label', value);
-
-export const createArticle = value => resourceRecord('POST', 'article', value);
-
-export const updateArticle = value => resourceRecord('PUT', 'article', value);
-
-export const createNewsLinks = value => resourceRecord('POST', 'news-links', value);
-
-export const updateNewsLinks = value => resourceRecord('PUT', 'news-links', value);
 
 export const logMessage = (label, message) => {
     console.log(label);
@@ -57,7 +45,6 @@ export const resource = (method, object, value) => {
     return dispatch => {
         const token = window.sessionStorage.token;
         if (token) {
-            console.log("resourceTags(" + JSON.stringify(value) + ")")
             return urlMethod(API_V1_RESOURCE, method, object, value, token)
                 .then(resp => resp.json())
                 .then(data => {
@@ -75,7 +62,6 @@ export const resourceTags = (value, props) => {
     return dispatch => {
         const token = window.sessionStorage.token;
         if (token) {
-            console.log("resourceTags(" + JSON.stringify(value) + ")")
             return urlMethod(API_V1_RESOURCE, 'POST', 'add-tags', value, token)
                 .then(resp => resp.json())
                 .then(data => {
@@ -83,7 +69,6 @@ export const resourceTags = (value, props) => {
                         logMessage('resourceTags message: ', data.message);
                         // noinspection EqualityComparisonWithCoercionJS
                         if ('success' == data.status) {
-                            console.log(data.object);
                             dispatch(setUpdatedRecord(data.object));
                         }
                     } else {
@@ -132,7 +117,6 @@ export const userPostFetch = user => {
 
 export const userLoginFetch = user => {
     return dispatch => {
-        console.log('user: ' + JSON.stringify(user))
         return fetch("/api/v1/auth/login", {
             method: "POST",
             headers: {
@@ -200,5 +184,3 @@ export const setPage = (value = {}) => ({type: 'UPDATED_PAGE', payload: value});
 export const setLanguage = (value = {}) => ({type: 'UPDATED_LANGUAGE', payload: value});
 
 export const setUpdatedRecord = (value = {}) => ({type: 'UPDATED_RECORD', payload: value});
-
-export const setLocale = (locale = '') => ({type: 'LOCALE', payload: locale});
