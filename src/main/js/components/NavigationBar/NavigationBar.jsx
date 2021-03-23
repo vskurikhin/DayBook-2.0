@@ -1,5 +1,5 @@
 /*
- * This file was last modified at 2021.03.02 23:08 by Victor N. Skurikhin.
+ * This file was last modified at 2021.03.23 09:40 by Victor N. Skurikhin.
  * This is free and unencumbered software released into the public domain.
  * For more information, please refer to <http://unlicense.org>
  * NavigationBar.jsx
@@ -35,8 +35,6 @@ class NavigationBar extends Component {
     }
 
     handleLanguage = event => {
-        console.log(this.props);
-        console.log(this.event);
         if ('ru' === this.props.locale.language) {
             this.props.setLanguage('en');
         }
